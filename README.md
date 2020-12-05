@@ -15,3 +15,10 @@ React, Redux, Typescript, ESLint, Prettier
 Запусти проект на `localhost:3000` 
 
 ### `yarn dev`
+
+Конфиги находятся в `openapitools.json` и TODO.
+
+Для кодогенерации запусти 
+
+### `yarn codegen`
+
