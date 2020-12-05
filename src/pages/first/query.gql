@@ -1,0 +1,13 @@
+query getMoscowWeather {
+  getCityByName(name: "Moscow") {
+    id
+    name
+    weather {
+      summary {
+        description
+        title
+        icon
+      }
+    }
+  }
+}

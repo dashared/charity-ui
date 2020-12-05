@@ -1,0 +1,42 @@
+@import "~antd/lib/style/themes/default.less";
+@import "~antd/lib/style/color/colorPalette.less";
+
+@gray-1: #ffffff;
+@gray-2: #fafafa;
+@gray-3: #f5f5f5;
+@gray-4: #e8e8e8;
+@gray-5: #d9d9d9;
+@gray-6: #bfbfbf;
+@gray-7: #8c8c8c;
+@gray-8: #595959;
+@gray-9: #262626;
+@gray-10: #000000;
+
+@main-horizontal-padding: 1.2em;
+@main-vertical-padding: 1em;
+@layout-margin: 4px;
+
+.simpleScroll(@color: @gray-6) {
+  @width: 5px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    width: @width;
+    height: @width;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: @color;
+  }
+}
+
+.infoSegment() {
+  background: @component-background;
+  padding: @main-horizontal-padding;
+  margin-bottom: @layout-margin;
+}

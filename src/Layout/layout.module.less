@@ -1,0 +1,42 @@
+@import "../variables.less";
+
+.mainLayout {
+  min-height: 100vh;
+}
+
+.header {
+  background-color: @component-background;
+  padding-left: @main-horizontal-padding;
+  padding-right: @main-horizontal-padding;
+  margin-bottom: @layout-margin;
+}
+
+.leftBar {
+  background-color: @component-background;
+  margin-right: @layout-margin;
+
+  .appLogo {
+    height: @layout-header-height;
+    background-color: @component-background;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menu {
+    border-right: none;
+  }
+}
+
+.trigger {
+  font-size: 150%;
+  line-height: @layout-header-height;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.3s;
+
+  &:hover {
+    color: @primary-color;
+  }
+}

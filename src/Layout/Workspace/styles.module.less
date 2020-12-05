@@ -1,0 +1,44 @@
+@import "../../variables.less";
+
+.footer {
+  padding: @main-vertical-padding @main-horizontal-padding;
+  margin-top: @layout-margin;
+  background-color: @component-background;
+}
+
+.workspaceLayout {
+  height: calc(100vh - @layout-header-height - @layout-margin);
+  overflow: hidden;
+}
+
+.workspaceMain {
+  .simpleScroll();
+
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  & > main {
+    flex: 1 1 auto;
+  }
+}
+
+.rightSidebar {
+  .simpleScroll();
+  height: 100%;
+  margin-left: @layout-margin;
+
+  &:global(.ant-layout-sider-collapsed) {
+    margin-left: 0;
+  }
+}
+
+.pageHeader {
+  background-color: @white;
+  margin-bottom: @layout-margin;
+}
+
+.rotated {
+  transform: rotate(-180deg);
+}

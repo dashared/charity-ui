@@ -1,26 +1,28 @@
 {
   "name": "ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "4.0.1",
-    "web-vitals": "^0.2.4"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "dev": "react-app-rewired start",
+    "fix": "yarn fix:prettier && yarn fix:eslint",
+    "fix:eslint": "eslint --fix \"**/*\"",
+    "fix:prettier": "prettier --write \"**/*\"",
+    "lint": "yarn lint:prettier && yarn lint:eslint",
+    "lint:eslint": "eslint \"**/*\"",
+    "lint:prettier": "prettier --check \"**/*\"",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.tsx": [
+      "eslint --fix",
+      "prettier --write"
     ]
   },
   "browserslist": {
@@ -34,5 +36,81 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.2.2",
+    "@curi/helpers": "^2.0.2",
+    "@curi/react-dom": "^2.0.3",
+    "@curi/router": "^2.1.1",
+    "@hickory/browser": "^2.1.0",
+    "@loadable/component": "^5.13.2",
+    "@reduxjs/toolkit": "^1.4.0",
+    "antd": "^4.6.5",
+    "classnames": "^2.2.6",
+    "date-fns": "^2.16.1",
+    "file-saver": "^2.0.2",
+    "gojs": "^2.1.26",
+    "gojs-react": "^1.0.8",
+    "i18next": "^19.7.0",
+    "i18next-http-backend": "^1.0.21",
+    "immer": "7.0.9",
+    "jotai": "^0.7.1",
+    "linkifyjs": "^2.1.9",
+    "lodash": "^4.17.20",
+    "query-string": "^6.13.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-i18next": "^11.7.3",
+    "react-redux": "^7.2.1",
+    "react-scripts": "3.4.3",
+    "stringz": "^2.1.0",
+    "typescript": "~4.0.3"
+  },
+  "devDependencies": {
+    "@curi/types": "^2.0.2",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^10.4.9",
+    "@testing-library/user-event": "^12.1.6",
+    "@types/classnames": "^2.2.10",
+    "@types/file-saver": "^2.0.1",
+    "@types/jest": "^26.0.14",
+    "@types/linkifyjs": "^2.1.3",
+    "@types/loadable__component": "^5.13.1",
+    "@types/lodash": "^4.14.161",
+    "@types/luxon": "^1.25.0",
+    "@types/node": "^14.11.2",
+    "@types/qs": "^6.9.5",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-redux": "^7.1.9",
+    "@types/webpack-env": "^1.15.3",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
+    "babel-plugin-import": "^1.13.0",
+    "casual": "^1.6.2",
+    "customize-cra": "^1.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-json": "^2.1.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.21.2",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "http-proxy-middleware": "^1.0.5",
+    "husky": "^4.3.0",
+    "less": "^3.12.2",
+    "less-loader": "^6.2.0",
+    "less-vars-to-js": "^1.3.0",
+    "lint-staged": "^10.5.1",
+    "prettier": "^2.1.2",
+    "react-app-rewired": "^2.1.6",
+    "webpack-bundle-analyzer": "^3.9.0"
+  },
+  "resolutions": {
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1"
   }
 }
