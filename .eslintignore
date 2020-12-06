@@ -1,2 +1,13 @@
-src/registerServiceWorker.js
-src/**/__tests__/**
+*.*
+
+!*.graphql
+!*.js
+!*.jsx
+!*.ts
+!*.tsx
+
+Dockerfile
+LICENSE
+node_modules
+/build
+/src/@generated/
