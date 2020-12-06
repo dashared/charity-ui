@@ -1,11 +1,4 @@
-import React, {
-  MutableRefObject,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-import { get } from "lodash";
+import React, { MutableRefObject, ReactNode, useEffect, useState } from "react";
 import { Empty, Skeleton } from "antd";
 import Pagination, { PaginationProps } from "antd/lib/pagination";
 import { AxiosResponse } from "axios";
@@ -61,13 +54,14 @@ type PaginatedQueryProps<Variables, Result, Single> = {
   noInfo?: boolean;
   className?: string;
   paginationClassName?: string;
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  requestQuery: (params?: any, options?: any) => Promise<AxiosResponse<Result>>;
+  requestQuery: (
+    limit: number,
+    offset: number,
+  ) => Promise<AxiosResponse<Result>>;
   variables?: Omit<Variables, "limit" | "offset">;
   stateRef?: MutableRefObject<StateRef>;
   initialLimit?: number;
   initialOffset?: number;
-  reduce: keyof Result | string[]; // TODO: maybe more enforcing?
   render: (
     entries: PaginatedResult<Single>["entries"],
     total: PaginatedResult<Single>["total"],
@@ -120,16 +114,13 @@ function useAntPagination(
 /**
  * Extracts entries and total using provided reduce option
  *
- * @param option reduce option
  * @param data raw query result
  */
-function grabPaginatedResult<V, R, S>(
-  option: PaginatedQueryProps<V, R, S>["reduce"],
-  data: R,
-): PaginatedResult<S> {
+function grabPaginatedResult<V, R, S>(data: R): PaginatedResult<S> {
   let entries: S[] = [];
 
-  const { total = null, ...rest } = get(data, option, {});
+  // eslint-disable-next-line
+  const { total = null, ...rest } = data as any; // TODO
 
   // can be less hacky if pagination has fixed list field name
   if (Object.keys(rest).length === 1) {
@@ -154,14 +145,13 @@ function InnerPaginatedQuery<
   paginationClassName,
   //
   requestQuery,
-  initialLimit = 20,
+  initialLimit = 10,
   initialOffset = 0,
   stateRef,
-  variables,
-  reduce,
+  // variables,
+  // onResult,
   render,
   onPaginationState,
-  onResult,
   ...rest
 }: PaginatedQueryProps<Variables, Result, Single> &
   RestProps): JSX.Element | null {
@@ -180,33 +170,26 @@ function InnerPaginatedQuery<
     if (stateRef !== undefined) {
       stateRef.current = { limit, offset };
     }
-
     onPaginationState?.({ limit, offset });
   }, [stateRef, onPaginationState, limit, offset]);
 
   const [data, setData] = useState<Result | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string | undefined>(undefined);
 
-  // query REST
-  useCallback(async (): Promise<void> => {
-    try {
-      setLoading(true);
-      const response = await requestQuery(variables);
-
-      setData(response.data);
-      setLoading(false);
-    } catch (e) {
-      setError(e.message);
-    }
-  }, [setLoading, setData, setError, requestQuery, variables]);
-
-  // propagate result above if needed
   useEffect(() => {
-    if (data) {
-      onResult?.(data);
-    }
-  }, [onResult, data]);
+    setLoading(true);
+
+    requestQuery(limit, offset)
+      .then((r) => {
+        setData(r.data);
+        setLoading(false);
+      })
+      .catch((e) => {
+        setError(e.message);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Handle data
   if (error || loading || !data) {
@@ -215,7 +198,6 @@ function InnerPaginatedQuery<
 
   // Grab total and entries
   const { total, entries } = grabPaginatedResult<Variables, Result, Single>(
-    reduce,
     data,
   );
 

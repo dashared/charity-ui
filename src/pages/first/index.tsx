@@ -1,19 +1,55 @@
-import React, { FC, useEffect, useState } from "react";
-import { Pet } from "@generated";
-import { petService } from "@providers/axios";
+import React, { FC, useRef } from "react";
+import { C as Single, CList, ProjectsApiFactory } from "@generated";
+import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
+import RegistryTable from "@lib/components/RegistryTable";
+import { useListSelection } from "@lib/hooks";
 
 const FirstPage: FC = () => {
-  const petId = 1;
+  const {
+    isTarget,
+    isSelected,
+    onElementClick,
+    setList,
+  } = useListSelection<Single>();
 
-  const [pet, setPet] = useState<Pet | undefined>(undefined);
+  const paginationState = useRef<StateRef>(null);
 
-  useEffect(() => {
-    petService.getPetById(petId).then((value) => {
-      setPet(value.data);
-    });
-  });
+  const columns = [
+    {
+      key: "someKey",
+      name: "ColumnName",
+      render(record: Single) {
+        return record.name;
+      },
+    },
+  ];
 
-  return <>Hello, {pet?.name ?? "Not found :("}</>;
+  return (
+    <PaginatedQuery<{ limit: number; offset: number }, CList, Single>
+      requestQuery={ProjectsApiFactory(undefined).getCounter}
+      stateRef={paginationState}
+      onResult={(result) => setList(Array.from(result.entries))}
+      render={(entries) => (
+        <RegistryTable
+          entity="C"
+          columns={columns}
+          // TODO FIX this
+          rows={entries.map((r) => {
+            return { name: r.name };
+          })}
+          rowState={(record, index) => ({
+            selected: isSelected(index),
+            target: isTarget(index),
+          })}
+          onRecordClick={(event, record, index) => {
+            if (index !== undefined) {
+              onElementClick(event, index);
+            }
+          }}
+        />
+      )}
+    />
+  );
 };
 
 export default FirstPage;
