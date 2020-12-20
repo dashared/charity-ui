@@ -1,0 +1,19 @@
+{
+  "$views": {
+    "title": "Заявка № {{ id }} {{ title }}",
+    "tabs": {
+      "generalInfoTitle": "Основная информация",
+      "doneeInfoTitle": "Нуждающийся",
+      "logsTitle": "История"
+    },
+    "card": {
+      "generalInfoTitle": "Данные о заявке",
+      "description": "Описание",
+      "need": "Запрос",
+      "approvedAmount": "Одобрено",
+      "createTime": "Время создания заявки",
+      "endTime": "Окончание сбора",
+      "status": "Статус"
+    }
+  }
+}

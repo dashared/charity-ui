@@ -1,20 +1,30 @@
 import React, { FC } from "react";
-import { Empty, Skeleton } from "antd";
+import { Button, Empty, Skeleton, Space } from "antd";
 import { DefaultApiFactory } from "@generated";
-import { PageProps } from "@providers";
+import { PageProps, useTranslation, Workspace } from "@providers";
 import useAxios from "@providers/axios";
 
 import ApplicationView from "components/Application/View";
 
+const Actions: FC = () => {
+  const { t } = useTranslation("Application");
+
+  return (
+    <Space>
+      <Button>{t("$views.button")}</Button>
+    </Space>
+  );
+};
+
 const ApplicationPage: FC<PageProps> = ({ response }) => {
   const id = response.params.id as number;
+
+  const { t } = useTranslation("Application");
 
   const { data, loading } = useAxios(
     DefaultApiFactory(undefined).donationRequestIdGet,
     id,
   );
-
-  console.log(data, loading);
 
   if (!data) {
     return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
@@ -24,7 +34,16 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
     return <Skeleton active={loading} />;
   }
 
-  return <ApplicationView donation={data} />;
+  return (
+    <Workspace
+      withBack
+      noRefresh
+      title={t("$views.title")}
+      actions={<Actions />}
+    >
+      <ApplicationView donation={data} />
+    </Workspace>
+  );
 };
 
 export default ApplicationPage;
