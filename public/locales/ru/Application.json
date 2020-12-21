@@ -1,4 +1,8 @@
 {
+  "listTitle": "Заявки",
+  "id": "№",
+  "status": "Статус",
+  "createdAt": "Дата, время создания",
   "$views": {
     "title": "Заявка № {{ id }} {{ title }}",
     "tabs": {

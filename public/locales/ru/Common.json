@@ -1,0 +1,5 @@
+{
+  "Pagination": {
+    "showTotal": "Показать {{from}}-{{to}} из {{total}}"
+  }
+}

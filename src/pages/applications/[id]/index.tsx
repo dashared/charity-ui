@@ -38,12 +38,14 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
     <Workspace
       withBack
       noRefresh
-      title={t("$views.title")}
+      title={t("$views.title", { id: data.id })}
       actions={<Actions />}
     >
       <ApplicationView donation={data} />
     </Workspace>
   );
 };
+
+export const name = "applications:show";
 
 export default ApplicationPage;

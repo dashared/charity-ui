@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { DefaultApi } from "@generated";
 import axios, { AxiosResponse as Response } from "axios";
 
+// i18n reexports
+export type { ModelsPageData as PageData } from "@generated";
+
 const axiosInstance = axios.create();
 
 type AxiosResponse<R> = {
@@ -15,7 +18,7 @@ export default function useAxios<R>(query: (...v: any[]) => Promise<Response<R>>
   const [error, setError] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    query(variables).then((r) => {
+    query(...variables).then((r) => {
       setData(r.data);
     }).catch((e) => {
       setError(e.message);
