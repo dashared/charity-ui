@@ -17,7 +17,7 @@ const Actions: FC = () => {
 };
 
 const ApplicationPage: FC<PageProps> = ({ response }) => {
-  const id = response.params.id as number;
+  const id = response.params.id as string;
 
   const { t } = useTranslation("Application");
 

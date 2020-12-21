@@ -40,7 +40,7 @@ const ApplicationsPage: FC = () => {
       key: "createdAt",
       name: t("createdAt"),
       render(record: Single) {
-        return record.createdAt;
+        return record.created_at;
       },
     },
     {

@@ -30,19 +30,19 @@ export interface ModelsDonationRequest {
      * @type {string}
      * @memberof ModelsDonationRequest
      */
-    applicantId?: string;
+    applicant_id?: string;
     /**
      * 
      * @type {number}
      * @memberof ModelsDonationRequest
      */
-    approvedAmount?: number;
+    approved_amount?: number;
     /**
      * 
      * @type {string}
      * @memberof ModelsDonationRequest
      */
-    createdAt?: string;
+    created_at?: string;
     /**
      * 
      * @type {string}
@@ -55,6 +55,12 @@ export interface ModelsDonationRequest {
      * @memberof ModelsDonationRequest
      */
     donee?: ModelsDonee;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelsDonationRequest
+     */
+    donee_id?: string;
     /**
      * 
      * @type {string}
@@ -72,19 +78,25 @@ export interface ModelsDonationRequest {
      * @type {string}
      * @memberof ModelsDonationRequest
      */
-    requestType?: string;
+    request_type?: string;
     /**
      * 
      * @type {number}
      * @memberof ModelsDonationRequest
      */
-    requestedAmount?: number;
+    requested_amount?: number;
     /**
      * 
      * @type {string}
      * @memberof ModelsDonationRequest
      */
     status?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelsDonationRequest
+     */
+    title?: string;
 }
 /**
  * 
@@ -97,19 +109,19 @@ export interface ModelsDonationRequestBody {
      * @type {string}
      * @memberof ModelsDonationRequestBody
      */
-    applicantId?: string;
+    applicant_id?: string;
     /**
      * 
      * @type {number}
      * @memberof ModelsDonationRequestBody
      */
-    approvedAmount?: number;
+    approved_amount?: number;
     /**
      * 
      * @type {string}
      * @memberof ModelsDonationRequestBody
      */
-    createdAt?: string;
+    created_at?: string;
     /**
      * 
      * @type {string}
@@ -122,6 +134,12 @@ export interface ModelsDonationRequestBody {
      * @memberof ModelsDonationRequestBody
      */
     donee?: ModelsDonee;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelsDonationRequestBody
+     */
+    donee_id?: string;
     /**
      * 
      * @type {Array<string>}
@@ -145,19 +163,25 @@ export interface ModelsDonationRequestBody {
      * @type {string}
      * @memberof ModelsDonationRequestBody
      */
-    requestType?: string;
+    request_type?: string;
     /**
      * 
      * @type {number}
      * @memberof ModelsDonationRequestBody
      */
-    requestedAmount?: number;
+    requested_amount?: number;
     /**
      * 
      * @type {string}
      * @memberof ModelsDonationRequestBody
      */
     status?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelsDonationRequestBody
+     */
+    title?: string;
 }
 /**
  * 
@@ -170,7 +194,7 @@ export interface ModelsDonationRequestInput {
      * @type {string}
      * @memberof ModelsDonationRequestInput
      */
-    applicantId?: string;
+    applicant_id?: string;
     /**
      * 
      * @type {string}
@@ -188,25 +212,25 @@ export interface ModelsDonationRequestInput {
      * @type {Array<string>}
      * @memberof ModelsDonationRequestInput
      */
-    fileIds?: Array<string>;
+    file_ids?: Array<string>;
     /**
      * 
      * @type {string}
      * @memberof ModelsDonationRequestInput
      */
-    relationShip?: string;
+    relationship?: string;
     /**
      * 
      * @type {number}
      * @memberof ModelsDonationRequestInput
      */
-    requestAmount?: number;
+    request_amount?: number;
     /**
      * 
      * @type {string}
      * @memberof ModelsDonationRequestInput
      */
-    requestType?: string;
+    request_type?: string;
     /**
      * 
      * @type {string}
@@ -244,7 +268,7 @@ export interface ModelsDonee {
      * @type {string}
      * @memberof ModelsDonee
      */
-    firstName?: string;
+    first_name?: string;
     /**
      * 
      * @type {string}
@@ -256,13 +280,13 @@ export interface ModelsDonee {
      * @type {string}
      * @memberof ModelsDonee
      */
-    lastName?: string;
+    last_name?: string;
     /**
      * 
      * @type {string}
      * @memberof ModelsDonee
      */
-    middleName?: string;
+    middle_name?: string;
 }
 /**
  * 
@@ -398,11 +422,11 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Retrieves donation request based on given ID
-         * @param {number} id Donation request ID
+         * @param {string} id Donation request ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestIdGet: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        donationRequestIdGet: async (id: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling donationRequestIdGet.');
@@ -620,11 +644,11 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Retrieves donation request based on given ID
-         * @param {number} id Donation request ID
+         * @param {string} id Donation request ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async donationRequestIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelsDonationRequest>> {
+        async donationRequestIdGet(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelsDonationRequest>> {
             const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).donationRequestIdGet(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -698,11 +722,11 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Retrieves donation request based on given ID
-         * @param {number} id Donation request ID
+         * @param {string} id Donation request ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestIdGet(id: number, options?: any): AxiosPromise<ModelsDonationRequest> {
+        donationRequestIdGet(id: string, options?: any): AxiosPromise<ModelsDonationRequest> {
             return DefaultApiFp(configuration).donationRequestIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -763,12 +787,12 @@ export class DefaultApi extends BaseAPI {
     /**
      * 
      * @summary Retrieves donation request based on given ID
-     * @param {number} id Donation request ID
+     * @param {string} id Donation request ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public donationRequestIdGet(id: number, options?: any) {
+    public donationRequestIdGet(id: string, options?: any) {
         return DefaultApiFp(this.configuration).donationRequestIdGet(id, options).then((request) => request(this.axios, this.basePath));
     }
 
