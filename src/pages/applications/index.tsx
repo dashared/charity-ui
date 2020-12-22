@@ -8,7 +8,12 @@ import {
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import { useListSelection } from "@lib/hooks";
+import { authorCred } from "@lib/utils/author";
 import { useTranslation, Workspace } from "@providers";
+
+import StatusTag, {
+  ApplicationStatus,
+} from "components/Application/Status/tag";
 
 import styles from "./styles.module.less";
 
@@ -31,9 +36,33 @@ const ApplicationsPage: FC = () => {
       render(record: Single) {
         return (
           <Link params={{ id: record.id }} name="applications:show">
-            {record.id}
+            id
           </Link>
         );
+      },
+    },
+    {
+      key: "title",
+      name: t("title"),
+      render(record: Single) {
+        return record.title;
+      },
+    },
+    {
+      key: "status",
+      name: t("status"),
+      render(record: Single) {
+        return (
+          <StatusTag status={record.status as ApplicationStatus}></StatusTag>
+        );
+      },
+    },
+    {
+      key: "author",
+      name: t("author"),
+      render(record: Single) {
+        const { first_name, middle_name, last_name } = { ...record.donee };
+        return authorCred(first_name, middle_name, last_name);
       },
     },
     {
@@ -41,13 +70,6 @@ const ApplicationsPage: FC = () => {
       name: t("createdAt"),
       render(record: Single) {
         return record.created_at;
-      },
-    },
-    {
-      key: "status",
-      name: t("status"),
-      render(record: Single) {
-        return record.status;
       },
     },
   ];
