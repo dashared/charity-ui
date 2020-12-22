@@ -115,7 +115,7 @@ function InnerPaginatedQuery<
   paginationClassName,
   //
   requestQuery,
-  initialPage = 0,
+  initialPage = 1,
   initialSize = 10,
   stateRef,
   // variables,
@@ -156,8 +156,6 @@ function InnerPaginatedQuery<
   const { total, entries } = grabPaginatedResult<Variables, Result, Single>(
     data,
   );
-
-  console.log(entries);
 
   // Handle bad response
   if (total === null || total === 0) {

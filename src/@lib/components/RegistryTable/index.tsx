@@ -131,8 +131,6 @@ function RegistryTable<Element extends Record<string, unknown>>({
     [boundStyles, rowClassName, onRecordClick],
   );
 
-  console.log(rows);
-
   return (
     <Table
       className={classnames(styles.table, className)}
