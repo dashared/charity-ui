@@ -1,36 +1,39 @@
 import React, { FC } from "react";
-import { Badge, Descriptions } from "antd";
+import { Descriptions } from "antd";
 import { ModelsDonationRequest } from "@generated";
 import { useTranslation } from "@providers";
+
+import StatusTag, {
+  ApplicationStatus,
+} from "components/Application/Status/tag";
 
 const GeneralInfo: FC<{ info: ModelsDonationRequest }> = ({ info }) => {
   const { t } = useTranslation("Application");
 
   return (
-    <Descriptions
-      title={t("$views.card.generalInfoTitle")}
-      layout="vertical"
-      bordered
-    >
+    <Descriptions layout="vertical" bordered>
       <Descriptions.Item label={t("$views.card.description")} span={3}>
         {info.description}
       </Descriptions.Item>
 
-      <Descriptions.Item label={t("$views.card.need")}>
-        10000 $
+      <Descriptions.Item label={t("$views.card.requestedAmount")}>
+        {info.requested_amount}
       </Descriptions.Item>
 
       <Descriptions.Item label={t("$views.card.approvedAmount")} span={2}>
-        10 $
+        {info.approved_amount}
       </Descriptions.Item>
-      <Descriptions.Item label={t("$views.card.createTime")}>
-        2018-04-24 18:00:00
+
+      <Descriptions.Item label={t("$views.card.createdAt")}>
+        {info.created_at}
       </Descriptions.Item>
+
       <Descriptions.Item label={t("$views.card.endTime")}>
         2019-04-24 18:00:00
       </Descriptions.Item>
+
       <Descriptions.Item label={t("$views.card.status")} span={3}>
-        <Badge status="processing" text="Running" />
+        <StatusTag status={info.status as ApplicationStatus} />
       </Descriptions.Item>
     </Descriptions>
   );

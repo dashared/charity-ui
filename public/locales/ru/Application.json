@@ -13,11 +13,18 @@
     "card": {
       "generalInfoTitle": "Данные о заявке",
       "description": "Описание",
-      "need": "Запрос",
+      "requestedAmount": "Запрос",
       "approvedAmount": "Одобрено",
-      "createTime": "Время создания заявки",
+      "createdAt": "Время создания заявки",
       "endTime": "Окончание сбора",
       "status": "Статус"
+    },
+    "buttons": {
+      "inProcessing": "Взять в обработку"
     }
+  },
+  "Status": {
+    "DonationNew": "Новая",
+    "DonationInProcessing": "В обработке"
   }
 }

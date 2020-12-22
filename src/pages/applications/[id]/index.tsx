@@ -1,17 +1,22 @@
 import React, { FC } from "react";
-import { Button, Empty, Skeleton, Space } from "antd";
+import { Empty, Skeleton, Space } from "antd";
 import { DefaultApiFactory } from "@generated";
 import { PageProps, useTranslation, Workspace } from "@providers";
 import useAxios from "@providers/axios";
 
+import StartProcessingButton from "components/Application/Buttons/processing";
+import { ApplicationStatus } from "components/Application/Status/tag";
 import ApplicationView from "components/Application/View";
 
-const Actions: FC = () => {
-  const { t } = useTranslation("Application");
-
+const Actions: FC<{ id: string; status: ApplicationStatus }> = ({
+  id,
+  status,
+}) => {
   return (
     <Space>
-      <Button>{t("$views.button")}</Button>
+      {status === ApplicationStatus.New && (
+        <StartProcessingButton applicationId={id} />
+      )}
     </Space>
   );
 };
@@ -38,8 +43,10 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
     <Workspace
       withBack
       noRefresh
-      title={t("$views.title", { id: data.id })}
-      actions={<Actions />}
+      title={t("$views.title", { id: data.id, title: data.title })}
+      actions={
+        <Actions id={data.id ?? ""} status={data.status as ApplicationStatus} />
+      }
     >
       <ApplicationView donation={data} />
     </Workspace>
