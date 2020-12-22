@@ -5,6 +5,7 @@ import { PageProps, useTranslation, Workspace } from "@providers";
 import useAxios from "@providers/axios";
 
 import StartProcessingButton from "components/Application/Buttons/processing";
+import SpamButton from "components/Application/Buttons/spam";
 import { ApplicationStatus } from "components/Application/Status/tag";
 import ApplicationView from "components/Application/View";
 
@@ -14,6 +15,7 @@ const Actions: FC<{ id: string; status: ApplicationStatus }> = ({
 }) => {
   return (
     <Space>
+      {<SpamButton applicationId={id} />}
       {status === ApplicationStatus.New && (
         <StartProcessingButton applicationId={id} />
       )}

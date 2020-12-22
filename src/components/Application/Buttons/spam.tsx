@@ -1,13 +1,13 @@
 import React, { FC, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button } from "antd";
+import { Button, Popconfirm } from "antd";
 
-const StartProcessingButton: FC<{ applicationId: string }> = () => {
+const SpamButton: FC<{ applicationId: string }> = () => {
   const [loading, setLoading] = useState(false);
 
   const { t } = useTranslation("Application");
 
-  const startProcessing = useCallback(async () => {
+  const spam = useCallback(async () => {
     try {
       setLoading(true); // send request to Kostik with applicationId
       await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -19,10 +19,18 @@ const StartProcessingButton: FC<{ applicationId: string }> = () => {
   }, [setLoading]);
 
   return (
-    <Button type="primary" loading={loading} onClick={startProcessing}>
-      {t("$views.buttons.inProcessing")}
-    </Button>
+    <Popconfirm
+      placement="topLeft"
+      title={t("$views.confirm.spam")}
+      onConfirm={spam}
+      okText="Да"
+      cancelText="Нет"
+    >
+      <Button type="default" danger loading={loading}>
+        {t("$views.buttons.spam")}
+      </Button>
+    </Popconfirm>
   );
 };
 
-export default StartProcessingButton;
+export default SpamButton;

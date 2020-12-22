@@ -10,6 +10,9 @@
       "doneeInfoTitle": "Нуждающийся",
       "logsTitle": "История"
     },
+    "confirm": {
+      "spam": "Отправить заявку в спам?"
+    },
     "card": {
       "generalInfoTitle": "Данные о заявке",
       "description": "Описание",
@@ -20,7 +23,8 @@
       "status": "Статус"
     },
     "buttons": {
-      "inProcessing": "Взять в обработку"
+      "inProcessing": "Взять в обработку",
+      "spam": "Спам"
     }
   },
   "Status": {
