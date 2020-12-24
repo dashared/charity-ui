@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { Descriptions } from "antd";
 import { ModelsDonationRequest } from "@generated";
+import { cred } from "@lib/utils/name";
 import { useTranslation } from "@providers";
 
 import StatusTag, {
@@ -16,11 +17,19 @@ const GeneralInfo: FC<{ info: ModelsDonationRequest }> = ({ info }) => {
         {info.description}
       </Descriptions.Item>
 
+      <Descriptions.Item label={t("$views.card.createdBy")}>
+        {cred(
+          info.donee?.first_name,
+          info.donee?.middle_name,
+          info.donee?.last_name,
+        )}
+      </Descriptions.Item>
+
       <Descriptions.Item label={t("$views.card.requestedAmount")}>
         {info.requested_amount}
       </Descriptions.Item>
 
-      <Descriptions.Item label={t("$views.card.approvedAmount")} span={2}>
+      <Descriptions.Item label={t("$views.card.approvedAmount")}>
         {info.approved_amount}
       </Descriptions.Item>
 

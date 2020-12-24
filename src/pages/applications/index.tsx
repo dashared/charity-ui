@@ -8,7 +8,7 @@ import {
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import { useListSelection } from "@lib/hooks";
-import { authorCred } from "@lib/utils/author";
+import { cred } from "@lib/utils/name";
 import { useTranslation, Workspace } from "@providers";
 
 import StatusTag, {
@@ -62,7 +62,7 @@ const ApplicationsPage: FC = () => {
       name: t("author"),
       render(record: Single) {
         const { first_name, middle_name, last_name } = { ...record.donee };
-        return authorCred(first_name, middle_name, last_name);
+        return cred(first_name, middle_name, last_name);
       },
     },
     {
@@ -87,6 +87,7 @@ const ApplicationsPage: FC = () => {
           <RegistryTable
             entity="Application"
             columns={columns}
+            // eslint-ignore-next-line
             rows={entries as Record<string, any>[]} // TODO
             rowState={(record, index) => ({
               selected: isSelected(index),

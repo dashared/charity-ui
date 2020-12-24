@@ -45,7 +45,7 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
     <Workspace
       withBack
       noRefresh
-      title={t("$views.title", { id: data.id, title: data.title })}
+      title={t("$views.title", { id: 1, title: data.title })}
       actions={
         <Actions id={data.id ?? ""} status={data.status as ApplicationStatus} />
       }

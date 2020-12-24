@@ -4,6 +4,7 @@ import { ModelsDonationRequest } from "@generated";
 import { useTranslation } from "@providers";
 
 import DoneeInfoTab from "./Tabs/Donee";
+import FilesTab from "./Tabs/Files";
 import GeneralInfoTab from "./Tabs/Info";
 import LogsTab from "./Tabs/Logs";
 
@@ -22,7 +23,15 @@ const ApplicationView: FC<{ donation: ModelsDonationRequest }> = ({
         </TabPane>
 
         <TabPane tab={t("$views.tabs.doneeInfoTitle")} key="donee">
-          <DoneeInfoTab donee={donation.donee} />
+          <DoneeInfoTab
+            applicantId={donation.applicant_id}
+            donee={donation.donee}
+            relationship={donation.relationship}
+          />
+        </TabPane>
+
+        <TabPane tab={t("$views.tabs.filesTitle")} key="files">
+          <FilesTab files={["fff.pfd", "xxx.hfhf"]} />
         </TabPane>
 
         <TabPane tab={t("$views.tabs.logsTitle")} key="logs">
