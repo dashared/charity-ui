@@ -1,0 +1,408 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "contact": {}
+  },
+  "paths": {
+    "/donation-request": {
+      "post": {
+        "summary": "Creates donation request",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "request",
+            "description": "Donation request Input",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/models.DonationRequestInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "summary": "Creates donation request",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Donation request Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "input",
+            "description": "New Donation state",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/models.UpdateDonationStatusInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/models.DonationRequest"
+            }
+          },
+          "400": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/donation-request/": {
+      "get": {
+        "summary": "Retrieves all donation requests",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "path",
+            "description": "Page number",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "size",
+            "in": "path",
+            "description": "Page size",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "sort",
+            "in": "path",
+            "description": "sort",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/models.DonationRequestResponse"
+            }
+          }
+        }
+      }
+    },
+    "/donation-request/{id}": {
+      "get": {
+        "summary": "Retrieves donation request based on given ID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Donation request ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/models.DonationRequestBody"
+            }
+          }
+        }
+      }
+    },
+    "/upload": {
+      "post": {
+        "summary": "Uploads given file",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "File",
+            "required": false,
+            "type": "object"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/models.FileResponse"
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "summary": "Retrieves user based on given ID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/models.User"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "models.DonationRequest": {
+      "type": "object",
+      "properties": {
+        "applicant_id": {
+          "type": "string"
+        },
+        "approved_amount": {
+          "type": "integer"
+        },
+        "assignee_id": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "donee": {
+          "$ref": "#/definitions/models.Donee"
+        },
+        "donee_id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "relationship": {
+          "type": "string"
+        },
+        "request_type": {
+          "type": "string"
+        },
+        "requested_amount": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "models.DonationRequestBody": {
+      "type": "object",
+      "properties": {
+        "applicant_id": {
+          "type": "string"
+        },
+        "approved_amount": {
+          "type": "integer"
+        },
+        "assignee_id": {
+          "type": "string"
+        },
+        "author": {
+          "$ref": "#/definitions/models.Donee"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "donee": {
+          "$ref": "#/definitions/models.Donee"
+        },
+        "donee_id": {
+          "type": "string"
+        },
+        "file_id": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "relationship": {
+          "type": "string"
+        },
+        "request_type": {
+          "type": "string"
+        },
+        "requested_amount": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "models.DonationRequestInput": {
+      "type": "object",
+      "properties": {
+        "applicant_id": {
+          "type": "string"
+        },
+        "assignee_id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "donee": {
+          "$ref": "#/definitions/models.Donee"
+        },
+        "file_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "relationship": {
+          "type": "string"
+        },
+        "request_amount": {
+          "type": "integer"
+        },
+        "request_type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "models.DonationRequestResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/models.DonationRequestBody"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/models.PageData"
+        }
+      }
+    },
+    "models.Donee": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "middle_name": {
+          "type": "string"
+        }
+      }
+    },
+    "models.FileResponse": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "models.PageData": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer"
+        },
+        "size": {
+          "type": "integer"
+        },
+        "totalElements": {
+          "type": "integer"
+        },
+        "totalPages": {
+          "type": "integer"
+        }
+      }
+    },
+    "models.UpdateDonationStatusInput": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "models.User": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "middle_name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

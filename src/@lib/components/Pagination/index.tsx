@@ -1,6 +1,8 @@
 import React, { MutableRefObject, ReactNode, useEffect, useState } from "react";
 import { Empty, Skeleton } from "antd";
 import Pagination, { PaginationProps } from "antd/lib/pagination";
+import { ModelsPageData } from "@generated";
+import useAxios from "@providers/axios";
 import { AxiosResponse } from "axios";
 import classnames from "classnames";
 import i18n from "i18next";
@@ -29,13 +31,11 @@ type FullProps<Variables, Result, Single> = PaginatedQueryProps<
   RestProps;
 
 type PaginationState = {
-  limit: number;
-  offset: number;
+  currentPage: number;
+  size: number;
 };
 
 type PaginationHookState = PaginationState & {
-  current: number;
-  pageSize: number;
   onCurrentChange: PaginationProps["onChange"];
   onPageSizeChange: PaginationProps["onShowSizeChange"];
 };
@@ -46,8 +46,8 @@ export type PaginatedResult<T> = {
 };
 
 export type StateRef = {
-  limit: number;
-  offset: number;
+  page: number;
+  size: number;
 } | null;
 
 type PaginatedQueryProps<Variables, Result, Single> = {
@@ -55,13 +55,14 @@ type PaginatedQueryProps<Variables, Result, Single> = {
   className?: string;
   paginationClassName?: string;
   requestQuery: (
-    limit: number,
-    offset: number,
+    page: number, // offset
+    size: number, // limit
+    sort: string,
   ) => Promise<AxiosResponse<Result>>;
   variables?: Omit<Variables, "limit" | "offset">;
   stateRef?: MutableRefObject<StateRef>;
-  initialLimit?: number;
-  initialOffset?: number;
+  initialPage?: number;
+  initialSize?: number;
   render: (
     entries: PaginatedResult<Single>["entries"],
     total: PaginatedResult<Single>["total"],
@@ -81,37 +82,6 @@ function showTotal(total: number, [from, to]: [number, number]): string {
 }
 
 /**
- * Just wrap handling limit and offset to page and size for Ant component.
- *
- * @param initialLimit
- * @param initialOffset
- */
-function useAntPagination(
-  initialLimit: number,
-  initialOffset: number,
-): PaginationHookState {
-  const [limit, setLimit] = useState(initialLimit);
-  const [offset, setOffset] = useState(initialOffset);
-
-  const current = Math.floor(offset / limit) + 1;
-
-  return {
-    limit,
-    offset,
-    current,
-    pageSize: limit,
-    onCurrentChange(page, size = initialLimit) {
-      const newOffset = (page - 1) * size;
-      setOffset(newOffset);
-    },
-    onPageSizeChange(page, size) {
-      setOffset(0);
-      setLimit(size);
-    },
-  };
-}
-
-/**
  * Extracts entries and total using provided reduce option
  *
  * @param data raw query result
@@ -120,7 +90,7 @@ function grabPaginatedResult<V, R, S>(data: R): PaginatedResult<S> {
   let entries: S[] = [];
 
   // eslint-disable-next-line
-  const { total = null, ...rest } = data as any; // TODO
+  const { page = null, ...rest } = data as any; // TODO
 
   // can be less hacky if pagination has fixed list field name
   if (Object.keys(rest).length === 1) {
@@ -128,7 +98,7 @@ function grabPaginatedResult<V, R, S>(data: R): PaginatedResult<S> {
   }
 
   return {
-    total,
+    total: (page as ModelsPageData).totalElements ?? 0,
     entries,
   };
 }
@@ -145,51 +115,37 @@ function InnerPaginatedQuery<
   paginationClassName,
   //
   requestQuery,
-  initialLimit = 10,
-  initialOffset = 0,
+  initialPage = 1,
+  initialSize = 10,
   stateRef,
   // variables,
-  // onResult,
+  onResult,
   render,
   onPaginationState,
   ...rest
 }: PaginatedQueryProps<Variables, Result, Single> &
   RestProps): JSX.Element | null {
   // pagination state handlers
-  const {
-    limit,
-    offset,
-    current,
-    pageSize,
-    onCurrentChange,
-    onPageSizeChange,
-  } = useAntPagination(initialLimit, initialOffset);
+
+  const [page, onCurrentChange] = useState(initialPage);
+  const [size, onPageSizeChange] = useState(initialSize);
 
   // save state above if needed
   useEffect(() => {
     if (stateRef !== undefined) {
-      stateRef.current = { limit, offset };
+      stateRef.current = { page, size };
     }
-    onPaginationState?.({ limit, offset });
-  }, [stateRef, onPaginationState, limit, offset]);
+    onPaginationState?.({ currentPage: page, size });
+  }, [stateRef, onPaginationState, page, size]);
 
-  const [data, setData] = useState<Result | undefined>(undefined);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | undefined>(undefined);
+  const { data, loading, error } = useAxios(requestQuery, page, size, "");
 
+  // propagate result above if needed
   useEffect(() => {
-    setLoading(true);
-
-    requestQuery(limit, offset)
-      .then((r) => {
-        setData(r.data);
-        setLoading(false);
-      })
-      .catch((e) => {
-        setError(e.message);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (data) {
+      onResult?.(data);
+    }
+  }, [onResult, data]);
 
   // Handle data
   if (error || loading || !data) {
@@ -214,11 +170,11 @@ function InnerPaginatedQuery<
         {...rest}
         className={classnames(styles.pagination, paginationClassName)}
         total={total}
-        current={current}
-        pageSize={pageSize}
+        current={page}
+        pageSize={size}
         pageSizeOptions={rest.pageSizeOptions ?? ["10", "20", "50"]}
-        showSizeChanger={total > pageSize}
-        showQuickJumper={total > pageSize}
+        showSizeChanger={total > size}
+        showQuickJumper={total > size}
         showTotal={noInfo ? () => "" : showTotal}
         onChange={onCurrentChange}
         onShowSizeChange={onPageSizeChange}

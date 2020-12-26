@@ -1,6 +1,11 @@
 import React, { FC } from "react";
 import { Menu } from "antd";
-import { AimOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  AimOutlined,
+  FolderOpenOutlined,
+  SettingOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
 
 import { buildUseMenuKeys, entryToKey, MenuEntry } from "./utils";
@@ -36,6 +41,15 @@ const LeftBarConf: Array<MenuEntry> = [
     ),
     name: "first",
     params: { id: "456" },
+  },
+  {
+    display: (
+      <>
+        <FolderOpenOutlined />
+        <span>Заявки</span>
+      </>
+    ),
+    name: "applications:index",
   },
 ];
 
