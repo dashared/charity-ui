@@ -4,8 +4,13 @@ import { DefaultApiFactory } from "@generated";
 import { PageProps, useTranslation, Workspace } from "@providers";
 import useAxios from "@providers/axios";
 
-import StartProcessingButton from "components/Application/Buttons/processing";
-import SpamButton from "components/Application/Buttons/spam";
+import {
+  RequestChangesButton,
+  RequireConfirmationButton,
+  SpamButton,
+  StartProcessingButton,
+  StopProcessingButton,
+} from "components/Application/Buttons";
 import { ApplicationStatus } from "components/Application/Status/tag";
 import ApplicationView from "components/Application/View";
 
@@ -15,10 +20,11 @@ const Actions: FC<{ id: string; status: ApplicationStatus }> = ({
 }) => {
   return (
     <Space>
-      {<SpamButton applicationId={id} />}
-      {status === ApplicationStatus.New && (
-        <StartProcessingButton applicationId={id} />
-      )}
+      <SpamButton applicationId={id} />
+      <StopProcessingButton applicationId={id} status={status} />
+      <RequestChangesButton applicationId={id} status={status} />
+      <StartProcessingButton applicationId={id} status={status} />
+      <RequireConfirmationButton applicationId={id} status={status} />
     </Space>
   );
 };

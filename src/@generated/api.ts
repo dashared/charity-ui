@@ -42,6 +42,12 @@ export interface ModelsDonationRequest {
      * @type {string}
      * @memberof ModelsDonationRequest
      */
+    assignee_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelsDonationRequest
+     */
     created_at?: string;
     /**
      * 
@@ -116,6 +122,18 @@ export interface ModelsDonationRequestBody {
      * @memberof ModelsDonationRequestBody
      */
     approved_amount?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelsDonationRequestBody
+     */
+    assignee_id?: string;
+    /**
+     * 
+     * @type {ModelsDonee}
+     * @memberof ModelsDonationRequestBody
+     */
+    author?: ModelsDonee;
     /**
      * 
      * @type {string}
@@ -200,6 +218,12 @@ export interface ModelsDonationRequestInput {
      * @type {string}
      * @memberof ModelsDonationRequestInput
      */
+    assignee_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelsDonationRequestInput
+     */
     description?: string;
     /**
      * 
@@ -269,12 +293,6 @@ export interface ModelsDonee {
      * @memberof ModelsDonee
      */
     first_name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelsDonee
-     */
-    id?: string;
     /**
      * 
      * @type {string}
@@ -356,6 +374,37 @@ export interface ModelsUpdateDonationStatusInput {
      * @memberof ModelsUpdateDonationStatusInput
      */
     status?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ModelsUser
+ */
+export interface ModelsUser {
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelsUser
+     */
+    first_name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelsUser
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelsUser
+     */
+    last_name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelsUser
+     */
+    middle_name?: string;
 }
 
 /**
@@ -616,6 +665,49 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Retrieves user based on given ID
+         * @param {string} id User ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userIdGet: async (id: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling userIdGet.');
+            }
+            const localVarPath = `/user/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            const queryParameters = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                queryParameters.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                queryParameters.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -648,7 +740,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async donationRequestIdGet(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelsDonationRequest>> {
+        async donationRequestIdGet(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelsDonationRequestBody>> {
             const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).donationRequestIdGet(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -698,6 +790,20 @@ export const DefaultApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @summary Retrieves user based on given ID
+         * @param {string} id User ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async userIdGet(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelsUser>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).userIdGet(id, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -726,7 +832,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestIdGet(id: string, options?: any): AxiosPromise<ModelsDonationRequest> {
+        donationRequestIdGet(id: string, options?: any): AxiosPromise<ModelsDonationRequestBody> {
             return DefaultApiFp(configuration).donationRequestIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -759,6 +865,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         uploadPost(file?: object, options?: any): AxiosPromise<ModelsFileResponse> {
             return DefaultApiFp(configuration).uploadPost(file, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Retrieves user based on given ID
+         * @param {string} id User ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userIdGet(id: string, options?: any): AxiosPromise<ModelsUser> {
+            return DefaultApiFp(configuration).userIdGet(id, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -831,6 +947,18 @@ export class DefaultApi extends BaseAPI {
      */
     public uploadPost(file?: object, options?: any) {
         return DefaultApiFp(this.configuration).uploadPost(file, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Retrieves user based on given ID
+     * @param {string} id User ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public userIdGet(id: string, options?: any) {
+        return DefaultApiFp(this.configuration).userIdGet(id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

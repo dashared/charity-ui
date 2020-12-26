@@ -1,4 +1,6 @@
 {
+  "yes": "Да",
+  "no": "Нет",
   "listTitle": "Заявки",
   "id": "№",
   "title": "Название",
@@ -16,7 +18,9 @@
       "filesTitle": "Файлы"
     },
     "confirm": {
-      "spam": "Отправить заявку в спам?"
+      "spam": "Отправить заявку в спам?",
+      "processing": "Вы уверены, что хотите взять заявку в обработку?",
+      "stopProcessing": "Вы уверены, что хотите перестать обрабатывать заявку?"
     },
     "card": {
       "doneeInfoTitle": "Личные данные",
@@ -32,15 +36,24 @@
       "birthday": "Дата рождения",
       "address": "Адрес",
       "phone": "Телефон",
-      "relationship": "Отношения с заявителем"
+      "relationship": "Отношения с заявителем",
+      "message": "Сообщение",
+      "enterMessage": "Введите сообщение пользователю",
+      "assignee": "Менеджер"
     },
     "buttons": {
       "inProcessing": "Взять в обработку",
-      "spam": "Спам"
+      "spam": "Спам",
+      "request_changes": "Отправить на доработку",
+      "stopProcessing": "Перестать обрабатывать",
+      "require_confirmation": "Одобрить"
+    },
+    "modal": {
+      "requestChangesTitle": "Отправить на доработку"
     }
   },
   "Status": {
     "DonationNew": "Новая",
-    "DonationInProcessing": "В обработке"
+    "DonationInProcess": "В обработке"
   }
 }

@@ -1,14 +1,22 @@
 import React, { FC, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Popconfirm, Tooltip } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { PauseCircleOutlined } from "@ant-design/icons";
 
-export const SpamButton: FC<{ applicationId: string }> = () => {
+import { ApplicationStatus } from "../Status/tag";
+
+export const StopProcessingButton: FC<{
+  applicationId: string;
+  status: ApplicationStatus;
+}> = ({
+  // applicationId,
+  status,
+}) => {
   const [loading, setLoading] = useState(false);
 
   const { t } = useTranslation("Application");
 
-  const spam = useCallback(async () => {
+  const stopProcessing = useCallback(async () => {
     try {
       setLoading(true); // send request to Kostik with applicationId
       await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -19,20 +27,24 @@ export const SpamButton: FC<{ applicationId: string }> = () => {
     }
   }, [setLoading]);
 
+  if (status !== ApplicationStatus.Processing) {
+    return null;
+  }
+
   return (
     <Popconfirm
       placement="topLeft"
-      title={t("$views.confirm.spam")}
-      onConfirm={spam}
+      title={t("$views.confirm.stopProcessing")}
+      onConfirm={stopProcessing}
       okText={t("yes")}
       cancelText={t("no")}
     >
-      <Tooltip title={t("$views.buttons.spam")}>
+      <Tooltip title={t("$views.buttons.stopProcessing")}>
         <Button
-          type="primary"
+          type="default"
           danger
           loading={loading}
-          icon={<DeleteOutlined />}
+          icon={<PauseCircleOutlined />}
         />
       </Tooltip>
     </Popconfirm>
