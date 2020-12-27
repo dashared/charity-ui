@@ -2,30 +2,33 @@ import React, { FC, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Popconfirm } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
+import { DefaultApiFactory } from "@generated";
 
 import { ApplicationStatus } from "../Status/tag";
 
 export const StartProcessingButton: FC<{
   applicationId: string;
   status: ApplicationStatus;
-}> = ({
-  // applicationId,
-  status,
-}) => {
+  onRefetch: () => Promise<void>;
+}> = ({ onRefetch, applicationId: id, status }) => {
   const [loading, setLoading] = useState(false);
 
   const { t } = useTranslation("Application");
 
   const startProcessing = useCallback(async () => {
     try {
-      setLoading(true); // send request to Kostik with applicationId
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setLoading(true);
+      const input = {
+        status: ApplicationStatus.Processing,
+      };
+      await DefaultApiFactory(undefined).donationRequestIdPatch(id, input);
     } catch (e) {
       console.log(e);
     } finally {
       setLoading(false);
+      onRefetch();
     }
-  }, [setLoading]);
+  }, [setLoading, id, onRefetch]);
 
   if (status !== ApplicationStatus.New) {
     return null;

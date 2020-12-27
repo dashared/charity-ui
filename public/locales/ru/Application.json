@@ -54,6 +54,7 @@
   },
   "Status": {
     "DonationNew": "Новая",
-    "DonationInProcess": "В обработке"
+    "DonationInProcess": "В обработке",
+    "DonationNeedsImprovement": "На доработке"
   }
 }

@@ -14,17 +14,34 @@ import {
 import { ApplicationStatus } from "components/Application/Status/tag";
 import ApplicationView from "components/Application/View";
 
-const Actions: FC<{ id: string; status: ApplicationStatus }> = ({
-  id,
-  status,
-}) => {
+const Actions: FC<{
+  id: string;
+  status: ApplicationStatus;
+  onUpdate: () => Promise<void>;
+}> = ({ id, status, onUpdate }) => {
   return (
     <Space>
-      <SpamButton applicationId={id} />
-      <StopProcessingButton applicationId={id} status={status} />
-      <RequestChangesButton applicationId={id} status={status} />
-      <StartProcessingButton applicationId={id} status={status} />
-      <RequireConfirmationButton applicationId={id} status={status} />
+      <SpamButton applicationId={id} onRefetch={onUpdate} />
+      <StopProcessingButton
+        applicationId={id}
+        status={status}
+        onRefetch={onUpdate}
+      />
+      <RequestChangesButton
+        applicationId={id}
+        status={status}
+        onRefetch={onUpdate}
+      />
+      <StartProcessingButton
+        applicationId={id}
+        status={status}
+        onRefetch={onUpdate}
+      />
+      <RequireConfirmationButton
+        applicationId={id}
+        status={status}
+        onRefetch={onUpdate}
+      />
     </Space>
   );
 };
@@ -34,7 +51,7 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
 
   const { t } = useTranslation("Application");
 
-  const { data, loading } = useAxios(
+  const { data, loading, refetchQuery } = useAxios(
     DefaultApiFactory(undefined).donationRequestIdGet,
     id,
   );
@@ -52,8 +69,13 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
       withBack
       noRefresh
       title={t("$views.title", { id: 1, title: data.title })}
+      // TODO: replace id: 1 after it's done in API https://www.notion.so/Human-readable-id-User-fa8d1bda3a11449781f924f1c187645e
       actions={
-        <Actions id={data.id ?? ""} status={data.status as ApplicationStatus} />
+        <Actions
+          id={data.id ?? ""}
+          status={data.status as ApplicationStatus}
+          onUpdate={refetchQuery}
+        />
       }
     >
       <ApplicationView donation={data} />

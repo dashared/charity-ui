@@ -519,16 +519,16 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestPatch: async (id: string, input: ModelsUpdateDonationStatusInput, options: any = {}): Promise<RequestArgs> => {
+        donationRequestIdPatch: async (id: string, input: ModelsUpdateDonationStatusInput, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling donationRequestPatch.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling donationRequestIdPatch.');
             }
             // verify required parameter 'input' is not null or undefined
             if (input === null || input === undefined) {
-                throw new RequiredError('input','Required parameter input was null or undefined when calling donationRequestPatch.');
+                throw new RequiredError('input','Required parameter input was null or undefined when calling donationRequestIdPatch.');
             }
-            const localVarPath = `/donation-request`
+            const localVarPath = `/donation-request/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -755,8 +755,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async donationRequestPatch(id: string, input: ModelsUpdateDonationStatusInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelsDonationRequest>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).donationRequestPatch(id, input, options);
+        async donationRequestIdPatch(id: string, input: ModelsUpdateDonationStatusInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelsDonationRequest>> {
+            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).donationRequestIdPatch(id, input, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -843,8 +843,8 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestPatch(id: string, input: ModelsUpdateDonationStatusInput, options?: any): AxiosPromise<ModelsDonationRequest> {
-            return DefaultApiFp(configuration).donationRequestPatch(id, input, options).then((request) => request(axios, basePath));
+        donationRequestIdPatch(id: string, input: ModelsUpdateDonationStatusInput, options?: any): AxiosPromise<ModelsDonationRequest> {
+            return DefaultApiFp(configuration).donationRequestIdPatch(id, input, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -921,8 +921,8 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public donationRequestPatch(id: string, input: ModelsUpdateDonationStatusInput, options?: any) {
-        return DefaultApiFp(this.configuration).donationRequestPatch(id, input, options).then((request) => request(this.axios, this.basePath));
+    public donationRequestIdPatch(id: string, input: ModelsUpdateDonationStatusInput, options?: any) {
+        return DefaultApiFp(this.configuration).donationRequestIdPatch(id, input, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

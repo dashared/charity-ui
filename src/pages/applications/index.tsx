@@ -35,6 +35,7 @@ const ApplicationsPage: FC = () => {
       name: t("id"),
       render(record: Single) {
         return (
+          // TODO: replace id after it's done in API https://www.notion.so/Human-readable-id-User-fa8d1bda3a11449781f924f1c187645e
           <Link params={{ id: record.id }} name="applications:show">
             id
           </Link>

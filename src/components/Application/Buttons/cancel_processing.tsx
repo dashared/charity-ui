@@ -8,9 +8,11 @@ import { ApplicationStatus } from "../Status/tag";
 export const StopProcessingButton: FC<{
   applicationId: string;
   status: ApplicationStatus;
+  onRefetch: () => Promise<void>;
 }> = ({
   // applicationId,
   status,
+  onRefetch,
 }) => {
   const [loading, setLoading] = useState(false);
 
@@ -24,8 +26,9 @@ export const StopProcessingButton: FC<{
       console.log(e);
     } finally {
       setLoading(false);
+      onRefetch();
     }
-  }, [setLoading]);
+  }, [setLoading, onRefetch]);
 
   if (status !== ApplicationStatus.Processing) {
     return null;

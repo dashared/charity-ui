@@ -32,44 +32,6 @@
             "description": ""
           }
         }
-      },
-      "patch": {
-        "summary": "Creates donation request",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Donation request Id",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "input",
-            "description": "New Donation state",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/models.UpdateDonationStatusInput"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/models.DonationRequest"
-            }
-          },
-          "400": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
       }
     },
     "/donation-request/": {
@@ -132,6 +94,44 @@
             "schema": {
               "$ref": "#/definitions/models.DonationRequestBody"
             }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Creates donation request",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Donation request Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "input",
+            "description": "New Donation state",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/models.UpdateDonationStatusInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/models.DonationRequest"
+            }
+          },
+          "400": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
           }
         }
       }

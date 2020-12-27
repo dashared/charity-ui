@@ -8,8 +8,10 @@ import { ApplicationStatus } from "../Status/tag";
 export const RequireConfirmationButton: FC<{
   applicationId: string;
   status: ApplicationStatus;
+  onRefetch: () => Promise<void>;
 }> = ({
   //applicationId,
+  // onRefetch
   status,
 }) => {
   const { t } = useTranslation("Application");

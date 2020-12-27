@@ -11,6 +11,7 @@ type AxiosResponse<R> = {
   data: R | undefined;
   loading: boolean;
   error: string | undefined;
+  refetchQuery: () => Promise<void>;
 }
 
 export default function useAxios<R>(query: (...v: any[]) => Promise<Response<R>>, ...variables: any[]): AxiosResponse<R> {
@@ -20,31 +21,30 @@ export default function useAxios<R>(query: (...v: any[]) => Promise<Response<R>>
   // Turn objects into strings for useCallback & useEffect dependencies
   const [stringifiedUrl, stringifiedInit] = [JSON.stringify(variables), JSON.stringify(query)];
 
-  useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await query(...variables);
 
-    const fetchData = async () => {
-      try {
-        const response = await query(...variables);
-
-        if (response.status === 200) {
-          setData(response.data);
-        } else {
-          console.error(`Error ${response.status} ${response.statusText}`);
-        }
-      } catch (error) {
-        setError(error.message);
+      if (response.status === 200) {
+        setData(response.data);
+      } else {
+        console.error(`Error ${response.status} ${response.statusText}`);
       }
-    };
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
     // eslint-disable-next-line
   }, [stringifiedUrl, stringifiedInit]);
 
   if (!(data || error)) {
-    return { data, loading: true, error }
+    return { data, loading: true, error, refetchQuery: fetchData }
   }
 
-  return { data, loading: false, error };
+  return { data, loading: false, error, refetchQuery: fetchData };
 }
 
 /** Service to perform donations requests */
