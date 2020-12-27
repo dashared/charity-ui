@@ -20,7 +20,8 @@
     "confirm": {
       "spam": "Отправить заявку в спам?",
       "processing": "Вы уверены, что хотите взять заявку в обработку?",
-      "stopProcessing": "Вы уверены, что хотите перестать обрабатывать заявку?"
+      "stopProcessing": "Вы уверены, что хотите перестать обрабатывать заявку?",
+      "returnFromSpam": "Вы уверены, что хотите вернуть заявку из спама?"
     },
     "card": {
       "doneeInfoTitle": "Личные данные",
@@ -46,15 +47,18 @@
       "spam": "Спам",
       "request_changes": "Отправить на доработку",
       "stopProcessing": "Перестать обрабатывать",
-      "require_confirmation": "Одобрить"
+      "require_confirmation": "Одобрить",
+      "returnFromSpam": "Вернуть из спама"
     },
     "modal": {
-      "requestChangesTitle": "Отправить на доработку"
+      "requestChangesTitle": "Отправить на доработку",
+      "spamTitle": "Отправить в спам"
     }
   },
   "Status": {
     "DonationNew": "Новая",
     "DonationInProcess": "В обработке",
-    "DonationNeedsImprovement": "На доработке"
+    "DonationNeedsImprovement": "На доработке",
+    "DonationSpam": "Спам"
   }
 }

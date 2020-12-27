@@ -7,6 +7,7 @@ import useAxios from "@providers/axios";
 import {
   RequestChangesButton,
   RequireConfirmationButton,
+  ReturnFromSpamButton,
   SpamButton,
   StartProcessingButton,
   StopProcessingButton,
@@ -15,33 +16,18 @@ import { ApplicationStatus } from "components/Application/Status/tag";
 import ApplicationView from "components/Application/View";
 
 const Actions: FC<{
-  id: string;
+  applicationId: string;
   status: ApplicationStatus;
-  onUpdate: () => Promise<void>;
-}> = ({ id, status, onUpdate }) => {
+  onRefetch: () => Promise<void>;
+}> = (props) => {
   return (
     <Space>
-      <SpamButton applicationId={id} onRefetch={onUpdate} />
-      <StopProcessingButton
-        applicationId={id}
-        status={status}
-        onRefetch={onUpdate}
-      />
-      <RequestChangesButton
-        applicationId={id}
-        status={status}
-        onRefetch={onUpdate}
-      />
-      <StartProcessingButton
-        applicationId={id}
-        status={status}
-        onRefetch={onUpdate}
-      />
-      <RequireConfirmationButton
-        applicationId={id}
-        status={status}
-        onRefetch={onUpdate}
-      />
+      <SpamButton {...props} />
+      <ReturnFromSpamButton {...props} />
+      <StopProcessingButton {...props} />
+      <RequestChangesButton {...props} />
+      <StartProcessingButton {...props} />
+      <RequireConfirmationButton {...props} />
     </Space>
   );
 };
@@ -72,9 +58,9 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
       // TODO: replace id: 1 after it's done in API https://www.notion.so/Human-readable-id-User-fa8d1bda3a11449781f924f1c187645e
       actions={
         <Actions
-          id={data.id ?? ""}
+          applicationId={data.id ?? ""}
           status={data.status as ApplicationStatus}
-          onUpdate={refetchQuery}
+          onRefetch={refetchQuery}
         />
       }
     >

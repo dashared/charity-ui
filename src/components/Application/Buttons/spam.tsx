@@ -1,43 +1,48 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Popconfirm, Tooltip } from "antd";
+import { Button, Tooltip } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
+import { DefaultApiFactory } from "@generated";
+
+import ModalWithMessage from "../Modal";
+import { ApplicationStatus } from "../Status/tag";
 
 export const SpamButton: FC<{
   applicationId: string;
+  status: ApplicationStatus;
   onRefetch: () => Promise<void>;
-}> = () => {
-  const [loading, setLoading] = useState(false);
+}> = ({ onRefetch, status, applicationId }) => {
+  const [visible, setVisible] = useState(false);
 
   const { t } = useTranslation("Application");
 
-  const spam = useCallback(async () => {
-    try {
-      setLoading(true); // send request to Kostik with applicationId
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
-  }, [setLoading]);
+  const showModal = (): void => {
+    setVisible(true);
+  };
+
+  if (status === ApplicationStatus.Spam) {
+    return null;
+  }
 
   return (
-    <Popconfirm
-      placement="topLeft"
-      title={t("$views.confirm.spam")}
-      onConfirm={spam}
-      okText={t("yes")}
-      cancelText={t("no")}
-    >
+    <>
       <Tooltip title={t("$views.buttons.spam")}>
         <Button
           type="primary"
           danger
-          loading={loading}
+          onClick={showModal}
           icon={<DeleteOutlined />}
         />
       </Tooltip>
-    </Popconfirm>
+
+      <ModalWithMessage
+        title={t("$views.modal.spamTitle")}
+        isVisible={visible}
+        onRefetch={onRefetch}
+        newStatus={ApplicationStatus.Spam}
+        query={DefaultApiFactory(undefined).donationRequestIdPatch}
+        applicationId={applicationId}
+      ></ModalWithMessage>
+    </>
   );
 };

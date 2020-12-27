@@ -16,7 +16,7 @@ export const RequireConfirmationButton: FC<{
 }) => {
   const { t } = useTranslation("Application");
 
-  if (status === ApplicationStatus.New) {
+  if (status === ApplicationStatus.New || status === ApplicationStatus.Spam) {
     return null;
   }
 

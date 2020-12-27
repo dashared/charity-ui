@@ -5,6 +5,7 @@ import { NO_DATA_PLACEHOLDER } from "@lib/utils";
 
 export enum ApplicationStatus {
   New = "DonationNew",
+  Spam = "DonationSpam",
   Processing = "DonationInProcess",
   Delete = "DonationDelete",
   RequiresConfirmation = "DonationRequiresConfirmation",
@@ -19,11 +20,13 @@ function getColor(level: ApplicationStatus): TagProps["color"] {
     case ApplicationStatus.Processing:
       return "orange";
     case ApplicationStatus.Delete:
-      return "red";
+      return "pink";
     case ApplicationStatus.NeedsImprovement:
       return "yellow";
     case ApplicationStatus.Active:
       return "green";
+    case ApplicationStatus.Spam:
+      return "red";
   }
 }
 
