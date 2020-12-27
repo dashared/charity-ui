@@ -14,6 +14,8 @@ export const SpamButton: FC<{
 }> = ({ onRefetch, status, applicationId }) => {
   const [visible, setVisible] = useState(false);
 
+  console.log(visible);
+
   const { t } = useTranslation("Application");
 
   const showModal = (): void => {
@@ -28,8 +30,9 @@ export const SpamButton: FC<{
     <>
       <Tooltip title={t("$views.buttons.spam")}>
         <Button
-          type="primary"
+          type="default"
           danger
+          shape="circle"
           onClick={showModal}
           icon={<DeleteOutlined />}
         />
@@ -42,6 +45,7 @@ export const SpamButton: FC<{
         newStatus={ApplicationStatus.Spam}
         query={DefaultApiFactory(undefined).donationRequestIdPatch}
         applicationId={applicationId}
+        onClose={() => setVisible(false)}
       ></ModalWithMessage>
     </>
   );

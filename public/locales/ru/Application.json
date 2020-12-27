@@ -40,7 +40,8 @@
       "relationship": "Отношения с заявителем",
       "message": "Сообщение",
       "enterMessage": "Введите сообщение пользователю",
-      "assignee": "Менеджер"
+      "assignee": "Менеджер",
+      "successUpdateStatus": "Успешно обновлен статус заявки!"
     },
     "buttons": {
       "inProcessing": "Взять в обработку",
@@ -48,17 +49,22 @@
       "request_changes": "Отправить на доработку",
       "stopProcessing": "Перестать обрабатывать",
       "require_confirmation": "Одобрить",
-      "returnFromSpam": "Вернуть из спама"
+      "returnFromSpam": "Вернуть из спама",
+      "refuse": "Отклонить",
+      "activate": "Активировать"
     },
     "modal": {
       "requestChangesTitle": "Отправить на доработку",
-      "spamTitle": "Отправить в спам"
+      "spamTitle": "Отправить в спам",
+      "refuse": "Причина отклонения заявки"
     }
   },
   "Status": {
     "DonationNew": "Новая",
     "DonationInProcess": "В обработке",
     "DonationNeedsImprovement": "На доработке",
-    "DonationSpam": "Спам"
+    "DonationSpam": "Спам",
+    "DonationRequiresConfirmation": "Ждет активации",
+    "DonationActive": "Активна"
   }
 }

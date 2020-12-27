@@ -138,7 +138,8 @@ function InnerPaginatedQuery<
     onPaginationState?.({ currentPage: page, size });
   }, [stateRef, onPaginationState, page, size]);
 
-  const { data, loading, error } = useAxios(requestQuery, page, size, "");
+  // TODO fix after https://www.notion.so/GET-donation-request-0-1-c25efe0a4eff44df9a7af554c5281bfe
+  const { data, loading, error } = useAxios(requestQuery, page - 1, size, "");
 
   // propagate result above if needed
   useEffect(() => {

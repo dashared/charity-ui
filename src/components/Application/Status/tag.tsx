@@ -11,6 +11,7 @@ export enum ApplicationStatus {
   RequiresConfirmation = "DonationRequiresConfirmation",
   NeedsImprovement = "DonationNeedsImprovement",
   Active = "DonationActive",
+  Refused = "DonationRefused",
 }
 
 function getColor(level: ApplicationStatus): TagProps["color"] {
@@ -18,15 +19,17 @@ function getColor(level: ApplicationStatus): TagProps["color"] {
     case ApplicationStatus.New:
       return "blue";
     case ApplicationStatus.Processing:
-      return "orange";
+      return "gold";
     case ApplicationStatus.Delete:
       return "pink";
     case ApplicationStatus.NeedsImprovement:
-      return "yellow";
+      return "warning";
     case ApplicationStatus.Active:
       return "green";
     case ApplicationStatus.Spam:
       return "red";
+    case ApplicationStatus.Refused:
+      return "error";
   }
 }
 

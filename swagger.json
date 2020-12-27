@@ -43,21 +43,21 @@
         "parameters": [
           {
             "name": "page",
-            "in": "path",
+            "in": "query",
             "description": "Page number",
             "required": true,
             "type": "integer"
           },
           {
             "name": "size",
-            "in": "path",
+            "in": "query",
             "description": "Page size",
             "required": true,
             "type": "integer"
           },
           {
             "name": "sort",
-            "in": "path",
+            "in": "query",
             "description": "sort",
             "required": true,
             "type": "string"

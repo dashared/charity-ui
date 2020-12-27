@@ -46,6 +46,7 @@ export const ReturnFromSpamButton: FC<{
         <Tooltip title={t("$views.buttons.returnFromSpam")}>
           <Button
             type="primary"
+            shape="circle"
             loading={loading}
             icon={<RollbackOutlined />}
           />

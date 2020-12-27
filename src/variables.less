@@ -40,3 +40,19 @@
   padding: @main-horizontal-padding;
   margin-bottom: @layout-margin;
 }
+
+.selectAndHover(@select-color: @blue-1, @hover-color: @gray-3) {
+  transition: background 0.3s ease-in;
+
+  &.selected {
+    background-color: @select-color !important;
+
+    &:hover {
+      background-color: mix(@select-color, @hover-color) !important;
+    }
+  }
+
+  &:not(.selected):hover {
+    background-color: @hover-color !important;
+  }
+}

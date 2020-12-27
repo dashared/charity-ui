@@ -44,8 +44,9 @@ export const StopProcessingButton: FC<{
     >
       <Tooltip title={t("$views.buttons.stopProcessing")}>
         <Button
-          type="default"
+          type="dashed"
           danger
+          shape="circle"
           loading={loading}
           icon={<PauseCircleOutlined />}
         />

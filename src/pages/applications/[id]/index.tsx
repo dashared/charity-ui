@@ -5,6 +5,7 @@ import { PageProps, useTranslation, Workspace } from "@providers";
 import useAxios from "@providers/axios";
 
 import {
+  RefuseButton,
   RequestChangesButton,
   RequireConfirmationButton,
   ReturnFromSpamButton,
@@ -27,6 +28,7 @@ const Actions: FC<{
       <StopProcessingButton {...props} />
       <RequestChangesButton {...props} />
       <StartProcessingButton {...props} />
+      <RefuseButton {...props} />
       <RequireConfirmationButton {...props} />
     </Space>
   );

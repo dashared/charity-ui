@@ -4,3 +4,4 @@ export { SpamButton } from "./spam";
 export { StopProcessingButton } from "./cancel_processing";
 export { RequireConfirmationButton } from "./require_confirmation";
 export { ReturnFromSpamButton } from "./return_from_spam";
+export { RefuseButton } from "./refuse";

@@ -30,6 +30,7 @@ export const RequestChangesButton: FC<{
       <Tooltip title={t("$views.buttons.request_changes")}>
         <Button
           type="default"
+          shape="circle"
           icon={<IssuesCloseOutlined />}
           onClick={showModal}
         />
@@ -42,6 +43,7 @@ export const RequestChangesButton: FC<{
         newStatus={ApplicationStatus.NeedsImprovement}
         query={DefaultApiFactory(undefined).donationRequestIdPatch}
         applicationId={applicationId}
+        onClose={() => setVisible(false)}
       ></ModalWithMessage>
     </>
   );

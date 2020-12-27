@@ -16,10 +16,10 @@ type FormValues = {
 };
 
 const ModalWithMessage: FC<{
-  // eslint-disable-next-line
   query: (
     id: string,
     input: ModelsUpdateDonationStatusInput,
+    // eslint-disable-next-line
     options?: any,
   ) => AxiosPromise<ModelsDonationRequest>;
   title: string;
@@ -27,7 +27,16 @@ const ModalWithMessage: FC<{
   newStatus: ApplicationStatus;
   onRefetch: () => Promise<void>;
   isVisible: boolean;
-}> = ({ query, title, applicationId: id, newStatus, onRefetch, isVisible }) => {
+  onClose: () => void;
+}> = ({
+  query,
+  title,
+  applicationId: id,
+  newStatus,
+  onRefetch,
+  isVisible,
+  onClose,
+}) => {
   const { t } = useTranslation("Application");
 
   const [form] = useForm<FormValues>();
@@ -50,16 +59,26 @@ const ModalWithMessage: FC<{
 
         await query(id, input);
 
-        notify("Ура!");
+        notify(t("$views.card.successUpdateStatus"));
       } catch (e) {
         console.error(e);
       } finally {
         setVisible(false);
         setConfirmLoading(false);
+        onClose();
         onRefetch();
       }
     },
-    [setConfirmLoading, setVisible, id, onRefetch, newStatus, query],
+    [
+      setConfirmLoading,
+      setVisible,
+      id,
+      onRefetch,
+      newStatus,
+      query,
+      onClose,
+      t,
+    ],
   );
 
   return (

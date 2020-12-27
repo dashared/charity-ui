@@ -435,10 +435,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             if (sort === null || sort === undefined) {
                 throw new RequiredError('sort','Required parameter sort was null or undefined when calling donationRequestGet.');
             }
-            const localVarPath = `/donation-request/`
-                .replace(`{${"page"}}`, encodeURIComponent(String(page)))
-                .replace(`{${"size"}}`, encodeURIComponent(String(size)))
-                .replace(`{${"sort"}}`, encodeURIComponent(String(sort)));
+            const localVarPath = `/donation-request/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -449,6 +446,18 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
 
 
     
