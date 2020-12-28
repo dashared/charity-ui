@@ -56,15 +56,16 @@
     "modal": {
       "requestChangesTitle": "Отправить на доработку",
       "spamTitle": "Отправить в спам",
-      "refuse": "Причина отклонения заявки"
+      "refuse": "Причина отклонения заявки",
+      "editTitle": "Изменить данные заявки"
     }
   },
   "Status": {
-    "DonationNew": "Новая",
-    "DonationInProcess": "В обработке",
-    "DonationNeedsImprovement": "На доработке",
-    "DonationSpam": "Спам",
-    "DonationRequiresConfirmation": "Ждет активации",
-    "DonationActive": "Активна"
+    "New": "Новая",
+    "Process": "В обработке",
+    "NeedsImprovement": "На доработке",
+    "Spam": "Спам",
+    "RequiresConfirmation": "Ждет активации",
+    "Active": "Активна"
   }
 }

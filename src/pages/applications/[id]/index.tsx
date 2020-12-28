@@ -66,7 +66,7 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
         />
       }
     >
-      <ApplicationView donation={data} />
+      <ApplicationView donation={data} onRefetch={refetchQuery} />
     </Workspace>
   );
 };

@@ -1,5 +1,11 @@
 import React, { FC } from "react";
-import { Card, Tabs } from "antd";
+import { Card, Tabs, Tooltip } from "antd";
+import {
+  DiffOutlined,
+  FileOutlined,
+  InfoCircleOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { ModelsDonationRequest } from "@generated";
 import { useTranslation } from "@providers";
 
@@ -10,19 +16,34 @@ import LogsTab from "./Tabs/Logs";
 
 const { TabPane } = Tabs;
 
-const ApplicationView: FC<{ donation: ModelsDonationRequest }> = ({
-  donation,
-}) => {
+const ApplicationView: FC<{
+  donation: ModelsDonationRequest;
+  onRefetch: () => Promise<void>;
+}> = ({ donation, onRefetch }) => {
   const { t } = useTranslation("Application");
 
   return (
     <Card>
-      <Tabs defaultActiveKey="1">
-        <TabPane tab={t("$views.tabs.generalInfoTitle")} key="general">
-          <GeneralInfoTab info={donation} />
+      <Tabs defaultActiveKey="1" tabPosition="left">
+        <TabPane
+          tab={
+            <Tooltip title={t("$views.tabs.generalInfoTitle")}>
+              <InfoCircleOutlined />
+            </Tooltip>
+          }
+          key="general"
+        >
+          <GeneralInfoTab info={donation} onRefetch={onRefetch} />
         </TabPane>
 
-        <TabPane tab={t("$views.tabs.doneeInfoTitle")} key="donee">
+        <TabPane
+          tab={
+            <Tooltip title={t("$views.tabs.doneeInfoTitle")}>
+              <UserOutlined />
+            </Tooltip>
+          }
+          key="donee"
+        >
           <DoneeInfoTab
             applicantId={donation.applicant_id}
             donee={donation.donee}
@@ -30,11 +51,25 @@ const ApplicationView: FC<{ donation: ModelsDonationRequest }> = ({
           />
         </TabPane>
 
-        <TabPane tab={t("$views.tabs.filesTitle")} key="files">
+        <TabPane
+          tab={
+            <Tooltip title={t("$views.tabs.filesTitle")}>
+              <FileOutlined />
+            </Tooltip>
+          }
+          key="files"
+        >
           <FilesTab files={["fff.pfd", "xxx.hfhf"]} />
         </TabPane>
 
-        <TabPane tab={t("$views.tabs.logsTitle")} key="logs">
+        <TabPane
+          tab={
+            <Tooltip title={t("$views.tabs.logsTitle")}>
+              <DiffOutlined />
+            </Tooltip>
+          }
+          key="logs"
+        >
           <LogsTab id={donation.id ?? ""} />
         </TabPane>
       </Tabs>

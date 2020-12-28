@@ -4,14 +4,14 @@ import Tag, { TagProps } from "antd/lib/tag";
 import { NO_DATA_PLACEHOLDER } from "@lib/utils";
 
 export enum ApplicationStatus {
-  New = "DonationNew",
-  Spam = "DonationSpam",
-  Processing = "DonationInProcess",
-  Delete = "DonationDelete",
-  RequiresConfirmation = "DonationRequiresConfirmation",
-  NeedsImprovement = "DonationNeedsImprovement",
-  Active = "DonationActive",
-  Refused = "DonationRefused",
+  New = "New",
+  Spam = "Spam",
+  Processing = "InProcess",
+  Delete = "Delete",
+  RequiresConfirmation = "RequiresConfirmation",
+  NeedsImprovement = "NeedsImprovement",
+  Active = "Active",
+  Refused = "Refused",
 }
 
 function getColor(level: ApplicationStatus): TagProps["color"] {
