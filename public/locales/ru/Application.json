@@ -1,0 +1,71 @@
+{
+  "yes": "Да",
+  "no": "Нет",
+  "listTitle": "Заявки",
+  "id": "№",
+  "title": "Название",
+  "file": "Файл",
+  "downloadDate": "Дата, время загрузки",
+  "status": "Статус",
+  "author": "Автор",
+  "createdAt": "Дата, время создания",
+  "$views": {
+    "title": "Заявка № {{ id }} {{ title }}",
+    "tabs": {
+      "generalInfoTitle": "Основная информация",
+      "doneeInfoTitle": "Нуждающийся",
+      "logsTitle": "История",
+      "filesTitle": "Файлы"
+    },
+    "confirm": {
+      "spam": "Отправить заявку в спам?",
+      "processing": "Вы уверены, что хотите взять заявку в обработку?",
+      "stopProcessing": "Вы уверены, что хотите перестать обрабатывать заявку?",
+      "returnFromSpam": "Вы уверены, что хотите вернуть заявку из спама?"
+    },
+    "card": {
+      "doneeInfoTitle": "Личные данные",
+      "generalInfoTitle": "Данные о заявке",
+      "description": "Описание",
+      "requestedAmount": "Запрос",
+      "approvedAmount": "Одобрено",
+      "createdAt": "Время создания заявки",
+      "endTime": "Окончание сбора",
+      "status": "Статус",
+      "createdBy": "Автор",
+      "birthPlace": "Место рождения",
+      "birthday": "Дата рождения",
+      "address": "Адрес",
+      "phone": "Телефон",
+      "relationship": "Отношения с заявителем",
+      "message": "Сообщение",
+      "enterMessage": "Введите сообщение пользователю",
+      "assignee": "Менеджер",
+      "successUpdateStatus": "Успешно обновлен статус заявки!"
+    },
+    "buttons": {
+      "inProcessing": "Взять в обработку",
+      "spam": "Спам",
+      "request_changes": "Отправить на доработку",
+      "stopProcessing": "Перестать обрабатывать",
+      "require_confirmation": "Одобрить",
+      "returnFromSpam": "Вернуть из спама",
+      "refuse": "Отклонить",
+      "activate": "Активировать"
+    },
+    "modal": {
+      "requestChangesTitle": "Отправить на доработку",
+      "spamTitle": "Отправить в спам",
+      "refuse": "Причина отклонения заявки",
+      "editTitle": "Изменить данные заявки"
+    }
+  },
+  "Status": {
+    "New": "Новая",
+    "Process": "В обработке",
+    "NeedsImprovement": "На доработке",
+    "Spam": "Спам",
+    "RequiresConfirmation": "Ждет активации",
+    "Active": "Активна"
+  }
+}

@@ -1,36 +1,16 @@
 const sortGroups = {
   groups: [
-    [
-      "^react",
-      "^react-dom",
-      "^lodash",
-      "^antd",
-      "^@?\\w",
-    ],
+    ["^react", "^react-dom", "^lodash", "^antd", "^@?\\w"],
     // Internal packages
-    [
-      "^(@|@ui|components|utils|config|vendored-lib)(/.*|$)"
-    ],
+    ["^(@|@ui|components|utils|config|vendored-lib)(/.*|$)"],
     // Side effect imports
-    [
-      "^\\u0000"
-    ],
+    ["^\\u0000"],
     // Parent imports
-    [
-      "^\\.\\.(?!/?$)",
-      "^\\.\\./?$"
-    ],
+    ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
     // Other relative imports
-    [
-      "^\\./(?=.*/)(?!/?$)",
-      "^\\.(?!/?$)",
-      "^\\./?$"
-    ],
+    ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
     // Style imports.
-    [
-      "^.+\\.s?css$",
-      "^.+\\.less$"
-    ],
+    ["^.+\\.s?css$", "^.+\\.less$"],
   ],
 };
 
@@ -78,7 +58,7 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": [
       "error",
       {
-        allowExpressions: true
+        allowExpressions: true,
       },
     ],
     // "@typescript-eslint/explicit-member-accessibility": [
@@ -91,25 +71,20 @@ module.exports = {
     "comma-spacing": [
       "error",
       {
-        before: false, after: true
-      }
+        before: false,
+        after: true,
+      },
     ],
-    curly: [
-      "error",
-      "all"
-    ],
+    curly: ["error", "all"],
     eqeqeq: "error",
     "func-style": [
       "error",
       "declaration",
       {
-        allowArrowFunctions: true
-      }
+        allowArrowFunctions: true,
+      },
     ],
-    "func-call-spacing": [
-      "error",
-      "never"
-    ],
+    "func-call-spacing": ["error", "never"],
     "import/default": "off",
     "import/export": "off",
     "import/first": "error",
@@ -122,19 +97,15 @@ module.exports = {
     "import/no-unresolved": [
       "error",
       {
-        ignore: [
-          ".svg$",
-          "@curi/types",
-          "^@types/"
-        ]
+        ignore: [".svg$", "@curi/types", "^@types/"],
       },
     ],
     "import/order": "off",
     "key-spacing": [
       "error",
       {
-        beforeColon: false
-      }
+        beforeColon: false,
+      },
     ],
     "no-alert": "error",
     "no-eval": "error",
@@ -142,12 +113,6 @@ module.exports = {
     "no-shadow": "error",
     // "no-undef": "off",
     "no-underscore-dangle": "error",
-    "no-unused-expressions": [
-      "error",
-      {
-        allowTaggedTemplates: true
-      }
-    ],
     // "no-unused-vars": "off",
     "no-var": "error",
     "object-shorthand": "error",
@@ -162,16 +127,12 @@ module.exports = {
     "react/prop-types": "off",
     // "simple-import-sort/sort": "error",
     "sort-imports": "off",
-    "simple-import-sort/sort": [
-      "error", sortGroups
-    ],
+    "simple-import-sort/sort": ["error", sortGroups],
     // "spaced-comment": ["error", "always", { block: { balanced: true } }],
   },
   overrides: [
     {
-      files: [
-        "*.d.ts"
-      ],
+      files: ["*.d.ts"],
       rules: {
         "spaced-comment": "off",
       },

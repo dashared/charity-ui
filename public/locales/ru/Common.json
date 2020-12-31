@@ -1,0 +1,8 @@
+{
+  "Pagination": {
+    "showTotal": "Показать {{from}}-{{to}} из {{total}}"
+  },
+  "Button": {
+    "edit": "Изменить"
+  }
+}
