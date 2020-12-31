@@ -6,7 +6,7 @@ import {
   InfoCircleOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { ModelsDonationRequest } from "@generated";
+import { ModelsDonationRequestBody } from "@generated";
 import { useTranslation } from "@providers";
 
 import DoneeInfoTab from "./Tabs/Donee";
@@ -17,7 +17,7 @@ import LogsTab from "./Tabs/Logs";
 const { TabPane } = Tabs;
 
 const ApplicationView: FC<{
-  donation: ModelsDonationRequest;
+  donation: ModelsDonationRequestBody;
   onRefetch: () => Promise<void>;
 }> = ({ donation, onRefetch }) => {
   const { t } = useTranslation("Application");
@@ -45,7 +45,7 @@ const ApplicationView: FC<{
           key="donee"
         >
           <DoneeInfoTab
-            applicantId={donation.applicant_id}
+            applicantId={donation.assignee?.id}
             donee={donation.donee}
             relationship={donation.relationship}
           />

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, Descriptions, Drawer, Empty, Skeleton } from "antd";
-import { DefaultApiFactory } from "@generated";
+import { UserApiFactory } from "@generated";
 import useAxios from "@providers/axios";
 
 const UserPreview: FC<{
@@ -11,10 +11,7 @@ const UserPreview: FC<{
 }> = ({ userId: id, visible, onClose }) => {
   const { t } = useTranslation("User");
 
-  const { data, loading } = useAxios(
-    DefaultApiFactory(undefined).userIdGet,
-    id,
-  );
+  const { data, loading } = useAxios(UserApiFactory(undefined).userIdGet, id);
 
   return (
     <Drawer

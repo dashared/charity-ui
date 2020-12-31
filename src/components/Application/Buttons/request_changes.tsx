@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Tooltip } from "antd";
 import { IssuesCloseOutlined } from "@ant-design/icons";
-import { DefaultApiFactory } from "@generated";
+import { DonationRequestApiFactory } from "@generated";
 
 import ModalWithMessage from "../Modal";
 import { ApplicationStatus } from "../Status/tag";
@@ -41,7 +41,9 @@ export const RequestChangesButton: FC<{
         isVisible={visible}
         onRefetch={onRefetch}
         newStatus={ApplicationStatus.NeedsImprovement}
-        query={DefaultApiFactory(undefined).donationRequestIdPatch}
+        query={
+          DonationRequestApiFactory(undefined).donationRequestIdStatusPatch
+        }
         applicationId={applicationId}
         onClose={() => setVisible(false)}
       ></ModalWithMessage>

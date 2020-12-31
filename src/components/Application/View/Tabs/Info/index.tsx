@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import { Button, Descriptions } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
-import { ModelsDonationRequest } from "@generated";
+import { ModelsDonationRequestBody as Single } from "@generated";
 import { cred } from "@lib/utils/name";
 import { useTranslation } from "@providers";
 
@@ -48,7 +48,7 @@ const Actions: FC<{
 };
 
 const GeneralInfo: FC<{
-  info: ModelsDonationRequest;
+  info: Single;
   onRefetch: () => Promise<void>;
 }> = ({ info, onRefetch }) => {
   const [visible, setVisible] = useState(false);
@@ -97,9 +97,9 @@ const GeneralInfo: FC<{
           <StatusTag status={info.status as ApplicationStatus} />
         </Descriptions.Item>
 
-        {info.assignee_id && (
+        {info.assignee && (
           <Descriptions.Item label={t("$views.card.assignee")}>
-            <Link>{info.assignee_id}</Link>
+            <Link>{info.assignee.id}</Link>
           </Descriptions.Item>
         )}
       </Descriptions>
@@ -107,7 +107,7 @@ const GeneralInfo: FC<{
       {visible && (
         <UserPreview
           visible={visible}
-          userId={info.applicant_id ?? ""}
+          userId={info.author?.id ?? ""}
           onClose={() => setVisible(false)}
         />
       )}

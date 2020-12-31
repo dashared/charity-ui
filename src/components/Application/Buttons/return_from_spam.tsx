@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Popconfirm, Tooltip } from "antd";
 import { RollbackOutlined } from "@ant-design/icons";
-import { DefaultApiFactory } from "@generated";
+import { DonationRequestApiFactory } from "@generated";
 
 import { ApplicationStatus } from "../Status/tag";
 
@@ -21,7 +21,10 @@ export const ReturnFromSpamButton: FC<{
       const input = {
         status: ApplicationStatus.New, // TODO different request
       };
-      await DefaultApiFactory(undefined).donationRequestIdPatch(id, input);
+      await DonationRequestApiFactory(undefined).donationRequestIdStatusPatch(
+        id,
+        input,
+      );
     } catch (e) {
       console.log(e);
     } finally {

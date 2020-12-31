@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Descriptions, Tag } from "antd";
 import { Link } from "@curi/react-dom";
-import { ModelsDonee as Donee } from "@generated";
+import { ModelsSimpleUser as Donee } from "@generated";
 // import useAxios from "@providers/axios";
 import { fullName } from "@lib/utils/name";
 import { useTranslation } from "@providers";

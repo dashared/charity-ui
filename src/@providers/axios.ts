@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { DefaultApi } from "@generated";
+import { DonationRequestApi } from "@generated";
 import axios, { AxiosResponse as Response } from "axios";
 
 // i18n reexports
@@ -48,4 +48,4 @@ export default function useAxios<R>(query: (...v: any[]) => Promise<Response<R>>
 }
 
 /** Service to perform donations requests */
-export const donationService = new DefaultApi(undefined, undefined, axiosInstance);
+export const donationService = new DonationRequestApi(undefined, undefined, axiosInstance);

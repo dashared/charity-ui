@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Empty, Skeleton, Space } from "antd";
-import { DefaultApiFactory } from "@generated";
+import { DonationRequestApiFactory } from "@generated";
 import { PageProps, useTranslation, Workspace } from "@providers";
 import useAxios from "@providers/axios";
 
@@ -40,7 +40,7 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
   const { t } = useTranslation("Application");
 
   const { data, loading, refetchQuery } = useAxios(
-    DefaultApiFactory(undefined).donationRequestIdGet,
+    DonationRequestApiFactory(undefined).donationRequestIdGet,
     id,
   );
 

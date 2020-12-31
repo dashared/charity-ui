@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
-import { DefaultApiFactory } from "@generated";
+import { DonationRequestApiFactory } from "@generated";
 
 import { ApplicationStatus } from "../Status/tag";
 
@@ -24,9 +24,12 @@ export const RequireConfirmationButton: FC<{
 
       setLoading(true);
 
-      await DefaultApiFactory(undefined).donationRequestIdPatch(id, {
-        status: newStatus,
-      });
+      await DonationRequestApiFactory(undefined).donationRequestIdStatusPatch(
+        id,
+        {
+          status: newStatus,
+        },
+      );
     } catch (e) {
       console.log(e);
     } finally {

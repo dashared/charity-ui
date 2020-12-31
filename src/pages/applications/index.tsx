@@ -1,7 +1,7 @@
 import React, { FC, useRef } from "react";
 import { Link } from "@curi/react-dom";
 import {
-  DefaultApiFactory,
+  DonationRequestApiFactory,
   ModelsDonationRequestBody as Single,
   ModelsDonationRequestResponse as Result,
 } from "@generated";
@@ -79,7 +79,7 @@ const ApplicationsPage: FC = () => {
     <Workspace noRefresh title={t("listTitle")}>
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
-        requestQuery={DefaultApiFactory(undefined).donationRequestGet}
+        requestQuery={DonationRequestApiFactory(undefined).donationRequestGet}
         stateRef={paginationState}
         onResult={(result) => {
           setList(result.data ?? []);
@@ -88,7 +88,7 @@ const ApplicationsPage: FC = () => {
           <RegistryTable
             entity="Application"
             columns={columns}
-            // eslint-ignore-next-line
+            // eslint-disable-next-line
             rows={entries as Record<string, any>[]} // TODO
             rowState={(record, index) => ({
               selected: isSelected(index),

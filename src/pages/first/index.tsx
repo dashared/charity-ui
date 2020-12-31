@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-// import { C as Single, DefaultApiFactory } from "@generated";
+// import { C as Single, DonationRequestApiFactory } from "@generated";
 // import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 // import RegistryTable from "@lib/components/RegistryTable";
 // import { useListSelection } from "@lib/hooks";
@@ -26,7 +26,7 @@ const FirstPage: FC = () => {
 
   // return (
   //   <PaginatedQuery<{ limit: number; offset: number }, CList, Single>
-  //     requestQuery={DefaultApiFactory(undefined).donationRequestGet}
+  //     requestQuery={DonationRequestApiFactory(undefined).donationRequestGet}
   //     stateRef={paginationState}
   //     onResult={(result) => setList(Array.from(result.entries))}
   //     render={(entries) => (

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import {
-  ModelsDonationRequest,
+  ModelsDonationRequestResponse,
   ModelsUpdateDonationStatusInput,
 } from "@generated";
 import { notify } from "@lib/utils/notification";
@@ -21,7 +21,7 @@ const ModalWithMessage: FC<{
     input: ModelsUpdateDonationStatusInput,
     // eslint-disable-next-line
     options?: any,
-  ) => AxiosPromise<ModelsDonationRequest>;
+  ) => AxiosPromise<ModelsDonationRequestResponse>;
   title: string;
   applicationId: string;
   newStatus: ApplicationStatus;

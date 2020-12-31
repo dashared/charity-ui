@@ -2,9 +2,12 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Empty, Form, Input, Modal, Skeleton, Space } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { DefaultApiFactory, ModelsDonationRequestBody } from "@generated";
+import {
+  DonationRequestApiFactory,
+  ModelsDonationRequestBody,
+} from "@generated";
 import useAxios from "@providers/axios";
-// import { DefaultApi, DefaultApiFactory } from "@generated";
+// import { DonationRequestApi, DonationRequestApiFactory } from "@generated";
 
 const layout = {
   labelCol: { span: 8 },
@@ -33,7 +36,7 @@ const EditModal: FC<{
 
   const [form] = useForm<ModelsDonationRequestBody>();
   const { data, loading } = useAxios(
-    DefaultApiFactory(undefined).donationRequestIdGet,
+    DonationRequestApiFactory(undefined).donationRequestIdGet,
     id,
   );
   const [confirmLoading, setConfirmLoading] = useState(false);
