@@ -13,6 +13,25 @@
  */
 
 
-export * from "./api";
-export * from "./configuration";
-export * from "./models";
+
+/**
+ * 
+ * @export
+ * @interface ModelsFileResponse
+ */
+export interface ModelsFileResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelsFileResponse
+     */
+    createdAt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelsFileResponse
+     */
+    id?: string;
+}
+
+
