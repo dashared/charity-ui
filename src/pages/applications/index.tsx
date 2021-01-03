@@ -1,7 +1,6 @@
 import React, { FC, useRef } from "react";
 import { Link } from "@curi/react-dom";
 import {
-  DonationRequestApiFactory,
   ModelsDonationRequestBody as Single,
   ModelsDonationRequestResponse as Result,
 } from "@generated";
@@ -10,6 +9,7 @@ import RegistryTable from "@lib/components/RegistryTable";
 import { useListSelection } from "@lib/hooks";
 import { cred } from "@lib/utils/name";
 import { useTranslation, Workspace } from "@providers";
+import { DonationRequestFactory } from "@providers/axios";
 
 import StatusTag, {
   ApplicationStatus,
@@ -79,7 +79,7 @@ const ApplicationsPage: FC = () => {
     <Workspace noRefresh title={t("listTitle")}>
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
-        requestQuery={DonationRequestApiFactory(undefined).donationRequestGet}
+        requestQuery={DonationRequestFactory.donationRequestGet}
         stateRef={paginationState}
         onResult={(result) => {
           setList(result.data ?? []);

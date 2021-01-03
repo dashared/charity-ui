@@ -1,7 +1,46 @@
-export { StartProcessingButton } from "./processing";
-export { RequestChangesButton } from "./request_changes";
-export { SpamButton } from "./spam";
-export { StopProcessingButton } from "./cancel_processing";
-export { RequireConfirmationButton } from "./require_confirmation";
-export { ReturnFromSpamButton } from "./return_from_spam";
-export { RefuseButton } from "./refuse";
+import React, { FC } from "react";
+import { Space } from "antd";
+
+import { ApplicationStatus } from "components/Application/Status/tag";
+
+import { StartProcessingButton } from "./Processing/Start";
+import { StopProcessingButton } from "./Processing/Stop";
+import { ReturnFromSpamButton } from "./Spam/Cancel";
+import { RefuseButton } from "./Refuse";
+import { RequestChangesButton } from "./RequestChanges";
+import { RequireConfirmationButton } from "./RequireConfirmation";
+import { SpamButton } from "./Spam";
+
+export { StartProcessingButton } from "./Processing/Start";
+export { StopProcessingButton } from "./Processing/Stop";
+
+export { RequestChangesButton } from "./RequestChanges";
+
+export { SpamButton } from "./Spam";
+export { ReturnFromSpamButton } from "./Spam/Cancel";
+
+export { RequireConfirmationButton } from "./RequireConfirmation";
+
+export { RefuseButton } from "./Refuse";
+
+type ApplicationButtonsProps = {
+  applicationId: string;
+  status: ApplicationStatus;
+  onRefetch: () => Promise<void>;
+};
+
+const ActionButtons: FC<ApplicationButtonsProps> = (props) => {
+  return (
+    <Space>
+      <SpamButton {...props} />
+      <ReturnFromSpamButton {...props} />
+      <StopProcessingButton {...props} />
+      <RequestChangesButton {...props} />
+      <StartProcessingButton {...props} />
+      <RefuseButton {...props} />
+      <RequireConfirmationButton {...props} />
+    </Space>
+  );
+};
+
+export default ActionButtons;

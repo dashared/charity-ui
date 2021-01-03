@@ -2,10 +2,10 @@ import React, { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Tooltip } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-import { DonationRequestApiFactory } from "@generated";
+import { DonationRequestFactory } from "@providers/axios";
 
-import ModalWithMessage from "../Modal";
-import { ApplicationStatus } from "../Status/tag";
+import ModalWithMessage from "../../Modal";
+import { ApplicationStatus } from "../../Status/tag";
 
 export const SpamButton: FC<{
   applicationId: string;
@@ -43,9 +43,7 @@ export const SpamButton: FC<{
         isVisible={visible}
         onRefetch={onRefetch}
         newStatus={ApplicationStatus.Spam}
-        query={
-          DonationRequestApiFactory(undefined).donationRequestIdStatusPatch
-        }
+        query={DonationRequestFactory.donationRequestIdStatusPatch}
         applicationId={applicationId}
         onClose={() => setVisible(false)}
       ></ModalWithMessage>

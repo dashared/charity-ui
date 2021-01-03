@@ -1,5 +1,6 @@
 import React, { MutableRefObject, ReactNode, useEffect, useState } from "react";
-import { Empty, Skeleton } from "antd";
+import { useTranslation } from "react-i18next";
+import { Empty, Result as DisplayResult, Skeleton } from "antd";
 import Pagination, { PaginationProps } from "antd/lib/pagination";
 import { ModelsPageData } from "@generated";
 import useAxios from "@providers/axios";
@@ -127,6 +128,8 @@ function InnerPaginatedQuery<
   RestProps): JSX.Element | null {
   // pagination state handlers
 
+  const { t } = useTranslation("Common");
+
   const [page, onCurrentChange] = useState(initialPage);
   const [size, onPageSizeChange] = useState(initialSize);
 
@@ -148,8 +151,13 @@ function InnerPaginatedQuery<
     }
   }, [onResult, data]);
 
+  if (error) {
+    // TODO : make more userfriendly and consice
+    return <DisplayResult status="500" title="500" subTitle={t("error")} />;
+  }
+
   // Handle data
-  if (error || loading || !data) {
+  if (loading || !data) {
     return <Skeleton active={loading} />;
   }
 

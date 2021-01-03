@@ -2,10 +2,10 @@ import React, { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Tooltip } from "antd";
 import { IssuesCloseOutlined } from "@ant-design/icons";
-import { DonationRequestApiFactory } from "@generated";
+import { DonationRequestFactory } from "@providers/axios";
 
-import ModalWithMessage from "../Modal";
-import { ApplicationStatus } from "../Status/tag";
+import ModalWithMessage from "../../Modal";
+import { ApplicationStatus } from "../../Status/tag";
 
 /** Leaves a comment and transferes application into "NeedsImprovement" status. */
 export const RequestChangesButton: FC<{
@@ -41,9 +41,7 @@ export const RequestChangesButton: FC<{
         isVisible={visible}
         onRefetch={onRefetch}
         newStatus={ApplicationStatus.NeedsImprovement}
-        query={
-          DonationRequestApiFactory(undefined).donationRequestIdStatusPatch
-        }
+        query={DonationRequestFactory.donationRequestIdStatusPatch}
         applicationId={applicationId}
         onClose={() => setVisible(false)}
       ></ModalWithMessage>

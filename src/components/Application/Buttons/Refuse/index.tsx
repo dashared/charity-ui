@@ -1,11 +1,11 @@
 import React, { FC, useState } from "react";
 import { Button } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
-import { DonationRequestApiFactory } from "@generated";
 import { useTranslation } from "@providers";
+import { DonationRequestFactory } from "@providers/axios";
 
-import ModalWithMessage from "../Modal";
-import { ApplicationStatus } from "../Status/tag";
+import ModalWithMessage from "../../Modal";
+import { ApplicationStatus } from "../../Status/tag";
 
 export const RefuseButton: FC<{
   applicationId: string;
@@ -28,9 +28,7 @@ export const RefuseButton: FC<{
       </Button>
       <ModalWithMessage
         title={t("$views.modal.refuse")}
-        query={
-          DonationRequestApiFactory(undefined).donationRequestIdStatusPatch
-        }
+        query={DonationRequestFactory.donationRequestIdStatusPatch}
         newStatus={ApplicationStatus.Refused}
         onClose={() => setVisible(false)}
         isVisible={visible}
