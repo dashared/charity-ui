@@ -2,9 +2,9 @@ import React, { FC, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Popconfirm } from "antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { DonationRequestApiFactory } from "@generated";
+import { DonationRequestFactory } from "@providers/axios";
 
-import { ApplicationStatus } from "../Status/tag";
+import { ApplicationStatus } from "../../../Status/tag";
 
 export const StartProcessingButton: FC<{
   applicationId: string;
@@ -21,10 +21,7 @@ export const StartProcessingButton: FC<{
       const input = {
         status: ApplicationStatus.Processing,
       };
-      await DonationRequestApiFactory(undefined).donationRequestIdStatusPatch(
-        id,
-        input,
-      );
+      await DonationRequestFactory.donationRequestIdStatusPatch(id, input);
     } catch (e) {
       console.log(e);
     } finally {

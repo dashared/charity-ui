@@ -1,18 +1,9 @@
 import React, { FC } from "react";
-import { Empty, Skeleton, Space } from "antd";
-import { DonationRequestApiFactory } from "@generated";
+import { Empty, Skeleton } from "antd";
 import { PageProps, useTranslation, Workspace } from "@providers";
-import useAxios from "@providers/axios";
+import useAxios, { DonationRequestFactory } from "@providers/axios";
 
-import {
-  RefuseButton,
-  RequestChangesButton,
-  RequireConfirmationButton,
-  ReturnFromSpamButton,
-  SpamButton,
-  StartProcessingButton,
-  StopProcessingButton,
-} from "components/Application/Buttons";
+import ActionButtons from "components/Application/Buttons";
 import { ApplicationStatus } from "components/Application/Status/tag";
 import ApplicationView from "components/Application/View";
 
@@ -21,17 +12,7 @@ const Actions: FC<{
   status: ApplicationStatus;
   onRefetch: () => Promise<void>;
 }> = (props) => {
-  return (
-    <Space>
-      <SpamButton {...props} />
-      <ReturnFromSpamButton {...props} />
-      <StopProcessingButton {...props} />
-      <RequestChangesButton {...props} />
-      <StartProcessingButton {...props} />
-      <RefuseButton {...props} />
-      <RequireConfirmationButton {...props} />
-    </Space>
-  );
+  return <ActionButtons {...props} />;
 };
 
 const ApplicationPage: FC<PageProps> = ({ response }) => {
@@ -40,7 +21,7 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
   const { t } = useTranslation("Application");
 
   const { data, loading, refetchQuery } = useAxios(
-    DonationRequestApiFactory(undefined).donationRequestIdGet,
+    DonationRequestFactory.donationRequestIdGet,
     id,
   );
 
