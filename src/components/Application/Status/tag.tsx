@@ -6,8 +6,8 @@ import { NO_DATA_PLACEHOLDER } from "@lib/utils";
 export enum ApplicationStatus {
   New = "New",
   Spam = "Spam",
-  Processing = "InProcess",
-  Delete = "Delete",
+  Processing = "InProcessing",
+  Delete = "DeletedActive",
   RequiresConfirmation = "RequiresConfirmation",
   NeedsImprovement = "NeedsImprovement",
   Active = "Active",
