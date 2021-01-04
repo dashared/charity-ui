@@ -1,12 +1,12 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { Button, Descriptions } from "antd";
+import { Button, DatePicker, Descriptions, Input, Select, Space } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
 import { ModelsDonationRequestBody as Single } from "@generated";
 import { cred } from "@lib/utils/name";
 import { useTranslation } from "@providers";
+import moment from "moment";
 
-import EditModal from "components/Application/Modal/Edit";
 import StatusTag, {
   ApplicationStatus,
 } from "components/Application/Status/tag";
@@ -15,36 +15,43 @@ import UserPreview from "../../../Drawers/User";
 
 const Actions: FC<{
   id: string;
-  onRefetch: () => Promise<void>;
-}> = ({ id, onRefetch }) => {
-  const [editable, setEditMode] = useState(false);
-
-  useEffect(() => {
-    setEditMode(false);
-  }, []);
-
-  const close = useCallback(() => {
-    setEditMode(false);
-  }, [setEditMode]);
+  onSave: () => Promise<void>;
+  onClose: () => void;
+  onEdit: () => void;
+  editable: boolean;
+}> = ({ onSave, editable, onClose, onEdit }) => {
+  const saveAndClose = useCallback(() => {
+    onClose();
+    onSave();
+  }, [onClose, onSave]);
 
   const { t } = useTranslation("Common");
 
   return (
-    <>
-      <Button icon={<EditOutlined />} onClick={() => setEditMode(true)}>
-        {t("Button.edit")}
-      </Button>
+    <Space>
+      {!editable && (
+        <Button icon={<EditOutlined />} onClick={onEdit}>
+          {t("Button.edit")}
+        </Button>
+      )}
+
+      {editable && <Button onClick={onClose}>{t("Button.cancel")}</Button>}
 
       {editable && (
-        <EditModal
-          id={id}
-          onRefetch={onRefetch}
-          isVisible={editable}
-          onClose={close}
-        />
+        <Button onClick={saveAndClose} type="primary">
+          {t("Button.save")}
+        </Button>
       )}
-    </>
+    </Space>
   );
+};
+
+type EditableInfo = {
+  title?: string;
+  description?: string;
+  approvedAmount?: number;
+  endTime?: string;
+  assignee?: string;
 };
 
 const GeneralInfo: FC<{
@@ -52,6 +59,32 @@ const GeneralInfo: FC<{
   onRefetch: () => Promise<void>;
 }> = ({ info, onRefetch }) => {
   const [visible, setVisible] = useState(false);
+
+  const [editable, setEditable] = useState<boolean>(false);
+
+  const [initialInfo, updateInfo] = useState<EditableInfo>({
+    title: info.title,
+    description: info.description,
+    approvedAmount: info.approved_amount,
+    endTime: undefined,
+    assignee: info.assignee?.id,
+  });
+
+  useEffect(() => {
+    updateInfo({
+      title: info.title,
+      description: info.description,
+      approvedAmount: info.approved_amount,
+      endTime: undefined,
+      assignee: info.assignee?.id,
+    });
+  }, [updateInfo, info]);
+
+  const onSave = useCallback(async () => {
+    console.log(initialInfo);
+    // TODO: api call
+    onRefetch();
+  }, [onRefetch, initialInfo]);
 
   const { t } = useTranslation("Application");
 
@@ -61,10 +94,30 @@ const GeneralInfo: FC<{
         layout="vertical"
         bordered
         title={t("$views.tabs.generalInfoTitle")}
-        extra={<Actions id={info.id ?? ""} onRefetch={onRefetch} />}
+        extra={
+          <Actions
+            id={info.id ?? ""}
+            onSave={onSave}
+            onClose={() => setEditable(false)}
+            onEdit={() => setEditable(true)}
+            editable={editable}
+          />
+        }
       >
         <Descriptions.Item label={t("$views.card.description")} span={3}>
-          {info.description}
+          {!editable && <span>{initialInfo.description}</span>}
+          {editable && (
+            <Input.TextArea
+              defaultValue={initialInfo.description}
+              autoSize={true}
+              onChange={(e) => {
+                updateInfo({
+                  ...initialInfo,
+                  description: e.target.value,
+                });
+              }}
+            />
+          )}
         </Descriptions.Item>
 
         <Descriptions.Item label={t("$views.card.createdBy")}>
@@ -82,7 +135,18 @@ const GeneralInfo: FC<{
         </Descriptions.Item>
 
         <Descriptions.Item label={t("$views.card.approvedAmount")}>
-          {info.approved_amount}
+          {!editable && <span>{initialInfo.approvedAmount}</span>}
+          {editable && (
+            <Input
+              defaultValue={initialInfo.approvedAmount}
+              onChange={(e) => {
+                updateInfo({
+                  ...initialInfo,
+                  approvedAmount: Number(e.target.value),
+                });
+              }}
+            />
+          )}
         </Descriptions.Item>
 
         <Descriptions.Item label={t("$views.card.createdAt")}>
@@ -90,18 +154,51 @@ const GeneralInfo: FC<{
         </Descriptions.Item>
 
         <Descriptions.Item label={t("$views.card.endTime")} span={2}>
-          2019-04-24 18:00:00
+          {!editable && <span>{initialInfo.endTime}</span>}
+          {editable && (
+            <DatePicker
+              defaultValue={
+                initialInfo.endTime
+                  ? moment(initialInfo.endTime, "DD-MM-YYYY")
+                  : undefined
+              }
+              style={{ width: "100%" }}
+              onChange={(date, dateString) => {
+                updateInfo({
+                  ...initialInfo,
+                  endTime: dateString,
+                });
+              }}
+            />
+          )}
         </Descriptions.Item>
 
         <Descriptions.Item label={t("$views.card.status")}>
           <StatusTag status={info.status as ApplicationStatus} />
         </Descriptions.Item>
 
-        {info.assignee && (
-          <Descriptions.Item label={t("$views.card.assignee")}>
-            <Link>{info.assignee.id}</Link>
-          </Descriptions.Item>
-        )}
+        <Descriptions.Item label={t("$views.card.assignee")}>
+          {!editable && <Link>{initialInfo.assignee}</Link>}
+          {editable && (
+            <Select
+              style={{ width: "100%" }}
+              showSearch
+              defaultValue={initialInfo.assignee}
+              placeholder={t("$views.assignee")}
+              defaultActiveFirstOption={false}
+              showArrow={false}
+              filterOption={false}
+              // onSearch={this.handleSearch}
+              onSelect={(value) => {
+                updateInfo({
+                  ...initialInfo,
+                  assignee: value,
+                });
+              }}
+              //notFoundContent={null}
+            ></Select>
+          )}
+        </Descriptions.Item>
       </Descriptions>
 
       {visible && (
