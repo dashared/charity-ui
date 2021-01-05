@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Button, Form, Input, Skeleton } from "antd";
+import { Button, Card, Form, Input, Skeleton } from "antd";
 import { useTranslation } from "@providers";
 import useAxios, { UserRequestFactory } from "@providers/axios";
 
@@ -8,7 +8,7 @@ const layout = {
   wrapperCol: { span: 12 },
 };
 
-export const PersonalSettingsTab: FC<{ id: string }> = ({ id }) => {
+export const PersonalSettings: FC<{ id: string }> = ({ id }) => {
   const { t } = useTranslation("Settings");
 
   const { data, loading } = useAxios(UserRequestFactory.userUserIdGet, id);
@@ -22,9 +22,9 @@ export const PersonalSettingsTab: FC<{ id: string }> = ({ id }) => {
   }
 
   return (
-    <>
-      <h3>{t("personal")}</h3>
-      <br />
+    <Card bordered={false} title={t("personal")} id="personal">
+      {/* <h3>{t("personal")}</h3>
+      <br /> */}
       <Form
         {...layout}
         initialValues={{
@@ -55,6 +55,6 @@ export const PersonalSettingsTab: FC<{ id: string }> = ({ id }) => {
           <Button type="primary">{t("updateButton")}</Button>
         </Form.Item>
       </Form>
-    </>
+    </Card>
   );
 };

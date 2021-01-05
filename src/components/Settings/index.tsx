@@ -1,1 +1,1 @@
-export { PersonalSettingsTab } from "./Personal";
+export { PersonalSettings } from "./Personal";
