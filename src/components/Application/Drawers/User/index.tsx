@@ -11,7 +11,10 @@ const UserPreview: FC<{
 }> = ({ userId: id, visible, onClose }) => {
   const { t } = useTranslation("User");
 
-  const { data, loading } = useAxios(UserApiFactory(undefined).userIdGet, id);
+  const { data, loading } = useAxios(
+    UserApiFactory(undefined).userUserIdGet,
+    id,
+  );
 
   return (
     <Drawer

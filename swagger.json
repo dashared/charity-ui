@@ -1,20 +1,28 @@
 {
   "swagger": "2.0",
+  "host": "localhost:9000",
   "info": {
+    "title": "Charity API",
     "contact": {}
   },
   "paths": {
     "/donation-request": {
       "post": {
-        "tags": ["DonationRequest"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "DonationRequest"
+        ],
         "summary": "Creates donation request",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
         "parameters": [
           {
-            "in": "body",
-            "name": "request",
             "description": "Donation request Input",
+            "name": "request",
+            "in": "body",
             "required": true,
             "schema": {
               "$ref": "#/definitions/models.DonationRequestInput"
@@ -33,30 +41,31 @@
     },
     "/donation-request/": {
       "get": {
-        "tags": ["DonationRequest"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "DonationRequest"
+        ],
         "summary": "Retrieves all donation requests",
-        "produces": ["application/json"],
         "parameters": [
           {
-            "name": "page",
-            "in": "query",
+            "type": "integer",
             "description": "Page number",
-            "required": false,
-            "type": "integer"
+            "name": "page",
+            "in": "query"
           },
           {
-            "name": "size",
-            "in": "query",
+            "type": "integer",
             "description": "Page size",
-            "required": false,
-            "type": "integer"
+            "name": "size",
+            "in": "query"
           },
           {
-            "name": "sort",
-            "in": "query",
+            "type": "string",
             "description": "sort",
-            "required": false,
-            "type": "string"
+            "name": "sort",
+            "in": "query"
           }
         ],
         "responses": {
@@ -71,16 +80,20 @@
     },
     "/donation-request/{id}": {
       "get": {
-        "tags": ["DonationRequest"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "DonationRequest"
+        ],
         "summary": "Retrieves donation request based on given ID",
-        "produces": ["application/json"],
         "parameters": [
           {
+            "type": "string",
+            "description": "Donation request ID",
             "name": "id",
             "in": "path",
-            "description": "Donation request ID",
-            "required": true,
-            "type": "string"
+            "required": true
           }
         ],
         "responses": {
@@ -95,22 +108,24 @@
     },
     "/donation-request/{id}/status": {
       "patch": {
-        "tags": ["DonationRequest"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "DonationRequest"
+        ],
         "summary": "Updates status of donation request",
-        "produces": ["application/json"],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
+            "type": "string",
             "description": "donation request id",
-            "required": true,
-            "type": "string"
+            "name": "id",
+            "in": "path"
           },
           {
-            "in": "body",
-            "name": "input",
             "description": "Status and message",
-            "required": false,
+            "name": "input",
+            "in": "body",
             "schema": {
               "$ref": "#/definitions/models.UpdateDonationStatusInput"
             }
@@ -126,18 +141,21 @@
         }
       }
     },
-    "/upload": {
+    "/file/upload": {
       "post": {
-        "tags": ["File"],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "File"
+        ],
         "summary": "Uploads given file",
-        "consumes": ["multipart/form-data"],
         "parameters": [
           {
-            "name": "file",
-            "in": "formData",
+            "type": "object",
             "description": "File",
-            "required": false,
-            "type": "object"
+            "name": "file",
+            "in": "formData"
           }
         ],
         "responses": {
@@ -150,18 +168,22 @@
         }
       }
     },
-    "/user/{id}": {
+    "/user/user/{id}": {
       "get": {
-        "tags": ["User"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "User"
+        ],
         "summary": "Retrieves user based on given ID",
-        "produces": ["application/json"],
         "parameters": [
           {
+            "type": "string",
+            "description": "User ID",
             "name": "id",
             "in": "path",
-            "description": "User ID",
-            "required": true,
-            "type": "string"
+            "required": true
           }
         ],
         "responses": {
@@ -176,6 +198,9 @@
     }
   },
   "definitions": {
+    "DonationState.DonationStateEnum": {
+      "type": "object"
+    },
     "models.DonationRequestBody": {
       "type": "object",
       "properties": {
@@ -219,7 +244,7 @@
           "type": "integer"
         },
         "status": {
-          "type": "string"
+          "$ref": "#/definitions/DonationState.DonationStateEnum"
         },
         "title": {
           "type": "string"

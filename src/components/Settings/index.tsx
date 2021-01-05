@@ -1,0 +1,1 @@
+export { PersonalSettingsTab } from "./Personal";
