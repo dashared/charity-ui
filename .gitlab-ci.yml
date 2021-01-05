@@ -4,12 +4,15 @@ before_script:
   - yarn -v
 
 stages:
-  - code-style
+  - prettier
+  - eslint
 
 prettier:
-  stage: code-style
+  stage: prettier
   script: yarn lint:prettier
 
 eslint:
-  stage: code-style
+  stage: eslint
+  needs:
+    - job: prettier
   script: yarn lint:eslint
