@@ -1,9 +1,10 @@
 import React, { FC } from "react";
-import { Card, Tabs, Tooltip } from "antd";
+import { Badge, Card, Tabs, Tooltip } from "antd";
 import {
   DiffOutlined,
   FileOutlined,
   InfoCircleOutlined,
+  MessageOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { DonationRequestBody } from "@generated";
@@ -79,7 +80,9 @@ const ApplicationView: FC<{
         <TabPane
           tab={
             <Tooltip title={t("$views.tabs.commentsTitle")}>
-              <DiffOutlined />
+              <Badge count={5}>
+                <MessageOutlined />
+              </Badge>
             </Tooltip>
           }
         >
