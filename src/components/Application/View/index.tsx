@@ -6,7 +6,7 @@ import {
   InfoCircleOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { ModelsDonationRequestBody } from "@generated";
+import { DonationRequestBody } from "@generated";
 import { useTranslation } from "@providers";
 
 import DoneeInfoTab from "./Tabs/Donee";
@@ -17,7 +17,7 @@ import LogsTab from "./Tabs/Logs";
 const { TabPane } = Tabs;
 
 const ApplicationView: FC<{
-  donation: ModelsDonationRequestBody;
+  donation: DonationRequestBody;
   onRefetch: () => Promise<void>;
 }> = ({ donation, onRefetch }) => {
   const { t } = useTranslation("Application");

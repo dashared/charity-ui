@@ -20,6 +20,7 @@ export const StartProcessingButton: FC<{
       setLoading(true);
       const input = {
         status: ApplicationStatus.Processing,
+        role: "Manager",
       };
       await DonationRequestFactory.donationRequestIdStatusPatch(id, input);
     } catch (e) {

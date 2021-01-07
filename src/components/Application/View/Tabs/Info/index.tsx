@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import { Button, DatePicker, Descriptions, Input, Select, Space } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
-import { ModelsDonationRequestBody as Single } from "@generated";
+import { DonationRequestBody as Single } from "@generated";
 import { cred } from "@lib/utils/name";
 import { useTranslation } from "@providers";
 import moment from "moment";
