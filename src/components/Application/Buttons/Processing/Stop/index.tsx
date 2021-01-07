@@ -6,7 +6,7 @@ import { PauseCircleOutlined } from "@ant-design/icons";
 import { ApplicationStatus } from "components/Application/Status/tag";
 
 export const StopProcessingButton: FC<{
-  applicationId: string;
+  applicationId: number;
   status: ApplicationStatus;
   onRefetch: () => Promise<void>;
 }> = ({

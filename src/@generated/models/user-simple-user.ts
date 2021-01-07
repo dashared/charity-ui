@@ -25,6 +25,12 @@ export interface UserSimpleUser {
      * @type {string}
      * @memberof UserSimpleUser
      */
+    created_at?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSimpleUser
+     */
     first_name?: string;
     /**
      * 

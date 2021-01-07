@@ -24,6 +24,12 @@ import { UserUser } from './user-user';
 export interface DonationRequestDonationRequest {
     /**
      * 
+     * @type {boolean}
+     * @memberof DonationRequestDonationRequest
+     */
+    anonymous?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof DonationRequestDonationRequest
      */
@@ -60,10 +66,22 @@ export interface DonationRequestDonationRequest {
     donee?: UserSimpleUser;
     /**
      * 
+     * @type {number}
+     * @memberof DonationRequestDonationRequest
+     */
+    id?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DonationRequestDonationRequest
+     */
+    is_private?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof DonationRequestDonationRequest
      */
-    id?: string;
+    message?: string;
     /**
      * 
      * @type {string}
@@ -87,6 +105,12 @@ export interface DonationRequestDonationRequest {
      * @type {string}
      * @memberof DonationRequestDonationRequest
      */
+    started_at?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestDonationRequest
+     */
     status?: string;
     /**
      * 
@@ -94,6 +118,12 @@ export interface DonationRequestDonationRequest {
      * @memberof DonationRequestDonationRequest
      */
     title?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestDonationRequest
+     */
+    until?: string;
 }
 
 

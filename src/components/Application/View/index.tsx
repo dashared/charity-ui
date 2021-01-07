@@ -1,18 +1,22 @@
 import React, { FC } from "react";
-import { Card, Tabs, Tooltip } from "antd";
+import { Badge, Card, Tabs, Tooltip } from "antd";
 import {
   DiffOutlined,
   FileOutlined,
   InfoCircleOutlined,
+  MessageOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { DonationRequestBody } from "@generated";
 import { useTranslation } from "@providers";
 
-import DoneeInfoTab from "./Tabs/Donee";
-import FilesTab from "./Tabs/Files";
-import GeneralInfoTab from "./Tabs/Info";
-import LogsTab from "./Tabs/Logs";
+import {
+  CommentTab,
+  DoneeInfoTab,
+  FilesTab,
+  GeneralInfoTab,
+  LogsTab,
+} from "./Tabs";
 
 const { TabPane } = Tabs;
 
@@ -70,7 +74,19 @@ const ApplicationView: FC<{
           }
           key="logs"
         >
-          <LogsTab id={donation.id ?? ""} />
+          <LogsTab id={donation.id ?? 0} />
+        </TabPane>
+
+        <TabPane
+          tab={
+            <Tooltip title={t("$views.tabs.commentsTitle")}>
+              <Badge count={5}>
+                <MessageOutlined />
+              </Badge>
+            </Tooltip>
+          }
+        >
+          <CommentTab id={donation.id ?? 0} />
         </TabPane>
       </Tabs>
     </Card>

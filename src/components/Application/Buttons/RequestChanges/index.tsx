@@ -9,7 +9,7 @@ import { ApplicationStatus } from "../../Status/tag";
 
 /** Leaves a comment and transferes application into "NeedsImprovement" status. */
 export const RequestChangesButton: FC<{
-  applicationId: string;
+  applicationId: number;
   status: ApplicationStatus;
   onRefetch: () => Promise<void>;
 }> = ({ applicationId, status, onRefetch }) => {

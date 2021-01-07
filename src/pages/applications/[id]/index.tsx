@@ -8,7 +8,7 @@ import { ApplicationStatus } from "components/Application/Status/tag";
 import ApplicationView from "components/Application/View";
 
 const Actions: FC<{
-  applicationId: string;
+  applicationId: number;
   status: ApplicationStatus;
   onRefetch: () => Promise<void>;
 }> = (props) => {
@@ -41,7 +41,7 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
       // TODO: replace id: 1 after it's done in API https://www.notion.so/Human-readable-id-User-fa8d1bda3a11449781f924f1c187645e
       actions={
         <Actions
-          applicationId={data.id ?? ""}
+          applicationId={data.id ?? 0}
           status={data.status as ApplicationStatus}
           onRefetch={refetchQuery}
         />

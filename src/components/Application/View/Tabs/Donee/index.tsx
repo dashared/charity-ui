@@ -6,7 +6,7 @@ import { UserSimpleUser as Donee } from "@generated";
 import { fullName } from "@lib/utils/name";
 import { useTranslation } from "@providers";
 
-const DoneeInfoTab: FC<{
+export const DoneeInfoTab: FC<{
   applicantId?: string;
   donee?: Donee;
   relationship?: string;
@@ -61,5 +61,3 @@ function doneeTitle(
     );
   }
 }
-
-export default DoneeInfoTab;

@@ -24,7 +24,7 @@ export { RequireConfirmationButton } from "./RequireConfirmation";
 export { RefuseButton } from "./Refuse";
 
 type ApplicationButtonsProps = {
-  applicationId: string;
+  applicationId: number;
   status: ApplicationStatus;
   onRefetch: () => Promise<void>;
 };

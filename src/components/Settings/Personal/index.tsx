@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { Button, Card, Form, Input, Skeleton } from "antd";
 import { useTranslation } from "@providers";
 import useAxios, { UserRequestFactory } from "@providers/axios";
+// import { IdComponent } from "@typings/component";
 
 const layout = {
   labelCol: { span: 6 },

@@ -1,8 +1,7 @@
-import React, { FC } from "react";
+import React from "react";
 import { Skeleton } from "antd";
+import { IdComponent } from "@typings/component";
 
-const LogsTab: FC<{ id: string }> = () => {
+export const LogsTab: IdComponent = () => {
   return <Skeleton active={true} />;
 };
-
-export default LogsTab;
