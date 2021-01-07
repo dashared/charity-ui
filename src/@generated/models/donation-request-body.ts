@@ -13,97 +13,91 @@
  */
 
 
-import { ModelsSimpleUser } from './models-simple-user';
-import { ModelsUser } from './models-user';
+import { UserSimpleUser } from './user-simple-user';
+import { UserUser } from './user-user';
 
 /**
  * 
  * @export
- * @interface ModelsDonationRequestBody
+ * @interface DonationRequestBody
  */
-export interface ModelsDonationRequestBody {
+export interface DonationRequestBody {
     /**
      * 
      * @type {number}
-     * @memberof ModelsDonationRequestBody
+     * @memberof DonationRequestBody
      */
     approved_amount?: number;
     /**
      * 
-     * @type {ModelsUser}
-     * @memberof ModelsDonationRequestBody
+     * @type {UserUser}
+     * @memberof DonationRequestBody
      */
-    assignee?: ModelsUser;
+    assignee?: UserUser;
     /**
      * 
-     * @type {ModelsUser}
-     * @memberof ModelsDonationRequestBody
+     * @type {UserUser}
+     * @memberof DonationRequestBody
      */
-    author?: ModelsUser;
+    author?: UserUser;
     /**
      * 
      * @type {string}
-     * @memberof ModelsDonationRequestBody
+     * @memberof DonationRequestBody
      */
     created_at?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelsDonationRequestBody
+     * @memberof DonationRequestBody
      */
     description?: string;
     /**
      * 
-     * @type {ModelsSimpleUser}
-     * @memberof ModelsDonationRequestBody
+     * @type {UserSimpleUser}
+     * @memberof DonationRequestBody
      */
-    donee?: ModelsSimpleUser;
+    donee?: UserSimpleUser;
     /**
      * 
      * @type {Array<string>}
-     * @memberof ModelsDonationRequestBody
+     * @memberof DonationRequestBody
      */
     file_id?: Array<string>;
     /**
      * 
      * @type {string}
-     * @memberof ModelsDonationRequestBody
+     * @memberof DonationRequestBody
      */
     id?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelsDonationRequestBody
-     */
-    message?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelsDonationRequestBody
+     * @memberof DonationRequestBody
      */
     relationship?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelsDonationRequestBody
+     * @memberof DonationRequestBody
      */
     request_type?: string;
     /**
      * 
      * @type {number}
-     * @memberof ModelsDonationRequestBody
+     * @memberof DonationRequestBody
      */
     requested_amount?: number;
     /**
      * 
-     * @type {object}
-     * @memberof ModelsDonationRequestBody
+     * @type {string}
+     * @memberof DonationRequestBody
      */
-    status?: object;
+    status?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelsDonationRequestBody
+     * @memberof DonationRequestBody
      */
     title?: string;
 }

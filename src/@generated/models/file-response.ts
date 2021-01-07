@@ -17,33 +17,21 @@
 /**
  * 
  * @export
- * @interface ModelsSimpleUser
+ * @interface FileResponse
  */
-export interface ModelsSimpleUser {
+export interface FileResponse {
     /**
      * 
      * @type {string}
-     * @memberof ModelsSimpleUser
+     * @memberof FileResponse
      */
-    first_name?: string;
+    createdAt?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelsSimpleUser
+     * @memberof FileResponse
      */
     id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelsSimpleUser
-     */
-    last_name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ModelsSimpleUser
-     */
-    middle_name?: string;
 }
 
 

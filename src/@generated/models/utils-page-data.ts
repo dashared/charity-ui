@@ -17,27 +17,33 @@
 /**
  * 
  * @export
- * @interface ModelsUpdateDonationStatusInput
+ * @interface UtilsPageData
  */
-export interface ModelsUpdateDonationStatusInput {
+export interface UtilsPageData {
     /**
      * 
-     * @type {string}
-     * @memberof ModelsUpdateDonationStatusInput
+     * @type {number}
+     * @memberof UtilsPageData
      */
-    message?: string;
+    page?: number;
     /**
      * 
-     * @type {string}
-     * @memberof ModelsUpdateDonationStatusInput
+     * @type {number}
+     * @memberof UtilsPageData
      */
-    status?: string;
+    size?: number;
     /**
      * 
-     * @type {string}
-     * @memberof ModelsUpdateDonationStatusInput
+     * @type {number}
+     * @memberof UtilsPageData
      */
-    user_id?: string;
+    totalElements?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UtilsPageData
+     */
+    totalPages?: number;
 }
 
 

@@ -19,7 +19,7 @@ import { Configuration } from '../configuration';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { ModelsUser } from '../models';
+import { UserUser } from '../models';
 /**
  * UserApi - axios parameter creator
  * @export
@@ -33,12 +33,12 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userUserIdGet: async (id: string, options: any = {}): Promise<RequestArgs> => {
+        userIdGet: async (id: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling userUserIdGet.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling userIdGet.');
             }
-            const localVarPath = `/user/user/{id}`
+            const localVarPath = `/user/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -85,8 +85,8 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async userUserIdGet(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelsUser>> {
-            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).userUserIdGet(id, options);
+        async userIdGet(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserUser>> {
+            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).userIdGet(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -108,22 +108,22 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userUserIdGet(id: string, options?: any): AxiosPromise<ModelsUser> {
-            return UserApiFp(configuration).userUserIdGet(id, options).then((request) => request(axios, basePath));
+        userIdGet(id: string, options?: any): AxiosPromise<UserUser> {
+            return UserApiFp(configuration).userIdGet(id, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for userUserIdGet operation in UserApi.
+ * Request parameters for userIdGet operation in UserApi.
  * @export
- * @interface UserApiUserUserIdGetRequest
+ * @interface UserApiUserIdGetRequest
  */
-export interface UserApiUserUserIdGetRequest {
+export interface UserApiUserIdGetRequest {
     /**
      * User ID
      * @type {string}
-     * @memberof UserApiUserUserIdGet
+     * @memberof UserApiUserIdGet
      */
     readonly id: string
 }
@@ -138,12 +138,12 @@ export class UserApi extends BaseAPI {
     /**
      * 
      * @summary Retrieves user based on given ID
-     * @param {UserApiUserUserIdGetRequest} requestParameters Request parameters.
+     * @param {UserApiUserIdGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public userUserIdGet(requestParameters: UserApiUserUserIdGetRequest, options?: any) {
-        return UserApiFp(this.configuration).userUserIdGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public userIdGet(requestParameters: UserApiUserIdGetRequest, options?: any) {
+        return UserApiFp(this.configuration).userIdGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }

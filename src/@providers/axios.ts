@@ -3,7 +3,7 @@ import { DonationRequestApiFactory, UserApiFactory } from "@generated";
 import { AxiosResponse as Response } from "axios";
 
 // i18n reexports
-export type { ModelsPageData as PageData } from "@generated";
+export type { UtilsPageData as PageData } from "@generated";
 
 type AxiosResponse<R> = {
   data: R | undefined;

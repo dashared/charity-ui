@@ -19,7 +19,7 @@ import { Configuration } from '../configuration';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { ModelsFileResponse } from '../models';
+import { FileResponse } from '../models';
 /**
  * FileApi - axios parameter creator
  * @export
@@ -88,7 +88,7 @@ export const FileApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async fileUploadPost(file?: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ModelsFileResponse>> {
+        async fileUploadPost(file?: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileResponse>> {
             const localVarAxiosArgs = await FileApiAxiosParamCreator(configuration).fileUploadPost(file, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -111,7 +111,7 @@ export const FileApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        fileUploadPost(file?: object, options?: any): AxiosPromise<ModelsFileResponse> {
+        fileUploadPost(file?: object, options?: any): AxiosPromise<FileResponse> {
             return FileApiFp(configuration).fileUploadPost(file, options).then((request) => request(axios, basePath));
         },
     };

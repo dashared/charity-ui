@@ -8,7 +8,7 @@ export enum ApplicationStatus {
   Spam = "Spam",
   Processing = "InProcessing",
   Delete = "DeletedActive",
-  RequiresConfirmation = "RequiresConfirmation",
+  RequiresConfirmation = "SuperManagerConfirmation",
   NeedsImprovement = "NeedsImprovement",
   Active = "Active",
   Refused = "Refused",
@@ -24,6 +24,8 @@ function getColor(level: ApplicationStatus): TagProps["color"] {
       return "pink";
     case ApplicationStatus.NeedsImprovement:
       return "warning";
+    case ApplicationStatus.RequiresConfirmation:
+      return "gray";
     case ApplicationStatus.Active:
       return "green";
     case ApplicationStatus.Spam:

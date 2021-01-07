@@ -1,8 +1,8 @@
 import React, { FC, useRef } from "react";
 import { Link } from "@curi/react-dom";
 import {
-  ModelsDonationRequestBody as Single,
-  ModelsDonationRequestResponse as Result,
+  DonationRequestBody as Single,
+  DonationRequestResponse as Result,
 } from "@generated";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
@@ -37,7 +37,7 @@ const ApplicationsPage: FC = () => {
         return (
           // TODO: replace id after it's done in API https://www.notion.so/Human-readable-id-User-fa8d1bda3a11449781f924f1c187645e
           <Link params={{ id: record.id }} name="applications:show">
-            id
+            {record.id}
           </Link>
         );
       },

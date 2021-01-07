@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import {
-  ModelsDonationRequestResponse,
-  ModelsUpdateDonationStatusInput,
+  DonationRequestResponse,
+  DonationRequestUpdateInput,
 } from "@generated";
 import { notify } from "@lib/utils/notification";
 import { AxiosPromise } from "axios";
@@ -18,10 +18,10 @@ type FormValues = {
 const ModalWithMessage: FC<{
   query: (
     id: string,
-    input: ModelsUpdateDonationStatusInput,
+    input: DonationRequestUpdateInput,
     // eslint-disable-next-line
     options?: any,
-  ) => AxiosPromise<ModelsDonationRequestResponse>;
+  ) => AxiosPromise<DonationRequestResponse>;
   title: string;
   applicationId: string;
   newStatus: ApplicationStatus;
@@ -52,9 +52,11 @@ const ModalWithMessage: FC<{
       try {
         setConfirmLoading(true);
 
-        const input: ModelsUpdateDonationStatusInput = {
+        console.log(values);
+
+        const input: DonationRequestUpdateInput = {
           status: newStatus,
-          message: values.message,
+          role: "Manager",
         };
 
         await query(id, input);

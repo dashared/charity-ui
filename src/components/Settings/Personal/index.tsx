@@ -11,7 +11,7 @@ const layout = {
 export const PersonalSettings: FC<{ id: string }> = ({ id }) => {
   const { t } = useTranslation("Settings");
 
-  const { data, loading } = useAxios(UserRequestFactory.userUserIdGet, id);
+  const { data, loading } = useAxios(UserRequestFactory.userIdGet, id);
 
   if (loading) {
     return <Skeleton active={loading} />;

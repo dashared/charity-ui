@@ -13,72 +13,72 @@
  */
 
 
-import { ModelsSimpleUser } from './models-simple-user';
+import { UserSimpleUser } from './user-simple-user';
 
 /**
  * 
  * @export
- * @interface ModelsDonationRequestInput
+ * @interface DonationRequestInput
  */
-export interface ModelsDonationRequestInput {
+export interface DonationRequestInput {
     /**
      * 
      * @type {string}
-     * @memberof ModelsDonationRequestInput
+     * @memberof DonationRequestInput
      */
     applicant_id?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelsDonationRequestInput
+     * @memberof DonationRequestInput
      */
     assignee_id?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelsDonationRequestInput
+     * @memberof DonationRequestInput
      */
     description?: string;
     /**
      * 
-     * @type {ModelsSimpleUser}
-     * @memberof ModelsDonationRequestInput
+     * @type {UserSimpleUser}
+     * @memberof DonationRequestInput
      */
-    donee?: ModelsSimpleUser;
+    donee?: UserSimpleUser;
     /**
      * 
      * @type {Array<string>}
-     * @memberof ModelsDonationRequestInput
+     * @memberof DonationRequestInput
      */
     file_ids?: Array<string>;
     /**
      * 
      * @type {string}
-     * @memberof ModelsDonationRequestInput
+     * @memberof DonationRequestInput
      */
     message?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelsDonationRequestInput
+     * @memberof DonationRequestInput
      */
     relationship?: string;
     /**
      * 
      * @type {number}
-     * @memberof ModelsDonationRequestInput
+     * @memberof DonationRequestInput
      */
     request_amount?: number;
     /**
      * 
      * @type {string}
-     * @memberof ModelsDonationRequestInput
+     * @memberof DonationRequestInput
      */
     request_type?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelsDonationRequestInput
+     * @memberof DonationRequestInput
      */
     title?: string;
 }

@@ -13,25 +13,27 @@
  */
 
 
+import { DonationRequestBody } from './donation-request-body';
+import { UtilsPageData } from './utils-page-data';
 
 /**
  * 
  * @export
- * @interface ModelsFileResponse
+ * @interface DonationRequestResponse
  */
-export interface ModelsFileResponse {
+export interface DonationRequestResponse {
     /**
      * 
-     * @type {string}
-     * @memberof ModelsFileResponse
+     * @type {Array<DonationRequestBody>}
+     * @memberof DonationRequestResponse
      */
-    createdAt?: string;
+    data?: Array<DonationRequestBody>;
     /**
      * 
-     * @type {string}
-     * @memberof ModelsFileResponse
+     * @type {UtilsPageData}
+     * @memberof DonationRequestResponse
      */
-    id?: string;
+    page?: UtilsPageData;
 }
 
 

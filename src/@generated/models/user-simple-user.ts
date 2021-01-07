@@ -17,31 +17,31 @@
 /**
  * 
  * @export
- * @interface ModelsUser
+ * @interface UserSimpleUser
  */
-export interface ModelsUser {
+export interface UserSimpleUser {
     /**
      * 
      * @type {string}
-     * @memberof ModelsUser
+     * @memberof UserSimpleUser
      */
     first_name?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelsUser
+     * @memberof UserSimpleUser
      */
     id?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelsUser
+     * @memberof UserSimpleUser
      */
     last_name?: string;
     /**
      * 
      * @type {string}
-     * @memberof ModelsUser
+     * @memberof UserSimpleUser
      */
     middle_name?: string;
 }

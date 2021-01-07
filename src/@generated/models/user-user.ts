@@ -13,27 +13,37 @@
  */
 
 
-import { ModelsDonationRequestBody } from './models-donation-request-body';
-import { ModelsPageData } from './models-page-data';
 
 /**
  * 
  * @export
- * @interface ModelsDonationRequestResponse
+ * @interface UserUser
  */
-export interface ModelsDonationRequestResponse {
+export interface UserUser {
     /**
      * 
-     * @type {Array<ModelsDonationRequestBody>}
-     * @memberof ModelsDonationRequestResponse
+     * @type {string}
+     * @memberof UserUser
      */
-    data?: Array<ModelsDonationRequestBody>;
+    first_name?: string;
     /**
      * 
-     * @type {ModelsPageData}
-     * @memberof ModelsDonationRequestResponse
+     * @type {string}
+     * @memberof UserUser
      */
-    page?: ModelsPageData;
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUser
+     */
+    last_name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUser
+     */
+    middle_name?: string;
 }
 
 

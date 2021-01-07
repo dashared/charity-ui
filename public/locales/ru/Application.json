@@ -62,10 +62,10 @@
   },
   "Status": {
     "New": "Новая",
-    "Process": "В обработке",
+    "InProcessing": "В обработке",
     "NeedsImprovement": "На доработке",
     "Spam": "Спам",
-    "RequiresConfirmation": "Ждет активации",
+    "SuperManagerConfirmation": "Ждет активации",
     "Active": "Активна"
   }
 }
