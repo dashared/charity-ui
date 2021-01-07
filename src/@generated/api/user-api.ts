@@ -19,6 +19,8 @@ import { Configuration } from '../configuration';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
+import { UserResponse } from '../models';
+// @ts-ignore
 import { UserUser } from '../models';
 /**
  * UserApi - axios parameter creator
@@ -26,6 +28,58 @@ import { UserUser } from '../models';
  */
 export const UserApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @summary GetAllUsers
+         * @param {number} [page] Page number
+         * @param {number} [size] Page size
+         * @param {string} [sort] sort
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userGet: async (page?: number, size?: number, sort?: string, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/user`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+
+    
+            const queryParameters = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                queryParameters.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                queryParameters.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Retrieves user based on given ID
@@ -80,6 +134,22 @@ export const UserApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary GetAllUsers
+         * @param {number} [page] Page number
+         * @param {number} [size] Page size
+         * @param {string} [sort] sort
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async userGet(page?: number, size?: number, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponse>> {
+            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).userGet(page, size, sort, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @summary Retrieves user based on given ID
          * @param {string} id User ID
          * @param {*} [options] Override http request option.
@@ -103,6 +173,18 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
+         * @summary GetAllUsers
+         * @param {number} [page] Page number
+         * @param {number} [size] Page size
+         * @param {string} [sort] sort
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userGet(page?: number, size?: number, sort?: string, options?: any): AxiosPromise<UserResponse> {
+            return UserApiFp(configuration).userGet(page, size, sort, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Retrieves user based on given ID
          * @param {string} id User ID
          * @param {*} [options] Override http request option.
@@ -113,6 +195,34 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         },
     };
 };
+
+/**
+ * Request parameters for userGet operation in UserApi.
+ * @export
+ * @interface UserApiUserGetRequest
+ */
+export interface UserApiUserGetRequest {
+    /**
+     * Page number
+     * @type {number}
+     * @memberof UserApiUserGet
+     */
+    readonly page?: number
+
+    /**
+     * Page size
+     * @type {number}
+     * @memberof UserApiUserGet
+     */
+    readonly size?: number
+
+    /**
+     * sort
+     * @type {string}
+     * @memberof UserApiUserGet
+     */
+    readonly sort?: string
+}
 
 /**
  * Request parameters for userIdGet operation in UserApi.
@@ -135,6 +245,18 @@ export interface UserApiUserIdGetRequest {
  * @extends {BaseAPI}
  */
 export class UserApi extends BaseAPI {
+    /**
+     * 
+     * @summary GetAllUsers
+     * @param {UserApiUserGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public userGet(requestParameters: UserApiUserGetRequest = {}, options?: any) {
+        return UserApiFp(this.configuration).userGet(requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Retrieves user based on given ID

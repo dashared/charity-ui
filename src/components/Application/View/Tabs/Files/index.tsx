@@ -8,7 +8,7 @@ type File = {
   fileName: string;
 };
 
-const FilesTab: FC<{ files: string[] }> = ({ files }) => {
+export const FilesTab: FC<{ files: string[] }> = ({ files }) => {
   const {
     isTarget,
     isSelected,
@@ -62,5 +62,3 @@ const FilesTab: FC<{ files: string[] }> = ({ files }) => {
     />
   );
 };
-
-export default FilesTab;

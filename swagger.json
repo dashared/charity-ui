@@ -75,7 +75,7 @@
         "summary": "Retrieves donation request based on given ID",
         "parameters": [
           {
-            "type": "string",
+            "type": "integer",
             "description": "Donation request ID",
             "name": "id",
             "in": "path",
@@ -99,7 +99,7 @@
         "summary": "RollBacks status of donation request",
         "parameters": [
           {
-            "type": "string",
+            "type": "integer",
             "description": "donation request id",
             "name": "id",
             "in": "path"
@@ -120,7 +120,7 @@
         "summary": "Updates status of donation request",
         "parameters": [
           {
-            "type": "string",
+            "type": "integer",
             "description": "donation request id",
             "name": "id",
             "in": "path"
@@ -167,6 +167,41 @@
         }
       }
     },
+    "/user": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["User"],
+        "summary": "GetAllUsers",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Page number",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Page size",
+            "name": "size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "sort",
+            "name": "sort",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User.Response"
+            }
+          }
+        }
+      }
+    },
     "/user/{id}": {
       "get": {
         "produces": ["application/json"],
@@ -196,6 +231,9 @@
     "DonationRequest.Body": {
       "type": "object",
       "properties": {
+        "anonymous": {
+          "type": "boolean"
+        },
         "approved_amount": {
           "type": "integer"
         },
@@ -221,6 +259,12 @@
           }
         },
         "id": {
+          "type": "integer"
+        },
+        "is_private": {
+          "type": "boolean"
+        },
+        "message": {
           "type": "string"
         },
         "relationship": {
@@ -232,10 +276,16 @@
         "requested_amount": {
           "type": "integer"
         },
+        "started_at": {
+          "type": "string"
+        },
         "status": {
           "type": "string"
         },
         "title": {
+          "type": "string"
+        },
+        "until": {
           "type": "string"
         }
       }
@@ -243,6 +293,9 @@
     "DonationRequest.DonationRequest": {
       "type": "object",
       "properties": {
+        "anonymous": {
+          "type": "boolean"
+        },
         "approved_amount": {
           "type": "integer"
         },
@@ -262,6 +315,12 @@
           "$ref": "#/definitions/User.SimpleUser"
         },
         "id": {
+          "type": "integer"
+        },
+        "is_private": {
+          "type": "boolean"
+        },
+        "message": {
           "type": "string"
         },
         "relationship": {
@@ -273,10 +332,16 @@
         "requested_amount": {
           "type": "integer"
         },
+        "started_at": {
+          "type": "string"
+        },
         "status": {
           "type": "string"
         },
         "title": {
+          "type": "string"
+        },
+        "until": {
           "type": "string"
         }
       }
@@ -358,9 +423,26 @@
         }
       }
     },
+    "User.Response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User.User"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/utils.PageData"
+        }
+      }
+    },
     "User.SimpleUser": {
       "type": "object",
       "properties": {
+        "created_at": {
+          "type": "string"
+        },
         "first_name": {
           "type": "string"
         },
@@ -378,6 +460,9 @@
     "User.User": {
       "type": "object",
       "properties": {
+        "created_at": {
+          "type": "string"
+        },
         "first_name": {
           "type": "string"
         },

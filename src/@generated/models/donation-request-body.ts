@@ -24,6 +24,12 @@ import { UserUser } from './user-user';
 export interface DonationRequestBody {
     /**
      * 
+     * @type {boolean}
+     * @memberof DonationRequestBody
+     */
+    anonymous?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof DonationRequestBody
      */
@@ -66,10 +72,22 @@ export interface DonationRequestBody {
     file_id?: Array<string>;
     /**
      * 
+     * @type {number}
+     * @memberof DonationRequestBody
+     */
+    id?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DonationRequestBody
+     */
+    is_private?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof DonationRequestBody
      */
-    id?: string;
+    message?: string;
     /**
      * 
      * @type {string}
@@ -93,6 +111,12 @@ export interface DonationRequestBody {
      * @type {string}
      * @memberof DonationRequestBody
      */
+    started_at?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestBody
+     */
     status?: string;
     /**
      * 
@@ -100,6 +124,12 @@ export interface DonationRequestBody {
      * @memberof DonationRequestBody
      */
     title?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestBody
+     */
+    until?: string;
 }
 
 

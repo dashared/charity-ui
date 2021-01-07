@@ -17,13 +17,13 @@ type FormValues = {
 
 const ModalWithMessage: FC<{
   query: (
-    id: string,
+    id: number,
     input: DonationRequestUpdateInput,
     // eslint-disable-next-line
     options?: any,
   ) => AxiosPromise<DonationRequestResponse>;
   title: string;
-  applicationId: string;
+  applicationId: number;
   newStatus: ApplicationStatus;
   onRefetch: () => Promise<void>;
   isVisible: boolean;

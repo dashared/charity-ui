@@ -9,10 +9,13 @@ import {
 import { DonationRequestBody } from "@generated";
 import { useTranslation } from "@providers";
 
-import DoneeInfoTab from "./Tabs/Donee";
-import FilesTab from "./Tabs/Files";
-import GeneralInfoTab from "./Tabs/Info";
-import LogsTab from "./Tabs/Logs";
+import {
+  CommentTab,
+  DoneeInfoTab,
+  FilesTab,
+  GeneralInfoTab,
+  LogsTab,
+} from "./Tabs";
 
 const { TabPane } = Tabs;
 
@@ -70,7 +73,17 @@ const ApplicationView: FC<{
           }
           key="logs"
         >
-          <LogsTab id={donation.id ?? ""} />
+          <LogsTab id={donation.id ?? 0} />
+        </TabPane>
+
+        <TabPane
+          tab={
+            <Tooltip title={t("$views.tabs.commentsTitle")}>
+              <DiffOutlined />
+            </Tooltip>
+          }
+        >
+          <CommentTab id={donation.id ?? 0} />
         </TabPane>
       </Tabs>
     </Card>

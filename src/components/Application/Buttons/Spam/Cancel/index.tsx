@@ -7,7 +7,7 @@ import { DonationRequestFactory } from "@providers/axios";
 import { ApplicationStatus } from "../../../Status/tag";
 
 export const ReturnFromSpamButton: FC<{
-  applicationId: string;
+  applicationId: number;
   status: ApplicationStatus;
   onRefetch: () => Promise<void>;
 }> = ({ onRefetch, status, applicationId: id }) => {

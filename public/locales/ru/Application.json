@@ -15,7 +15,8 @@
       "generalInfoTitle": "Основная информация",
       "doneeInfoTitle": "Нуждающийся",
       "logsTitle": "История",
-      "filesTitle": "Файлы"
+      "filesTitle": "Файлы",
+      "commentsTitle": "Комментарии"
     },
     "confirm": {
       "spam": "Отправить заявку в спам?",

@@ -8,7 +8,7 @@ import ModalWithMessage from "../../Modal";
 import { ApplicationStatus } from "../../Status/tag";
 
 export const SpamButton: FC<{
-  applicationId: string;
+  applicationId: number;
   status: ApplicationStatus;
   onRefetch: () => Promise<void>;
 }> = ({ onRefetch, status, applicationId }) => {

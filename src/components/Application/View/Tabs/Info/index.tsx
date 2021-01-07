@@ -14,7 +14,7 @@ import StatusTag, {
 import UserPreview from "../../../Drawers/User";
 
 const Actions: FC<{
-  id: string;
+  id: number;
   onSave: () => Promise<void>;
   onClose: () => void;
   onEdit: () => void;
@@ -54,7 +54,7 @@ type EditableInfo = {
   assignee?: string;
 };
 
-const GeneralInfo: FC<{
+export const GeneralInfo: FC<{
   info: Single;
   onRefetch: () => Promise<void>;
 }> = ({ info, onRefetch }) => {
@@ -96,7 +96,7 @@ const GeneralInfo: FC<{
         title={t("$views.tabs.generalInfoTitle")}
         extra={
           <Actions
-            id={info.id ?? ""}
+            id={info.id ?? 0}
             onSave={onSave}
             onClose={() => setEditable(false)}
             onEdit={() => setEditable(true)}
@@ -211,5 +211,3 @@ const GeneralInfo: FC<{
     </>
   );
 };
-
-export default GeneralInfo;

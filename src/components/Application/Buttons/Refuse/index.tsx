@@ -8,7 +8,7 @@ import ModalWithMessage from "../../Modal";
 import { ApplicationStatus } from "../../Status/tag";
 
 export const RefuseButton: FC<{
-  applicationId: string;
+  applicationId: number;
   status: ApplicationStatus;
   onRefetch: () => Promise<void>;
 }> = ({ applicationId, status, onRefetch }) => {
