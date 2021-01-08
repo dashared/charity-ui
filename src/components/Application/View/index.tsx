@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MutableRefObject, useEffect } from "react";
 import { Badge, Card, Tabs, Tooltip } from "antd";
 import {
   DiffOutlined,
@@ -34,6 +34,15 @@ const ApplicationView = React.forwardRef<RefType, PropsType>((props, ref) => {
   const { t } = useTranslation("Application");
 
   const { donation, onRefetch } = props;
+
+  useEffect(() => {
+    if (ref !== undefined) {
+      (ref as MutableRefObject<RefType>).current = {
+        onRefetch,
+      };
+    }
+    // eslint-disable-next-line
+  }, [ref]);
 
   return (
     <Card>
