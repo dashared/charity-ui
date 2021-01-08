@@ -1,4 +1,10 @@
-import React, { FC, useRef } from "react";
+import React, {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   DonationRequestHistoryResponse as Result,
   DonationRequestStatusHistory as Single,
@@ -15,16 +21,20 @@ import StatusTag, {
 
 import styles from "./styles.module.less";
 
-export const LogsTab: FC<{
+type RefType = {
+  onRefetch: () => Promise<void>;
+};
+
+type PropsType = {
   id: number;
-}> = ({ id }) => {
+  onButtonsStatusRefetch: () => Promise<void>;
+};
+
+export const LogsTab = React.forwardRef<RefType, PropsType>((props, ref) => {
+  const { id, onButtonsStatusRefetch } = props;
   const { t } = useTranslation("Application");
 
-  const paginationState = useRef<StateRef>(null);
-
-  // useEffect(() => {
-  //   onRefetch(paginationState.current?.page ?? 0, paginationState.current?.size ?? 0);
-  // }, [])
+  const [refetch, setRefetch] = useState<boolean | undefined>(undefined);
 
   const {
     isTarget,
@@ -32,6 +42,27 @@ export const LogsTab: FC<{
     onElementClick,
     setList,
   } = useListSelection<Single>();
+
+  const onResult = useCallback(
+    (result: Result) => {
+      setList(result.data ?? []);
+    },
+    [setList],
+  );
+
+  const paginationState = useRef<StateRef>(null);
+
+  useEffect(() => {
+    if (ref !== null) {
+      (ref as MutableRefObject<RefType>).current = {
+        onRefetch: async () => {
+          await onButtonsStatusRefetch();
+          setRefetch(!refetch);
+        },
+      };
+    }
+    // eslint-disable-next-line
+  }, [ref, setRefetch, refetch]);
 
   const columns = [
     {
@@ -67,10 +98,9 @@ export const LogsTab: FC<{
       className={styles.pagination}
       requestQuery={DonationRequestFactory.donationRequestIdHistoryGet}
       stateRef={paginationState}
+      refetch={refetch}
       variables={{ id }}
-      onResult={(result) => {
-        setList(result.data ?? []);
-      }}
+      onResult={onResult}
       render={(entries) => (
         <RegistryTable
           entity="Application"
@@ -90,4 +120,4 @@ export const LogsTab: FC<{
       )}
     />
   );
-};
+});

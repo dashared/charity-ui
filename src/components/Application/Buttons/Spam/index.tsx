@@ -14,8 +14,6 @@ export const SpamButton: FC<{
 }> = ({ onRefetch, status, applicationId }) => {
   const [visible, setVisible] = useState(false);
 
-  console.log(visible);
-
   const { t } = useTranslation("Application");
 
   const showModal = (): void => {

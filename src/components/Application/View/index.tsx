@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import { Badge, Card, Tabs, Tooltip } from "antd";
 import {
   DiffOutlined,
@@ -21,11 +21,19 @@ import {
 
 const { TabPane } = Tabs;
 
-const ApplicationView: FC<{
+type PropsType = {
   donation: DonationRequestBody;
   onRefetch: () => Promise<void>;
-}> = ({ donation, onRefetch }) => {
+};
+
+type RefType = {
+  onRefetch: () => Promise<void>;
+};
+
+const ApplicationView = React.forwardRef<RefType, PropsType>((props, ref) => {
   const { t } = useTranslation("Application");
+
+  const { donation, onRefetch } = props;
 
   return (
     <Card>
@@ -75,7 +83,10 @@ const ApplicationView: FC<{
           }
           key="logs"
         >
-          <LogsTab id={donation.id ?? 0} />
+          <LogsTab
+            {...{ id: donation.id ?? 0, onButtonsStatusRefetch: onRefetch }}
+            ref={ref}
+          />
         </TabPane>
 
         <TabPane
@@ -92,6 +103,8 @@ const ApplicationView: FC<{
       </Tabs>
     </Card>
   );
-};
+});
+
+ApplicationView.displayName = "ApplicationView";
 
 export default ApplicationView;

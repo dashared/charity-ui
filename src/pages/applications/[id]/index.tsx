@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useCallback, useRef } from "react";
 import { Empty, Skeleton } from "antd";
 import { PageProps, useTranslation, Workspace } from "@providers";
 import useAxios, { DonationRequestFactory } from "@providers/axios";
@@ -20,8 +20,15 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
 
   const { t } = useTranslation("Application");
 
+  const refetchRef = useRef<{ onRefetch: () => Promise<void> } | null>(null);
+
+  const onRefetchButton = useCallback(async () => {
+    refetchRef.current?.onRefetch();
+  }, []);
+
   const { data, loading, refetchQuery } = useAxios(
     DonationRequestFactory.donationRequestIdGet,
+    undefined,
     id,
   );
 
@@ -37,17 +44,20 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
     <Workspace
       withBack
       noRefresh
-      title={t("$views.title", { id: 1, title: data.title })}
-      // TODO: replace id: 1 after it's done in API https://www.notion.so/Human-readable-id-User-fa8d1bda3a11449781f924f1c187645e
+      title={t("$views.title", { id: data.id, title: data.title })}
       actions={
         <Actions
           applicationId={data.id ?? 0}
           status={data.status as ApplicationStatus}
-          onRefetch={refetchQuery}
+          onRefetch={onRefetchButton}
         />
       }
     >
-      <ApplicationView donation={data} onRefetch={refetchQuery} />
+      <ApplicationView
+        donation={data}
+        onRefetch={refetchQuery}
+        ref={refetchRef}
+      />
     </Workspace>
   );
 };

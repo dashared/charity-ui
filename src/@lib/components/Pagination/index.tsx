@@ -54,6 +54,7 @@ type PaginatedQueryProps<Variables, Result, Single> = {
   noInfo?: boolean;
   className?: string;
   paginationClassName?: string;
+  refetch?: boolean;
   // eslint-disable-next-line
   requestQuery: (variables: any) => Promise<AxiosResponse<Result>>;
   variables?: Omit<Variables, "page" | "size">;
@@ -110,7 +111,7 @@ function InnerPaginatedQuery<
 >({
   noInfo = false,
   paginationClassName,
-  //
+  refetch = undefined,
   requestQuery,
   initialPage = 1,
   initialSize = 10,
@@ -139,6 +140,7 @@ function InnerPaginatedQuery<
 
   const { data, loading, error } = useAxios(
     requestQuery,
+    refetch,
     Object.values(variables ?? {}),
     page - 1,
     size,
