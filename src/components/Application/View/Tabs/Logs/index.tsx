@@ -12,6 +12,7 @@ import {
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import { useListSelection } from "@lib/hooks";
+import { format } from "@lib/utils/date";
 import { useTranslation } from "@providers";
 import { DonationRequestFactory } from "@providers/axios";
 
@@ -88,7 +89,15 @@ export const LogsTab = React.forwardRef<RefType, PropsType>((props, ref) => {
       key: "statusUpdData",
       name: t("statusUpdData"),
       render(record: Single) {
-        return <>{record.created_at}</>;
+        return format(record.created_at);
+      },
+    },
+
+    {
+      key: "authorUpd",
+      name: t("authorUpd"),
+      render(record: Single) {
+        return record.author_id;
       },
     },
   ];

@@ -7,6 +7,7 @@ import {
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import { useListSelection } from "@lib/hooks";
+import { format } from "@lib/utils/date";
 import { cred } from "@lib/utils/name";
 import { useTranslation, Workspace } from "@providers";
 import { DonationRequestFactory } from "@providers/axios";
@@ -70,7 +71,7 @@ const ApplicationsPage: FC = () => {
       key: "createdAt",
       name: t("createdAt"),
       render(record: Single) {
-        return record.created_at;
+        return format(record.created_at);
       },
     },
   ];

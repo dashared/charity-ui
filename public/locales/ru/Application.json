@@ -10,8 +10,9 @@
   "author": "Автор",
   "createdAt": "Дата, время создания",
   "prevStatus": "Предыдущий статус",
-  "newStatus": "Измененный статус",
+  "newStatus": "Новый статус",
   "statusUpdData": "Дата изменения",
+  "authorUpd": "Автор изменения",
   "$views": {
     "title": "Заявка № {{ id }} {{ title }}",
     "tabs": {

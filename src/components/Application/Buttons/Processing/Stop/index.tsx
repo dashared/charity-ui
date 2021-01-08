@@ -2,6 +2,7 @@ import React, { FC, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Popconfirm, Tooltip } from "antd";
 import { PauseCircleOutlined } from "@ant-design/icons";
+import { DonationRequestFactory } from "@providers/axios";
 
 import { ApplicationStatus } from "components/Application/Status/tag";
 
@@ -9,26 +10,22 @@ export const StopProcessingButton: FC<{
   applicationId: number;
   status: ApplicationStatus;
   onRefetch: () => Promise<void>;
-}> = ({
-  // applicationId,
-  status,
-  onRefetch,
-}) => {
+}> = ({ applicationId: id, status, onRefetch }) => {
   const [loading, setLoading] = useState(false);
 
   const { t } = useTranslation("Application");
 
   const stopProcessing = useCallback(async () => {
     try {
-      setLoading(true); // send request to Kostik with applicationId
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setLoading(true);
+      await DonationRequestFactory.donationRequestIdStatusDelete(id);
     } catch (e) {
       console.log(e);
     } finally {
       setLoading(false);
       onRefetch();
     }
-  }, [setLoading, onRefetch]);
+  }, [setLoading, onRefetch, id]);
 
   if (status !== ApplicationStatus.Processing) {
     return null;
