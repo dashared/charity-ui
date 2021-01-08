@@ -3,6 +3,7 @@ import { Button, DatePicker, Descriptions, Input, Select, Space } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
 import { DonationRequestBody as Single } from "@generated";
+import { format } from "@lib/utils/date";
 import { cred } from "@lib/utils/name";
 import { useTranslation } from "@providers";
 import moment from "moment";
@@ -150,11 +151,11 @@ export const GeneralInfo: FC<{
         </Descriptions.Item>
 
         <Descriptions.Item label={t("$views.card.createdAt")}>
-          {info.created_at}
+          {format(info.created_at)}
         </Descriptions.Item>
 
         <Descriptions.Item label={t("$views.card.endTime")} span={2}>
-          {!editable && <span>{initialInfo.endTime}</span>}
+          {!editable && <span>{format(initialInfo.endTime)}</span>}
           {editable && (
             <DatePicker
               defaultValue={

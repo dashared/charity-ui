@@ -3,7 +3,7 @@ import { ru } from "date-fns/locale";
 
 import { NO_DATA_PLACEHOLDER } from "./meta";
 
-export type UnixTime = number;
+export type UnixTime = string;
 
 type DateInput = {
   year?: number | null;
@@ -101,9 +101,9 @@ export function format(
     return NO_DATA_PLACEHOLDER;
   }
 
-  const dt = DateFn.fromUnixTime(apiValue);
+  const d = new Date(apiValue);
 
-  return DateFn.format(dt, display, { locale: ru });
+  return DateFn.format(d, display, { locale: ru });
 }
 
 export function formatDateTime(apiValue: DeepPartial<ApiDateTime>): string {

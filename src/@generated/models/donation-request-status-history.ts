@@ -46,10 +46,10 @@ export interface DonationRequestStatusHistory {
     donation_request_id?: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof DonationRequestStatusHistory
      */
-    id?: string;
+    id?: number;
     /**
      * 
      * @type {string}

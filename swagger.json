@@ -140,7 +140,7 @@
         "summary": "RollBacks status of donation request",
         "parameters": [
           {
-            "type": "string",
+            "type": "integer",
             "description": "donation request id",
             "name": "id",
             "in": "path"
@@ -469,7 +469,7 @@
           "type": "integer"
         },
         "id": {
-          "type": "string"
+          "type": "integer"
         },
         "previous_status": {
           "type": "string"

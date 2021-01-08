@@ -2,11 +2,11 @@ import React from "react";
 
 import meta from "../package.json";
 
-export const logoSmall = "LOGO";
+export const logoSmall = "Charity";
 
-export const logoLarge = "LARGE LOGO";
+export const logoLarge = "Charity CRM";
 
-export const nameString = "AppName";
+export const nameString = "Charity";
 
 export const name = (
   <>

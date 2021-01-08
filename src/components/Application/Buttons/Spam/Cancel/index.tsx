@@ -18,10 +18,7 @@ export const ReturnFromSpamButton: FC<{
   const returnFromSpam = useCallback(async () => {
     try {
       setLoading(true);
-      const input = {
-        status: ApplicationStatus.New, // TODO different request
-      };
-      await DonationRequestFactory.donationRequestIdStatusPatch(id, input);
+      await DonationRequestFactory.donationRequestIdStatusDelete(id);
     } catch (e) {
       console.log(e);
     } finally {
