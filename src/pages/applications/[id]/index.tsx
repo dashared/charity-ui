@@ -20,7 +20,7 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
 
   const { t } = useTranslation("Application");
 
-  const refetchRef = useRef<{ onRefetch: () => Promise<void> } | null>(null);
+  const refetchRef = useRef<{ onRefetch:() => Promise<void> } | null>(null);
 
   const onRefetchButton = useCallback(async () => {
     refetchRef.current?.onRefetch();
