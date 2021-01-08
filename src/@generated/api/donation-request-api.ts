@@ -23,6 +23,8 @@ import { DonationRequestBody } from '../models';
 // @ts-ignore
 import { DonationRequestDonationRequest } from '../models';
 // @ts-ignore
+import { DonationRequestHistoryResponse } from '../models';
+// @ts-ignore
 import { DonationRequestInput } from '../models';
 // @ts-ignore
 import { DonationRequestResponse } from '../models';
@@ -131,12 +133,70 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
     },
     /**
      * 
-     * @summary RollBacks status of donation request
+     * @summary Gets history of status changes
      * @param {number} id donation request id
+     * @param {number} [page] Page number
+     * @param {number} [size] Page size
+     * @param {string} [sort] sort
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    donationRequestIdStatusDelete: async (id: number, options: any = {}): Promise<RequestArgs> => {
+    donationRequestIdHistoryGet: async (id: number, page?: number, size?: number, sort?: string, options: any = {}): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      if (id === null || id === undefined) {
+        throw new RequiredError('id', 'Required parameter id was null or undefined when calling donationRequestIdHistoryGet.');
+      }
+      const localVarPath = `/donation-request/{id}/history`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+      }
+
+      if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+      }
+
+      if (sort !== undefined) {
+        localVarQueryParameter['sort'] = sort;
+      }
+
+
+
+      const queryParameters = new URLSearchParams(localVarUrlObj.search);
+      for (const key in localVarQueryParameter) {
+        queryParameters.set(key, localVarQueryParameter[key]);
+      }
+      for (const key in options.query) {
+        queryParameters.set(key, options.query[key]);
+      }
+      localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+
+      return {
+        url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * 
+     * @summary RollBacks status of donation request
+     * @param {string} id donation request id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    donationRequestIdStatusDelete: async (id: string, options: any = {}): Promise<RequestArgs> => {
       // verify required parameter 'id' is not null or undefined
       if (id === null || id === undefined) {
         throw new RequiredError('id', 'Required parameter id was null or undefined when calling donationRequestIdStatusDelete.');
@@ -317,12 +377,29 @@ export const DonationRequestApiFp = function (configuration?: Configuration) {
     },
     /**
      * 
-     * @summary RollBacks status of donation request
+     * @summary Gets history of status changes
      * @param {number} id donation request id
+     * @param {number} [page] Page number
+     * @param {number} [size] Page size
+     * @param {string} [sort] sort
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async donationRequestIdStatusDelete(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestDonationRequest>> {
+    async donationRequestIdHistoryGet(id: number, page?: number, size?: number, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestHistoryResponse>> {
+      const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).donationRequestIdHistoryGet(id, page, size, sort, options);
+      return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+        const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+        return axios.request(axiosRequestArgs);
+      };
+    },
+    /**
+     * 
+     * @summary RollBacks status of donation request
+     * @param {string} id donation request id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async donationRequestIdStatusDelete(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestDonationRequest>> {
       const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).donationRequestIdStatusDelete(id, options);
       return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
         const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
@@ -391,12 +468,25 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
     },
     /**
      * 
-     * @summary RollBacks status of donation request
+     * @summary Gets history of status changes
      * @param {number} id donation request id
+     * @param {number} [page] Page number
+     * @param {number} [size] Page size
+     * @param {string} [sort] sort
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    donationRequestIdStatusDelete(id: number, options?: any): AxiosPromise<DonationRequestDonationRequest> {
+    donationRequestIdHistoryGet(id: number, page?: number, size?: number, sort?: string, options?: any): AxiosPromise<DonationRequestHistoryResponse> {
+      return DonationRequestApiFp(configuration).donationRequestIdHistoryGet(id, page, size, sort, options).then((request) => request(axios, basePath));
+    },
+    /**
+     * 
+     * @summary RollBacks status of donation request
+     * @param {string} id donation request id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    donationRequestIdStatusDelete(id: string, options?: any): AxiosPromise<DonationRequestDonationRequest> {
       return DonationRequestApiFp(configuration).donationRequestIdStatusDelete(id, options).then((request) => request(axios, basePath));
     },
     /**
@@ -466,6 +556,41 @@ export interface DonationRequestApiDonationRequestIdGetRequest {
 }
 
 /**
+ * Request parameters for donationRequestIdHistoryGet operation in DonationRequestApi.
+ * @export
+ * @interface DonationRequestApiDonationRequestIdHistoryGetRequest
+ */
+export interface DonationRequestApiDonationRequestIdHistoryGetRequest {
+  /**
+   * donation request id
+   * @type {number}
+   * @memberof DonationRequestApiDonationRequestIdHistoryGet
+   */
+  readonly id: number
+
+  /**
+   * Page number
+   * @type {number}
+   * @memberof DonationRequestApiDonationRequestIdHistoryGet
+   */
+  readonly page?: number
+
+  /**
+   * Page size
+   * @type {number}
+   * @memberof DonationRequestApiDonationRequestIdHistoryGet
+   */
+  readonly size?: number
+
+  /**
+   * sort
+   * @type {string}
+   * @memberof DonationRequestApiDonationRequestIdHistoryGet
+   */
+  readonly sort?: string
+}
+
+/**
  * Request parameters for donationRequestIdStatusDelete operation in DonationRequestApi.
  * @export
  * @interface DonationRequestApiDonationRequestIdStatusDeleteRequest
@@ -473,10 +598,10 @@ export interface DonationRequestApiDonationRequestIdGetRequest {
 export interface DonationRequestApiDonationRequestIdStatusDeleteRequest {
   /**
    * donation request id
-   * @type {number}
+   * @type {string}
    * @memberof DonationRequestApiDonationRequestIdStatusDelete
    */
-  readonly id: number
+  readonly id: string
 }
 
 /**
@@ -543,6 +668,18 @@ export class DonationRequestApi extends BaseAPI {
    */
   public donationRequestIdGet(requestParameters: DonationRequestApiDonationRequestIdGetRequest, options?: any) {
     return DonationRequestApiFp(this.configuration).donationRequestIdGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * 
+   * @summary Gets history of status changes
+   * @param {DonationRequestApiDonationRequestIdHistoryGetRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DonationRequestApi
+   */
+  public donationRequestIdHistoryGet(requestParameters: DonationRequestApiDonationRequestIdHistoryGetRequest, options?: any) {
+    return DonationRequestApiFp(this.configuration).donationRequestIdHistoryGet(requestParameters.id, requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
   }
 
   /**

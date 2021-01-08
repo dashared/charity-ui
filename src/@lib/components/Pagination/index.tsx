@@ -54,12 +54,10 @@ type PaginatedQueryProps<Variables, Result, Single> = {
   noInfo?: boolean;
   className?: string;
   paginationClassName?: string;
-  requestQuery: (
-    page: number, // offset
-    size: number, // limit
-    sort: string,
-  ) => Promise<AxiosResponse<Result>>;
-  variables?: Omit<Variables, "limit" | "offset">;
+  refetch?: boolean;
+  // eslint-disable-next-line
+  requestQuery: (variables: any) => Promise<AxiosResponse<Result>>;
+  variables?: Omit<Variables, "page" | "size">;
   stateRef?: MutableRefObject<StateRef>;
   initialPage?: number;
   initialSize?: number;
@@ -113,12 +111,12 @@ function InnerPaginatedQuery<
 >({
   noInfo = false,
   paginationClassName,
-  //
+  refetch = undefined,
   requestQuery,
   initialPage = 1,
   initialSize = 10,
   stateRef,
-  // variables,
+  variables,
   onResult,
   render,
   onPaginationState,
@@ -132,6 +130,8 @@ function InnerPaginatedQuery<
   const [page, onCurrentChange] = useState(initialPage);
   const [size, onPageSizeChange] = useState(initialSize);
 
+  console.log(page, size);
+
   // save state above if needed
   useEffect(() => {
     if (stateRef !== undefined) {
@@ -140,8 +140,15 @@ function InnerPaginatedQuery<
     onPaginationState?.({ currentPage: page, size });
   }, [stateRef, onPaginationState, page, size]);
 
-  // TODO fix after https://www.notion.so/GET-donation-request-0-1-c25efe0a4eff44df9a7af554c5281bfe
-  const { data, loading, error } = useAxios(requestQuery, page - 1, size, "");
+  const { data, loading, error } = useAxios(
+    requestQuery,
+    refetch,
+    ...Object.values(
+      variables
+        ? { ...variables, page: page - 1, size, sort: "" }
+        : { page: page - 1, size, sort: "" },
+    ),
+  );
 
   // propagate result above if needed
   useEffect(() => {

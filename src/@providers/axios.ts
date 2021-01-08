@@ -15,6 +15,7 @@ type AxiosResponse<R> = {
 export default function useAxios<R>(
   // eslint-disable-next-line
   query: (...v: any[]) => Promise<Response<R>>,
+  refetch: boolean | undefined = undefined,
   // eslint-disable-next-line
   ...variables: any[]
 ): AxiosResponse<R> {
@@ -44,7 +45,7 @@ export default function useAxios<R>(
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line
-  }, [stringifiedUrl, stringifiedInit]);
+  }, [stringifiedUrl, stringifiedInit, refetch]);
 
   if (!(data || error)) {
     return { data, loading: true, error, refetchQuery: fetchData };
