@@ -130,6 +130,8 @@ function InnerPaginatedQuery<
   const [page, onCurrentChange] = useState(initialPage);
   const [size, onPageSizeChange] = useState(initialSize);
 
+  console.log(page, size);
+
   // save state above if needed
   useEffect(() => {
     if (stateRef !== undefined) {
@@ -141,10 +143,11 @@ function InnerPaginatedQuery<
   const { data, loading, error } = useAxios(
     requestQuery,
     refetch,
-    Object.values(variables ?? {}),
-    page - 1,
-    size,
-    "",
+    ...Object.values(
+      variables
+        ? { ...variables, page: page - 1, size, sort: "" }
+        : { page: page - 1, size, sort: "" },
+    ),
   );
 
   // propagate result above if needed
