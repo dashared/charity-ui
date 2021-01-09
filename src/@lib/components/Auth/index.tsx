@@ -32,7 +32,7 @@ class Auth extends Component {
     this.setState({
       authenticated: true,
       user: {
-        role: Role.manager,
+        role: Role.admin, // TODO: remove
         name: "Иван",
       },
     });

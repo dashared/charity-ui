@@ -1,6 +1,10 @@
 import React, { FC } from "react";
 import { Menu } from "antd";
-import { FolderOpenOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  FolderOpenOutlined,
+  SettingOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { AuthConsumer } from "@providers/authContext";
@@ -18,6 +22,16 @@ const LeftBarConf: Array<MenuEntry> = [
       </>
     ),
     name: "applications:index",
+  },
+
+  {
+    display: (
+      <>
+        <UserOutlined />
+        <span>Пользователи</span>
+      </>
+    ),
+    name: "users:index",
   },
 
   {

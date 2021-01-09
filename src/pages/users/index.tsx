@@ -1,27 +1,22 @@
 import React, { FC, useRef } from "react";
 import { Link } from "@curi/react-dom";
-import {
-  DonationRequestBody as Single,
-  DonationRequestResponse as Result,
-} from "@generated";
+import { UserResponse as Result, UserUser as Single } from "@generated";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useListSelection } from "@lib/hooks";
-import { format } from "@lib/utils/date";
 import { cred } from "@lib/utils/name";
 import { useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
-import { DonationRequestFactory } from "@providers/axios";
+import { UserRequestFactory } from "@providers/axios";
+import { Role } from "@providers/rbac-rules";
 import Redirect from "pages/_redirect";
 
-import StatusTag, {
-  ApplicationStatus,
-} from "components/Application/Status/tag";
+import RoleTag from "components/User/Role/tag";
 
 import styles from "./styles.module.less";
 
-const ApplicationsPage: FC = () => {
+const UsersPage: FC = () => {
   const {
     isTarget,
     isSelected,
@@ -31,66 +26,48 @@ const ApplicationsPage: FC = () => {
 
   const paginationState = useRef<StateRef>(null);
 
-  const { t } = useTranslation("Application");
+  const { t } = useTranslation("Users");
 
   const columns = [
     {
       key: "id",
-      name: t("id"),
       render(record: Single) {
         return (
-          // TODO: replace id after it's done in API https://www.notion.so/Human-readable-id-User-fa8d1bda3a11449781f924f1c187645e
-          <Link params={{ id: record.id }} name="applications:show">
+          <Link params={{ id: record.id }} name="users:show">
             {record.id}
           </Link>
         );
       },
     },
+
     {
-      key: "title",
-      name: t("title"),
+      key: "name",
       render(record: Single) {
-        return record.title;
+        return cred(record.first_name, record.middle_name, record.last_name);
       },
     },
+
     {
-      key: "status",
-      name: t("status"),
-      render(record: Single) {
-        return (
-          <StatusTag status={record.status as ApplicationStatus}></StatusTag>
-        );
-      },
-    },
-    {
-      key: "author",
-      name: t("author"),
-      render(record: Single) {
-        const { first_name, middle_name, last_name } = { ...record.donee };
-        return cred(first_name, middle_name, last_name);
-      },
-    },
-    {
-      key: "createdAt",
-      name: t("createdAt"),
-      render(record: Single) {
-        return format(record.created_at);
+      key: "role",
+      render() {
+        // TODO: fix
+        return <RoleTag role={Role.manager} />;
       },
     },
   ];
 
   return (
-    <Workspace noRefresh title={t("listTitle")}>
+    <Workspace noRefresh title={t("title")}>
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
-        requestQuery={DonationRequestFactory.donationRequestGet}
+        requestQuery={UserRequestFactory.userGet}
         stateRef={paginationState}
         onResult={(result) => {
           setList(result.data ?? []);
         }}
         render={(entries) => (
           <RegistryTable
-            entity="Application"
+            entity="Users"
             columns={columns}
             // eslint-disable-next-line
             rows={entries as Record<string, any>[]} // TODO
@@ -116,8 +93,8 @@ export const pageComponent: FC = () => (
       return (
         <RoleSwitch
           role={user.role}
-          perform="applications:index"
-          yes={() => <ApplicationsPage />}
+          perform="users:index"
+          yes={() => <UsersPage />}
           no={() => <Redirect name="home"></Redirect>}
         />
       );
