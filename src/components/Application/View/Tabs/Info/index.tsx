@@ -3,9 +3,11 @@ import { Button, DatePicker, Descriptions, Input, Select, Space } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
 import { DonationRequestBody as Single } from "@generated";
+import RoleSwitch from "@lib/components/RoleSwitch";
 import { format } from "@lib/utils/date";
 import { cred } from "@lib/utils/name";
 import { useTranslation } from "@providers";
+import { Role } from "@providers/rbac-rules";
 import moment from "moment";
 
 import StatusTag, {
@@ -96,12 +98,19 @@ export const GeneralInfo: FC<{
         bordered
         title={t("$views.tabs.generalInfoTitle")}
         extra={
-          <Actions
-            id={info.id ?? 0}
-            onSave={onSave}
-            onClose={() => setEditable(false)}
-            onEdit={() => setEditable(true)}
-            editable={editable}
+          <RoleSwitch
+            // it's an example of the RoleSwitch component
+            role={Role.manager} // replace for user.role from <AuthProvider />
+            perform="application:edit"
+            yes={() => (
+              <Actions
+                id={info.id ?? 0}
+                onSave={onSave}
+                onClose={() => setEditable(false)}
+                onEdit={() => setEditable(true)}
+                editable={editable}
+              />
+            )}
           />
         }
       >

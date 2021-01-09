@@ -10,7 +10,6 @@ const App: FC = () => {
   return (
     <Suspense fallback={loadingMessage}>
       <Provider>
-        {" "}
         <Layout />
       </Provider>
     </Suspense>

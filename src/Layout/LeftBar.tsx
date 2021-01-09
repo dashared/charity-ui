@@ -2,6 +2,8 @@ import React, { FC } from "react";
 import { Menu } from "antd";
 import { FolderOpenOutlined, SettingOutlined } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
+import RoleSwitch from "@lib/components/RoleSwitch";
+import { AuthConsumer } from "@providers/authContext";
 
 import { buildUseMenuKeys, entryToKey, MenuEntry } from "./utils";
 
@@ -43,21 +45,40 @@ const MenuLink: FC<MenuEntry> = ({ name, params, display, ...rest }) => (
 
 // rest should be passed down to subitems because antd-menu requires it
 const MenuItem: FC<{ entry: MenuEntry }> = ({ entry, ...rest }) => {
-  const { display, nested } = entry;
-  const key = entryToKey(entry);
-
-  if (!nested || nested.length === 0) {
-    return <MenuLink key={key} {...entry} {...rest} />;
-  }
-
-  const title = <span className="submenu-title-wrapper">{display}</span>;
-
   return (
-    <Menu.SubMenu {...rest} key={key} title={title}>
-      {nested.map((subentry) => (
-        <MenuLink key={entryToKey(subentry)} {...subentry} />
-      ))}
-    </Menu.SubMenu>
+    <AuthConsumer>
+      {({ user }) => {
+        const { display, nested } = entry;
+        const key = entryToKey(entry);
+
+        if (!nested || nested.length === 0) {
+          return (
+            <RoleSwitch
+              role={user.role}
+              perform={entry.name ?? ""}
+              yes={() => <MenuLink key={key} {...entry} {...rest} />}
+            />
+          );
+        }
+
+        const title = <span className="submenu-title-wrapper">{display}</span>;
+
+        console.log("fdgshjk");
+        return (
+          <RoleSwitch
+            role={user.role}
+            perform={entry.name ?? ""}
+            yes={() => (
+              <Menu.SubMenu {...rest} key={key} title={title}>
+                {nested.map((subentry) => (
+                  <MenuLink key={entryToKey(subentry)} {...subentry} />
+                ))}
+              </Menu.SubMenu>
+            )}
+          />
+        );
+      }}
+    </AuthConsumer>
   );
 };
 

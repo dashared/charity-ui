@@ -4,6 +4,7 @@ import { ConfigProvider as AntdConfigProvider } from "antd";
 // static imports aren't perfect for locales
 import ru from "antd/lib/locale/ru_RU";
 import { Response } from "@curi/types";
+import Auth from "@lib/components/Auth";
 import { transliterate } from "@lib/utils";
 import { closeRightPanel } from "reducer/workspace";
 
@@ -33,7 +34,9 @@ const Provider: FC = ({ children }) => {
   return (
     <AntdConfigProvider locale={ru}>
       <ReduxProvider store={store}>
-        <Router>{children}</Router>
+        <Auth>
+          <Router>{children}</Router>
+        </Auth>
       </ReduxProvider>
     </AntdConfigProvider>
   );

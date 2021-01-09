@@ -6,11 +6,14 @@ import {
 } from "@generated";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
+import RoleSwitch from "@lib/components/RoleSwitch";
 import { useListSelection } from "@lib/hooks";
 import { format } from "@lib/utils/date";
 import { cred } from "@lib/utils/name";
 import { useTranslation, Workspace } from "@providers";
+import { AuthConsumer } from "@providers/authContext";
 import { DonationRequestFactory } from "@providers/axios";
+import Redirect from "pages/_redirect";
 
 import StatusTag, {
   ApplicationStatus,
@@ -107,4 +110,17 @@ const ApplicationsPage: FC = () => {
   );
 };
 
-export default ApplicationsPage;
+export const pageComponent: FC = () => (
+  <AuthConsumer>
+    {({ user }) => {
+      return (
+        <RoleSwitch
+          role={user.role}
+          perform="applications:index"
+          yes={() => <ApplicationsPage />}
+          no={() => <Redirect name="home"></Redirect>}
+        />
+      );
+    }}
+  </AuthConsumer>
+);

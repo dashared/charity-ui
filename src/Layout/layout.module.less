@@ -9,6 +9,18 @@
   padding-left: @main-horizontal-padding;
   padding-right: @main-horizontal-padding;
   margin-bottom: @layout-margin;
+
+  .user {
+    float: right;
+
+    & > *:not(:last-child) {
+      margin-right: 0.2em;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .leftBar {
