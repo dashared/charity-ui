@@ -1,7 +1,10 @@
 import React, { FC, useCallback, useRef } from "react";
 import { Empty, Skeleton } from "antd";
+import RoleSwitch from "@lib/components/RoleSwitch";
 import { PageProps, useTranslation, Workspace } from "@providers";
+import { AuthConsumer } from "@providers/authContext";
 import useAxios, { DonationRequestFactory } from "@providers/axios";
+import Redirect from "pages/_redirect";
 
 import ActionButtons from "components/Application/Buttons";
 import { ApplicationStatus } from "components/Application/Status/tag";
@@ -67,4 +70,17 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
 
 export const name = "applications:show";
 
-export default ApplicationPage;
+export const pageComponent: FC<PageProps> = (props) => (
+  <AuthConsumer>
+    {({ user }) => {
+      return (
+        <RoleSwitch
+          role={user.role}
+          perform={name}
+          yes={() => <ApplicationPage {...props} />}
+          no={() => <Redirect name="home"></Redirect>}
+        />
+      );
+    }}
+  </AuthConsumer>
+);

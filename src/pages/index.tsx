@@ -20,4 +20,6 @@ const Index: FC = () => {
   );
 };
 
+export const name = "home";
+
 export default Index;

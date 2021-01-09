@@ -11,13 +11,23 @@ const rules = {
     static: ["auth:login"],
   },
   operator: {
-    static: ["applications:index", "application:view", "settings:index",],
+    static: ["applications:show", "settings:index"],
   },
   manager: {
-    static: ["applications:index", "settings:index", "application:edit", "application:view"],
+    static: [
+      "applications:index",
+      "settings:index",
+      "application:edit",
+      "applications:show",
+    ],
   },
   supermanager: {
-    static: ["applications:index", "application:view", "application:edit", "settings:index"],
+    static: [
+      "applications:index",
+      "applications:show",
+      "application:edit",
+      "settings:index",
+    ],
   },
   admin: {
     static: ["users:index", "settings:index"],

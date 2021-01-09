@@ -1,6 +1,9 @@
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Anchor, Card, Layout, PageHeader } from "antd";
+import RoleSwitch from "@lib/components/RoleSwitch";
+import { AuthConsumer } from "@providers/authContext";
+import Redirect from "pages/_redirect";
 
 import { PersonalSettings } from "components/Settings";
 
@@ -63,4 +66,17 @@ const SettingsPage: FC = () => {
   );
 };
 
-export default SettingsPage;
+export const pageComponent: FC = () => (
+  <AuthConsumer>
+    {({ user }) => {
+      return (
+        <RoleSwitch
+          role={user.role}
+          perform="settings:index"
+          yes={() => <SettingsPage />}
+          no={() => <Redirect name="home"></Redirect>}
+        />
+      );
+    }}
+  </AuthConsumer>
+);

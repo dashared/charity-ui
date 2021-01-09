@@ -17,7 +17,11 @@ function buildSubRoute(
   path: string,
   name: string,
 ): RouteDescriptor {
-  const { default: importedComponent, name: importedName } = context(file);
+  const {
+    default: importedComponent,
+    name: importedName,
+    pageComponent: importedPageComponent,
+  } = context(file);
 
   return {
     path,
@@ -25,12 +29,12 @@ function buildSubRoute(
     resolve(): Promise<ResolveResult> {
       // TODO: check if this can be async
       return Promise.resolve({
-        component: importedComponent,
+        component: importedComponent || importedPageComponent,
       });
     },
     respond({ resolved }): SettableResponseProperties {
       const { component } = resolved as ResolveResult;
-      return { body: component };
+      return { body: component }; // TODO: add AuthConsumer
     },
   };
 }

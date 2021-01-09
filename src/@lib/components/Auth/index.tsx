@@ -45,6 +45,7 @@ class Auth extends Component {
       handleAuthentication: this.handleAuthentication,
       logout: this.logout,
     };
+
     return (
       <AuthProvider value={authProviderValue}>
         {this.props.children}
