@@ -1,43 +1,30 @@
 export enum Role {
-  visitor = 'visitor',
-  manager = 'manager',
-  supermanager = 'supermanager',
-  operator = 'operator',
-  admin = 'admin'
+  visitor = "visitor",
+  manager = "manager",
+  supermanager = "supermanager",
+  operator = "operator",
+  admin = "admin",
 }
 
 const rules = {
   visitor: {
-    static: ["auth:login"]
+    static: ["auth:login"],
   },
   operator: {
-    static: [
-      "applications:list",
-      "application:view",
-    ]
+    static: ["applications:list", "application:view"],
   },
   manager: {
-    static: [
-      "applications:list",
-      "application:view",
-      "application:edit",
-    ]
+    static: ["applications:list", "application:view", "application:edit"],
   },
   supermanager: {
-    static: [
-      "applications:list",
-      "application:view",
-      "application:edit",
-    ]
+    static: ["applications:list", "application:view", "application:edit"],
   },
   admin: {
-    static: [
-      "users:list",
-    ]
-  }
+    static: ["users:list"],
+  },
 };
 
-export function check(role: Role, action: string) {
+export function check(role: Role, action: string): boolean {
   const permissions = rules[role];
   if (!permissions) {
     // role is not present in the rules
@@ -52,6 +39,6 @@ export function check(role: Role, action: string) {
   }
 
   return false;
-};
+}
 
 export default rules;
