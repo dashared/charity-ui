@@ -12,7 +12,7 @@ class Auth extends Component {
   };
 
   initiateLogin = (): void => {
-    // axios.login()
+    this.handleAuthentication(); // TODO: replace
   };
 
   logout = (): void => {
