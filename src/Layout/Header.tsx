@@ -43,6 +43,7 @@ const UserDropdown: FC<{ className?: string }> = ({ className }) => {
             <span className={className}>
               <UserOutlined />
               <span>{user.name}</span>
+              <span>{user.role}</span>
               <DownOutlined />
             </span>
           </Dropdown>
