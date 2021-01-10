@@ -18,8 +18,8 @@ type AuthContextType = {
 };
 
 const authContext = createContext<AuthContextType>({
-  authenticated: false, // to check if authenticated or not
-  user: { role: Role.manager, name: "Hello World" }, // store all the user details
+  authenticated: true, // to check if authenticated or not
+  user: { role: Role.admin, name: "Hello World" }, // store all the user details
   accessToken: "", // accessToken of user for Auth0
   initiateLogin: () => {
     console.log("initiate login");

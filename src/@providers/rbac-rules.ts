@@ -32,7 +32,7 @@ const rules = {
     ],
   },
   admin: {
-    static: ["users:index", "settings:index"],
+    static: ["users:index", "users:show", "settings:index"],
   },
 };
 

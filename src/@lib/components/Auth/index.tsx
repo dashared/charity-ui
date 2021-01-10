@@ -4,9 +4,10 @@ import { Role } from "@providers/rbac-rules";
 
 class Auth extends Component {
   state = {
-    authenticated: false,
+    authenticated: true,
     user: {
-      role: Role.visitor,
+      role: Role.admin,
+      name: "Hello W",
     },
     accessToken: "",
   };

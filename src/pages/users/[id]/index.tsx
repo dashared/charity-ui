@@ -1,18 +1,20 @@
-import React from "react";
+import React, { FC } from "react";
 import { Empty, Skeleton } from "antd";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { fullName } from "@lib/utils/name";
-import { Workspace } from "@providers";
+import { PageProps, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import useAxios, { UserRequestFactory } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
-import { IdComponent } from "@typings/component";
 
+import BlockedTag from "components/User/Block/tag";
 import UserView from "components/User/View";
 
 import Unauthorized from "../../_unauthorized";
 
-const UserPage: IdComponent = ({ id }) => {
+const UserPage: FC<PageProps> = ({ response }) => {
+  const id = response.params.id as string;
+
   const { data, loading } = useAxios(UserRequestFactory.userIdGet, false, id);
 
   if (loading) {
@@ -28,7 +30,13 @@ const UserPage: IdComponent = ({ id }) => {
   const { first_name, middle_name, last_name } = user;
 
   return (
-    <Workspace title={fullName(first_name, middle_name, last_name)}>
+    <Workspace
+      noRefresh
+      title={fullName(first_name, middle_name, last_name)}
+      actions={
+        <BlockedTag isBlocked={true} /> //TODO
+      }
+    >
       <UserView user={user} role={Role.manager} />
     </Workspace>
   );
@@ -36,7 +44,7 @@ const UserPage: IdComponent = ({ id }) => {
 
 export const name = "users:show";
 
-export const pageComponent: IdComponent = (props) => (
+export const pageComponent: FC<PageProps> = (props) => (
   <AuthConsumer>
     {({ user }) => {
       return (
