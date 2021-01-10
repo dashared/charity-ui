@@ -7,6 +7,8 @@
   "country": "Страна",
   "phone": "Телефон",
   "email": "Почта",
+  "address": "Адрес",
+  "credentials": "ФИО",
   "$views": {
     "tab": {
       "info": "Основная информация",

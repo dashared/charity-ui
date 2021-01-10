@@ -6,7 +6,7 @@ class Auth extends Component {
   state = {
     authenticated: true,
     user: {
-      role: Role.admin,
+      role: Role.manager,
       name: "Hello W",
     },
     accessToken: "",
