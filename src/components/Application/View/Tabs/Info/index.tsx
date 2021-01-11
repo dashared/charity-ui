@@ -14,7 +14,7 @@ import StatusTag, {
   ApplicationStatus,
 } from "components/Application/Status/tag";
 
-import UserPreview from "../../../Drawers/User";
+import UserPreview from "../../../../User/Drawer";
 
 const Actions: FC<{
   id: number;

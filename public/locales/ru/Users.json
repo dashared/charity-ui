@@ -3,6 +3,7 @@
   "id": "№",
   "name": "ФИО",
   "role": "Роль",
+  "blocked": "Заблокирован",
   "Role": {
     "manager": "Менеджер",
     "supermanager": "Комиссия",

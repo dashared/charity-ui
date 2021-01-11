@@ -19,14 +19,22 @@ function getColor(role: Role): TagProps["color"] {
   }
 }
 
-const RoleTag: FC<{ role?: Role | null }> = ({ role }) => {
+const RoleTag: FC<{ roles?: Role[] | null }> = ({ roles }) => {
   const { t } = useTranslation("Users");
 
-  if (!role) {
+  if (!roles) {
     return <span>{NO_DATA_PLACEHOLDER}</span>;
   }
 
-  return <Tag color={getColor(role)}>{t(`Role.${role}`)}</Tag>;
+  return (
+    <>
+      {roles.map((role) => (
+        <Tag key={role} color={getColor(role)}>
+          {t(`Role.${role}`)}
+        </Tag>
+      ))}
+    </>
+  );
 };
 
 export default RoleTag;

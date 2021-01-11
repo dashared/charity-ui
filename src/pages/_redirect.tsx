@@ -4,18 +4,24 @@ import { AuthConsumer } from "@providers/authContext";
 
 import NotFound from "./_notFound";
 
-const Redirect: FC<{ name?: string }> = ({ name }) => {
+const Redirect: FC<{ name?: string; component?: () => JSX.Element }> = ({
+  name,
+  component,
+}) => {
   return (
     <AuthConsumer>
       {({ authenticated }) => {
         if (authenticated) {
-          console.log(authenticated);
           router.navigate({ url: router.url({ name }) });
         } else {
           router.navigate({ url: router.url({ name: "login:index" }) });
         }
 
-        return <NotFound />;
+        if (component) {
+          return component();
+        } else {
+          return <NotFound />;
+        }
       }}
     </AuthConsumer>
   );

@@ -11,7 +11,7 @@ const rules = {
     static: ["auth:login"],
   },
   operator: {
-    static: ["applications:show", "settings:index"],
+    static: ["applications:show", "settings:index", "users:show"],
   },
   manager: {
     static: [
@@ -19,6 +19,8 @@ const rules = {
       "settings:index",
       "application:edit",
       "applications:show",
+      "users:show",
+      "user:view-applications",
     ],
   },
   supermanager: {
@@ -27,10 +29,17 @@ const rules = {
       "applications:show",
       "application:edit",
       "settings:index",
+      "users:show",
+      "user:view-applications",
     ],
   },
   admin: {
-    static: ["users:index", "settings:index"],
+    static: [
+      "users:index",
+      "users:show",
+      "user:view-sessions",
+      "settings:index",
+    ],
   },
 };
 
