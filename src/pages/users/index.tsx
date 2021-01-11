@@ -1,4 +1,6 @@
 import React, { FC, useRef } from "react";
+import { Button } from "antd";
+import { UserAddOutlined } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
 import { UserResponse as Result, UserUser as Single } from "@generated";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
@@ -6,7 +8,7 @@ import RegistryTable from "@lib/components/RegistryTable";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useListSelection } from "@lib/hooks";
 import { cred } from "@lib/utils/name";
-import { useTranslation, Workspace } from "@providers";
+import { router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import { UserRequestFactory } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
@@ -15,6 +17,22 @@ import Redirect from "pages/_redirect";
 import RoleTag from "components/User/Role/tag";
 
 import styles from "./styles.module.less";
+
+const Actions: FC = () => {
+  const { t } = useTranslation("Users");
+
+  return (
+    <Button
+      type="primary"
+      icon={<UserAddOutlined />}
+      onClick={() => {
+        router.navigate({ url: router.url({ name: "users:create" }) });
+      }}
+    >
+      {t("$views.buttons.registerUser")}
+    </Button>
+  );
+};
 
 const UsersPage: FC = () => {
   const {
@@ -57,7 +75,7 @@ const UsersPage: FC = () => {
   ];
 
   return (
-    <Workspace noRefresh title={t("title")}>
+    <Workspace noRefresh title={t("title")} actions={<Actions />}>
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
         requestQuery={UserRequestFactory.userGet}

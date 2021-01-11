@@ -9,5 +9,10 @@
     "supermanager": "Комиссия",
     "admin": "Администратор",
     "operator": "Оператор"
+  },
+  "$views": {
+    "buttons": {
+      "registerUser": "Добавить пользователя"
+    }
   }
 }
