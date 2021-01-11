@@ -34,7 +34,7 @@ const Actions: FC<{ userData: UserUser }> = () => {
   );
 };
 
-export const InfoTab: FC<{ user: UserUser }> = ({ user }) => {
+export const InfoTab: FC<{ user: UserUser; role: Role }> = ({ user, role }) => {
   const { t } = useTranslation("User");
 
   const { first_name, middle_name, last_name } = user;
@@ -65,16 +65,35 @@ export const InfoTab: FC<{ user: UserUser }> = ({ user }) => {
               <Form.Item label={t("country")}>
                 <span>Hangzhou, Zhejiang</span>
               </Form.Item>
+
+              <Form.Item>
+                <BlockedTag isBlocked={true} />
+              </Form.Item>
             </Form>
           </Col>
           <Col span={12}>
             <Form>
+              <RoleSwitch
+                role={role}
+                perform="user:show-admin"
+                yes={() => {
+                  return (
+                    <>
+                      <Form.Item label={t("uuid")}>
+                        <span>24b74642-7926-4669-a6c4-755502efa06f</span>
+                      </Form.Item>
+                      <Form.Item label={t("created_at")}>
+                        <span>03.01.2020 в 12:33</span>
+                      </Form.Item>
+                    </>
+                  );
+                }}
+              />
               <Form.Item label={t("email")}>
                 <span>ivanov@mail.ru</span>
               </Form.Item>
               <Form.Item label={t("address")}>
                 <span>
-                  {" "}
                   No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
                 </span>
               </Form.Item>
@@ -82,9 +101,6 @@ export const InfoTab: FC<{ user: UserUser }> = ({ user }) => {
                 <span>
                   <RoleTag roles={[Role.admin, Role.operator]} />
                 </span>
-              </Form.Item>
-              <Form.Item>
-                <BlockedTag isBlocked={true} />
               </Form.Item>
             </Form>
           </Col>

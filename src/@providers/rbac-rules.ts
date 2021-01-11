@@ -37,7 +37,9 @@ const rules = {
     static: [
       "users:index",
       "users:show",
+      "users:create",
       "user:view-sessions",
+      "user:show-admin",
       "settings:index",
     ],
   },

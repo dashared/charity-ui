@@ -34,7 +34,7 @@ const UserView: FC<UserViewProps> = ({ user }) => {
                   </Tooltip>
                 }
               >
-                <InfoTab user={user} />
+                <InfoTab user={user} role={u.role} />
               </Tabs.TabPane>
 
               <Tabs.TabPane
