@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { Menu } from "antd";
 import {
   FolderOpenOutlined,
+  HomeOutlined,
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -22,6 +23,26 @@ const LeftBarConf: Array<MenuEntry> = [
       </>
     ),
     name: "applications:index",
+  },
+
+  {
+    display: (
+      <>
+        <HomeOutlined />
+        <span>Фонд</span>
+      </>
+    ),
+    name: "fund:index",
+    nested: [
+      {
+        display: <span>Описание</span>,
+        name: "fund:description-index",
+      },
+      {
+        display: <span>FAQ</span>,
+        name: "fund:faq-index",
+      },
+    ],
   },
 
   {
@@ -77,7 +98,6 @@ const MenuItem: FC<{ entry: MenuEntry }> = ({ entry, ...rest }) => {
 
         const title = <span className="submenu-title-wrapper">{display}</span>;
 
-        console.log("fdgshjk");
         return (
           <RoleSwitch
             role={user.role}

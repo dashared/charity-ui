@@ -11,7 +11,14 @@ const rules = {
     static: ["auth:login"],
   },
   operator: {
-    static: ["applications:show", "settings:index", "users:show"],
+    static: [
+      "applications:show",
+      "settings:index",
+      "users:show",
+      "fund:index",
+      "fund:faq-index",
+      "fund:description-index"
+    ],
   },
   manager: {
     static: [
