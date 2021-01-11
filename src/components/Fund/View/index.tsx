@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Card, Space, Tabs, Tooltip } from "antd";
+import { Button, Card, Modal, Space, Tabs, Tooltip } from "antd";
 import {
   EditOutlined,
   FileDoneOutlined,
@@ -10,7 +10,7 @@ import {
   StopOutlined,
 } from "@ant-design/icons";
 
-import { InfoTab } from "components/Fund/Tabs";
+import { DocsTab, InfoTab, ReportsTab } from "components/Fund/Tabs";
 
 type FundProps = {
   name: string;
@@ -80,7 +80,14 @@ const FundView: FC<FundProps> = ({ name }) => {
       <Tabs
         tabPosition="left"
         defaultActiveKey="1"
-        onChange={() => {
+        onTabClick={() => {
+          {
+            editable &&
+              Modal.warning({
+                title: t("modal.title"),
+                content: t("modal.description"),
+              }); // TODO: is it good enough for UX?
+          }
           setEditable(false);
         }}
       >
@@ -103,7 +110,7 @@ const FundView: FC<FundProps> = ({ name }) => {
             </Tooltip>
           }
         >
-          Hello
+          <DocsTab />
         </Tabs.TabPane>
 
         <Tabs.TabPane
@@ -114,7 +121,7 @@ const FundView: FC<FundProps> = ({ name }) => {
             </Tooltip>
           }
         >
-          hs
+          <ReportsTab />
         </Tabs.TabPane>
       </Tabs>
     </Card>
