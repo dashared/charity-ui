@@ -9,11 +9,15 @@
   "email": "Почта",
   "address": "Адрес",
   "credentials": "ФИО",
+  "roles": "Роли",
   "$views": {
     "tab": {
       "info": "Основная информация",
       "sessions": "Сессии",
       "applications": "История заявок"
+    },
+    "buttons": {
+      "visitPage": "Перейти на страницу"
     }
   }
 }

@@ -51,7 +51,7 @@ const UsersPage: FC = () => {
       key: "role",
       render() {
         // TODO: fix
-        return <RoleTag role={Role.manager} />;
+        return <RoleTag roles={[Role.manager]} />;
       },
     },
   ];

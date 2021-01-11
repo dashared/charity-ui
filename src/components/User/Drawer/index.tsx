@@ -1,9 +1,10 @@
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Card, Descriptions, Drawer, Empty, Skeleton } from "antd";
-import { Link } from "@curi/react-dom";
+import { Button, Card, Descriptions, Drawer, Empty, Skeleton } from "antd";
+import { FileSearchOutlined } from "@ant-design/icons";
 import { UserApiFactory } from "@generated";
 import { fullName } from "@lib/utils/name";
+import { router } from "@providers";
 import useAxios from "@providers/axios";
 
 const UserPreview: FC<{
@@ -29,10 +30,19 @@ const UserPreview: FC<{
     >
       <Card
         bordered={false}
-        title={
-          <Link name="users:show" params={{ id }}>
-            {t("title")}
-          </Link>
+        title={t("title")}
+        extra={
+          <Button
+            type="primary"
+            icon={<FileSearchOutlined />}
+            onClick={() =>
+              router.navigate({
+                url: router.url({ name: "users:show", params: { id } }),
+              })
+            }
+          >
+            {t("$views.buttons.visitPage")}
+          </Button>
         }
       >
         {!data && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}

@@ -7,7 +7,6 @@ import { AuthConsumer } from "@providers/authContext";
 import useAxios, { UserRequestFactory } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
 
-import BlockedTag from "components/User/Block/tag";
 import UserView from "components/User/View";
 
 import Unauthorized from "../../_unauthorized";
@@ -31,11 +30,9 @@ const UserPage: FC<PageProps> = ({ response }) => {
 
   return (
     <Workspace
+      withBack
       noRefresh
       title={fullName(first_name, middle_name, last_name)}
-      actions={
-        <BlockedTag isBlocked={true} /> //TODO
-      }
     >
       <UserView user={user} role={Role.manager} />
     </Workspace>

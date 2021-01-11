@@ -20,6 +20,7 @@ const rules = {
       "application:edit",
       "applications:show",
       "users:show",
+      "user:view-applications",
     ],
   },
   supermanager: {
@@ -29,10 +30,16 @@ const rules = {
       "application:edit",
       "settings:index",
       "users:show",
+      "user:view-applications",
     ],
   },
   admin: {
-    static: ["users:index", "users:show", "settings:index"],
+    static: [
+      "users:index",
+      "users:show",
+      "user:view-sessions",
+      "settings:index",
+    ],
   },
 };
 
