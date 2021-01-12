@@ -22,5 +22,4 @@ React, Redux, Typescript, ESLint, Prettier
 
 ### `yarn codegen`
 
-
 Пока не работает авторизация в API, для смены роли пользователя зайди в `/Users/dashared/Developer/charity/ui/src/@lib/components/Auth/index.tsx`;

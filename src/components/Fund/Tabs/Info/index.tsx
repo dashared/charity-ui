@@ -5,7 +5,7 @@ import React, {
   useState,
 } from "react";
 import { useTranslation } from "react-i18next";
-import { Avatar, Col, Input, Row, Upload } from "antd";
+import { Avatar, Col, Divider, Input, Row, Upload } from "antd";
 import { UploadChangeParam } from "antd/lib/upload";
 import { UploadFile } from "antd/lib/upload/interface";
 import {
@@ -13,6 +13,8 @@ import {
   PlusOutlined,
   ProfileFilled,
 } from "@ant-design/icons";
+import RoleSwitch from "@lib/components/RoleSwitch";
+import { Role } from "@providers/rbac-rules";
 
 import styles from "./styles.module.less";
 
@@ -21,11 +23,12 @@ type RefType = {
 };
 
 type PropsType = {
+  role: Role;
   editable: boolean;
 };
 
 export const InfoTab = React.forwardRef<RefType, PropsType>((props, ref) => {
-  const { editable } = props;
+  const { editable, role } = props;
 
   const [uploadLoading, setLoading] = useState(false);
 
@@ -102,8 +105,23 @@ export const InfoTab = React.forwardRef<RefType, PropsType>((props, ref) => {
       </Col>
 
       <Col span={20}>
-        <h3>{t("description")}</h3>
-        <>
+        <Row justify="space-between" align="middle">
+          <Col>
+            <h3>{t("description")}</h3>
+          </Col>
+          <RoleSwitch
+            role={role}
+            perform="fund:description-edit"
+            yes={() => (
+              <Col>
+                <span className={styles.extra}>
+                  Обновлено 10.01.2021 в 11:33, Андреем
+                </span>
+              </Col>
+            )}
+          />
+        </Row>
+        <Row>
           {!editable && text}
 
           {editable && (
@@ -113,7 +131,20 @@ export const InfoTab = React.forwardRef<RefType, PropsType>((props, ref) => {
               onChange={(e) => setText(e.target.value)}
             />
           )}
-        </>
+        </Row>
+
+        <Divider />
+        <Row>
+          <Col>
+            <h3>{t("contacts")}</h3>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>
+            <span>TODO: обсудить что будет</span>
+          </Col>
+        </Row>
       </Col>
     </Row>
   );

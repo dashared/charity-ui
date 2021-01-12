@@ -17,7 +17,8 @@ const rules = {
       "users:show",
       "fund:index",
       "fund:faq-index",
-      "fund:description-index"
+      "fund:description-index",
+      "fund:description-edit",
     ],
   },
   manager: {
@@ -38,6 +39,7 @@ const rules = {
       "settings:index",
       "users:show",
       "user:view-applications",
+      "fund:description-index",
     ],
   },
   admin: {

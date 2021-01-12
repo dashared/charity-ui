@@ -9,6 +9,8 @@ import {
   SaveOutlined,
   StopOutlined,
 } from "@ant-design/icons";
+import RoleSwitch from "@lib/components/RoleSwitch";
+import { AuthConsumer } from "@providers/authContext";
 
 import { DocsTab, InfoTab, ReportsTab } from "components/Fund/Tabs";
 
@@ -66,65 +68,77 @@ const FundView: FC<FundProps> = ({ name }) => {
   }, []);
 
   return (
-    <Card
-      title={t("title", { name })}
-      extra={
-        <Actions
-          editable={editable}
-          onEdit={() => setEditable(true)}
-          onSave={onSave}
-          onCancel={() => setEditable(false)}
-        />
-      }
-    >
-      <Tabs
-        tabPosition="left"
-        defaultActiveKey="1"
-        onTabClick={() => {
-          {
-            editable &&
-              Modal.warning({
-                title: t("modal.title"),
-                content: t("modal.description"),
-              }); // TODO: is it good enough for UX?
-          }
-          setEditable(false);
-        }}
-      >
-        <Tabs.TabPane
-          key="1"
-          tab={
-            <Tooltip title={t("description")}>
-              <InfoCircleOutlined />
-            </Tooltip>
-          }
-        >
-          <InfoTab {...{ editable }} ref={onSave} />
-        </Tabs.TabPane>
+    <AuthConsumer>
+      {({ user }) => {
+        return (
+          <Card
+            title={t("title", { name })}
+            extra={
+              <RoleSwitch
+                role={user.role}
+                perform="fund:description-edit"
+                yes={() => (
+                  <Actions
+                    editable={editable}
+                    onEdit={() => setEditable(true)}
+                    onSave={onSave}
+                    onCancel={() => setEditable(false)}
+                  />
+                )}
+              />
+            }
+          >
+            <Tabs
+              tabPosition="left"
+              defaultActiveKey="1"
+              onTabClick={() => {
+                {
+                  editable &&
+                    Modal.warning({
+                      title: t("modal.title"),
+                      content: t("modal.description"),
+                    }); // TODO: is it good enough for UX?
+                }
+                setEditable(false);
+              }}
+            >
+              <Tabs.TabPane
+                key="1"
+                tab={
+                  <Tooltip title={t("description")}>
+                    <InfoCircleOutlined />
+                  </Tooltip>
+                }
+              >
+                <InfoTab {...{ editable, role: user.role }} ref={refetchRef} />
+              </Tabs.TabPane>
 
-        <Tabs.TabPane
-          key="2"
-          tab={
-            <Tooltip title={t("docs")}>
-              <FileOutlined />
-            </Tooltip>
-          }
-        >
-          <DocsTab />
-        </Tabs.TabPane>
+              <Tabs.TabPane
+                key="2"
+                tab={
+                  <Tooltip title={t("docs")}>
+                    <FileOutlined />
+                  </Tooltip>
+                }
+              >
+                <DocsTab />
+              </Tabs.TabPane>
 
-        <Tabs.TabPane
-          key="3"
-          tab={
-            <Tooltip title={t("reports")}>
-              <FileDoneOutlined />
-            </Tooltip>
-          }
-        >
-          <ReportsTab />
-        </Tabs.TabPane>
-      </Tabs>
-    </Card>
+              <Tabs.TabPane
+                key="3"
+                tab={
+                  <Tooltip title={t("reports")}>
+                    <FileDoneOutlined />
+                  </Tooltip>
+                }
+              >
+                <ReportsTab />
+              </Tabs.TabPane>
+            </Tabs>
+          </Card>
+        );
+      }}
+    </AuthConsumer>
   );
 };
 
