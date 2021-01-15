@@ -63,6 +63,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-i18next": "^11.7.3",
+    "react-markdown": "^5.0.3",
+    "react-markdown-editor-lite": "^1.2.4",
     "react-redux": "^7.2.1",
     "react-scripts": "3.4.3",
     "stringz": "^2.1.0",

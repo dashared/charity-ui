@@ -40,7 +40,7 @@ const LeftBarConf: Array<MenuEntry> = [
       },
       {
         display: <span>FAQ</span>,
-        name: "fund:faq-index",
+        name: "faq:index",
       },
     ],
   },
