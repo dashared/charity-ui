@@ -9,8 +9,10 @@
   "whom": "Нуждающийся",
   "info": "Основная информация",
   "anon": "Видимость",
+  "createPageTitle": "Ввод пожертвования",
   "time": "Время проведения транзакции",
   "status": "Статус",
+  "createTransaction": "Ввести пожертвование",
   "application_status": "Статус заявки",
   "aim": "Цель сбора",
   "Status": {
@@ -24,5 +26,22 @@
     "Registered": "Транзакция создана {{ date }}",
     "InProgress": "Транзакция поступила в обработку {{ date }}",
     "Success": "Деньги поступили на счет {{ date }}"
+  },
+  "form": {
+    "amount": "Сумма",
+    "anon": "Анонимность",
+    "application": "Заявка",
+    "applicationMessage": "Пожалуйста, выберете заявку",
+    "applicationPlaceholder": "Выберете заявку",
+    "type": {
+      "title": "Тип пожертвования",
+      "application": "На заявку",
+      "fund": "Фонду"
+    },
+    "first_name": "Имя донора",
+    "middle_name": "Отчество донора",
+    "last_name": "Фамилия донора",
+    "submit": "Создать транзакцию",
+    "priceValidation": "Сумма транзакции > 0"
   }
 }

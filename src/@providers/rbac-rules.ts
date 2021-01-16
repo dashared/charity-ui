@@ -43,6 +43,7 @@ const rules = {
       "fund:description-index",
       "transactions:show",
       "transactions:index",
+      "transactions:create",
     ],
   },
   admin: {

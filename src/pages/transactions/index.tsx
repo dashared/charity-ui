@@ -1,4 +1,6 @@
 import React, { FC, useRef } from "react";
+import { Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
 import {
   DonationRequestBody as Single,
@@ -10,7 +12,7 @@ import RoleSwitch from "@lib/components/RoleSwitch";
 import { useListSelection } from "@lib/hooks";
 import { format } from "@lib/utils/date";
 import { cred } from "@lib/utils/name";
-import { useTranslation, Workspace } from "@providers";
+import { router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import { DonationRequestFactory } from "@providers/axios";
 import Redirect from "pages/_redirect";
@@ -20,6 +22,22 @@ import StatusTag, {
 } from "components/Transaction/Status/tag";
 
 import styles from "./styles.module.less";
+
+const Actions: FC = () => {
+  const { t } = useTranslation("Transaction");
+
+  return (
+    <Button
+      type="primary"
+      icon={<PlusOutlined />}
+      onClick={() => {
+        router.navigate({ url: router.url({ name: "transactions:create" }) });
+      }}
+    >
+      {t("createTransaction")}
+    </Button>
+  );
+};
 
 const TransactionsPage: FC = () => {
   const {
@@ -85,7 +103,7 @@ const TransactionsPage: FC = () => {
 
   // TODO: replace api calls to TransactionsFactory
   return (
-    <Workspace noRefresh title={t("title")}>
+    <Workspace noRefresh title={t("title")} actions={<Actions />}>
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
         requestQuery={DonationRequestFactory.donationRequestGet}
