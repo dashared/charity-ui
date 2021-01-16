@@ -3,7 +3,7 @@ import { Link } from "@curi/react-dom";
 import {
   DonationRequestBody as Single,
   DonationRequestResponse as Result,
-} from "@generated";
+} from "@generated"; // TODO: replace to TransactionRequestBody
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import RoleSwitch from "@lib/components/RoleSwitch";
@@ -16,12 +16,12 @@ import { DonationRequestFactory } from "@providers/axios";
 import Redirect from "pages/_redirect";
 
 import StatusTag, {
-  ApplicationStatus,
-} from "components/Application/Status/tag";
+  TransactionStatus,
+} from "components/Transaction/Status/tag";
 
 import styles from "./styles.module.less";
 
-const ApplicationsPage: FC = () => {
+const TransactionsPage: FC = () => {
   const {
     isTarget,
     isSelected,
@@ -31,55 +31,61 @@ const ApplicationsPage: FC = () => {
 
   const paginationState = useRef<StateRef>(null);
 
-  const { t } = useTranslation("Application");
+  const { t } = useTranslation("Transaction");
 
   const columns = [
     {
       key: "id",
-      name: t("id"),
       render(record: Single) {
         return (
-          <Link params={{ id: record.id }} name="applications:show">
+          <Link params={{ id: record.id }} name="transactions:show">
             {record.id}
           </Link>
         );
       },
     },
     {
-      key: "title",
-      name: t("title"),
-      render(record: Single) {
-        return record.title;
+      key: "sum",
+      render() {
+        return "1000 $";
       },
     },
     {
-      key: "status",
-      name: t("status"),
-      render(record: Single) {
+      key: "who",
+      render() {
+        return cred("Алексей", "Юрьевич", "Андреев");
+      },
+    },
+    {
+      key: "aim",
+      render() {
         return (
-          <StatusTag status={record.status as ApplicationStatus}></StatusTag>
+          // TODO: replace after transactions api is done
+          <Link params={{ id: 1 }} name="applications:show">
+            Имя заявки как дела
+          </Link>
         );
       },
     },
+
     {
-      key: "author",
-      name: t("author"),
-      render(record: Single) {
-        const { first_name, middle_name, last_name } = { ...record.donee };
-        return cred(first_name, middle_name, last_name);
+      key: "status",
+      render() {
+        return <StatusTag status={TransactionStatus.Success} />;
       },
     },
+
     {
-      key: "createdAt",
-      name: t("createdAt"),
+      key: "time",
       render(record: Single) {
-        return format(record.created_at);
+        return format(record.until);
       },
     },
   ];
 
+  // TODO: replace api calls to TransactionsFactory
   return (
-    <Workspace noRefresh title={t("listTitle")}>
+    <Workspace noRefresh title={t("title")}>
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
         requestQuery={DonationRequestFactory.donationRequestGet}
@@ -89,7 +95,7 @@ const ApplicationsPage: FC = () => {
         }}
         render={(entries) => (
           <RegistryTable
-            entity="Application"
+            entity="Transaction"
             columns={columns}
             // eslint-disable-next-line
             rows={entries as Record<string, any>[]} // TODO
@@ -109,17 +115,19 @@ const ApplicationsPage: FC = () => {
   );
 };
 
-export const pageComponent: FC = () => (
-  <AuthConsumer>
-    {({ user }) => {
-      return (
-        <RoleSwitch
-          role={user.role}
-          perform="applications:index"
-          yes={() => <ApplicationsPage />}
-          no={() => <Redirect name="home"></Redirect>}
-        />
-      );
-    }}
-  </AuthConsumer>
-);
+export const pageComponent: FC = () => {
+  return (
+    <AuthConsumer>
+      {({ user }) => {
+        return (
+          <RoleSwitch
+            role={user.role}
+            perform="transactions:index"
+            yes={() => <TransactionsPage />}
+            no={() => <Redirect name="home"></Redirect>}
+          />
+        );
+      }}
+    </AuthConsumer>
+  );
+};
