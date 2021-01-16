@@ -3,6 +3,7 @@ import { Menu } from "antd";
 import {
   FolderOpenOutlined,
   HomeOutlined,
+  MoneyCollectOutlined,
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -23,6 +24,16 @@ const LeftBarConf: Array<MenuEntry> = [
       </>
     ),
     name: "applications:index",
+  },
+
+  {
+    display: (
+      <>
+        <MoneyCollectOutlined />
+        <span>Транзакции</span>
+      </>
+    ),
+    name: "transactions:index",
   },
 
   {

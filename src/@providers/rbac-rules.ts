@@ -41,6 +41,8 @@ const rules = {
       "users:show",
       "user:view-applications",
       "fund:description-index",
+      "transactions:show",
+      "transactions:index",
     ],
   },
   admin: {
