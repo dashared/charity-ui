@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, RefObject, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import Editor from "react-markdown-editor-lite";
 
@@ -9,28 +9,27 @@ type EditorChangeType = {
   html: string;
 };
 
-const FAQEditor: FC = () => {
-  const mdEditor = React.useRef<Editor>(null);
-  const [value, setValue] = React.useState("xxx");
+type EditorProps = {
+  initialValue: string;
+  editorRef?: RefObject<Editor>;
+};
 
-  // eslint-disable-next-line
-  const handleClick = useCallback(() => {
-    if (mdEditor !== null) {
-      console.log("hello");
-      //alert((mdEditor as React.RefObject<Editor>).current?.getMdValue())
-    }
-  }, []);
+const FAQEditor: FC<EditorProps> = ({ editorRef, initialValue }) => {
+  const [value, setValue] = useState(initialValue);
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
 
   const handleEditorChange = (val: EditorChangeType): void => {
     const { text } = val;
     const newValue = text.replace(/\d/g, "");
-    console.log(newValue);
     setValue(newValue);
   };
 
   return (
     <Editor
-      ref={mdEditor}
+      ref={editorRef}
       value={value}
       style={{
         height: "500px",
