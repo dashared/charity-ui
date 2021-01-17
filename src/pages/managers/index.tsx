@@ -55,7 +55,7 @@ const ManagersPage: FC = () => {
       key: "name",
       render(record: Single) {
         return (
-          <Link params={{ id: record.id }} name="users:show">
+          <Link params={{ id: record.id }} name="managers:show">
             {fullName(record.first_name, record.middle_name, record.last_name)}
           </Link>
         );
