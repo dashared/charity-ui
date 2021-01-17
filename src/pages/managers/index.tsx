@@ -1,17 +1,42 @@
 import React, { FC, useRef } from "react";
+import { CheckOutlined, SyncOutlined } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
 import { UserResponse as Result, UserUser as Single } from "@generated";
+import Metrics from "@lib/components/Metrics";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useListSelection } from "@lib/hooks";
-import { cred } from "@lib/utils/name";
+import { fullName } from "@lib/utils/name";
 import { useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import { UserRequestFactory } from "@providers/axios";
+import { Role } from "@providers/rbac-rules";
 import Unauthorized from "pages/_unauthorized";
 
+import RoleTag from "components/User/Role/tag";
+
 import styles from "./styles.module.less";
+
+function ManagersMetrics(): JSX.Element {
+  const { t } = useTranslation("Manager");
+  return (
+    <Metrics
+      metrics={[
+        {
+          title: t("metrics.inProgress"),
+          icon: <SyncOutlined />,
+          value: 4,
+        },
+        {
+          title: t("metrics.done"),
+          icon: <CheckOutlined />,
+          value: 15,
+        },
+      ]}
+    />
+  );
+}
 
 const ManagersPage: FC = () => {
   const {
@@ -27,19 +52,31 @@ const ManagersPage: FC = () => {
 
   const columns = [
     {
-      key: "id",
+      key: "name",
       render(record: Single) {
         return (
           <Link params={{ id: record.id }} name="users:show">
-            {record.id}
+            {fullName(record.first_name, record.middle_name, record.last_name)}
           </Link>
         );
       },
     },
     {
-      key: "name",
-      render(record: Single) {
-        return cred(record.first_name, record.middle_name, record.last_name);
+      key: "roles",
+      render() {
+        return <RoleTag roles={[Role.operator, Role.manager]} />;
+      },
+    },
+    {
+      key: "email",
+      render() {
+        return "britte.geraedts@example.com";
+      },
+    },
+    {
+      key: "metric",
+      render() {
+        return ManagersMetrics();
       },
     },
   ];
