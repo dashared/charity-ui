@@ -4,6 +4,7 @@ import {
   FolderOpenOutlined,
   HomeOutlined,
   MoneyCollectOutlined,
+  ProfileOutlined,
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -24,6 +25,16 @@ const LeftBarConf: Array<MenuEntry> = [
       </>
     ),
     name: "applications:index",
+  },
+
+  {
+    display: (
+      <>
+        <ProfileOutlined />
+        <span>Менеджеры</span>
+      </>
+    ),
+    name: "managers:index",
   },
 
   {

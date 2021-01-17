@@ -1,0 +1,133 @@
+import React, { FC, useRef } from "react";
+import { CheckOutlined, SyncOutlined } from "@ant-design/icons";
+import { Link } from "@curi/react-dom";
+import { UserResponse as Result, UserUser as Single } from "@generated";
+import Metrics from "@lib/components/Metrics";
+import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
+import RegistryTable from "@lib/components/RegistryTable";
+import RoleSwitch from "@lib/components/RoleSwitch";
+import { useListSelection } from "@lib/hooks";
+import { fullName } from "@lib/utils/name";
+import { useTranslation, Workspace } from "@providers";
+import { AuthConsumer } from "@providers/authContext";
+import { UserRequestFactory } from "@providers/axios";
+import { Role } from "@providers/rbac-rules";
+import Unauthorized from "pages/_unauthorized";
+
+import RoleTag from "components/User/Role/tag";
+
+import styles from "./styles.module.less";
+
+function ManagersMetrics(): JSX.Element {
+  const { t } = useTranslation("Manager");
+  return (
+    <Metrics
+      metrics={[
+        {
+          title: t("metrics.inProgress"),
+          icon: <SyncOutlined />,
+          value: 4,
+        },
+        {
+          title: t("metrics.done"),
+          icon: <CheckOutlined />,
+          value: 15,
+        },
+      ]}
+    />
+  );
+}
+
+const ManagersPage: FC = () => {
+  const {
+    isTarget,
+    isSelected,
+    onElementClick,
+    setList,
+  } = useListSelection<Single>();
+
+  const paginationState = useRef<StateRef>(null);
+
+  const { t } = useTranslation("Manager");
+
+  const columns = [
+    {
+      key: "name",
+      render(record: Single) {
+        return (
+          <Link params={{ id: record.id }} name="managers:show">
+            {fullName(record.first_name, record.middle_name, record.last_name)}
+          </Link>
+        );
+      },
+    },
+    {
+      key: "roles",
+      render() {
+        return <RoleTag roles={[Role.operator, Role.manager]} />;
+      },
+    },
+    {
+      key: "email",
+      render() {
+        return "britte.geraedts@example.com";
+      },
+    },
+    {
+      key: "metric",
+      render() {
+        return ManagersMetrics();
+      },
+    },
+  ];
+
+  // TODO: replace api calls to TransactionsFactory
+  return (
+    <Workspace noRefresh title={t("title")}>
+      <PaginatedQuery<{ page: number; size: number }, Result, Single>
+        className={styles.pagination}
+        requestQuery={UserRequestFactory.userGet}
+        stateRef={paginationState}
+        onResult={(result) => {
+          setList(result.data ?? []);
+        }}
+        render={(entries) => (
+          <RegistryTable
+            entity="Manager"
+            columns={columns}
+            // eslint-disable-next-line
+            rows={entries as Record<string, any>[]} // TODO
+            rowState={(record, index) => ({
+              selected: isSelected(index),
+              target: isTarget(index),
+            })}
+            onRecordClick={(event, record, index) => {
+              if (index !== undefined) {
+                onElementClick(event, index);
+              }
+            }}
+          />
+        )}
+      />
+    </Workspace>
+  );
+};
+
+export const name = "managers:index";
+
+export const pageComponent: FC = () => {
+  return (
+    <AuthConsumer>
+      {({ user }) => {
+        return (
+          <RoleSwitch
+            role={user.role}
+            perform={name}
+            yes={() => <ManagersPage />}
+            no={() => <Unauthorized />}
+          />
+        );
+      }}
+    </AuthConsumer>
+  );
+};
