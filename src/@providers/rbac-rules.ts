@@ -59,6 +59,7 @@ const rules = {
       "user:view-sessions",
       "user:show-admin",
       "settings:index",
+      "logs:index",
     ],
   },
 };

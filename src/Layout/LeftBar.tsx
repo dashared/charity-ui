@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { Menu } from "antd";
 import {
   FolderOpenOutlined,
+  HistoryOutlined,
   HomeOutlined,
   MoneyCollectOutlined,
   ProfileOutlined,
@@ -75,6 +76,16 @@ const LeftBarConf: Array<MenuEntry> = [
       </>
     ),
     name: "users:index",
+  },
+
+  {
+    display: (
+      <>
+        <HistoryOutlined />
+        <span>Логи</span>
+      </>
+    ),
+    name: "logs:index",
   },
 
   {

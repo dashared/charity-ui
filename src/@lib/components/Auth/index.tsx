@@ -6,7 +6,7 @@ class Auth extends Component {
   state = {
     authenticated: true,
     user: {
-      role: Role.supermanager, // Temporary solution without API
+      role: Role.admin, // Temporary solution without API
       name: "Hello W",
     },
     accessToken: "",
