@@ -455,7 +455,19 @@
           "type": "string"
         },
         "status": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "New",
+            "InProcessing",
+            "Refused",
+            "NeedsImprovement",
+            "Archived",
+            "SuperManagerConfirmation",
+            "UserConfirmation",
+            "Active",
+            "Spam",
+            "Deleted"
+          ]
         },
         "title": {
           "type": "string"
@@ -508,7 +520,19 @@
           "type": "string"
         },
         "status": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "New",
+            "InProcessing",
+            "Refused",
+            "NeedsImprovement",
+            "Archived",
+            "SuperManagerConfirmation",
+            "UserConfirmation",
+            "Active",
+            "Spam",
+            "Deleted"
+          ]
         },
         "title": {
           "type": "string"
@@ -700,7 +724,14 @@
           "type": "string"
         },
         "role": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "User",
+            "Manager",
+            "SuperManager",
+            "ContentManager",
+            "Operator"
+          ]
         }
       }
     },

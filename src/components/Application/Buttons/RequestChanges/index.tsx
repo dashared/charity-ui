@@ -21,7 +21,7 @@ export const RequestChangesButton: FC<{
     setVisible(true);
   };
 
-  if (status !== ApplicationStatus.Processing) {
+  if (status !== ApplicationStatus.InProcessing) {
     return null;
   }
 

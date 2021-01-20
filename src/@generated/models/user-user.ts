@@ -91,7 +91,20 @@ export interface UserUser {
      * @type {string}
      * @memberof UserUser
      */
-    role?: string;
+    role?: UserUserRoleEnum;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum UserUserRoleEnum {
+    User = 'User',
+    Manager = 'Manager',
+    SuperManager = 'SuperManager',
+    ContentManager = 'ContentManager',
+    Operator = 'Operator'
+}
+
 
 

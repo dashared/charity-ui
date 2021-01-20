@@ -10,9 +10,7 @@ import { useTranslation } from "@providers";
 import { Role } from "@providers/rbac-rules";
 import moment from "moment";
 
-import StatusTag, {
-  ApplicationStatus,
-} from "components/Application/Status/tag";
+import StatusTag from "components/Application/Status/tag";
 
 import UserPreview from "../../../../User/Drawer";
 
@@ -184,7 +182,7 @@ export const GeneralInfo: FC<{
         </Descriptions.Item>
 
         <Descriptions.Item label={t("$views.card.status")}>
-          <StatusTag status={info.status as ApplicationStatus} />
+          <StatusTag status={info.status} />
         </Descriptions.Item>
 
         <Descriptions.Item label={t("$views.card.assignee")}>

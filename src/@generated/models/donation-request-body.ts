@@ -111,7 +111,7 @@ export interface DonationRequestBody {
      * @type {string}
      * @memberof DonationRequestBody
      */
-    status?: string;
+    status?: DonationRequestBodyStatusEnum;
     /**
      * 
      * @type {string}
@@ -125,5 +125,23 @@ export interface DonationRequestBody {
      */
     until?: string;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DonationRequestBodyStatusEnum {
+    New = 'New',
+    InProcessing = 'InProcessing',
+    Refused = 'Refused',
+    NeedsImprovement = 'NeedsImprovement',
+    Archived = 'Archived',
+    SuperManagerConfirmation = 'SuperManagerConfirmation',
+    UserConfirmation = 'UserConfirmation',
+    Active = 'Active',
+    Spam = 'Spam',
+    Deleted = 'Deleted'
+}
+
 
 

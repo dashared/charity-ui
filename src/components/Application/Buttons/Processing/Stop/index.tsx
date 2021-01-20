@@ -27,7 +27,7 @@ export const StopProcessingButton: FC<{
     }
   }, [setLoading, onRefetch, id]);
 
-  if (status !== ApplicationStatus.Processing) {
+  if (status !== ApplicationStatus.InProcessing) {
     return null;
   }
 

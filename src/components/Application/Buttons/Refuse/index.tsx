@@ -17,7 +17,7 @@ export const RefuseButton: FC<{
   const [visible, setVisible] = useState(false);
 
   // TODO: more complex assertion for manager's role and application's status
-  if (status !== ApplicationStatus.RequiresConfirmation) {
+  if (status !== ApplicationStatus.SuperManagerConfirmation) {
     return null;
   }
 

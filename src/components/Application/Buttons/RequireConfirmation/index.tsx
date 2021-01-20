@@ -18,9 +18,9 @@ export const RequireConfirmationButton: FC<{
   const moveFurther = useCallback(async () => {
     try {
       const newStatus =
-        status === ApplicationStatus.RequiresConfirmation
+        status === ApplicationStatus.SuperManagerConfirmation
           ? ApplicationStatus.Active
-          : ApplicationStatus.RequiresConfirmation;
+          : ApplicationStatus.SuperManagerConfirmation;
 
       setLoading(true);
 
@@ -50,7 +50,7 @@ export const RequireConfirmationButton: FC<{
       loading={loading}
       onClick={moveFurther}
     >
-      {status === ApplicationStatus.RequiresConfirmation
+      {status === ApplicationStatus.SuperManagerConfirmation
         ? t("$views.buttons.activate")
         : t("$views.buttons.require_confirmation")}
     </Button>
