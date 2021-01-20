@@ -17,21 +17,21 @@
 /**
  * 
  * @export
- * @interface DonationRequestUpdateInput
+ * @interface AuthEmailConfirmationInput
  */
-export interface DonationRequestUpdateInput {
+export interface AuthEmailConfirmationInput {
     /**
      * 
      * @type {string}
-     * @memberof DonationRequestUpdateInput
+     * @memberof AuthEmailConfirmationInput
      */
-    comment?: string;
+    code?: string;
     /**
      * 
      * @type {string}
-     * @memberof DonationRequestUpdateInput
+     * @memberof AuthEmailConfirmationInput
      */
-    status?: string;
+    email?: string;
 }
 
 

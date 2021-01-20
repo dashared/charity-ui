@@ -78,12 +78,6 @@ export interface DonationRequestBody {
     id?: number;
     /**
      * 
-     * @type {boolean}
-     * @memberof DonationRequestBody
-     */
-    is_private?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof DonationRequestBody
      */

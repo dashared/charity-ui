@@ -17,81 +17,69 @@
 /**
  * 
  * @export
- * @interface UserUser
+ * @interface AuthRegistrationInput
  */
-export interface UserUser {
+export interface AuthRegistrationInput {
     /**
      * 
      * @type {string}
-     * @memberof UserUser
+     * @memberof AuthRegistrationInput
      */
     birth_date?: string;
     /**
      * 
      * @type {string}
-     * @memberof UserUser
+     * @memberof AuthRegistrationInput
      */
     city?: string;
     /**
      * 
      * @type {string}
-     * @memberof UserUser
+     * @memberof AuthRegistrationInput
      */
     country?: string;
     /**
      * 
      * @type {string}
-     * @memberof UserUser
-     */
-    created_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserUser
+     * @memberof AuthRegistrationInput
      */
     email?: string;
     /**
      * 
      * @type {string}
-     * @memberof UserUser
+     * @memberof AuthRegistrationInput
      */
     first_name?: string;
     /**
      * 
      * @type {string}
-     * @memberof UserUser
-     */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserUser
+     * @memberof AuthRegistrationInput
      */
     image?: string;
     /**
      * 
      * @type {string}
-     * @memberof UserUser
+     * @memberof AuthRegistrationInput
      */
     last_name?: string;
     /**
      * 
      * @type {string}
-     * @memberof UserUser
+     * @memberof AuthRegistrationInput
      */
     middle_name?: string;
     /**
      * 
      * @type {string}
-     * @memberof UserUser
+     * @memberof AuthRegistrationInput
      */
-    phone?: string;
+    password?: string;
     /**
      * 
      * @type {string}
-     * @memberof UserUser
+     * @memberof AuthRegistrationInput
      */
-    role?: string;
+    phone?: string;
 }
 
 

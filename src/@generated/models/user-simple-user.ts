@@ -37,12 +37,6 @@ export interface UserSimpleUser {
      * @type {string}
      * @memberof UserSimpleUser
      */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserSimpleUser
-     */
     last_name?: string;
     /**
      * 

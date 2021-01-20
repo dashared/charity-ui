@@ -25,6 +25,12 @@ export interface DonationRequestStatusHistory {
      * @type {string}
      * @memberof DonationRequestStatusHistory
      */
+    assignee_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestStatusHistory
+     */
     author_id?: string;
     /**
      * 
@@ -46,10 +52,10 @@ export interface DonationRequestStatusHistory {
     donation_request_id?: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof DonationRequestStatusHistory
      */
-    id?: number;
+    id?: string;
     /**
      * 
      * @type {string}

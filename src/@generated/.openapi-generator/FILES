@@ -3,11 +3,16 @@
 api.ts
 api/donation-request-api.ts
 api/file-api.ts
+api/login-api.ts
+api/registration-api.ts
 api/user-api.ts
 base.ts
 configuration.ts
 git_push.sh
 index.ts
+models/auth-credentials.ts
+models/auth-email-confirmation-input.ts
+models/auth-registration-input.ts
 models/donation-request-body.ts
 models/donation-request-donation-request.ts
 models/donation-request-history-response.ts

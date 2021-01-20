@@ -72,12 +72,6 @@ export interface DonationRequestDonationRequest {
     id?: number;
     /**
      * 
-     * @type {boolean}
-     * @memberof DonationRequestDonationRequest
-     */
-    is_private?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof DonationRequestDonationRequest
      */

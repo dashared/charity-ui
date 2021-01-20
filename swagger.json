@@ -208,6 +208,86 @@
         }
       }
     },
+    "/login": {
+      "post": {
+        "description": "Sets token on success",
+        "tags": ["Login"],
+        "summary": "Route for signing in",
+        "parameters": [
+          {
+            "description": "User credentials",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Auth.Credentials"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/login/refresh": {
+      "post": {
+        "tags": ["Login"],
+        "summary": "Route for refreshing",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "description": "Register with this route",
+        "tags": ["Registration"],
+        "summary": "Register",
+        "parameters": [
+          {
+            "description": "Email registration input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Auth.RegistrationInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/register/confirm": {
+      "post": {
+        "description": "Confirms email with code from email",
+        "tags": ["Registration"],
+        "summary": "Confirm email",
+        "parameters": [
+          {
+            "description": "Email confirmation input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Auth.EmailConfirmationInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/user": {
       "get": {
         "produces": ["application/json"],
@@ -269,6 +349,63 @@
     }
   },
   "definitions": {
+    "Auth.Credentials": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Auth.EmailConfirmationInput": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "Auth.RegistrationInput": {
+      "type": "object",
+      "properties": {
+        "birth_date": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "middle_name": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      }
+    },
     "DonationRequest.Body": {
       "type": "object",
       "properties": {
@@ -301,9 +438,6 @@
         },
         "id": {
           "type": "integer"
-        },
-        "is_private": {
-          "type": "boolean"
         },
         "message": {
           "type": "string"
@@ -358,9 +492,6 @@
         "id": {
           "type": "integer"
         },
-        "is_private": {
-          "type": "boolean"
-        },
         "message": {
           "type": "string"
         },
@@ -404,9 +535,6 @@
     "DonationRequest.Input": {
       "type": "object",
       "properties": {
-        "applicant_id": {
-          "type": "string"
-        },
         "assignee_id": {
           "type": "string"
         },
@@ -436,6 +564,9 @@
         },
         "title": {
           "type": "string"
+        },
+        "until": {
+          "type": "string"
         }
       }
     },
@@ -456,6 +587,9 @@
     "DonationRequest.StatusHistory": {
       "type": "object",
       "properties": {
+        "assignee_id": {
+          "type": "string"
+        },
         "author_id": {
           "type": "string"
         },
@@ -469,7 +603,7 @@
           "type": "integer"
         },
         "id": {
-          "type": "integer"
+          "type": "string"
         },
         "previous_status": {
           "type": "string"
@@ -479,13 +613,10 @@
     "DonationRequest.UpdateInput": {
       "type": "object",
       "properties": {
-        "role": {
+        "comment": {
           "type": "string"
         },
         "status": {
-          "type": "string"
-        },
-        "user_id": {
           "type": "string"
         }
       }
@@ -524,9 +655,6 @@
         "first_name": {
           "type": "string"
         },
-        "id": {
-          "type": "string"
-        },
         "last_name": {
           "type": "string"
         },
@@ -538,7 +666,19 @@
     "User.User": {
       "type": "object",
       "properties": {
+        "birth_date": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
         "created_at": {
+          "type": "string"
+        },
+        "email": {
           "type": "string"
         },
         "first_name": {
@@ -547,10 +687,19 @@
         "id": {
           "type": "string"
         },
+        "image": {
+          "type": "string"
+        },
         "last_name": {
           "type": "string"
         },
         "middle_name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "role": {
           "type": "string"
         }
       }
