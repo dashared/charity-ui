@@ -4,6 +4,7 @@ import {
   FolderOpenOutlined,
   HistoryOutlined,
   HomeOutlined,
+  MessageOutlined,
   MoneyCollectOutlined,
   ProfileOutlined,
   SettingOutlined,
@@ -46,6 +47,16 @@ const LeftBarConf: Array<MenuEntry> = [
       </>
     ),
     name: "transactions:index",
+  },
+
+  {
+    display: (
+      <>
+        <MessageOutlined />
+        <span>Чаты</span>
+      </>
+    ),
+    name: "chats:index",
   },
 
   {

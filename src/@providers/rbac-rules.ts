@@ -2,6 +2,7 @@ export enum Role {
   visitor = "visitor",
   manager = "manager",
   supermanager = "supermanager",
+  contentManager = "contentManager",
   operator = "operator",
   admin = "admin",
 }
@@ -10,7 +11,7 @@ const rules = {
   visitor: {
     static: ["auth:login"],
   },
-  operator: {
+  contentManager: {
     static: [
       "applications:show",
       "settings:index",
@@ -21,6 +22,9 @@ const rules = {
       "fund:description-edit",
       "faq:edit",
     ],
+  },
+  operator: {
+    static: ["chats:show", "chats:index", "settings:index"],
   },
   manager: {
     static: [
