@@ -28,7 +28,7 @@ export const RefuseButton: FC<{
       </Button>
       <ModalWithMessage
         title={t("$views.modal.refuse")}
-        query={DonationRequestFactory.donationRequestIdStatusPatch}
+        query={DonationRequestFactory.apiDonationRequestIdStatusPatch}
         newStatus={ApplicationStatus.Refused}
         onClose={() => setVisible(false)}
         isVisible={visible}

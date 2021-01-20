@@ -35,12 +35,12 @@ export const RegistrationApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerConfirmPost: async (request: AuthEmailConfirmationInput, options: any = {}): Promise<RequestArgs> => {
+        apiRegisterConfirmPost: async (request: AuthEmailConfirmationInput, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling registerConfirmPost.');
+                throw new RequiredError('request','Required parameter request was null or undefined when calling apiRegisterConfirmPost.');
             }
-            const localVarPath = `/register/confirm`;
+            const localVarPath = `/api/register/confirm`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -86,12 +86,12 @@ export const RegistrationApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerPost: async (request: AuthRegistrationInput, options: any = {}): Promise<RequestArgs> => {
+        apiRegisterPost: async (request: AuthRegistrationInput, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling registerPost.');
+                throw new RequiredError('request','Required parameter request was null or undefined when calling apiRegisterPost.');
             }
-            const localVarPath = `/register`;
+            const localVarPath = `/api/register`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -146,8 +146,8 @@ export const RegistrationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async registerConfirmPost(request: AuthEmailConfirmationInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await RegistrationApiAxiosParamCreator(configuration).registerConfirmPost(request, options);
+        async apiRegisterConfirmPost(request: AuthEmailConfirmationInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await RegistrationApiAxiosParamCreator(configuration).apiRegisterConfirmPost(request, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -160,8 +160,8 @@ export const RegistrationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async registerPost(request: AuthRegistrationInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await RegistrationApiAxiosParamCreator(configuration).registerPost(request, options);
+        async apiRegisterPost(request: AuthRegistrationInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await RegistrationApiAxiosParamCreator(configuration).apiRegisterPost(request, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -183,8 +183,8 @@ export const RegistrationApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerConfirmPost(request: AuthEmailConfirmationInput, options?: any): AxiosPromise<void> {
-            return RegistrationApiFp(configuration).registerConfirmPost(request, options).then((request) => request(axios, basePath));
+        apiRegisterConfirmPost(request: AuthEmailConfirmationInput, options?: any): AxiosPromise<void> {
+            return RegistrationApiFp(configuration).apiRegisterConfirmPost(request, options).then((request) => request(axios, basePath));
         },
         /**
          * Register with this route
@@ -193,36 +193,36 @@ export const RegistrationApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerPost(request: AuthRegistrationInput, options?: any): AxiosPromise<void> {
-            return RegistrationApiFp(configuration).registerPost(request, options).then((request) => request(axios, basePath));
+        apiRegisterPost(request: AuthRegistrationInput, options?: any): AxiosPromise<void> {
+            return RegistrationApiFp(configuration).apiRegisterPost(request, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for registerConfirmPost operation in RegistrationApi.
+ * Request parameters for apiRegisterConfirmPost operation in RegistrationApi.
  * @export
- * @interface RegistrationApiRegisterConfirmPostRequest
+ * @interface RegistrationApiApiRegisterConfirmPostRequest
  */
-export interface RegistrationApiRegisterConfirmPostRequest {
+export interface RegistrationApiApiRegisterConfirmPostRequest {
     /**
      * Email confirmation input
      * @type {AuthEmailConfirmationInput}
-     * @memberof RegistrationApiRegisterConfirmPost
+     * @memberof RegistrationApiApiRegisterConfirmPost
      */
     readonly request: AuthEmailConfirmationInput
 }
 
 /**
- * Request parameters for registerPost operation in RegistrationApi.
+ * Request parameters for apiRegisterPost operation in RegistrationApi.
  * @export
- * @interface RegistrationApiRegisterPostRequest
+ * @interface RegistrationApiApiRegisterPostRequest
  */
-export interface RegistrationApiRegisterPostRequest {
+export interface RegistrationApiApiRegisterPostRequest {
     /**
      * Email registration input
      * @type {AuthRegistrationInput}
-     * @memberof RegistrationApiRegisterPost
+     * @memberof RegistrationApiApiRegisterPost
      */
     readonly request: AuthRegistrationInput
 }
@@ -237,24 +237,24 @@ export class RegistrationApi extends BaseAPI {
     /**
      * Confirms email with code from email
      * @summary Confirm email
-     * @param {RegistrationApiRegisterConfirmPostRequest} requestParameters Request parameters.
+     * @param {RegistrationApiApiRegisterConfirmPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RegistrationApi
      */
-    public registerConfirmPost(requestParameters: RegistrationApiRegisterConfirmPostRequest, options?: any) {
-        return RegistrationApiFp(this.configuration).registerConfirmPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
+    public apiRegisterConfirmPost(requestParameters: RegistrationApiApiRegisterConfirmPostRequest, options?: any) {
+        return RegistrationApiFp(this.configuration).apiRegisterConfirmPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Register with this route
      * @summary Register
-     * @param {RegistrationApiRegisterPostRequest} requestParameters Request parameters.
+     * @param {RegistrationApiApiRegisterPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RegistrationApi
      */
-    public registerPost(requestParameters: RegistrationApiRegisterPostRequest, options?: any) {
-        return RegistrationApiFp(this.configuration).registerPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
+    public apiRegisterPost(requestParameters: RegistrationApiApiRegisterPostRequest, options?: any) {
+        return RegistrationApiFp(this.configuration).apiRegisterPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
     }
 }

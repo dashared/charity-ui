@@ -24,7 +24,7 @@ export const RequireConfirmationButton: FC<{
 
       setLoading(true);
 
-      await DonationRequestFactory.donationRequestIdStatusPatch(id, {
+      await DonationRequestFactory.apiDonationRequestIdStatusPatch(id, {
         status: newStatus,
       });
     } catch (e) {

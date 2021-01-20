@@ -22,7 +22,7 @@ export const StartProcessingButton: FC<{
         status: ApplicationStatus.InProcessing,
         role: "Manager",
       };
-      await DonationRequestFactory.donationRequestIdStatusPatch(id, input);
+      await DonationRequestFactory.apiDonationRequestIdStatusPatch(id, input);
     } catch (e) {
       console.log(e);
     } finally {

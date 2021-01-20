@@ -45,8 +45,8 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestGet: async (page?: number, size?: number, sort?: string, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/donation-request/`;
+        apiDonationRequestGet: async (page?: number, size?: number, sort?: string, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/donation-request/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -95,12 +95,12 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestIdGet: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        apiDonationRequestIdGet: async (id: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling donationRequestIdGet.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling apiDonationRequestIdGet.');
             }
-            const localVarPath = `/donation-request/{id}`
+            const localVarPath = `/api/donation-request/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -141,12 +141,12 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestIdHistoryGet: async (id: number, page?: number, size?: number, sort?: string, options: any = {}): Promise<RequestArgs> => {
+        apiDonationRequestIdHistoryGet: async (id: number, page?: number, size?: number, sort?: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling donationRequestIdHistoryGet.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling apiDonationRequestIdHistoryGet.');
             }
-            const localVarPath = `/donation-request/{id}/history`
+            const localVarPath = `/api/donation-request/{id}/history`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -196,12 +196,12 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestIdStatusDelete: async (id: number, options: any = {}): Promise<RequestArgs> => {
+        apiDonationRequestIdStatusDelete: async (id: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling donationRequestIdStatusDelete.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling apiDonationRequestIdStatusDelete.');
             }
-            const localVarPath = `/donation-request/{id}/status`
+            const localVarPath = `/api/donation-request/{id}/status`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -240,12 +240,12 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestIdStatusPatch: async (id: number, input?: DonationRequestUpdateInput, options: any = {}): Promise<RequestArgs> => {
+        apiDonationRequestIdStatusPatch: async (id: number, input?: DonationRequestUpdateInput, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling donationRequestIdStatusPatch.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling apiDonationRequestIdStatusPatch.');
             }
-            const localVarPath = `/donation-request/{id}/status`
+            const localVarPath = `/api/donation-request/{id}/status`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -292,12 +292,12 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestPost: async (request: DonationRequestInput, options: any = {}): Promise<RequestArgs> => {
+        apiDonationRequestPost: async (request: DonationRequestInput, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling donationRequestPost.');
+                throw new RequiredError('request','Required parameter request was null or undefined when calling apiDonationRequestPost.');
             }
-            const localVarPath = `/donation-request`;
+            const localVarPath = `/api/donation-request`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -354,8 +354,8 @@ export const DonationRequestApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async donationRequestGet(page?: number, size?: number, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestResponse>> {
-            const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).donationRequestGet(page, size, sort, options);
+        async apiDonationRequestGet(page?: number, size?: number, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestResponse>> {
+            const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestGet(page, size, sort, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -368,8 +368,8 @@ export const DonationRequestApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async donationRequestIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestBody>> {
-            const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).donationRequestIdGet(id, options);
+        async apiDonationRequestIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestBody>> {
+            const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestIdGet(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -385,8 +385,8 @@ export const DonationRequestApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async donationRequestIdHistoryGet(id: number, page?: number, size?: number, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestHistoryResponse>> {
-            const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).donationRequestIdHistoryGet(id, page, size, sort, options);
+        async apiDonationRequestIdHistoryGet(id: number, page?: number, size?: number, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestHistoryResponse>> {
+            const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestIdHistoryGet(id, page, size, sort, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -399,8 +399,8 @@ export const DonationRequestApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async donationRequestIdStatusDelete(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestDonationRequest>> {
-            const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).donationRequestIdStatusDelete(id, options);
+        async apiDonationRequestIdStatusDelete(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestDonationRequest>> {
+            const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestIdStatusDelete(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -414,8 +414,8 @@ export const DonationRequestApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async donationRequestIdStatusPatch(id: number, input?: DonationRequestUpdateInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestResponse>> {
-            const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).donationRequestIdStatusPatch(id, input, options);
+        async apiDonationRequestIdStatusPatch(id: number, input?: DonationRequestUpdateInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestResponse>> {
+            const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestIdStatusPatch(id, input, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -428,8 +428,8 @@ export const DonationRequestApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async donationRequestPost(request: DonationRequestInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).donationRequestPost(request, options);
+        async apiDonationRequestPost(request: DonationRequestInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestPost(request, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -453,8 +453,8 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestGet(page?: number, size?: number, sort?: string, options?: any): AxiosPromise<DonationRequestResponse> {
-            return DonationRequestApiFp(configuration).donationRequestGet(page, size, sort, options).then((request) => request(axios, basePath));
+        apiDonationRequestGet(page?: number, size?: number, sort?: string, options?: any): AxiosPromise<DonationRequestResponse> {
+            return DonationRequestApiFp(configuration).apiDonationRequestGet(page, size, sort, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -463,8 +463,8 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestIdGet(id: number, options?: any): AxiosPromise<DonationRequestBody> {
-            return DonationRequestApiFp(configuration).donationRequestIdGet(id, options).then((request) => request(axios, basePath));
+        apiDonationRequestIdGet(id: number, options?: any): AxiosPromise<DonationRequestBody> {
+            return DonationRequestApiFp(configuration).apiDonationRequestIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -476,8 +476,8 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestIdHistoryGet(id: number, page?: number, size?: number, sort?: string, options?: any): AxiosPromise<DonationRequestHistoryResponse> {
-            return DonationRequestApiFp(configuration).donationRequestIdHistoryGet(id, page, size, sort, options).then((request) => request(axios, basePath));
+        apiDonationRequestIdHistoryGet(id: number, page?: number, size?: number, sort?: string, options?: any): AxiosPromise<DonationRequestHistoryResponse> {
+            return DonationRequestApiFp(configuration).apiDonationRequestIdHistoryGet(id, page, size, sort, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -486,8 +486,8 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestIdStatusDelete(id: number, options?: any): AxiosPromise<DonationRequestDonationRequest> {
-            return DonationRequestApiFp(configuration).donationRequestIdStatusDelete(id, options).then((request) => request(axios, basePath));
+        apiDonationRequestIdStatusDelete(id: number, options?: any): AxiosPromise<DonationRequestDonationRequest> {
+            return DonationRequestApiFp(configuration).apiDonationRequestIdStatusDelete(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -497,8 +497,8 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestIdStatusPatch(id: number, input?: DonationRequestUpdateInput, options?: any): AxiosPromise<DonationRequestResponse> {
-            return DonationRequestApiFp(configuration).donationRequestIdStatusPatch(id, input, options).then((request) => request(axios, basePath));
+        apiDonationRequestIdStatusPatch(id: number, input?: DonationRequestUpdateInput, options?: any): AxiosPromise<DonationRequestResponse> {
+            return DonationRequestApiFp(configuration).apiDonationRequestIdStatusPatch(id, input, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -507,134 +507,134 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        donationRequestPost(request: DonationRequestInput, options?: any): AxiosPromise<void> {
-            return DonationRequestApiFp(configuration).donationRequestPost(request, options).then((request) => request(axios, basePath));
+        apiDonationRequestPost(request: DonationRequestInput, options?: any): AxiosPromise<void> {
+            return DonationRequestApiFp(configuration).apiDonationRequestPost(request, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for donationRequestGet operation in DonationRequestApi.
+ * Request parameters for apiDonationRequestGet operation in DonationRequestApi.
  * @export
- * @interface DonationRequestApiDonationRequestGetRequest
+ * @interface DonationRequestApiApiDonationRequestGetRequest
  */
-export interface DonationRequestApiDonationRequestGetRequest {
+export interface DonationRequestApiApiDonationRequestGetRequest {
     /**
      * Page number
      * @type {number}
-     * @memberof DonationRequestApiDonationRequestGet
+     * @memberof DonationRequestApiApiDonationRequestGet
      */
     readonly page?: number
 
     /**
      * Page size
      * @type {number}
-     * @memberof DonationRequestApiDonationRequestGet
+     * @memberof DonationRequestApiApiDonationRequestGet
      */
     readonly size?: number
 
     /**
      * sort
      * @type {string}
-     * @memberof DonationRequestApiDonationRequestGet
+     * @memberof DonationRequestApiApiDonationRequestGet
      */
     readonly sort?: string
 }
 
 /**
- * Request parameters for donationRequestIdGet operation in DonationRequestApi.
+ * Request parameters for apiDonationRequestIdGet operation in DonationRequestApi.
  * @export
- * @interface DonationRequestApiDonationRequestIdGetRequest
+ * @interface DonationRequestApiApiDonationRequestIdGetRequest
  */
-export interface DonationRequestApiDonationRequestIdGetRequest {
+export interface DonationRequestApiApiDonationRequestIdGetRequest {
     /**
      * Donation request ID
      * @type {number}
-     * @memberof DonationRequestApiDonationRequestIdGet
+     * @memberof DonationRequestApiApiDonationRequestIdGet
      */
     readonly id: number
 }
 
 /**
- * Request parameters for donationRequestIdHistoryGet operation in DonationRequestApi.
+ * Request parameters for apiDonationRequestIdHistoryGet operation in DonationRequestApi.
  * @export
- * @interface DonationRequestApiDonationRequestIdHistoryGetRequest
+ * @interface DonationRequestApiApiDonationRequestIdHistoryGetRequest
  */
-export interface DonationRequestApiDonationRequestIdHistoryGetRequest {
+export interface DonationRequestApiApiDonationRequestIdHistoryGetRequest {
     /**
      * donation request id
      * @type {number}
-     * @memberof DonationRequestApiDonationRequestIdHistoryGet
+     * @memberof DonationRequestApiApiDonationRequestIdHistoryGet
      */
     readonly id: number
 
     /**
      * Page number
      * @type {number}
-     * @memberof DonationRequestApiDonationRequestIdHistoryGet
+     * @memberof DonationRequestApiApiDonationRequestIdHistoryGet
      */
     readonly page?: number
 
     /**
      * Page size
      * @type {number}
-     * @memberof DonationRequestApiDonationRequestIdHistoryGet
+     * @memberof DonationRequestApiApiDonationRequestIdHistoryGet
      */
     readonly size?: number
 
     /**
      * sort
      * @type {string}
-     * @memberof DonationRequestApiDonationRequestIdHistoryGet
+     * @memberof DonationRequestApiApiDonationRequestIdHistoryGet
      */
     readonly sort?: string
 }
 
 /**
- * Request parameters for donationRequestIdStatusDelete operation in DonationRequestApi.
+ * Request parameters for apiDonationRequestIdStatusDelete operation in DonationRequestApi.
  * @export
- * @interface DonationRequestApiDonationRequestIdStatusDeleteRequest
+ * @interface DonationRequestApiApiDonationRequestIdStatusDeleteRequest
  */
-export interface DonationRequestApiDonationRequestIdStatusDeleteRequest {
+export interface DonationRequestApiApiDonationRequestIdStatusDeleteRequest {
     /**
      * donation request id
      * @type {number}
-     * @memberof DonationRequestApiDonationRequestIdStatusDelete
+     * @memberof DonationRequestApiApiDonationRequestIdStatusDelete
      */
     readonly id: number
 }
 
 /**
- * Request parameters for donationRequestIdStatusPatch operation in DonationRequestApi.
+ * Request parameters for apiDonationRequestIdStatusPatch operation in DonationRequestApi.
  * @export
- * @interface DonationRequestApiDonationRequestIdStatusPatchRequest
+ * @interface DonationRequestApiApiDonationRequestIdStatusPatchRequest
  */
-export interface DonationRequestApiDonationRequestIdStatusPatchRequest {
+export interface DonationRequestApiApiDonationRequestIdStatusPatchRequest {
     /**
      * donation request id
      * @type {number}
-     * @memberof DonationRequestApiDonationRequestIdStatusPatch
+     * @memberof DonationRequestApiApiDonationRequestIdStatusPatch
      */
     readonly id: number
 
     /**
      * Status and message
      * @type {DonationRequestUpdateInput}
-     * @memberof DonationRequestApiDonationRequestIdStatusPatch
+     * @memberof DonationRequestApiApiDonationRequestIdStatusPatch
      */
     readonly input?: DonationRequestUpdateInput
 }
 
 /**
- * Request parameters for donationRequestPost operation in DonationRequestApi.
+ * Request parameters for apiDonationRequestPost operation in DonationRequestApi.
  * @export
- * @interface DonationRequestApiDonationRequestPostRequest
+ * @interface DonationRequestApiApiDonationRequestPostRequest
  */
-export interface DonationRequestApiDonationRequestPostRequest {
+export interface DonationRequestApiApiDonationRequestPostRequest {
     /**
      * Donation request Input
      * @type {DonationRequestInput}
-     * @memberof DonationRequestApiDonationRequestPost
+     * @memberof DonationRequestApiApiDonationRequestPost
      */
     readonly request: DonationRequestInput
 }
@@ -649,72 +649,72 @@ export class DonationRequestApi extends BaseAPI {
     /**
      * 
      * @summary Retrieves all donation requests
-     * @param {DonationRequestApiDonationRequestGetRequest} requestParameters Request parameters.
+     * @param {DonationRequestApiApiDonationRequestGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DonationRequestApi
      */
-    public donationRequestGet(requestParameters: DonationRequestApiDonationRequestGetRequest = {}, options?: any) {
-        return DonationRequestApiFp(this.configuration).donationRequestGet(requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
+    public apiDonationRequestGet(requestParameters: DonationRequestApiApiDonationRequestGetRequest = {}, options?: any) {
+        return DonationRequestApiFp(this.configuration).apiDonationRequestGet(requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Retrieves donation request based on given ID
-     * @param {DonationRequestApiDonationRequestIdGetRequest} requestParameters Request parameters.
+     * @param {DonationRequestApiApiDonationRequestIdGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DonationRequestApi
      */
-    public donationRequestIdGet(requestParameters: DonationRequestApiDonationRequestIdGetRequest, options?: any) {
-        return DonationRequestApiFp(this.configuration).donationRequestIdGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public apiDonationRequestIdGet(requestParameters: DonationRequestApiApiDonationRequestIdGetRequest, options?: any) {
+        return DonationRequestApiFp(this.configuration).apiDonationRequestIdGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Gets history of status changes
-     * @param {DonationRequestApiDonationRequestIdHistoryGetRequest} requestParameters Request parameters.
+     * @param {DonationRequestApiApiDonationRequestIdHistoryGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DonationRequestApi
      */
-    public donationRequestIdHistoryGet(requestParameters: DonationRequestApiDonationRequestIdHistoryGetRequest, options?: any) {
-        return DonationRequestApiFp(this.configuration).donationRequestIdHistoryGet(requestParameters.id, requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
+    public apiDonationRequestIdHistoryGet(requestParameters: DonationRequestApiApiDonationRequestIdHistoryGetRequest, options?: any) {
+        return DonationRequestApiFp(this.configuration).apiDonationRequestIdHistoryGet(requestParameters.id, requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary RollBacks status of donation request
-     * @param {DonationRequestApiDonationRequestIdStatusDeleteRequest} requestParameters Request parameters.
+     * @param {DonationRequestApiApiDonationRequestIdStatusDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DonationRequestApi
      */
-    public donationRequestIdStatusDelete(requestParameters: DonationRequestApiDonationRequestIdStatusDeleteRequest, options?: any) {
-        return DonationRequestApiFp(this.configuration).donationRequestIdStatusDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public apiDonationRequestIdStatusDelete(requestParameters: DonationRequestApiApiDonationRequestIdStatusDeleteRequest, options?: any) {
+        return DonationRequestApiFp(this.configuration).apiDonationRequestIdStatusDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Updates status of donation request
-     * @param {DonationRequestApiDonationRequestIdStatusPatchRequest} requestParameters Request parameters.
+     * @param {DonationRequestApiApiDonationRequestIdStatusPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DonationRequestApi
      */
-    public donationRequestIdStatusPatch(requestParameters: DonationRequestApiDonationRequestIdStatusPatchRequest, options?: any) {
-        return DonationRequestApiFp(this.configuration).donationRequestIdStatusPatch(requestParameters.id, requestParameters.input, options).then((request) => request(this.axios, this.basePath));
+    public apiDonationRequestIdStatusPatch(requestParameters: DonationRequestApiApiDonationRequestIdStatusPatchRequest, options?: any) {
+        return DonationRequestApiFp(this.configuration).apiDonationRequestIdStatusPatch(requestParameters.id, requestParameters.input, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Creates donation request
-     * @param {DonationRequestApiDonationRequestPostRequest} requestParameters Request parameters.
+     * @param {DonationRequestApiApiDonationRequestPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DonationRequestApi
      */
-    public donationRequestPost(requestParameters: DonationRequestApiDonationRequestPostRequest, options?: any) {
-        return DonationRequestApiFp(this.configuration).donationRequestPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
+    public apiDonationRequestPost(requestParameters: DonationRequestApiApiDonationRequestPostRequest, options?: any) {
+        return DonationRequestApiFp(this.configuration).apiDonationRequestPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
     }
 }

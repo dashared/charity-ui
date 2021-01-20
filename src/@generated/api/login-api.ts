@@ -33,12 +33,12 @@ export const LoginApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginPost: async (request: AuthCredentials, options: any = {}): Promise<RequestArgs> => {
+        apiLoginPost: async (request: AuthCredentials, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling loginPost.');
+                throw new RequiredError('request','Required parameter request was null or undefined when calling apiLoginPost.');
             }
-            const localVarPath = `/login`;
+            const localVarPath = `/api/login`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -83,8 +83,8 @@ export const LoginApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginRefreshPost: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/login/refresh`;
+        apiLoginRefreshPost: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/login/refresh`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -130,8 +130,8 @@ export const LoginApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async loginPost(request: AuthCredentials, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await LoginApiAxiosParamCreator(configuration).loginPost(request, options);
+        async apiLoginPost(request: AuthCredentials, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await LoginApiAxiosParamCreator(configuration).apiLoginPost(request, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -143,8 +143,8 @@ export const LoginApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async loginRefreshPost(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await LoginApiAxiosParamCreator(configuration).loginRefreshPost(options);
+        async apiLoginRefreshPost(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await LoginApiAxiosParamCreator(configuration).apiLoginRefreshPost(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -166,8 +166,8 @@ export const LoginApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginPost(request: AuthCredentials, options?: any): AxiosPromise<void> {
-            return LoginApiFp(configuration).loginPost(request, options).then((request) => request(axios, basePath));
+        apiLoginPost(request: AuthCredentials, options?: any): AxiosPromise<void> {
+            return LoginApiFp(configuration).apiLoginPost(request, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -175,22 +175,22 @@ export const LoginApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginRefreshPost(options?: any): AxiosPromise<void> {
-            return LoginApiFp(configuration).loginRefreshPost(options).then((request) => request(axios, basePath));
+        apiLoginRefreshPost(options?: any): AxiosPromise<void> {
+            return LoginApiFp(configuration).apiLoginRefreshPost(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for loginPost operation in LoginApi.
+ * Request parameters for apiLoginPost operation in LoginApi.
  * @export
- * @interface LoginApiLoginPostRequest
+ * @interface LoginApiApiLoginPostRequest
  */
-export interface LoginApiLoginPostRequest {
+export interface LoginApiApiLoginPostRequest {
     /**
      * User credentials
      * @type {AuthCredentials}
-     * @memberof LoginApiLoginPost
+     * @memberof LoginApiApiLoginPost
      */
     readonly request: AuthCredentials
 }
@@ -205,13 +205,13 @@ export class LoginApi extends BaseAPI {
     /**
      * Sets token on success
      * @summary Route for signing in
-     * @param {LoginApiLoginPostRequest} requestParameters Request parameters.
+     * @param {LoginApiApiLoginPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LoginApi
      */
-    public loginPost(requestParameters: LoginApiLoginPostRequest, options?: any) {
-        return LoginApiFp(this.configuration).loginPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
+    public apiLoginPost(requestParameters: LoginApiApiLoginPostRequest, options?: any) {
+        return LoginApiFp(this.configuration).apiLoginPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -221,7 +221,7 @@ export class LoginApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof LoginApi
      */
-    public loginRefreshPost(options?: any) {
-        return LoginApiFp(this.configuration).loginRefreshPost(options).then((request) => request(this.axios, this.basePath));
+    public apiLoginRefreshPost(options?: any) {
+        return LoginApiFp(this.configuration).apiLoginRefreshPost(options).then((request) => request(this.axios, this.basePath));
     }
 }

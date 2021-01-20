@@ -13,7 +13,7 @@ export const PersonalSettings: FC<{ id: string }> = ({ id }) => {
   const { t } = useTranslation("Settings");
 
   const { data, loading } = useAxios(
-    UserRequestFactory.userIdGet,
+    UserRequestFactory.apiUserIdGet,
     undefined,
     id,
   );

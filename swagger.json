@@ -6,7 +6,7 @@
     "contact": {}
   },
   "paths": {
-    "/donation-request": {
+    "/api/donation-request": {
       "post": {
         "consumes": ["application/json"],
         "produces": ["application/json"],
@@ -33,7 +33,7 @@
         }
       }
     },
-    "/donation-request/": {
+    "/api/donation-request/": {
       "get": {
         "produces": ["application/json"],
         "tags": ["DonationRequest"],
@@ -68,7 +68,7 @@
         }
       }
     },
-    "/donation-request/{id}": {
+    "/api/donation-request/{id}": {
       "get": {
         "produces": ["application/json"],
         "tags": ["DonationRequest"],
@@ -92,7 +92,7 @@
         }
       }
     },
-    "/donation-request/{id}/history": {
+    "/api/donation-request/{id}/history": {
       "get": {
         "produces": ["application/json"],
         "tags": ["DonationRequest"],
@@ -133,7 +133,7 @@
         }
       }
     },
-    "/donation-request/{id}/status": {
+    "/api/donation-request/{id}/status": {
       "delete": {
         "produces": ["application/json"],
         "tags": ["DonationRequest"],
@@ -185,7 +185,7 @@
         }
       }
     },
-    "/file/upload": {
+    "/api/file/upload": {
       "post": {
         "consumes": ["multipart/form-data"],
         "tags": ["File"],
@@ -208,7 +208,7 @@
         }
       }
     },
-    "/login": {
+    "/api/login": {
       "post": {
         "description": "Sets token on success",
         "tags": ["Login"],
@@ -231,7 +231,7 @@
         }
       }
     },
-    "/login/refresh": {
+    "/api/login/refresh": {
       "post": {
         "tags": ["Login"],
         "summary": "Route for refreshing",
@@ -242,7 +242,7 @@
         }
       }
     },
-    "/register": {
+    "/api/register": {
       "post": {
         "description": "Register with this route",
         "tags": ["Registration"],
@@ -265,7 +265,7 @@
         }
       }
     },
-    "/register/confirm": {
+    "/api/register/confirm": {
       "post": {
         "description": "Confirms email with code from email",
         "tags": ["Registration"],
@@ -288,7 +288,7 @@
         }
       }
     },
-    "/user": {
+    "/api/user": {
       "get": {
         "produces": ["application/json"],
         "tags": ["User"],
@@ -323,7 +323,7 @@
         }
       }
     },
-    "/user/{id}": {
+    "/api/user/{id}": {
       "get": {
         "produces": ["application/json"],
         "tags": ["User"],

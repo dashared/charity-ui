@@ -37,8 +37,8 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userGet: async (page?: number, size?: number, sort?: string, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/user`;
+        apiUserGet: async (page?: number, size?: number, sort?: string, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/user`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -87,12 +87,12 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userIdGet: async (id: string, options: any = {}): Promise<RequestArgs> => {
+        apiUserIdGet: async (id: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling userIdGet.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling apiUserIdGet.');
             }
-            const localVarPath = `/user/{id}`
+            const localVarPath = `/api/user/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -141,8 +141,8 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async userGet(page?: number, size?: number, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponse>> {
-            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).userGet(page, size, sort, options);
+        async apiUserGet(page?: number, size?: number, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponse>> {
+            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).apiUserGet(page, size, sort, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -155,8 +155,8 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async userIdGet(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserUser>> {
-            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).userIdGet(id, options);
+        async apiUserIdGet(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserUser>> {
+            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).apiUserIdGet(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -180,8 +180,8 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userGet(page?: number, size?: number, sort?: string, options?: any): AxiosPromise<UserResponse> {
-            return UserApiFp(configuration).userGet(page, size, sort, options).then((request) => request(axios, basePath));
+        apiUserGet(page?: number, size?: number, sort?: string, options?: any): AxiosPromise<UserResponse> {
+            return UserApiFp(configuration).apiUserGet(page, size, sort, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -190,50 +190,50 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userIdGet(id: string, options?: any): AxiosPromise<UserUser> {
-            return UserApiFp(configuration).userIdGet(id, options).then((request) => request(axios, basePath));
+        apiUserIdGet(id: string, options?: any): AxiosPromise<UserUser> {
+            return UserApiFp(configuration).apiUserIdGet(id, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for userGet operation in UserApi.
+ * Request parameters for apiUserGet operation in UserApi.
  * @export
- * @interface UserApiUserGetRequest
+ * @interface UserApiApiUserGetRequest
  */
-export interface UserApiUserGetRequest {
+export interface UserApiApiUserGetRequest {
     /**
      * Page number
      * @type {number}
-     * @memberof UserApiUserGet
+     * @memberof UserApiApiUserGet
      */
     readonly page?: number
 
     /**
      * Page size
      * @type {number}
-     * @memberof UserApiUserGet
+     * @memberof UserApiApiUserGet
      */
     readonly size?: number
 
     /**
      * sort
      * @type {string}
-     * @memberof UserApiUserGet
+     * @memberof UserApiApiUserGet
      */
     readonly sort?: string
 }
 
 /**
- * Request parameters for userIdGet operation in UserApi.
+ * Request parameters for apiUserIdGet operation in UserApi.
  * @export
- * @interface UserApiUserIdGetRequest
+ * @interface UserApiApiUserIdGetRequest
  */
-export interface UserApiUserIdGetRequest {
+export interface UserApiApiUserIdGetRequest {
     /**
      * User ID
      * @type {string}
-     * @memberof UserApiUserIdGet
+     * @memberof UserApiApiUserIdGet
      */
     readonly id: string
 }
@@ -248,24 +248,24 @@ export class UserApi extends BaseAPI {
     /**
      * 
      * @summary GetAllUsers
-     * @param {UserApiUserGetRequest} requestParameters Request parameters.
+     * @param {UserApiApiUserGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public userGet(requestParameters: UserApiUserGetRequest = {}, options?: any) {
-        return UserApiFp(this.configuration).userGet(requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
+    public apiUserGet(requestParameters: UserApiApiUserGetRequest = {}, options?: any) {
+        return UserApiFp(this.configuration).apiUserGet(requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Retrieves user based on given ID
-     * @param {UserApiUserIdGetRequest} requestParameters Request parameters.
+     * @param {UserApiApiUserIdGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public userIdGet(requestParameters: UserApiUserIdGetRequest, options?: any) {
-        return UserApiFp(this.configuration).userIdGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public apiUserIdGet(requestParameters: UserApiApiUserIdGetRequest, options?: any) {
+        return UserApiFp(this.configuration).apiUserIdGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }

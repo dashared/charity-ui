@@ -41,7 +41,7 @@ export const RequestChangesButton: FC<{
         isVisible={visible}
         onRefetch={onRefetch}
         newStatus={ApplicationStatus.NeedsImprovement}
-        query={DonationRequestFactory.donationRequestIdStatusPatch}
+        query={DonationRequestFactory.apiDonationRequestIdStatusPatch}
         applicationId={applicationId}
         onClose={() => setVisible(false)}
       ></ModalWithMessage>
