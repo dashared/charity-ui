@@ -82,7 +82,7 @@ const ApplicationsPage: FC = () => {
     <Workspace noRefresh title={t("listTitle")}>
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
-        requestQuery={DonationRequestFactory.donationRequestGet}
+        requestQuery={DonationRequestFactory.apiDonationRequestGet}
         stateRef={paginationState}
         onResult={(result) => {
           setList(result.data ?? []);

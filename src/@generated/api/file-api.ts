@@ -33,8 +33,8 @@ export const FileApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        fileUploadPost: async (file?: object, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/file/upload`;
+        apiFileUploadPost: async (file?: object, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/file/upload`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -88,8 +88,8 @@ export const FileApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async fileUploadPost(file?: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileResponse>> {
-            const localVarAxiosArgs = await FileApiAxiosParamCreator(configuration).fileUploadPost(file, options);
+        async apiFileUploadPost(file?: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileResponse>> {
+            const localVarAxiosArgs = await FileApiAxiosParamCreator(configuration).apiFileUploadPost(file, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -111,22 +111,22 @@ export const FileApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        fileUploadPost(file?: object, options?: any): AxiosPromise<FileResponse> {
-            return FileApiFp(configuration).fileUploadPost(file, options).then((request) => request(axios, basePath));
+        apiFileUploadPost(file?: object, options?: any): AxiosPromise<FileResponse> {
+            return FileApiFp(configuration).apiFileUploadPost(file, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for fileUploadPost operation in FileApi.
+ * Request parameters for apiFileUploadPost operation in FileApi.
  * @export
- * @interface FileApiFileUploadPostRequest
+ * @interface FileApiApiFileUploadPostRequest
  */
-export interface FileApiFileUploadPostRequest {
+export interface FileApiApiFileUploadPostRequest {
     /**
      * File
      * @type {object}
-     * @memberof FileApiFileUploadPost
+     * @memberof FileApiApiFileUploadPost
      */
     readonly file?: object
 }
@@ -141,12 +141,12 @@ export class FileApi extends BaseAPI {
     /**
      * 
      * @summary Uploads given file
-     * @param {FileApiFileUploadPostRequest} requestParameters Request parameters.
+     * @param {FileApiApiFileUploadPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof FileApi
      */
-    public fileUploadPost(requestParameters: FileApiFileUploadPostRequest = {}, options?: any) {
-        return FileApiFp(this.configuration).fileUploadPost(requestParameters.file, options).then((request) => request(this.axios, this.basePath));
+    public apiFileUploadPost(requestParameters: FileApiApiFileUploadPostRequest = {}, options?: any) {
+        return FileApiFp(this.configuration).apiFileUploadPost(requestParameters.file, options).then((request) => request(this.axios, this.basePath));
     }
 }

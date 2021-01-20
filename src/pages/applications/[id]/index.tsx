@@ -34,7 +34,7 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
   }, []);
 
   const { data, loading, refetchQuery } = useAxios(
-    DonationRequestFactory.donationRequestIdGet,
+    DonationRequestFactory.apiDonationRequestIdGet,
     undefined,
     id,
   );

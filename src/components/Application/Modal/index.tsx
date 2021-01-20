@@ -56,7 +56,7 @@ const ModalWithMessage: FC<{
 
         const input: DonationRequestUpdateInput = {
           status: newStatus,
-          role: "Manager",
+          comment: values.message,
         };
 
         await query(id, input);

@@ -72,12 +72,6 @@ export interface DonationRequestDonationRequest {
     id?: number;
     /**
      * 
-     * @type {boolean}
-     * @memberof DonationRequestDonationRequest
-     */
-    is_private?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof DonationRequestDonationRequest
      */
@@ -111,7 +105,7 @@ export interface DonationRequestDonationRequest {
      * @type {string}
      * @memberof DonationRequestDonationRequest
      */
-    status?: string;
+    status?: DonationRequestDonationRequestStatusEnum;
     /**
      * 
      * @type {string}
@@ -125,5 +119,23 @@ export interface DonationRequestDonationRequest {
      */
     until?: string;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DonationRequestDonationRequestStatusEnum {
+    New = 'New',
+    InProcessing = 'InProcessing',
+    Refused = 'Refused',
+    NeedsImprovement = 'NeedsImprovement',
+    Archived = 'Archived',
+    SuperManagerConfirmation = 'SuperManagerConfirmation',
+    UserConfirmation = 'UserConfirmation',
+    Active = 'Active',
+    Spam = 'Spam',
+    Deleted = 'Deleted'
+}
+
 
 

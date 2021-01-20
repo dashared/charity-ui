@@ -26,12 +26,6 @@ export interface DonationRequestInput {
      * @type {string}
      * @memberof DonationRequestInput
      */
-    applicant_id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DonationRequestInput
-     */
     assignee_id?: string;
     /**
      * 
@@ -81,6 +75,12 @@ export interface DonationRequestInput {
      * @memberof DonationRequestInput
      */
     title?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestInput
+     */
+    until?: string;
 }
 
 

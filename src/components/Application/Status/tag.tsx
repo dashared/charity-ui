@@ -1,41 +1,35 @@
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import Tag, { TagProps } from "antd/lib/tag";
+import { DonationRequestBodyStatusEnum } from "@generated";
 import { NO_DATA_PLACEHOLDER } from "@lib/utils";
 
-export enum ApplicationStatus {
-  New = "New",
-  Spam = "Spam",
-  Processing = "InProcessing",
-  Delete = "DeletedActive",
-  RequiresConfirmation = "SuperManagerConfirmation",
-  NeedsImprovement = "NeedsImprovement",
-  Active = "Active",
-  Refused = "Refused",
-}
+export { DonationRequestBodyStatusEnum as ApplicationStatus };
 
-function getColor(level: ApplicationStatus): TagProps["color"] {
+function getColor(level: DonationRequestBodyStatusEnum): TagProps["color"] {
   switch (level) {
-    case ApplicationStatus.New:
+    case DonationRequestBodyStatusEnum.New:
       return "blue";
-    case ApplicationStatus.Processing:
+    case DonationRequestBodyStatusEnum.InProcessing:
       return "gold";
-    case ApplicationStatus.Delete:
+    case DonationRequestBodyStatusEnum.Deleted:
       return "pink";
-    case ApplicationStatus.NeedsImprovement:
+    case DonationRequestBodyStatusEnum.NeedsImprovement:
       return "warning";
-    case ApplicationStatus.RequiresConfirmation:
+    case DonationRequestBodyStatusEnum.SuperManagerConfirmation:
       return "gray";
-    case ApplicationStatus.Active:
+    case DonationRequestBodyStatusEnum.Active:
       return "green";
-    case ApplicationStatus.Spam:
+    case DonationRequestBodyStatusEnum.Spam:
       return "red";
-    case ApplicationStatus.Refused:
+    case DonationRequestBodyStatusEnum.Refused:
       return "error";
   }
 }
 
-const StatusTag: FC<{ status?: ApplicationStatus | null }> = ({ status }) => {
+const StatusTag: FC<{ status?: DonationRequestBodyStatusEnum | null }> = ({
+  status,
+}) => {
   const { t } = useTranslation("Application");
 
   if (!status) {

@@ -105,7 +105,7 @@ export const LogsTab = React.forwardRef<RefType, PropsType>((props, ref) => {
   return (
     <PaginatedQuery<{ id: number; page: number; size: number }, Result, Single>
       className={styles.pagination}
-      requestQuery={DonationRequestFactory.donationRequestIdHistoryGet}
+      requestQuery={DonationRequestFactory.apiDonationRequestIdHistoryGet}
       stateRef={paginationState}
       refetch={refetch}
       variables={{ id }}

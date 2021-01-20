@@ -18,7 +18,7 @@ export const StopProcessingButton: FC<{
   const stopProcessing = useCallback(async () => {
     try {
       setLoading(true);
-      await DonationRequestFactory.donationRequestIdStatusDelete(id);
+      await DonationRequestFactory.apiDonationRequestIdStatusDelete(id);
     } catch (e) {
       console.log(e);
     } finally {
@@ -27,7 +27,7 @@ export const StopProcessingButton: FC<{
     }
   }, [setLoading, onRefetch, id]);
 
-  if (status !== ApplicationStatus.Processing) {
+  if (status !== ApplicationStatus.InProcessing) {
     return null;
   }
 

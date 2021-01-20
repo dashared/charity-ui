@@ -15,7 +15,7 @@ const UserPreview: FC<{
   const { t } = useTranslation("User");
 
   const { data, loading } = useAxios(
-    UserApiFactory(undefined).userIdGet,
+    UserApiFactory(undefined).apiUserIdGet,
     undefined,
     id,
   );

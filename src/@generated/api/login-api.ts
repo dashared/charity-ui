@@ -19,26 +19,26 @@ import { Configuration } from '../configuration';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { UserResponse } from '../models';
-// @ts-ignore
-import { UserUser } from '../models';
+import { AuthCredentials } from '../models';
 /**
- * UserApi - axios parameter creator
+ * LoginApi - axios parameter creator
  * @export
  */
-export const UserApiAxiosParamCreator = function (configuration?: Configuration) {
+export const LoginApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @summary GetAllUsers
-         * @param {number} [page] Page number
-         * @param {number} [size] Page size
-         * @param {string} [sort] sort
+         * Sets token on success
+         * @summary Route for signing in
+         * @param {AuthCredentials} request User credentials
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiUserGet: async (page?: number, size?: number, sort?: string, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/user`;
+        apiLoginPost: async (request: AuthCredentials, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling apiLoginPost.');
+            }
+            const localVarPath = `/api/login`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -46,24 +46,14 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
-            }
-
-            if (size !== undefined) {
-                localVarQueryParameter['size'] = size;
-            }
-
-            if (sort !== undefined) {
-                localVarQueryParameter['sort'] = sort;
-            }
-
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             const queryParameters = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
                 queryParameters.set(key, localVarQueryParameter[key]);
@@ -74,6 +64,13 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
             localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const nonString = typeof request !== 'string';
+            const needsSerialization = nonString && configuration && configuration.isJsonMime
+                ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
+                : nonString;
+            localVarRequestOptions.data =  needsSerialization
+                ? JSON.stringify(request !== undefined ? request : {})
+                : (request || "");
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -82,18 +79,12 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @summary Retrieves user based on given ID
-         * @param {string} id User ID
+         * @summary Route for refreshing
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiUserIdGet: async (id: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling apiUserIdGet.');
-            }
-            const localVarPath = `/api/user/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+        apiLoginRefreshPost: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/login/refresh`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -101,7 +92,7 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -127,22 +118,20 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
 };
 
 /**
- * UserApi - functional programming interface
+ * LoginApi - functional programming interface
  * @export
  */
-export const UserApiFp = function(configuration?: Configuration) {
+export const LoginApiFp = function(configuration?: Configuration) {
     return {
         /**
-         * 
-         * @summary GetAllUsers
-         * @param {number} [page] Page number
-         * @param {number} [size] Page size
-         * @param {string} [sort] sort
+         * Sets token on success
+         * @summary Route for signing in
+         * @param {AuthCredentials} request User credentials
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiUserGet(page?: number, size?: number, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponse>> {
-            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).apiUserGet(page, size, sort, options);
+        async apiLoginPost(request: AuthCredentials, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await LoginApiAxiosParamCreator(configuration).apiLoginPost(request, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -150,13 +139,12 @@ export const UserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Retrieves user based on given ID
-         * @param {string} id User ID
+         * @summary Route for refreshing
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiUserIdGet(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserUser>> {
-            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).apiUserIdGet(id, options);
+        async apiLoginRefreshPost(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await LoginApiAxiosParamCreator(configuration).apiLoginRefreshPost(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -166,106 +154,74 @@ export const UserApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * UserApi - factory interface
+ * LoginApi - factory interface
  * @export
  */
-export const UserApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const LoginApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
-         * 
-         * @summary GetAllUsers
-         * @param {number} [page] Page number
-         * @param {number} [size] Page size
-         * @param {string} [sort] sort
+         * Sets token on success
+         * @summary Route for signing in
+         * @param {AuthCredentials} request User credentials
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiUserGet(page?: number, size?: number, sort?: string, options?: any): AxiosPromise<UserResponse> {
-            return UserApiFp(configuration).apiUserGet(page, size, sort, options).then((request) => request(axios, basePath));
+        apiLoginPost(request: AuthCredentials, options?: any): AxiosPromise<void> {
+            return LoginApiFp(configuration).apiLoginPost(request, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Retrieves user based on given ID
-         * @param {string} id User ID
+         * @summary Route for refreshing
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiUserIdGet(id: string, options?: any): AxiosPromise<UserUser> {
-            return UserApiFp(configuration).apiUserIdGet(id, options).then((request) => request(axios, basePath));
+        apiLoginRefreshPost(options?: any): AxiosPromise<void> {
+            return LoginApiFp(configuration).apiLoginRefreshPost(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for apiUserGet operation in UserApi.
+ * Request parameters for apiLoginPost operation in LoginApi.
  * @export
- * @interface UserApiApiUserGetRequest
+ * @interface LoginApiApiLoginPostRequest
  */
-export interface UserApiApiUserGetRequest {
+export interface LoginApiApiLoginPostRequest {
     /**
-     * Page number
-     * @type {number}
-     * @memberof UserApiApiUserGet
+     * User credentials
+     * @type {AuthCredentials}
+     * @memberof LoginApiApiLoginPost
      */
-    readonly page?: number
-
-    /**
-     * Page size
-     * @type {number}
-     * @memberof UserApiApiUserGet
-     */
-    readonly size?: number
-
-    /**
-     * sort
-     * @type {string}
-     * @memberof UserApiApiUserGet
-     */
-    readonly sort?: string
+    readonly request: AuthCredentials
 }
 
 /**
- * Request parameters for apiUserIdGet operation in UserApi.
+ * LoginApi - object-oriented interface
  * @export
- * @interface UserApiApiUserIdGetRequest
- */
-export interface UserApiApiUserIdGetRequest {
-    /**
-     * User ID
-     * @type {string}
-     * @memberof UserApiApiUserIdGet
-     */
-    readonly id: string
-}
-
-/**
- * UserApi - object-oriented interface
- * @export
- * @class UserApi
+ * @class LoginApi
  * @extends {BaseAPI}
  */
-export class UserApi extends BaseAPI {
+export class LoginApi extends BaseAPI {
     /**
-     * 
-     * @summary GetAllUsers
-     * @param {UserApiApiUserGetRequest} requestParameters Request parameters.
+     * Sets token on success
+     * @summary Route for signing in
+     * @param {LoginApiApiLoginPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
+     * @memberof LoginApi
      */
-    public apiUserGet(requestParameters: UserApiApiUserGetRequest = {}, options?: any) {
-        return UserApiFp(this.configuration).apiUserGet(requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
+    public apiLoginPost(requestParameters: LoginApiApiLoginPostRequest, options?: any) {
+        return LoginApiFp(this.configuration).apiLoginPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Retrieves user based on given ID
-     * @param {UserApiApiUserIdGetRequest} requestParameters Request parameters.
+     * @summary Route for refreshing
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
+     * @memberof LoginApi
      */
-    public apiUserIdGet(requestParameters: UserApiApiUserIdGetRequest, options?: any) {
-        return UserApiFp(this.configuration).apiUserIdGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public apiLoginRefreshPost(options?: any) {
+        return LoginApiFp(this.configuration).apiLoginRefreshPost(options).then((request) => request(this.axios, this.basePath));
     }
 }

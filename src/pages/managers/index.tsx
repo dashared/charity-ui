@@ -86,7 +86,7 @@ const ManagersPage: FC = () => {
     <Workspace noRefresh title={t("title")}>
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
-        requestQuery={UserRequestFactory.userGet}
+        requestQuery={UserRequestFactory.apiUserGet}
         stateRef={paginationState}
         onResult={(result) => {
           setList(result.data ?? []);

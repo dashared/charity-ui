@@ -92,13 +92,11 @@ const FundView: FC<FundProps> = ({ name }) => {
               tabPosition="left"
               defaultActiveKey="1"
               onTabClick={() => {
-                {
-                  editable &&
-                    Modal.warning({
-                      title: t("modal.title"),
-                      content: t("modal.description"),
-                    }); // TODO: is it good enough for UX?
-                }
+                editable &&
+                  Modal.warning({
+                    title: t("modal.title"),
+                    content: t("modal.description"),
+                  }); // TODO: is it good enough for UX?
                 setEditable(false);
               }}
             >

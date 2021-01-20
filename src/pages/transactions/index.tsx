@@ -106,7 +106,7 @@ const TransactionsPage: FC = () => {
     <Workspace noRefresh title={t("title")} actions={<Actions />}>
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
-        requestQuery={DonationRequestFactory.donationRequestGet}
+        requestQuery={DonationRequestFactory.apiDonationRequestGet}
         stateRef={paginationState}
         onResult={(result) => {
           setList(result.data ?? []);

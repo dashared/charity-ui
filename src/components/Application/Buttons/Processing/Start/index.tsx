@@ -19,10 +19,10 @@ export const StartProcessingButton: FC<{
     try {
       setLoading(true);
       const input = {
-        status: ApplicationStatus.Processing,
+        status: ApplicationStatus.InProcessing,
         role: "Manager",
       };
-      await DonationRequestFactory.donationRequestIdStatusPatch(id, input);
+      await DonationRequestFactory.apiDonationRequestIdStatusPatch(id, input);
     } catch (e) {
       console.log(e);
     } finally {

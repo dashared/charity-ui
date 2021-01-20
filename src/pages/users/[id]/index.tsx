@@ -14,7 +14,11 @@ import Unauthorized from "../../_unauthorized";
 const UserPage: FC<PageProps> = ({ response }) => {
   const id = response.params.id as string;
 
-  const { data, loading } = useAxios(UserRequestFactory.userIdGet, false, id);
+  const { data, loading } = useAxios(
+    UserRequestFactory.apiUserIdGet,
+    false,
+    id,
+  );
 
   if (loading) {
     return <Skeleton active={loading} />;
