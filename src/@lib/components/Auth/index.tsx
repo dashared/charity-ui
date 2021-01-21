@@ -1,18 +1,24 @@
 import React, { Component } from "react";
-import { AuthProvider } from "@providers/authContext";
+import { AuthProvider, Credentials } from "@providers/authContext";
+import { LoginFactory } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
 
 class Auth extends Component {
   state = {
-    authenticated: true,
+    authenticated: false,
     user: {
-      role: Role.operator, // Temporary solution without API
-      name: "Hello W",
+      role: Role.visitor, // Temporary solution without API
     },
     accessToken: "",
   };
 
-  initiateLogin = (): void => {
+  initiateLogin = (credentials: Credentials): void => {
+    console.log(credentials);
+
+    LoginFactory.apiLoginPost(credentials).then((r) => {
+      console.log(btoa(r.headers.split(".")));
+    });
+
     this.handleAuthentication(); // TODO: replace
   };
 

@@ -1,0 +1,12 @@
+{
+  "title": "Вход",
+  "email": "Почта",
+  "password": "Пароль",
+  "rememberMe": "Запомнить меня",
+  "login": "Войти",
+  "forgotPassword": "Не помню пароль",
+  "messages": {
+    "enterEmail": "Введите, пожалуйста, Вашу почту",
+    "enterPassword": "Введите, пожалуйста, пароль"
+  }
+}

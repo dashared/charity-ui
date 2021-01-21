@@ -8,17 +8,22 @@ type User = {
   surname?: string;
 };
 
+export type Credentials = {
+  email: string;
+  password: string;
+};
+
 type AuthContextType = {
   authenticated: boolean;
   user: User;
   accessToken: string;
-  initiateLogin: () => void;
+  initiateLogin: (credentials: Credentials) => void;
   handleAuthentication: () => void;
   logout: () => void;
 };
 
 const authContext = createContext<AuthContextType>({
-  authenticated: true, // to check if authenticated or not
+  authenticated: false, // to check if authenticated or not
   user: { role: Role.admin, name: "Hello World" }, // store all the user details
   accessToken: "", // accessToken of user for Auth0
   initiateLogin: () => {
