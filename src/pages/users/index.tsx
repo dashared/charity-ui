@@ -10,8 +10,7 @@ import { useListSelection } from "@lib/hooks";
 import { cred } from "@lib/utils/name";
 import { router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
-import { UserRequestFactory } from "@providers/axios";
-import { Role } from "@providers/rbac-rules";
+import { UserApiRole, UserRequestFactory } from "@providers/axios";
 import Redirect from "pages/_redirect";
 
 import RoleTag from "components/User/Role/tag";
@@ -67,9 +66,8 @@ const UsersPage: FC = () => {
 
     {
       key: "role",
-      render() {
-        // TODO: fix
-        return <RoleTag roles={[Role.manager]} />;
+      render(record: Single) {
+        return <RoleTag roles={[record.role ?? UserApiRole.User]} />;
       },
     },
   ];

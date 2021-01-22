@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { AuthConsumer } from "@providers/authContext";
+import Redirect from "pages/_redirect";
 
 import LoginForm from "components/Login";
 
@@ -13,7 +14,7 @@ const LoginPage: FC = () => {
             role={user.role}
             perform="auth:login"
             yes={() => <LoginForm onLogin={initiateLogin} />}
-            no={() => <>You are authenticated {user.role}!</>}
+            no={() => <Redirect name="home" />}
           />
         );
       }}

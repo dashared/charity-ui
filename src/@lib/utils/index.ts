@@ -8,6 +8,7 @@ export { format as formatNumber } from "./number";
 export { default as transliterate } from "./transliterate";
 export { default as KVStorage } from "./kvstorage";
 export { bindStyles } from "./styles";
+export { format as formatString } from "./list_data";
 
 export { NO_DATA_PLACEHOLDER, NO_IMAGE_PLACEHOLDER } from "./meta";
 
