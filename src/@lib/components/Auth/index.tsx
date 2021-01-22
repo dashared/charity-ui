@@ -1,7 +1,31 @@
 import React, { Component } from "react";
 import { AuthProvider, Credentials } from "@providers/authContext";
-import { LoginFactory } from "@providers/axios";
+import {
+  LoginFactory,
+  UserApiModel,
+  UserApiRole,
+  UserRequestFactory,
+} from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
+
+export type HeaderData = {
+  user_id: string;
+  role: UserApiRole;
+  expires: number;
+};
+
+function mapRole(apiRole: UserApiRole): Role {
+  switch (apiRole) {
+    case UserApiRole.Manager:
+      return Role.manager;
+    case UserApiRole.ContentManager:
+      return Role.operator;
+    case UserApiRole.SuperManager:
+      return Role.supermanager;
+    default:
+      return Role.admin;
+  }
+}
 
 class Auth extends Component {
   state = {
@@ -13,13 +37,18 @@ class Auth extends Component {
   };
 
   initiateLogin = (credentials: Credentials): void => {
-    console.log(credentials);
-
     LoginFactory.apiLoginPost(credentials).then((r) => {
-      console.log(btoa(r.headers.split(".")));
-    });
+      if (r.status === 400) {
+        this.logout();
+      } else {
+        const fst = r.headers.http_auth.indexOf(".");
+        const lst = r.headers.http_auth.lastIndexOf(".");
+        const headerUndecodedData = r.headers.http_auth.substring(fst + 1, lst);
+        const headerData = JSON.parse(atob(headerUndecodedData)) as HeaderData;
 
-    this.handleAuthentication(); // TODO: replace
+        this.handleAuthentication(headerData); // TODO: replace
+      }
+    });
   };
 
   logout = (): void => {
@@ -31,16 +60,22 @@ class Auth extends Component {
     });
   };
 
-  handleAuthentication = (): void => {
-    this.setSession();
+  handleAuthentication = async (headerData: HeaderData): Promise<void> => {
+    const data = await UserRequestFactory.apiUserIdGet(headerData.user_id);
+
+    if (data) {
+      this.setSession(headerData, data.data);
+    }
   };
 
-  setSession(): void {
+  setSession(headerData: HeaderData, user: UserApiModel): void {
     this.setState({
       authenticated: true,
       user: {
-        role: Role.admin, // TODO: remove
-        name: "Иван",
+        role: mapRole(headerData.role), // TODO: remove
+        uuid: headerData.user_id,
+        name: user.first_name,
+        surname: user.last_name,
       },
     });
   }

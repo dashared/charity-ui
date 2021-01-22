@@ -74,3 +74,6 @@ export const UserRequestFactory = UserApiFactory(
 );
 
 export const LoginFactory = LoginApiFactory(configuration, basePath, axios);
+
+export { UserUserRoleEnum as UserApiRole } from "@generated";
+export type { UserUser as UserApiModel } from "@generated";

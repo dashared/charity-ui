@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { HeaderData } from "@lib/components/Auth";
 
 import { Role } from "./rbac-rules";
 
@@ -6,6 +7,7 @@ type User = {
   name?: string;
   role: Role;
   surname?: string;
+  uuid?: string;
 };
 
 export type Credentials = {
@@ -18,7 +20,7 @@ type AuthContextType = {
   user: User;
   accessToken: string;
   initiateLogin: (credentials: Credentials) => void;
-  handleAuthentication: () => void;
+  handleAuthentication: (headerData: HeaderData) => void;
   logout: () => void;
 };
 
