@@ -10,11 +10,13 @@ import {
   UserRequestFactory,
 } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
+import axios from "axios";
 
 export type HeaderData = {
   user_id: string;
   role: UserApiRole;
   expires: number;
+  token: string;
 };
 
 // TODO: replace or remove
@@ -27,7 +29,7 @@ function mapRole(apiRole: UserApiRole): Role {
     case UserApiRole.SuperManager:
       return Role.supermanager;
     default:
-      return Role.admin;
+      return Role.manager;
   }
 }
 
@@ -64,6 +66,7 @@ class Auth extends Component {
       user: {
         role: Role.visitor,
       },
+      accessToken: "",
     });
   };
 
@@ -80,22 +83,26 @@ class Auth extends Component {
     const fst = authHeader.indexOf(".");
     const lst = authHeader.lastIndexOf(".");
     const headerUndecodedData = authHeader.substring(fst + 1, lst);
-    return JSON.parse(decode(headerUndecodedData) ?? "") as HeaderData;
+    return {
+      ...JSON.parse(decode(headerUndecodedData) ?? ""),
+      token: authHeader,
+    };
   }
 
   // Important data to save in LocalStorage
-  saveToLocalStorage(role: Role, user: UserApiModel): void {
+  saveToLocalStorage(role: Role, user: UserApiModel, token: string): void {
     localStorage.setItem("authenticated", "true");
     localStorage.setItem("role", role);
     localStorage.setItem("uuid", user.id ?? "");
     localStorage.setItem("name", user.first_name ?? "");
     localStorage.setItem("surname", user.last_name ?? "");
+    localStorage.setItem("accessToken", token);
   }
 
   setSession(headerData: HeaderData, user: UserApiModel): void {
     const role = mapRole(headerData.role); // TODO: remove
 
-    this.saveToLocalStorage(role, user);
+    this.saveToLocalStorage(role, user, headerData.token);
 
     this.setState({
       authenticated: true,
@@ -105,6 +112,7 @@ class Auth extends Component {
         name: user.first_name,
         surname: user.last_name,
       },
+      accessToken: headerData.token,
     });
   }
 
@@ -115,6 +123,8 @@ class Auth extends Component {
       handleAuthentication: this.handleAuthentication,
       logout: this.logout,
     };
+
+    axios.defaults.headers.common = { Http_auth: `${this.state.accessToken}` };
 
     return (
       <AuthProvider value={authProviderValue}>

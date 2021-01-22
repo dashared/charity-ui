@@ -2,9 +2,8 @@ import React, { FC, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
+import { DonationRequestBodyAvailableStatusesEnum as ApplicationStatus } from "@generated";
 import { DonationRequestFactory } from "@providers/axios";
-
-import { ApplicationStatus } from "../../Status/tag";
 
 export const RequireConfirmationButton: FC<{
   applicationId: number;
@@ -34,14 +33,6 @@ export const RequireConfirmationButton: FC<{
       onRefetch();
     }
   }, [status, onRefetch, setLoading, id]);
-
-  if (
-    status === ApplicationStatus.New ||
-    status === ApplicationStatus.Spam ||
-    status === ApplicationStatus.Active
-  ) {
-    return null;
-  }
 
   return (
     <Button

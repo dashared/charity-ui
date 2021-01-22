@@ -7,7 +7,7 @@ import { DonationRequestFactory } from "@providers/axios";
 import ModalWithMessage from "../../Modal";
 import { ApplicationStatus } from "../../Status/tag";
 
-export const SpamButton: FC<{
+export const DeleteButton: FC<{
   applicationId: number;
   onRefetch: () => Promise<void>;
 }> = ({ onRefetch, applicationId }) => {
@@ -21,7 +21,7 @@ export const SpamButton: FC<{
 
   return (
     <>
-      <Tooltip title={t("$views.buttons.spam")}>
+      <Tooltip title={t("$views.buttons.delete")}>
         <Button
           type="default"
           danger
@@ -32,10 +32,10 @@ export const SpamButton: FC<{
       </Tooltip>
 
       <ModalWithMessage
-        title={t("$views.modal.spamTitle")}
+        title={t("$views.modal.deleteTitle")}
         isVisible={visible}
         onRefetch={onRefetch}
-        newStatus={ApplicationStatus.Spam}
+        newStatus={ApplicationStatus.Deleted}
         query={DonationRequestFactory.apiDonationRequestIdStatusPatch}
         applicationId={applicationId}
         onClose={() => setVisible(false)}

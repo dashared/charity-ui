@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useRef } from "react";
 import { Empty, Skeleton } from "antd";
+import { DonationRequestBodyAvailableStatusesEnum as ApplicationStatus } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { PageProps, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
@@ -7,12 +8,11 @@ import useAxios, { DonationRequestFactory } from "@providers/axios";
 import Redirect from "pages/_redirect";
 
 import ActionButtons from "components/Application/Buttons";
-import { ApplicationStatus } from "components/Application/Status/tag";
 import ApplicationView from "components/Application/View";
 
 const Actions: FC<{
   applicationId: number;
-  status: ApplicationStatus;
+  availiableStatuses: ApplicationStatus[];
   onRefetch: () => Promise<void>;
 }> = (props) => {
   return <ActionButtons {...props} />;
@@ -54,7 +54,7 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
       actions={
         <Actions
           applicationId={data.id ?? 0}
-          status={data.status as ApplicationStatus}
+          availiableStatuses={data.available_statuses ?? []}
           onRefetch={onRefetchButton}
         />
       }

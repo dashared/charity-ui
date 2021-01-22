@@ -8,9 +8,8 @@ import { ApplicationStatus } from "../../../Status/tag";
 
 export const StartProcessingButton: FC<{
   applicationId: number;
-  status: ApplicationStatus;
   onRefetch: () => Promise<void>;
-}> = ({ onRefetch, applicationId: id, status }) => {
+}> = ({ onRefetch, applicationId: id }) => {
   const [loading, setLoading] = useState(false);
 
   const { t } = useTranslation("Application");
@@ -30,10 +29,6 @@ export const StartProcessingButton: FC<{
       onRefetch();
     }
   }, [setLoading, id, onRefetch]);
-
-  if (status !== ApplicationStatus.New) {
-    return null;
-  }
 
   return (
     <Popconfirm
