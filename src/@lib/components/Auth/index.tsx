@@ -29,11 +29,14 @@ function mapRole(apiRole: UserApiRole): Role {
 
 class Auth extends Component {
   state = {
-    authenticated: false,
+    authenticated: localStorage.getItem("authenticated") === "true",
     user: {
-      role: Role.visitor, // Temporary solution without API
+      role: localStorage.getItem("role") as Role,
+      uuid: localStorage.getItem("uuid") ?? "",
+      name: localStorage.getItem("name") ?? "",
+      surname: localStorage.getItem("surname") ?? "",
     },
-    accessToken: "",
+    accessToken: localStorage.getItem("accessToken") ?? "",
   };
 
   initiateLogin = (credentials: Credentials): void => {
@@ -69,10 +72,18 @@ class Auth extends Component {
   };
 
   setSession(headerData: HeaderData, user: UserApiModel): void {
+    const role = mapRole(headerData.role); // TODO: remove
+
+    localStorage.setItem("authenticated", "true");
+    localStorage.setItem("role", role);
+    localStorage.setItem("uuid", user.id ?? "");
+    localStorage.setItem("name", user.first_name ?? "");
+    localStorage.setItem("surname", user.last_name ?? "");
+
     this.setState({
       authenticated: true,
       user: {
-        role: mapRole(headerData.role), // TODO: remove
+        role,
         uuid: headerData.user_id,
         name: user.first_name,
         surname: user.last_name,
