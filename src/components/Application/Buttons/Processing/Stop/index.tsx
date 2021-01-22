@@ -4,13 +4,10 @@ import { Button, Popconfirm, Tooltip } from "antd";
 import { PauseCircleOutlined } from "@ant-design/icons";
 import { DonationRequestFactory } from "@providers/axios";
 
-import { ApplicationStatus } from "components/Application/Status/tag";
-
 export const StopProcessingButton: FC<{
   applicationId: number;
-  status: ApplicationStatus;
   onRefetch: () => Promise<void>;
-}> = ({ applicationId: id, status, onRefetch }) => {
+}> = ({ applicationId: id, onRefetch }) => {
   const [loading, setLoading] = useState(false);
 
   const { t } = useTranslation("Application");
@@ -26,10 +23,6 @@ export const StopProcessingButton: FC<{
       onRefetch();
     }
   }, [setLoading, onRefetch, id]);
-
-  if (status !== ApplicationStatus.InProcessing) {
-    return null;
-  }
 
   return (
     <Popconfirm

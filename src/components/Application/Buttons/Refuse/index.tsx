@@ -9,17 +9,11 @@ import { ApplicationStatus } from "../../Status/tag";
 
 export const RefuseButton: FC<{
   applicationId: number;
-  status: ApplicationStatus;
   onRefetch: () => Promise<void>;
-}> = ({ applicationId, status, onRefetch }) => {
+}> = ({ applicationId, onRefetch }) => {
   const { t } = useTranslation("Application");
 
   const [visible, setVisible] = useState(false);
-
-  // TODO: more complex assertion for manager's role and application's status
-  if (status !== ApplicationStatus.SuperManagerConfirmation) {
-    return null;
-  }
 
   return (
     <>

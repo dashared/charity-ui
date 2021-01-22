@@ -10,9 +10,8 @@ import { ApplicationStatus } from "../../Status/tag";
 /** Leaves a comment and transferes application into "NeedsImprovement" status. */
 export const RequestChangesButton: FC<{
   applicationId: number;
-  status: ApplicationStatus;
   onRefetch: () => Promise<void>;
-}> = ({ applicationId, status, onRefetch }) => {
+}> = ({ applicationId, onRefetch }) => {
   const { t } = useTranslation("Application");
 
   const [visible, setVisible] = useState(false);
@@ -20,10 +19,6 @@ export const RequestChangesButton: FC<{
   const showModal = (): void => {
     setVisible(true);
   };
-
-  if (status !== ApplicationStatus.InProcessing) {
-    return null;
-  }
 
   return (
     <>
