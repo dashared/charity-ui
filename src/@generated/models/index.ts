@@ -1,5 +1,7 @@
 export * from './auth-credentials';
 export * from './auth-email-confirmation-input';
+export * from './auth-manager-registration-input';
+export * from './auth-manager-registration-user';
 export * from './auth-registration-input';
 export * from './donation-request-body';
 export * from './donation-request-donation-request';

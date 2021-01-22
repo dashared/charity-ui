@@ -48,6 +48,12 @@ export interface DonationRequestBody {
     author?: UserUser;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof DonationRequestBody
+     */
+    available_statuses?: Array<DonationRequestBodyAvailableStatusesEnum>;
+    /**
+     * 
      * @type {string}
      * @memberof DonationRequestBody
      */
@@ -126,6 +132,22 @@ export interface DonationRequestBody {
     until?: string;
 }
 
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DonationRequestBodyAvailableStatusesEnum {
+    New = 'New',
+    InProcessing = 'InProcessing',
+    Refused = 'Refused',
+    NeedsImprovement = 'NeedsImprovement',
+    Archived = 'Archived',
+    SuperManagerConfirmation = 'SuperManagerConfirmation',
+    UserConfirmation = 'UserConfirmation',
+    Active = 'Active',
+    Spam = 'Spam',
+    Deleted = 'Deleted'
+}
 /**
     * @export
     * @enum {string}
