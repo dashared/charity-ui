@@ -2,24 +2,24 @@ import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import Tag, { TagProps } from "antd/lib/tag";
 import { NO_DATA_PLACEHOLDER } from "@lib/utils";
-import { Role } from "@providers/rbac-rules";
+import { UserApiRole } from "@providers/axios";
 
-function getColor(role: Role): TagProps["color"] {
+function getColor(role: UserApiRole): TagProps["color"] {
   switch (role) {
-    case Role.manager:
+    case UserApiRole.Manager:
       return "blue";
-    case Role.supermanager:
+    case UserApiRole.SuperManager:
       return "gold";
-    case Role.operator:
+    case UserApiRole.Operator:
       return "pink";
-    case Role.admin:
+    case UserApiRole.User:
       return "purple";
     default:
       return "green";
   }
 }
 
-const RoleTag: FC<{ roles?: Role[] | null }> = ({ roles }) => {
+const RoleTag: FC<{ roles?: UserApiRole[] | null }> = ({ roles }) => {
   const { t } = useTranslation("Users");
 
   if (!roles) {

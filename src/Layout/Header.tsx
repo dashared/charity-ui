@@ -18,7 +18,7 @@ type AppHeaderProps = {
 };
 
 const UserDropdown: FC<{ className?: string }> = ({ className }) => {
-  const { t } = useTranslation("Auth");
+  const { t } = useTranslation("Login");
 
   return (
     <AuthConsumer>

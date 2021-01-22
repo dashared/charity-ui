@@ -16,53 +16,59 @@ const SettingsPage: FC = () => {
   const { t } = useTranslation("Settings");
 
   return (
-    <Layout>
-      <Header className={styles.header}>
-        <PageHeader
-          title={t("title")}
-          style={{ backgroundColor: "transparent" }}
-        />
-      </Header>
+    <AuthConsumer>
+      {({ user }) => {
+        return (
+          <Layout>
+            <Header className={styles.header}>
+              <PageHeader
+                title={t("title")}
+                style={{ backgroundColor: "transparent" }}
+              />
+            </Header>
 
-      <Layout className={styles.layout}>
-        <Sider className={styles.sider}>
-          <Anchor>
-            <Link href="#personal" title={t("personal")} />
-            <Link href="#language" title={t("language")} />
-          </Anchor>
-        </Sider>
+            <Layout className={styles.layout}>
+              <Sider className={styles.sider}>
+                <Anchor>
+                  <Link href="#personal" title={t("personal")} />
+                  <Link href="#language" title={t("language")} />
+                </Anchor>
+              </Sider>
 
-        <Content id="content">
-          <PersonalSettings id={"24b74642-7926-4669-a6c4-755502efa06f"} />
+              <Content id="content">
+                <PersonalSettings id={user.uuid ?? ""} />
 
-          <Card
-            title={t("language")}
-            style={{ marginTop: "4px" }}
-            id="language"
-          >
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-          </Card>
-        </Content>
-      </Layout>
-    </Layout>
+                <Card
+                  title={t("language")}
+                  style={{ marginTop: "4px" }}
+                  id="language"
+                >
+                  TEST DATA
+                  <br />
+                  TEST DATA
+                  <br />
+                  TEST DATA
+                  <br />
+                  TEST DATA
+                  <br />
+                  TEST DATA
+                  <br />
+                  TEST DATA
+                  <br />
+                  TEST DATA
+                  <br />
+                  TEST DATA
+                  <br />
+                  TEST DATA
+                  <br />
+                  TEST DATA
+                </Card>
+              </Content>
+            </Layout>
+          </Layout>
+        );
+      }}
+    </AuthConsumer>
   );
 };
 

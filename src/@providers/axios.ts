@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { DonationRequestApiFactory, UserApiFactory } from "@generated";
+import {
+  DonationRequestApiFactory,
+  LoginApiFactory,
+  UserApiFactory,
+} from "@generated";
 import { AxiosResponse as Response } from "axios";
 
 // i18n reexports
@@ -68,3 +72,8 @@ export const UserRequestFactory = UserApiFactory(
   basePath,
   axios,
 );
+
+export const LoginFactory = LoginApiFactory(configuration, basePath, axios);
+
+export { UserUserRoleEnum as UserApiRole } from "@generated";
+export type { UserUser as UserApiModel } from "@generated";

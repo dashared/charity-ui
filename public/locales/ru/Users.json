@@ -8,7 +8,8 @@
     "manager": "Менеджер",
     "supermanager": "Комиссия",
     "admin": "Администратор",
-    "operator": "Оператор"
+    "operator": "Оператор",
+    "User": "Пользователь"
   },
   "$views": {
     "buttons": {

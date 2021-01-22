@@ -11,7 +11,7 @@ import MainView from "./MainView";
 
 import styles from "./layout.module.less";
 
-const { Header, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
 
 const MainLayout: FC = () => {
   const [collapsed, setCollapsed] = useLocalStorage("Layout.collapsed", false);
@@ -49,8 +49,7 @@ const MainLayout: FC = () => {
             // visitor
             yes={() => (
               <Layout className={styles.mainLayout}>
-                <Header />
-                <Content style={{ padding: "0 50px" }}>
+                <Content style={{ padding: "50px" }}>
                   <MainView />
                 </Content>
               </Layout>

@@ -10,8 +10,7 @@ import { useListSelection } from "@lib/hooks";
 import { fullName } from "@lib/utils/name";
 import { useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
-import { UserRequestFactory } from "@providers/axios";
-import { Role } from "@providers/rbac-rules";
+import { UserApiRole, UserRequestFactory } from "@providers/axios";
 import Unauthorized from "pages/_unauthorized";
 
 import RoleTag from "components/User/Role/tag";
@@ -63,14 +62,14 @@ const ManagersPage: FC = () => {
     },
     {
       key: "roles",
-      render() {
-        return <RoleTag roles={[Role.operator, Role.manager]} />;
+      render(record: Single) {
+        return <RoleTag roles={[record.role ?? UserApiRole.User]} />;
       },
     },
     {
       key: "email",
-      render() {
-        return "britte.geraedts@example.com";
+      render(record: Single) {
+        return record.email;
       },
     },
     {
