@@ -13,8 +13,16 @@
   "newStatus": "Новый статус",
   "statusUpdData": "Дата изменения",
   "authorUpd": "Автор изменения",
+  "createPageTitle": "Создание заявки",
   "$views": {
     "title": "Заявка № {{ id }} {{ title }}",
+    "createApplication": "Создать",
+    "createPage": {
+      "title": "Название"
+    },
+    "message": {
+      "title": "Введите название заявки"
+    },
     "tabs": {
       "generalInfoTitle": "Основная информация",
       "doneeInfoTitle": "Нуждающийся",
@@ -56,7 +64,9 @@
       "require_confirmation": "Одобрить",
       "returnFromSpam": "Вернуть из спама",
       "refuse": "Отклонить",
-      "activate": "Активировать"
+      "activate": "Активировать",
+      "add": "Добавить",
+      "reset": "Очистить"
     },
     "modal": {
       "requestChangesTitle": "Отправить на доработку",
