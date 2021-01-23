@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   DonationRequestApiFactory,
   LoginApiFactory,
+  RegistrationApiFactory,
   UserApiFactory,
 } from "@generated";
 import { AxiosResponse as Response } from "axios";
@@ -68,6 +69,11 @@ export const DonationRequestFactory = DonationRequestApiFactory(
   axios,
 );
 export const UserRequestFactory = UserApiFactory(
+  configuration,
+  basePath,
+  axios,
+);
+export const RegistrationFactory = RegistrationApiFactory(
   configuration,
   basePath,
   axios,

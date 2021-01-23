@@ -41,10 +41,10 @@ export interface AuthManagerRegistrationInput {
     */
 export enum AuthManagerRegistrationInputRoleEnum {
     User = 'User',
-    Manager = ' Manager',
-    SuperManager = ' SuperManager',
-    ContentManager = ' ContentManager',
-    Operator = ' Operator'
+    Manager = 'Manager',
+    SuperManager = 'SuperManager',
+    ContentManager = 'ContentManager',
+    Operator = 'Operator'
 }
 
 
