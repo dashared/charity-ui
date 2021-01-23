@@ -401,10 +401,10 @@
           "type": "string",
           "enum": [
             "User",
-            " Manager",
-            " SuperManager",
-            " ContentManager",
-            " Operator"
+            "Manager",
+            "SuperManager",
+            "ContentManager",
+            "Operator"
           ]
         },
         "user": {
