@@ -104,7 +104,7 @@ export enum UserUserRoleEnum {
     SuperManager = 'SuperManager',
     ContentManager = 'ContentManager',
     Operator = 'Operator',
-    Administrator = 'Administrator'
+    Admin = 'Admin'
 }
 
 
