@@ -81,7 +81,7 @@ const ApplicationView = React.forwardRef<RefType, PropsType>((props, ref) => {
           }
           key="files"
         >
-          <FilesTab files={["fff.pfd", "xxx.hfhf"]} />
+          <FilesTab files={donation.file_id ?? []} />
         </TabPane>
 
         <TabPane

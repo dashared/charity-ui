@@ -44,7 +44,8 @@ export enum AuthManagerRegistrationInputRoleEnum {
     Manager = 'Manager',
     SuperManager = 'SuperManager',
     ContentManager = 'ContentManager',
-    Operator = 'Operator'
+    Operator = 'Operator',
+    Admin = 'Admin'
 }
 
 

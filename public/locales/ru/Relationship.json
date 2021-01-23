@@ -1,0 +1,8 @@
+{
+  "parent": "Родитель",
+  "relative": "Родственник",
+  "brother": "Брат",
+  "friend": "Друг",
+  "placeholder": "Отношения с нуждающимся",
+  "addRelationship": "Добавить"
+}

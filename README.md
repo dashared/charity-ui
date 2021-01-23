@@ -22,4 +22,6 @@ React, Redux, Typescript, ESLint, Prettier
 
 ### `yarn codegen`
 
-Пока не работает авторизация в API, для смены роли пользователя зайди в `/Users/dashared/Developer/charity/ui/src/@lib/components/Auth/index.tsx`;
+Перед каждым коммитом (пушем) прогони кодстайл (git pre-commit hooks почему-то плохо справляются с этим)
+
+### `yarn fix`

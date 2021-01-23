@@ -11,6 +11,7 @@ const RolesArr = [
   Roles.Operator,
   Roles.Manager,
   Roles.ContentManager,
+  Roles.Admin,
 ];
 
 const RoleSelect: FC = () => {

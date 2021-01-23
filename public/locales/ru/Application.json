@@ -13,8 +13,29 @@
   "newStatus": "Новый статус",
   "statusUpdData": "Дата изменения",
   "authorUpd": "Автор изменения",
+  "createPageTitle": "Создание заявки",
   "$views": {
     "title": "Заявка № {{ id }} {{ title }}",
+    "createApplication": "Создать",
+    "createPage": {
+      "title": "Название",
+      "description": "Описание",
+      "message": "Сообщение для менеджера",
+      "anon": {
+        "title": "Анонимная заявка",
+        "description": "Некоторые поля заявки будут скрыты от обычных пользователей"
+      },
+      "files": "Файлы",
+      "relationship": "Отношения",
+      "donee": "Заполняю заявку на другого",
+      "dragger": {
+        "title": "Загрузите файл(ы)",
+        "description": "Эти файлы будут доступны только сотрудникам фонда"
+      }
+    },
+    "message": {
+      "title": "Введите название заявки"
+    },
     "tabs": {
       "generalInfoTitle": "Основная информация",
       "doneeInfoTitle": "Нуждающийся",
@@ -56,7 +77,9 @@
       "require_confirmation": "Одобрить",
       "returnFromSpam": "Вернуть из спама",
       "refuse": "Отклонить",
-      "activate": "Активировать"
+      "activate": "Активировать",
+      "add": "Добавить",
+      "reset": "Очистить"
     },
     "modal": {
       "requestChangesTitle": "Отправить на доработку",
