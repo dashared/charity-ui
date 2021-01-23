@@ -18,6 +18,7 @@ const RolesArr = [
   Roles.Operator,
   Roles.Manager,
   Roles.ContentManager,
+  Roles.Administrator,
 ];
 
 const { Option } = Select;

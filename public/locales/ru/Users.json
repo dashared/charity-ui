@@ -7,6 +7,7 @@
   "Role": {
     "Manager": "Менеджер",
     "SuperManager": "Комиссия",
+    "Administrator": "Администратор",
     "Admin": "Администратор",
     "Operator": "Оператор",
     "ContentManager": "Контент-менеджер",

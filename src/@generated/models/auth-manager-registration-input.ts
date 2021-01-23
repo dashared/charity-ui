@@ -21,18 +21,18 @@ import { AuthManagerRegistrationUser } from './auth-manager-registration-user';
  * @interface AuthManagerRegistrationInput
  */
 export interface AuthManagerRegistrationInput {
-    /**
-     * 
-     * @type {string}
-     * @memberof AuthManagerRegistrationInput
-     */
-    role?: AuthManagerRegistrationInputRoleEnum;
-    /**
-     * 
-     * @type {AuthManagerRegistrationUser}
-     * @memberof AuthManagerRegistrationInput
-     */
-    user?: AuthManagerRegistrationUser;
+  /**
+   * 
+   * @type {string}
+   * @memberof AuthManagerRegistrationInput
+   */
+  role?: AuthManagerRegistrationInputRoleEnum;
+  /**
+   * 
+   * @type {AuthManagerRegistrationUser}
+   * @memberof AuthManagerRegistrationInput
+   */
+  user?: AuthManagerRegistrationUser;
 }
 
 /**
@@ -40,11 +40,12 @@ export interface AuthManagerRegistrationInput {
     * @enum {string}
     */
 export enum AuthManagerRegistrationInputRoleEnum {
-    User = 'User',
-    Manager = 'Manager',
-    SuperManager = 'SuperManager',
-    ContentManager = 'ContentManager',
-    Operator = 'Operator'
+  User = 'User',
+  Manager = 'Manager',
+  SuperManager = 'SuperManager',
+  ContentManager = 'ContentManager',
+  Operator = 'Operator',
+  Administrator = 'Administrator'
 }
 
 

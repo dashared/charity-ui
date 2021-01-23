@@ -103,7 +103,8 @@ export enum UserUserRoleEnum {
     Manager = 'Manager',
     SuperManager = 'SuperManager',
     ContentManager = 'ContentManager',
-    Operator = 'Operator'
+    Operator = 'Operator',
+    Administrator = 'Administrator'
 }
 
 

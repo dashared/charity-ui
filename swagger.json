@@ -404,7 +404,8 @@
             "Manager",
             "SuperManager",
             "ContentManager",
-            "Operator"
+            "Operator",
+            "Administrator"
           ]
         },
         "user": {
@@ -821,7 +822,8 @@
             "Manager",
             "SuperManager",
             "ContentManager",
-            "Operator"
+            "Operator",
+            "Administrator"
           ]
         }
       }
