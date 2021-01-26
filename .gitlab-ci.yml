@@ -1,3 +1,8 @@
+variables:
+  REPO_NAME: https://git.infostrategic.com/hsecharity/ui
+  DOCKER_BUILDKIT: "1"
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+
 before_script:
   - yarn install
   - node -v
@@ -6,6 +11,7 @@ before_script:
 stages:
   - prettier
   - eslint
+  - build
 
 prettier:
   stage: prettier
@@ -16,3 +22,12 @@ eslint:
   needs:
     - job: prettier
   script: yarn lint:eslint
+
+docker-build:
+  stage: build
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - DOCKER_BUILDKIT=1 docker build --pull -t ${IMAGE_TAG} .
+    - docker push ${IMAGE_TAG}
+    - docker image remove ${IMAGE_TAG}
+    - docker logout

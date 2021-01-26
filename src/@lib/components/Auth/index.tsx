@@ -30,6 +30,8 @@ function mapRole(apiRole: UserApiRole): Role {
       return Role.supermanager;
     case UserApiRole.Admin:
       return Role.admin;
+    case UserApiRole.User: //  TODO: for testing purposes only
+      return Role.supermanager;
     default:
       return Role.visitor;
   }
