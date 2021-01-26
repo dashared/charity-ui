@@ -121,9 +121,7 @@ services:
     entrypoint: |
       curl -X POST http://rest-api:8008/batches -H 'Content-Type: application/octet-stream' --data-binary @charity_seed.bin
   ui:
-    image: ui:latest
-    container_name: ui-test
-    # image: gitregistry.infostrategic.com/hsecharity/ui:master # ui:latest
+    image: gitregistry.infostrategic.com/hsecharity/ui:master
     ports:
       - "3000:80"
     depends_on:
