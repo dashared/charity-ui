@@ -2,6 +2,26 @@
 
 Сначала установи yarn.
 
+## Docker
+
+Так как пока нет образа на `gitregistry.infostrategic.com/hsecharity`, то я собирала ручками вот так:
+
+```
+> docker build . -t ui:latest
+```
+
+Именно `ui:latest` image используется в docker-compose.yml. Добавила туда также пока api, db, seeds, не добавляла Илью.
+
+Все контейнеры запускает
+
+```
+> docker-compose up
+```
+
+WARN: Почему-то не накатываются seeds.
+
+Осталось: присоединить Илью и проверить CI.
+
 ## Разработка
 
 React, Redux, Typescript, ESLint, Prettier
