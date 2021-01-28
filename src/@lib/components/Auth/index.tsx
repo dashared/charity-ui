@@ -30,10 +30,10 @@ function mapRole(apiRole: UserApiRole): Role {
       return Role.supermanager;
     case UserApiRole.Admin:
       return Role.admin;
-    case UserApiRole.User: //  TODO: for testing purposes only
-      return Role.supermanager;
-    default:
+    case UserApiRole.User:
       return Role.visitor;
+    case UserApiRole.Operator:
+      return Role.operator;
   }
 }
 
@@ -58,7 +58,7 @@ class Auth extends Component {
       })
       .catch((e) => {
         console.error(e);
-        notify(i18n.t("Login:error"), "error");
+        notify(i18n.t("Login:error", { error: e.message }), "error");
       });
   };
 
@@ -105,6 +105,11 @@ class Auth extends Component {
 
   setSession(headerData: HeaderData, user: UserApiModel): void {
     const role = mapRole(headerData.role); // TODO: remove
+
+    if (role === Role.visitor) {
+      notify(i18n.t("Login:denied"));
+      return;
+    }
 
     this.saveToLocalStorage(role, user, headerData.token);
 

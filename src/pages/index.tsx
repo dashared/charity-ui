@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { Card, Col, Descriptions, Row, Space, Statistic } from "antd";
 import { LikeOutlined, TransactionOutlined } from "@ant-design/icons";
+import { Link } from "@curi/react-dom";
 import { useTranslation } from "@providers";
 
 const { Meta } = Card;
@@ -11,16 +12,10 @@ const Index: FC = () => {
   return (
     <Card
       hoverable
-      style={{ padding: 50 }}
+      style={{ padding: "30px 0px 0px 0px" }}
       cover={
         <Row align="middle" justify="center">
           <Space size="large">
-            <TransactionOutlined
-              style={{ fontSize: "64px", color: "#1890ff" }}
-            />
-            <TransactionOutlined
-              style={{ fontSize: "64px", color: "#1890ff" }}
-            />
             <TransactionOutlined
               style={{ fontSize: "64px", color: "#1890ff" }}
             />
@@ -30,18 +25,20 @@ const Index: FC = () => {
     >
       <Meta title={<h1>{t("welcome")}</h1>} description={t("description")} />
       <br />
+      <Link name="login:index">Авторизоваться</Link>
       <br />
-      <Row gutter={16}>
-        <Col span={6}>
+      <br />
+      <Row gutter={16} justify="center">
+        <Col xs={{ span: 24 }} lg={{ span: 6 }}>
           <Statistic title="Feedback" value={1128} prefix={<LikeOutlined />} />
         </Col>
-        <Col span={6}>
+        <Col xs={{ span: 24 }} lg={{ span: 6 }}>
           <Statistic title="Unmerged" value={93} suffix="/ 100" />
         </Col>
-        <Col span={6}>
+        <Col xs={{ span: 24 }} lg={{ span: 6 }}>
           <Statistic title="Active Users" value={112893} />
         </Col>
-        <Col span={6}>
+        <Col xs={{ span: 24 }} lg={{ span: 6 }}>
           <Statistic title="Active Users" value={112893} />
         </Col>
       </Row>
