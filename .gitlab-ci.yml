@@ -1,12 +1,5 @@
 variables:
-  REPO_NAME: https://git.infostrategic.com/hsecharity/ui
-  DOCKER_BUILDKIT: "1"
   IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-
-before_script:
-  - yarn install
-  - node -v
-  - yarn -v
 
 stages:
   - prettier
@@ -15,10 +8,18 @@ stages:
 
 prettier:
   stage: prettier
+  before_script:
+    - yarn install
+    - node -v
+    - yarn -v
   script: yarn lint:prettier
 
 eslint:
   stage: eslint
+  before_script:
+    - yarn install
+    - node -v
+    - yarn -v
   needs:
     - job: prettier
   script: yarn lint:eslint
@@ -27,7 +28,18 @@ docker-build:
   stage: build
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - DOCKER_BUILDKIT=1 docker build --pull -t ${IMAGE_TAG} .
-    - docker push ${IMAGE_TAG}
-    - docker image remove ${IMAGE_TAG}
+    - echo "IMAGE_APP_TAG=$IMAGE_TAG" >> .env
+    - docker-compose build --pull
+    - >
+      if [ "$CI_COMMIT_REF_NAME" == "master" ]; then
+        docker-compose down -v
+      fi
+    - docker-compose push
+    - >
+      if [ "$CI_COMMIT_REF_NAME" == "master" ]; then
+        docker-compose pull
+        docker-compose up -d
+       else
+        docker image rm ${IMAGE_TAG}
+      fi
     - docker logout

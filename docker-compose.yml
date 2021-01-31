@@ -1,134 +1,18 @@
 version: "3.7"
 
 services:
-  settings-tp:
-    image: hyperledger/sawtooth-settings-tp:chime
-    depends_on:
-      - validator
-    entrypoint: settings-tp -vv -C tcp://validator:4004
-
-  charity-blockchain-transaction-processor:
-    image: gitregistry.infostrategic.com/hsecharity/charity-blockchain/charity-blockchain-transaction-processor:master
-    environment:
-      - VALIDATOR_URL=tcp://validator:4004
-    depends_on:
-      - validator
-
-  charity-blockchain-server:
-    image: gitregistry.infostrategic.com/hsecharity/charity-blockchain/charity-blockchain-server:master
-    environment:
-      - BATCHER_KEY=5S4JmoOJ0EDcjsQ9QppQyTV5foVQZvHeJ7HnXAm8PSU=
-      - VALIDATOR_REST_API=http://rest-api:8008
-      - SERVER_PORT=8011
-    ports:
-      - "8011:8011"
-    depends_on:
-      - charity-blockchain-transaction-processor
-
-  validator:
-    image: hyperledger/sawtooth-validator:chime
-    # container_name: sawtooth-validator-default
-    expose:
-      - 4004
-    ports:
-      - "4003:4004"
-    entrypoint: "bash -c \"\
-      sawadm keygen && \
-      sawtooth keygen my_key && \
-      sawset genesis -k /root/.sawtooth/keys/my_key.priv && \
-      sawset proposal create \
-      -k /root/.sawtooth/keys/my_key.priv \
-      sawtooth.consensus.algorithm.name=Devmode \
-      sawtooth.consensus.algorithm.version=0.1 \
-      -o config.batch && \
-      sawadm genesis config-genesis.batch config.batch && \
-      sawtooth-validator -vvvvvv \
-      --endpoint tcp://validator:8800 \
-      --bind component:tcp://eth0:4004 \
-      --bind network:tcp://eth0:8800 \
-      --bind consensus:tcp://eth0:5050 \
-      \""
-
-  devmode-engine:
-    image: hyperledger/sawtooth-devmode-engine-rust:chime
-    # container_name: sawtooth-devmode-engine-rust-default
-    depends_on:
-      - validator
-    entrypoint: devmode-engine-rust -C tcp://validator:5050
-
-  rest-api:
-    image: hyperledger/sawtooth-rest-api:chime
-    ports:
-      - "8008:8008"
-    depends_on:
-      - validator
-    entrypoint: sawtooth-rest-api -C tcp://validator:4004 --bind rest-api:8008
-
-  database:
-    image: postgres
-    restart: always
-    environment:
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_USER=postgres
-    ports:
-      - "5433:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-  api:
-    image: gitregistry.infostrategic.com/hsecharity/backend:develop
-    container_name: go-server-container
-    environment:
-      - db_user=postgres
-      - db_name=postgres
-      - db_host=database
-      - port=8080
-      - db_port=5432
-      - db_password=secret
-      - private_charity_key=52JysuTw7e2fsYCBfHohxqVg9xqg+Bhxti1RHjcG1oM=
-      - public_charity_key=AsRVHkKai/Pb45gGLXFRfJgpSW3bl8LT9/L+/j1gS2A/
-      - email_domain=hsecharity.com
-      - email_api_key=key-b8d663d64c387720e753501ad1d0bcbd
-      - email_api_base=https://api.eu.mailgun.net/v3
-      - jwt_key=my_jwt_key
-      - blockchain_url=http://charity-blockchain-server:8011
-    depends_on:
-      database:
-        condition: service_healthy
-    restart: unless-stopped
-    ports:
-      - "9000:8080"
-    healthcheck:
-      test: curl -f http://localhost:8080/ping || exit 1
-      interval: 5s
-      timeout: 1s
-      retries: 5
-      start_period: 2s
-  api-seeds:
-    image: gitregistry.infostrategic.com/hsecharity/backend:seeds-develop
-    depends_on:
-      api:
-        condition: service_healthy
-    entrypoint: psql -d postgresql://postgres:secret@database:5432/postgres -f seeds.sql
-  blockchain_seeds:
-    image: gitregistry.infostrategic.com/hsecharity/backend:blockchain_seeds-develop
-    depends_on:
-      - rest-api
-    entrypoint: |
-      curl -X POST http://rest-api:8008/batches -H 'Content-Type: application/octet-stream' --data-binary @charity_seed.bin
   ui:
-    image: gitregistry.infostrategic.com/hsecharity/ui:master
+    image: ${IMAGE_APP_TAG}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: charity_ui
     ports:
-      - "3000:80"
-    depends_on:
-      - api
+      - "80:80"
+      - "7778:7778"
     environment:
       - REACT_APP_API_URL=http://api:9000
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-volumes:
-  postgres_data:
+networks:
+  default:
+    external:
+      name: charity-network
