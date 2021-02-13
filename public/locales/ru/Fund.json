@@ -5,6 +5,7 @@
   "description": "Описание",
   "contacts": "Контакты",
   "docs": "Документы",
+  "reports": "Отчеты",
   "$views": {
     "buttons": {
       "edit": "Редактировать",

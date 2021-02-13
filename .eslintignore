@@ -2,7 +2,7 @@
 
 !*.graphql
 !*.js
-!*.jsx
+*.jsx
 !*.ts
 !*.tsx
 

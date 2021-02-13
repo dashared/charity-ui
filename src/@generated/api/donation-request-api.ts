@@ -41,11 +41,15 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
          * @summary Retrieves all donation requests
          * @param {number} [page] Page number
          * @param {number} [size] Page size
-         * @param {string} [sort] sort
+         * @param {Array<string>} [author] request author id
+         * @param {Array<string>} [assignee] request assignee id
+         * @param {Array<string>} [status] request status
+         * @param {Array<string>} [type] request type
+         * @param {string} [searchString] id &#x3D;&#x3D; searchString OR title LIKE searchString OR description LIKE searchString
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDonationRequestGet: async (page?: number, size?: number, sort?: string, options: any = {}): Promise<RequestArgs> => {
+        apiDonationRequestGet: async (page?: number, size?: number, author?: Array<string>, assignee?: Array<string>, status?: Array<string>, type?: Array<string>, searchString?: string, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/donation-request/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -66,8 +70,24 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
                 localVarQueryParameter['size'] = size;
             }
 
-            if (sort !== undefined) {
-                localVarQueryParameter['sort'] = sort;
+            if (author) {
+                localVarQueryParameter['author'] = author.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (assignee) {
+                localVarQueryParameter['assignee'] = assignee.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (status) {
+                localVarQueryParameter['status'] = status.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (type) {
+                localVarQueryParameter['type'] = type.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (searchString !== undefined) {
+                localVarQueryParameter['searchString'] = searchString;
             }
 
 
@@ -350,12 +370,16 @@ export const DonationRequestApiFp = function(configuration?: Configuration) {
          * @summary Retrieves all donation requests
          * @param {number} [page] Page number
          * @param {number} [size] Page size
-         * @param {string} [sort] sort
+         * @param {Array<string>} [author] request author id
+         * @param {Array<string>} [assignee] request assignee id
+         * @param {Array<string>} [status] request status
+         * @param {Array<string>} [type] request type
+         * @param {string} [searchString] id &#x3D;&#x3D; searchString OR title LIKE searchString OR description LIKE searchString
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiDonationRequestGet(page?: number, size?: number, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestResponse>> {
-            const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestGet(page, size, sort, options);
+        async apiDonationRequestGet(page?: number, size?: number, author?: Array<string>, assignee?: Array<string>, status?: Array<string>, type?: Array<string>, searchString?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestResponse>> {
+            const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestGet(page, size, author, assignee, status, type, searchString, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -449,12 +473,16 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
          * @summary Retrieves all donation requests
          * @param {number} [page] Page number
          * @param {number} [size] Page size
-         * @param {string} [sort] sort
+         * @param {Array<string>} [author] request author id
+         * @param {Array<string>} [assignee] request assignee id
+         * @param {Array<string>} [status] request status
+         * @param {Array<string>} [type] request type
+         * @param {string} [searchString] id &#x3D;&#x3D; searchString OR title LIKE searchString OR description LIKE searchString
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDonationRequestGet(page?: number, size?: number, sort?: string, options?: any): AxiosPromise<DonationRequestResponse> {
-            return DonationRequestApiFp(configuration).apiDonationRequestGet(page, size, sort, options).then((request) => request(axios, basePath));
+        apiDonationRequestGet(page?: number, size?: number, author?: Array<string>, assignee?: Array<string>, status?: Array<string>, type?: Array<string>, searchString?: string, options?: any): AxiosPromise<DonationRequestResponse> {
+            return DonationRequestApiFp(configuration).apiDonationRequestGet(page, size, author, assignee, status, type, searchString, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -534,11 +562,39 @@ export interface DonationRequestApiApiDonationRequestGetRequest {
     readonly size?: number
 
     /**
-     * sort
+     * request author id
+     * @type {Array<string>}
+     * @memberof DonationRequestApiApiDonationRequestGet
+     */
+    readonly author?: Array<string>
+
+    /**
+     * request assignee id
+     * @type {Array<string>}
+     * @memberof DonationRequestApiApiDonationRequestGet
+     */
+    readonly assignee?: Array<string>
+
+    /**
+     * request status
+     * @type {Array<string>}
+     * @memberof DonationRequestApiApiDonationRequestGet
+     */
+    readonly status?: Array<string>
+
+    /**
+     * request type
+     * @type {Array<string>}
+     * @memberof DonationRequestApiApiDonationRequestGet
+     */
+    readonly type?: Array<string>
+
+    /**
+     * id &#x3D;&#x3D; searchString OR title LIKE searchString OR description LIKE searchString
      * @type {string}
      * @memberof DonationRequestApiApiDonationRequestGet
      */
-    readonly sort?: string
+    readonly searchString?: string
 }
 
 /**
@@ -655,7 +711,7 @@ export class DonationRequestApi extends BaseAPI {
      * @memberof DonationRequestApi
      */
     public apiDonationRequestGet(requestParameters: DonationRequestApiApiDonationRequestGetRequest = {}, options?: any) {
-        return DonationRequestApiFp(this.configuration).apiDonationRequestGet(requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
+        return DonationRequestApiFp(this.configuration).apiDonationRequestGet(requestParameters.page, requestParameters.size, requestParameters.author, requestParameters.assignee, requestParameters.status, requestParameters.type, requestParameters.searchString, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
