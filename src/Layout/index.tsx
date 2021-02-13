@@ -49,7 +49,7 @@ const MainLayout: FC = () => {
             // visitor
             yes={() => (
               <Layout className={styles.mainLayout}>
-                <Content style={{ padding: "30px 20px 20px 20px" }}>
+                <Content>
                   <MainView />
                 </Content>
               </Layout>

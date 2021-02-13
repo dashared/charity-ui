@@ -41,20 +41,58 @@
         "parameters": [
           {
             "type": "integer",
+            "default": 0,
             "description": "Page number",
             "name": "page",
             "in": "query"
           },
           {
             "type": "integer",
+            "default": 10,
             "description": "Page size",
             "name": "size",
             "in": "query"
           },
           {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "request author id",
+            "name": "author",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "request assignee id",
+            "name": "assignee",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "request status",
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "request type",
+            "name": "type",
+            "in": "query"
+          },
+          {
             "type": "string",
-            "description": "sort",
-            "name": "sort",
+            "description": "id == searchString OR title LIKE searchString OR description LIKE searchString",
+            "name": "searchString",
             "in": "query"
           }
         ],
