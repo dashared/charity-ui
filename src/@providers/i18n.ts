@@ -7,8 +7,8 @@ export const init = (): Promise<TFunction> =>
     .use(initReactI18next)
     .use(HttpApi)
     .init({
-      ns: ["common", "form", "_error"],
-      defaultNS: "common",
+      ns: ["translation", "form", "_error"],
+      defaultNS: "translation",
       lng: "ru",
       fallbackLng: "ru",
       interpolation: {

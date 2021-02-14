@@ -3,7 +3,7 @@ import { Col, Row } from "antd";
 import { i18n } from "@providers";
 import QueueAnim from "rc-queue-anim";
 
-import { assets, base } from "./data";
+import { assets } from "./data";
 
 export default function Page1() {
   const page1 = [

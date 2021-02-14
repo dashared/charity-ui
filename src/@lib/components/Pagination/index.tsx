@@ -125,7 +125,7 @@ function InnerPaginatedQuery<
   RestProps): JSX.Element | null {
   // pagination state handlers
 
-  const { t } = useTranslation("Common");
+  const { t } = useTranslation("translation");
 
   const [page, onCurrentChange] = useState(initialPage);
   const [size, onPageSizeChange] = useState(initialSize);
