@@ -44,7 +44,6 @@ const ActionButtons: FC<ApplicationButtonsProps> = (props) => {
         );
         break;
       case ApplicationStatus.Deleted:
-        console.log("f");
         buttons.push(<DeleteButton key="DeleteButton" {...props} />);
         break;
       case ApplicationStatus.Spam:

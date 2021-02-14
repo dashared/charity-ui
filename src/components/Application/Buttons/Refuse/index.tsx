@@ -17,7 +17,12 @@ export const RefuseButton: FC<{
 
   return (
     <>
-      <Button type="primary" danger icon={<CloseOutlined />}>
+      <Button
+        type="primary"
+        danger
+        icon={<CloseOutlined />}
+        onClick={() => setVisible(true)}
+      >
         {t("$views.buttons.refuse")}
       </Button>
       <ModalWithMessage

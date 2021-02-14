@@ -16,15 +16,15 @@ export const RequireConfirmationButton: FC<{
 
   const moveFurther = useCallback(async () => {
     try {
-      const newStatus =
-        status === ApplicationStatus.SuperManagerConfirmation
-          ? ApplicationStatus.Active
-          : ApplicationStatus.SuperManagerConfirmation;
+      // const newStatus =
+      //   status === ApplicationStatus.SuperManagerConfirmation
+      //     ? ApplicationStatus.Active
+      //     : ApplicationStatus.SuperManagerConfirmation;
 
       setLoading(true);
 
       await DonationRequestFactory.apiDonationRequestIdStatusPatch(id, {
-        status: newStatus,
+        status,
       });
     } catch (e) {
       console.log(e);

@@ -1,16 +1,12 @@
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Anchor, Card, Layout, PageHeader } from "antd";
+import { Button, Card, Select } from "antd";
 import RoleSwitch from "@lib/components/RoleSwitch";
+import { Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import Redirect from "pages/_redirect";
 
 import { PersonalSettings } from "components/Settings";
-
-import styles from "./styles.module.less";
-
-const { Header, Sider, Content } = Layout;
-const { Link } = Anchor;
 
 const SettingsPage: FC = () => {
   const { t } = useTranslation("Settings");
@@ -19,53 +15,28 @@ const SettingsPage: FC = () => {
     <AuthConsumer>
       {({ user }) => {
         return (
-          <Layout>
-            <Header className={styles.header}>
-              <PageHeader
-                title={t("title")}
-                style={{ backgroundColor: "transparent" }}
-              />
-            </Header>
+          <Workspace
+            title={t("title")}
+            noRefresh
+            actions={<Button type="primary">{t("updateButton")}</Button>}
+          >
+            <PersonalSettings id={user.uuid ?? ""} />
 
-            <Layout className={styles.layout}>
-              <Sider className={styles.sider}>
-                <Anchor>
-                  <Link href="#personal" title={t("personal")} />
-                  <Link href="#language" title={t("language")} />
-                </Anchor>
-              </Sider>
-
-              <Content id="content">
-                <PersonalSettings id={user.uuid ?? ""} />
-
-                <Card
-                  title={t("language")}
-                  style={{ marginTop: "4px" }}
-                  id="language"
-                >
-                  TEST DATA
-                  <br />
-                  TEST DATA
-                  <br />
-                  TEST DATA
-                  <br />
-                  TEST DATA
-                  <br />
-                  TEST DATA
-                  <br />
-                  TEST DATA
-                  <br />
-                  TEST DATA
-                  <br />
-                  TEST DATA
-                  <br />
-                  TEST DATA
-                  <br />
-                  TEST DATA
-                </Card>
-              </Content>
-            </Layout>
-          </Layout>
+            <Card
+              title={t("language")}
+              style={{ marginTop: "4px" }}
+              id="language"
+            >
+              <Select value={"rus"} style={{ width: 180, margin: "0 8px" }}>
+                <Select.Option value="rus">
+                  {t("languageSetting.russian")}
+                </Select.Option>
+                <Select.Option value="eng">
+                  {t("languageSetting.english")}
+                </Select.Option>
+              </Select>
+            </Card>
+          </Workspace>
         );
       }}
     </AuthConsumer>

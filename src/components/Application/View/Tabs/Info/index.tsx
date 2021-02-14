@@ -26,7 +26,7 @@ const Actions: FC<{
     onSave();
   }, [onClose, onSave]);
 
-  const { t } = useTranslation("translation");
+  const { t } = useTranslation("Translation");
 
   return (
     <Space>
