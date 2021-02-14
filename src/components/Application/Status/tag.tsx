@@ -24,6 +24,10 @@ function getColor(level: DonationRequestBodyStatusEnum): TagProps["color"] {
       return "red";
     case DonationRequestBodyStatusEnum.Refused:
       return "error";
+    case DonationRequestBodyStatusEnum.UserConfirmation:
+      return "magenta";
+    case DonationRequestBodyStatusEnum.Archived:
+      return "volcano";
   }
 }
 
