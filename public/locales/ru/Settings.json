@@ -7,5 +7,9 @@
   "last_name": "Фамилия",
   "info": "Информация",
   "email": "Почта",
-  "updateButton": "Обновить данные"
+  "updateButton": "Обновить данные",
+  "languageSetting": {
+    "russian": "Русский",
+    "english": "Английский"
+  }
 }

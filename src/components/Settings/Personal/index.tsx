@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Button, Card, Form, Input, Skeleton } from "antd";
+import { Card, Form, Input, Skeleton } from "antd";
 import { useTranslation } from "@providers";
 import useAxios, { UserRequestFactory } from "@providers/axios";
 // import { IdComponent } from "@typings/component";
@@ -54,10 +54,6 @@ export const PersonalSettings: FC<{ id: string }> = ({ id }) => {
 
         <Form.Item name="info" label={t("info")}>
           <Input.TextArea />
-        </Form.Item>
-
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
-          <Button type="primary">{t("updateButton")}</Button>
         </Form.Item>
       </Form>
     </Card>
