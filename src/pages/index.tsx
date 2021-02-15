@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { AuthConsumer } from "@providers/authContext";
+import { Role } from "@providers/rbac-rules";
 import Home from "Home";
 
 import Redirect from "./_redirect";
@@ -14,7 +15,16 @@ const Index: FC = () => {
             role={user.role}
             perform="auth:login"
             yes={() => <Home />}
-            no={() => <Redirect name="applications:index" />}
+            no={() => {
+              switch (user.role) {
+                case Role.admin:
+                  return <Redirect name="users:index" />;
+                case Role.operator:
+                  return <Redirect name="fund:description-index" />;
+                default:
+                  return <Redirect name="applications:index" />;
+              }
+            }}
           />
         );
       }}

@@ -7,7 +7,8 @@ import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useListSelection } from "@lib/hooks";
-import { cred } from "@lib/utils/name";
+import { format } from "@lib/utils/date";
+import { fullName } from "@lib/utils/name";
 import { router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import { UserApiRole, UserRequestFactory } from "@providers/axios";
@@ -48,6 +49,7 @@ const UsersPage: FC = () => {
   const columns = [
     {
       key: "id",
+      width: "40%",
       render(record: Single) {
         return (
           <Link params={{ id: record.id }} name="users:show">
@@ -60,12 +62,24 @@ const UsersPage: FC = () => {
     {
       key: "name",
       render(record: Single) {
-        return cred(record.first_name, record.middle_name, record.last_name);
+        return fullName(
+          record.first_name,
+          record.middle_name,
+          record.last_name,
+        );
+      },
+    },
+
+    {
+      key: "createdAt",
+      render(record: Single) {
+        return format(record.created_at);
       },
     },
 
     {
       key: "role",
+      width: "12%",
       render(record: Single) {
         return <RoleTag roles={[record.role ?? UserApiRole.User]} />;
       },

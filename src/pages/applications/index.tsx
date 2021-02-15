@@ -53,7 +53,6 @@ const ApplicationsPage: FC = () => {
   const columns = [
     {
       key: "id",
-      name: t("id"),
       render(record: Single) {
         return (
           <Link params={{ id: record.id }} name="applications:show">
@@ -64,18 +63,22 @@ const ApplicationsPage: FC = () => {
     },
     {
       key: "title",
-      name: t("title"),
       render(record: Single) {
         return record.title;
       },
     },
     {
       key: "status",
-      name: t("status"),
       render(record: Single) {
         return (
           <StatusTag status={record.status as ApplicationStatus}></StatusTag>
         );
+      },
+    },
+    {
+      key: "type",
+      render(record: Single) {
+        return <span>{record.request_type}</span>;
       },
     },
     {

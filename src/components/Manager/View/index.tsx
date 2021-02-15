@@ -16,15 +16,14 @@ const ManagerView: FC<ManagerViewProps> = ({ user, role }) => {
 
   return (
     <>
-      <Card>
-        <h3>{t("page.infoTitle")}</h3>
+      <Card title={t("page.infoTitle")}>
         <br />
         <UserInfo user={user} role={role} />
       </Card>
-      <Card>
+      {/* <Card>
         <h3>{t("page.statistics")}</h3>
         <br />
-      </Card>
+      </Card> */}
     </>
   );
 };

@@ -8,7 +8,6 @@ import {
   Input,
   message,
   Space,
-  Switch,
   Upload,
 } from "antd";
 import { useForm } from "antd/lib/form/Form";
@@ -108,12 +107,6 @@ const CreatePage: FC<{ onCreate: (values: DonationRequestInput) => void }> = ({
           label={t("$views.createPage.relationship")}
         >
           <RelationshipSelect />
-        </Form.Item>
-
-        <Form.Item
-          /**name="anonymous"*/ label={t("$views.createPage.anon.title")}
-        >
-          <Switch />
         </Form.Item>
 
         <Divider />

@@ -80,7 +80,7 @@ const TransactionsPage: FC = () => {
         return (
           // TODO: replace after transactions api is done
           <Link params={{ id: 1 }} name="applications:show">
-            Имя заявки как дела
+            Заявка
           </Link>
         );
       },

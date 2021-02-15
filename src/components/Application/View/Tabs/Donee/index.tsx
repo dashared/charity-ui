@@ -1,8 +1,7 @@
 import React, { FC } from "react";
-import { Descriptions, Tag } from "antd";
+import { Descriptions } from "antd";
 import { Link } from "@curi/react-dom";
 import { UserSimpleUser as Donee } from "@generated";
-// import useAxios from "@providers/axios";
 import { fullName } from "@lib/utils/name";
 import { useTranslation } from "@providers";
 
@@ -10,19 +9,20 @@ export const DoneeInfoTab: FC<{
   applicantId?: string;
   donee?: Donee;
   relationship?: string;
-}> = ({ applicantId, donee }) => {
+}> = ({ applicantId, donee, relationship }) => {
   const { t } = useTranslation("Application");
-
-  // const { data, loading, error } = useAxios
 
   return (
     <Descriptions
-      title={doneeTitle(applicantId, donee, "relationship")}
+      title={doneeTitle(applicantId, donee, relationship)}
       layout="vertical"
       bordered
     >
-      <Descriptions.Item label={t("$views.card.birthPlace")}>
-        Zhou Maomao
+      <Descriptions.Item label={t("$views.card.country")}>
+        Россия
+      </Descriptions.Item>
+      <Descriptions.Item label={t("$views.card.city")}>
+        г. Москва
       </Descriptions.Item>
       <Descriptions.Item label={t("$views.card.birthday")}>
         19.03.2020
@@ -30,12 +30,9 @@ export const DoneeInfoTab: FC<{
       <Descriptions.Item label={t("$views.card.phone")}>
         +7 999 788 88 90
       </Descriptions.Item>
-      <Descriptions.Item label={t("$views.card.address")}>
-        No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
-      </Descriptions.Item>
-      {"f" && (
+      {relationship && (
         <Descriptions.Item label={t("$views.card.relationship")} span={2}>
-          <Tag color="green">{"relationship"}</Tag>
+          <span>{relationship}</span>
         </Descriptions.Item>
       )}
     </Descriptions>
