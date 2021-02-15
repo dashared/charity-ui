@@ -70,6 +70,9 @@
       "successUpdateStatus": "Успешно обновлен статус заявки!"
     },
     "buttons": {
+      "actions": {
+        "title": "Действия с заявкой"
+      },
       "inProcessing": "Взять в обработку",
       "spam": "Спам",
       "request_changes": "Отправить на доработку",
