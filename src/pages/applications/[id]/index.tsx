@@ -11,6 +11,7 @@ import ActionButtons from "components/Application/Buttons";
 import ApplicationView from "components/Application/View";
 
 const Actions: FC<{
+  currentStatus: ApplicationStatus;
   applicationId: number;
   availiableStatuses: ApplicationStatus[];
   onRefetch: () => Promise<void>;
@@ -53,6 +54,7 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
       title={t("$views.title", { id: data.id, title: data.title })}
       actions={
         <Actions
+          currentStatus={(data.status as unknown) as ApplicationStatus}
           applicationId={data.id ?? 0}
           availiableStatuses={data.available_statuses ?? []}
           onRefetch={onRefetchButton}
