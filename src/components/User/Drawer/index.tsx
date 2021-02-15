@@ -53,17 +53,20 @@ const UserPreview: FC<{
             <Descriptions.Item label={t("credentials")} span={3}>
               {fullName(data.first_name, data.last_name, data.middle_name)}
             </Descriptions.Item>
+            <Descriptions.Item label={t("birthday")} span={3}>
+              15.02.1999
+            </Descriptions.Item>
             <Descriptions.Item label={t("phone")} span={3}>
               1810000000
-            </Descriptions.Item>
-            <Descriptions.Item label={t("country")} span={3}>
-              Hangzhou, Zhejiang
             </Descriptions.Item>
             <Descriptions.Item label={t("email")} span={3}>
               ivanov@mail.ru
             </Descriptions.Item>
-            <Descriptions.Item label={t("address")} span={3}>
-              No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+            <Descriptions.Item label={t("city")} span={3}>
+              Москва
+            </Descriptions.Item>
+            <Descriptions.Item label={t("country")} span={3}>
+              Россия
             </Descriptions.Item>
           </Descriptions>
         )}

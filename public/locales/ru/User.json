@@ -7,9 +7,11 @@
   "country": "Страна",
   "phone": "Телефон",
   "email": "Почта",
-  "address": "Адрес",
   "credentials": "ФИО",
   "roles": "Роли",
+  "created_at": "Аккаунт создан",
+  "birthday": "Дата рождения",
+  "uuid": "ID",
   "$views": {
     "tab": {
       "info": "Основная информация",

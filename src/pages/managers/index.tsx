@@ -1,4 +1,5 @@
 import React, { FC, useRef } from "react";
+import { Avatar } from "antd";
 import { CheckOutlined, SyncOutlined } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
 import { UserResponse as Result, UserUser as Single } from "@generated";
@@ -51,7 +52,20 @@ const ManagersPage: FC = () => {
 
   const columns = [
     {
+      key: "photo",
+      title: "",
+      width: "6%",
+      render(record: Single) {
+        return (
+          <Avatar style={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
+            {record?.role?.substr(0, 1)}
+          </Avatar>
+        );
+      },
+    },
+    {
       key: "name",
+      width: "25%",
       render(record: Single) {
         return (
           <Link params={{ id: record.id }} name="managers:show">
@@ -62,6 +76,7 @@ const ManagersPage: FC = () => {
     },
     {
       key: "roles",
+      width: "12%",
       render(record: Single) {
         return <RoleTag roles={[record.role ?? UserApiRole.User]} />;
       },
@@ -74,6 +89,7 @@ const ManagersPage: FC = () => {
     },
     {
       key: "metric",
+      width: "12%",
       render() {
         return ManagersMetrics();
       },

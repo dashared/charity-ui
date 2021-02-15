@@ -42,8 +42,9 @@ const UserDropdown: FC<{ className?: string }> = ({ className }) => {
           <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
             <span className={className}>
               <UserOutlined />
-              <span>{user.name}</span>
-              <span>{user.role}</span>
+              <span>
+                {user.name} {user.surname}
+              </span>
               <DownOutlined />
             </span>
           </Dropdown>

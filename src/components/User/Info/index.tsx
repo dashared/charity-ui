@@ -9,7 +9,7 @@ import { useTranslation } from "@providers";
 import { UserApiRole } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
 
-import BlockedTag from "components/User/Block/tag";
+//import BlockedTag from "components/User/Block/tag";
 import RoleTag from "components/User/Role/tag";
 
 type UserInfoProps = {
@@ -42,9 +42,9 @@ const UserInfo: FC<UserInfoProps> = ({ user, role }) => {
             <span>{formatString(user.country)}</span>
           </Form.Item>
 
-          <Form.Item>
+          {/* <Form.Item>
             <BlockedTag isBlocked={true} />
-          </Form.Item>
+          </Form.Item> */}
         </Form>
       </Col>
       <Col span={12}>
