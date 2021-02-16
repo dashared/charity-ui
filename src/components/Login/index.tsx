@@ -1,11 +1,13 @@
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Card, Checkbox, Form, Input, Row } from "antd";
+import { Button, Card, Checkbox, Form, Input, Row, Typography } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { LockOutlined, UserOutlined, WarningOutlined } from "@ant-design/icons";
 import { Credentials } from "@providers/authContext";
 
 import styles from "./styles.module.less";
+
+const { Paragraph } = Typography;
 
 type LoginProps = {
   onLogin: (credentials: Credentials) => void;
@@ -65,6 +67,13 @@ const LoginForm: FC<LoginProps> = ({ onLogin }) => {
                 {t("forgotPassword")}
               </a>
             </Form.Item>
+
+            <div className={styles.desc}>
+              <Paragraph>
+                <WarningOutlined className={styles.icon} /> {t("message.title")}
+                <a> {t("message.link")} &gt;</a>
+              </Paragraph>
+            </div>
 
             <Form.Item>
               <Button type="primary" htmlType="submit" className={styles.login}>
