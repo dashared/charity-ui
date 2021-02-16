@@ -8,7 +8,7 @@ export enum Role {
 
 const rules = {
   visitor: {
-    static: ["auth:login"],
+    static: ["auth:login", "faq:pretty"],
   },
   operator: {
     static: [

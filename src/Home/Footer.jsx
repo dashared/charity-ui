@@ -1,6 +1,7 @@
 import React from "react";
 import { Col, Row } from "antd";
 import { i18n } from "@providers";
+import { Link } from "@curi/react-dom";
 
 function Footer() {
   return (
@@ -21,9 +22,7 @@ function Footer() {
             </a>
           </span>
           <span style={{ marginRight: 24 }}>
-            <a rel="noopener noreferrer" target="_blank">
-              {i18n.t("Landing.footer.faq")}
-            </a>
+            <Link name="faq:index">{i18n.t("Landing.footer.faq")}</Link>
           </span>
           <span style={{ marginRight: 12 }}>Copyright © Charity CRM </span>
         </Col>

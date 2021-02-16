@@ -163,7 +163,7 @@ const ActionButtons: FC<ApplicationButtonsProps> = (props) => {
           </Menu.Item>,
         );
         break;
-      case ApplicationStatus.Active:
+      case ApplicationStatus.UserConfirmation:
         menu.push(
           <Menu.Item
             key="require_confirmation2"
@@ -171,7 +171,7 @@ const ActionButtons: FC<ApplicationButtonsProps> = (props) => {
               requireConfirmation(
                 applicationId,
                 onRefetch,
-                ApplicationStatus.Active,
+                ApplicationStatus.UserConfirmation,
               )
             }
           >

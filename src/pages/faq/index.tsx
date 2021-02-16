@@ -5,6 +5,7 @@ import { SaveOutlined } from "@ant-design/icons";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
+import PrettyFAQ from "Home/FAQ";
 
 import FAQ from "components/FAQ";
 
@@ -52,19 +53,32 @@ const FAQPage: FC = () => {
     <AuthConsumer>
       {({ user }) => {
         return (
-          <Workspace
-            noRefresh
-            title={t("title")}
-            actions={
-              <RoleSwitch
-                role={user.role}
-                perform="faq:edit"
-                yes={() => <Actions onSubmit={onSubmit} loading={loading} />}
-              />
-            }
-          >
-            <FAQ role={user.role} text={`###  Heading`} editorRef={editorRef} />
-          </Workspace>
+          <RoleSwitch
+            role={user.role}
+            perform="faq:pretty"
+            yes={() => <PrettyFAQ />}
+            no={() => (
+              <Workspace
+                noRefresh
+                title={t("title")}
+                actions={
+                  <RoleSwitch
+                    role={user.role}
+                    perform="faq:edit"
+                    yes={() => (
+                      <Actions onSubmit={onSubmit} loading={loading} />
+                    )}
+                  />
+                }
+              >
+                <FAQ
+                  role={user.role}
+                  text={`###  Heading`}
+                  editorRef={editorRef}
+                />
+              </Workspace>
+            )}
+          />
         );
       }}
     </AuthConsumer>

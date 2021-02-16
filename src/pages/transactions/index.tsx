@@ -142,7 +142,7 @@ export const pageComponent: FC = () => {
             role={user.role}
             perform="transactions:index"
             yes={() => <TransactionsPage />}
-            no={() => <Redirect name="home"></Redirect>}
+            no={() => <Redirect name="home" />}
           />
         );
       }}
