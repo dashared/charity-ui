@@ -17,27 +17,27 @@
 /**
  * 
  * @export
- * @interface DonationRequestUpdateInput
+ * @interface UtilsMoneyJson
  */
-export interface DonationRequestUpdateInput {
+export interface UtilsMoneyJson {
     /**
      * 
      * @type {string}
-     * @memberof DonationRequestUpdateInput
+     * @memberof UtilsMoneyJson
      */
-    comment?: string;
+    currency?: string;
     /**
      * 
-     * @type {string}
-     * @memberof DonationRequestUpdateInput
+     * @type {number}
+     * @memberof UtilsMoneyJson
      */
-    password?: string;
+    denominator?: number;
     /**
      * 
-     * @type {string}
-     * @memberof DonationRequestUpdateInput
+     * @type {number}
+     * @memberof UtilsMoneyJson
      */
-    status?: string;
+    numerator?: number;
 }
 
 

@@ -66,7 +66,7 @@ export const GeneralInfo: FC<{
   const [initialInfo, updateInfo] = useState<EditableInfo>({
     title: info.title,
     description: info.description,
-    approvedAmount: info.approved_amount,
+    approvedAmount: info.approved_amount?.numerator,
     endTime: undefined,
     assignee: info.assignee?.id,
   });
@@ -75,7 +75,7 @@ export const GeneralInfo: FC<{
     updateInfo({
       title: info.title,
       description: info.description,
-      approvedAmount: info.approved_amount,
+      approvedAmount: info.approved_amount?.numerator,
       endTime: undefined,
       assignee: info.assignee?.id,
     });
@@ -138,7 +138,7 @@ export const GeneralInfo: FC<{
         </Descriptions.Item>
 
         <Descriptions.Item label={t("$views.card.requestedAmount")}>
-          {info.requested_amount}
+          {info.requested_amount?.numerator}
         </Descriptions.Item>
 
         <Descriptions.Item label={t("$views.card.approvedAmount")}>
@@ -146,10 +146,10 @@ export const GeneralInfo: FC<{
           {editable && (
             <Input
               defaultValue={initialInfo.approvedAmount}
-              onChange={(e) => {
+              onChange={() => {
                 updateInfo({
                   ...initialInfo,
-                  approvedAmount: Number(e.target.value),
+                  //approvedAmount: Number(e.target.value),
                 });
               }}
             />

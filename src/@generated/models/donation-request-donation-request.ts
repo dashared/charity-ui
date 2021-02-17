@@ -15,6 +15,7 @@
 
 import { UserSimpleUser } from './user-simple-user';
 import { UserUser } from './user-user';
+import { UtilsMoneyJson } from './utils-money-json';
 
 /**
  * 
@@ -30,10 +31,10 @@ export interface DonationRequestDonationRequest {
     anonymous?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {UtilsMoneyJson}
      * @memberof DonationRequestDonationRequest
      */
-    approved_amount?: number;
+    approved_amount?: UtilsMoneyJson;
     /**
      * 
      * @type {UserUser}
@@ -78,6 +79,12 @@ export interface DonationRequestDonationRequest {
     message?: string;
     /**
      * 
+     * @type {UtilsMoneyJson}
+     * @memberof DonationRequestDonationRequest
+     */
+    received_amount?: UtilsMoneyJson;
+    /**
+     * 
      * @type {string}
      * @memberof DonationRequestDonationRequest
      */
@@ -90,10 +97,10 @@ export interface DonationRequestDonationRequest {
     request_type?: string;
     /**
      * 
-     * @type {number}
+     * @type {UtilsMoneyJson}
      * @memberof DonationRequestDonationRequest
      */
-    requested_amount?: number;
+    requested_amount?: UtilsMoneyJson;
     /**
      * 
      * @type {string}

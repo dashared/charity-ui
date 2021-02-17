@@ -286,6 +286,52 @@
         }
       }
     },
+    "/api/money/deposit": {
+      "post": {
+        "produces": ["application/json"],
+        "tags": ["Money"],
+        "summary": "Deposit money to user with given ID",
+        "parameters": [
+          {
+            "description": "Deposit",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/blockchain.Deposit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/money/deposit/application": {
+      "post": {
+        "produces": ["application/json"],
+        "tags": ["Money"],
+        "summary": "Donation to an application with a given ID",
+        "parameters": [
+          {
+            "description": "DonateRequestInput",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/blockchain.DonateRequestInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/register": {
       "post": {
         "description": "Register with this route",
@@ -531,7 +577,7 @@
           "type": "boolean"
         },
         "approved_amount": {
-          "type": "integer"
+          "$ref": "#/definitions/utils.MoneyJson"
         },
         "assignee": {
           "$ref": "#/definitions/User.User"
@@ -578,6 +624,9 @@
         "message": {
           "type": "string"
         },
+        "received_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
         "relationship": {
           "type": "string"
         },
@@ -585,7 +634,7 @@
           "type": "string"
         },
         "requested_amount": {
-          "type": "integer"
+          "$ref": "#/definitions/utils.MoneyJson"
         },
         "started_at": {
           "type": "string"
@@ -620,7 +669,7 @@
           "type": "boolean"
         },
         "approved_amount": {
-          "type": "integer"
+          "$ref": "#/definitions/utils.MoneyJson"
         },
         "assignee": {
           "$ref": "#/definitions/User.User"
@@ -643,6 +692,9 @@
         "message": {
           "type": "string"
         },
+        "received_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
         "relationship": {
           "type": "string"
         },
@@ -650,7 +702,7 @@
           "type": "string"
         },
         "requested_amount": {
-          "type": "integer"
+          "$ref": "#/definitions/utils.MoneyJson"
         },
         "started_at": {
           "type": "string"
@@ -776,6 +828,9 @@
         "comment": {
           "type": "string"
         },
+        "password": {
+          "type": "string"
+        },
         "status": {
           "type": "string"
         }
@@ -869,6 +924,47 @@
             "Operator",
             "Admin"
           ]
+        }
+      }
+    },
+    "blockchain.Deposit": {
+      "type": "object",
+      "required": ["amount", "user_id"],
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "user_id": {
+          "type": "string"
+        }
+      }
+    },
+    "blockchain.DonateRequestInput": {
+      "type": "object",
+      "required": ["amount", "application", "password"],
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "application": {
+          "type": "integer"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "utils.MoneyJson": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string"
+        },
+        "denominator": {
+          "type": "integer"
+        },
+        "numerator": {
+          "type": "integer"
         }
       }
     },

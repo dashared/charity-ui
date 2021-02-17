@@ -13,31 +13,26 @@
  */
 
 
+import { UtilsMoneyJson } from './utils-money-json';
 
 /**
  * 
  * @export
- * @interface DonationRequestUpdateInput
+ * @interface BlockchainDeposit
  */
-export interface DonationRequestUpdateInput {
+export interface BlockchainDeposit {
+    /**
+     * 
+     * @type {UtilsMoneyJson}
+     * @memberof BlockchainDeposit
+     */
+    amount: UtilsMoneyJson;
     /**
      * 
      * @type {string}
-     * @memberof DonationRequestUpdateInput
+     * @memberof BlockchainDeposit
      */
-    comment?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DonationRequestUpdateInput
-     */
-    password?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DonationRequestUpdateInput
-     */
-    status?: string;
+    user_id: string;
 }
 
 

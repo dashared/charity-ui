@@ -4,6 +4,7 @@ api.ts
 api/donation-request-api.ts
 api/file-api.ts
 api/login-api.ts
+api/money-api.ts
 api/registration-api.ts
 api/user-api.ts
 base.ts
@@ -15,6 +16,8 @@ models/auth-email-confirmation-input.ts
 models/auth-manager-registration-input.ts
 models/auth-manager-registration-user.ts
 models/auth-registration-input.ts
+models/blockchain-deposit.ts
+models/blockchain-donate-request-input.ts
 models/donation-request-body.ts
 models/donation-request-donation-request.ts
 models/donation-request-history-response.ts
@@ -27,4 +30,5 @@ models/index.ts
 models/user-response.ts
 models/user-simple-user.ts
 models/user-user.ts
+models/utils-money-json.ts
 models/utils-page-data.ts
