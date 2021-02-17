@@ -2,3 +2,4 @@ withSeparateModelsAndApi: true
 apiPackage: "api"
 modelPackage: "models"
 useSingleRequestParameter: true
+sortParamsByRequiredFlag: false

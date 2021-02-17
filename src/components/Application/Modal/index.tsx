@@ -61,6 +61,8 @@ const ModalWithMessage: FC<{
 
         await query(id, input);
 
+        form.resetFields();
+
         notify(t("$views.card.successUpdateStatus"));
       } catch (e) {
         console.error(e);
@@ -80,6 +82,7 @@ const ModalWithMessage: FC<{
       query,
       onClose,
       t,
+      form,
     ],
   );
 

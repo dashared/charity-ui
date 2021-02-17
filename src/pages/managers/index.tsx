@@ -89,7 +89,7 @@ const ManagersPage: FC = () => {
     },
     {
       key: "metric",
-      width: "12%",
+      width: "20%",
       render() {
         return ManagersMetrics();
       },

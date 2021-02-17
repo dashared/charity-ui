@@ -145,7 +145,7 @@ function InnerPaginatedQuery<
     refetch,
     ...Object.values(
       variables
-        ? { ...variables, page: page - 1, size, sort: "" }
+        ? { page: page - 1, size, sort: "", ...variables }
         : { page: page - 1, size, sort: "" },
     ),
   );
@@ -158,6 +158,7 @@ function InnerPaginatedQuery<
   }, [onResult, data]);
 
   if (error) {
+    console.error(error);
     // TODO : make more userfriendly and consice
     return <DisplayResult status="500" title="500" subTitle={t("error")} />;
   }

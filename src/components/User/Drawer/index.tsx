@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Card, Descriptions, Drawer, Empty, Skeleton } from "antd";
-import { FileSearchOutlined } from "@ant-design/icons";
 import { UserApiFactory } from "@generated";
 import { fullName } from "@lib/utils/name";
 import { router } from "@providers";
@@ -33,8 +32,6 @@ const UserPreview: FC<{
         title={t("title")}
         extra={
           <Button
-            type="primary"
-            icon={<FileSearchOutlined />}
             onClick={() =>
               router.navigate({
                 url: router.url({ name: "users:show", params: { id } }),

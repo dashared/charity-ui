@@ -85,7 +85,7 @@ const ApplicationsPage: FC = () => {
       key: "author",
       name: t("author"),
       render(record: Single) {
-        const { first_name, middle_name, last_name } = { ...record.donee };
+        const { first_name, middle_name, last_name } = { ...record.author };
         return cred(first_name, middle_name, last_name);
       },
     },

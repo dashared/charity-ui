@@ -105,6 +105,8 @@ export const LogsTab = React.forwardRef<RefType, PropsType>((props, ref) => {
   return (
     <PaginatedQuery<{ id: number; page: number; size: number }, Result, Single>
       className={styles.pagination}
+      // eslint-disable-next-line
+      // @ts-ignore
       requestQuery={DonationRequestFactory.apiDonationRequestIdHistoryGet}
       stateRef={paginationState}
       refetch={refetch}

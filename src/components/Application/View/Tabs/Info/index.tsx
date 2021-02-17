@@ -82,10 +82,9 @@ export const GeneralInfo: FC<{
   }, [updateInfo, info]);
 
   const onSave = useCallback(async () => {
-    console.log(initialInfo);
     // TODO: api call
     onRefetch();
-  }, [onRefetch, initialInfo]);
+  }, [onRefetch]);
 
   const { t } = useTranslation("Application");
 
@@ -131,9 +130,9 @@ export const GeneralInfo: FC<{
         <Descriptions.Item label={t("$views.card.createdBy")}>
           <a onClick={() => setVisible(true)}>
             {cred(
-              info.donee?.first_name,
-              info.donee?.middle_name,
-              info.donee?.last_name,
+              info.author?.first_name,
+              info.author?.middle_name,
+              info.author?.last_name,
             )}
           </a>
         </Descriptions.Item>
