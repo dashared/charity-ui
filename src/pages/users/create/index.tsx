@@ -59,6 +59,14 @@ const UserRegisterPage: FC = () => {
       <Card>
         <Form {...formLayout} form={form} name="control-hooks" onFinish={onAdd}>
           <Form.Item
+            name={["user", "last_name"]}
+            label={t("$views.register.last_name")}
+            rules={[{ required: true, message: t("$views.message.last_name") }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
             name={["user", "first_name"]}
             label={t("$views.register.name")}
             rules={[
@@ -71,14 +79,6 @@ const UserRegisterPage: FC = () => {
           <Form.Item
             name={["user", "middle_name"]}
             label={t("$views.register.middle_name")}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name={["user", "last_name"]}
-            label={t("$views.register.last_name")}
-            rules={[{ required: true, message: t("$views.message.last_name") }]}
           >
             <Input />
           </Form.Item>

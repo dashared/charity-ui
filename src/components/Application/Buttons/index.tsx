@@ -15,12 +15,6 @@ import ModalWithMessage from "components/Application/Modal";
 import { startProcessing, stopProcessing } from "./Processing";
 import { requireConfirmation } from "./RequireConfirmation";
 
-export { startProcessing, stopProcessing } from "./Processing";
-
-export { SpamButton } from "./Spam";
-
-export { requireConfirmation } from "./RequireConfirmation";
-
 type ApplicationButtonsProps = {
   currentStatus: ApplicationStatus;
   applicationId: number;
@@ -48,8 +42,6 @@ const ActionButtons: FC<ApplicationButtonsProps> = (props) => {
   );
 
   const menu = [];
-
-  console.log(props.availiableStatuses);
 
   for (const ind in props.availiableStatuses) {
     const status = props.availiableStatuses[ind];

@@ -1,6 +1,5 @@
 import React, { FC, useRef } from "react";
 import { Button } from "antd";
-import { UserAddOutlined } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
 import { UserResponse as Result, UserUser as Single } from "@generated";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
@@ -23,8 +22,6 @@ const Actions: FC = () => {
 
   return (
     <Button
-      type="primary"
-      icon={<UserAddOutlined />}
       onClick={() => {
         router.navigate({ url: router.url({ name: "users:create" }) });
       }}
@@ -49,11 +46,11 @@ const UsersPage: FC = () => {
   const columns = [
     {
       key: "id",
-      width: "40%",
+      width: "12%",
       render(record: Single) {
         return (
           <Link params={{ id: record.id }} name="users:show">
-            {record.id}
+            {record.id?.substr(0, 7)}...
           </Link>
         );
       },
@@ -71,7 +68,15 @@ const UsersPage: FC = () => {
     },
 
     {
+      key: "email",
+      render(record: Single) {
+        return record.email;
+      },
+    },
+
+    {
       key: "createdAt",
+      width: "20%",
       render(record: Single) {
         return format(record.created_at);
       },

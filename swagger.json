@@ -54,6 +54,12 @@
             "in": "query"
           },
           {
+            "type": "string",
+            "description": "sort",
+            "name": "sort",
+            "in": "query"
+          },
+          {
             "type": "array",
             "items": {
               "type": "string"
@@ -138,12 +144,6 @@
         "parameters": [
           {
             "type": "integer",
-            "description": "donation request id",
-            "name": "id",
-            "in": "path"
-          },
-          {
-            "type": "integer",
             "description": "Page number",
             "name": "page",
             "in": "query"
@@ -159,6 +159,12 @@
             "description": "sort",
             "name": "sort",
             "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "donation request id",
+            "name": "id",
+            "in": "path"
           }
         ],
         "responses": {
