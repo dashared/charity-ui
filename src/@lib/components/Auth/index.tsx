@@ -52,7 +52,7 @@ class Auth extends Component {
   initiateLogin = (credentials: Credentials): void => {
     LoginFactory.apiLoginPost(credentials)
       .then((r) => {
-        const headerData = this.parseHeader(r.headers.http_auth);
+        const headerData = this.parseHeader(r.headers.authorization);
 
         this.handleAuthentication(headerData); // TODO: replace
       })
@@ -133,7 +133,9 @@ class Auth extends Component {
       logout: this.logout,
     };
 
-    axios.defaults.headers.common = { Http_auth: `${this.state.accessToken}` };
+    axios.defaults.headers.common = {
+      Authorization: `${this.state.accessToken}`,
+    };
 
     return (
       <AuthProvider value={authProviderValue}>
