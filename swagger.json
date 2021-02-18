@@ -424,6 +424,15 @@
             "description": "sort",
             "name": "sort",
             "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "User role",
+            "name": "role",
+            "in": "query"
           }
         ],
         "responses": {
@@ -825,6 +834,9 @@
     "DonationRequest.UpdateInput": {
       "type": "object",
       "properties": {
+        "assignee_id": {
+          "type": "string"
+        },
         "comment": {
           "type": "string"
         },

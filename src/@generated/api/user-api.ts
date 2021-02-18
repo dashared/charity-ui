@@ -34,10 +34,11 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {number} [page] Page number
          * @param {number} [size] Page size
          * @param {string} [sort] sort
+         * @param {Array<string>} [role] User role
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiUserGet: async (page?: number, size?: number, sort?: string, options: any = {}): Promise<RequestArgs> => {
+        apiUserGet: async (page?: number, size?: number, sort?: string, role?: Array<string>, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/user`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -60,6 +61,10 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (sort !== undefined) {
                 localVarQueryParameter['sort'] = sort;
+            }
+
+            if (role) {
+                localVarQueryParameter['role'] = role.join(COLLECTION_FORMATS.csv);
             }
 
 
@@ -138,11 +143,12 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {number} [page] Page number
          * @param {number} [size] Page size
          * @param {string} [sort] sort
+         * @param {Array<string>} [role] User role
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiUserGet(page?: number, size?: number, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponse>> {
-            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).apiUserGet(page, size, sort, options);
+        async apiUserGet(page?: number, size?: number, sort?: string, role?: Array<string>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponse>> {
+            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).apiUserGet(page, size, sort, role, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -177,11 +183,12 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {number} [page] Page number
          * @param {number} [size] Page size
          * @param {string} [sort] sort
+         * @param {Array<string>} [role] User role
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiUserGet(page?: number, size?: number, sort?: string, options?: any): AxiosPromise<UserResponse> {
-            return UserApiFp(configuration).apiUserGet(page, size, sort, options).then((request) => request(axios, basePath));
+        apiUserGet(page?: number, size?: number, sort?: string, role?: Array<string>, options?: any): AxiosPromise<UserResponse> {
+            return UserApiFp(configuration).apiUserGet(page, size, sort, role, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -222,6 +229,13 @@ export interface UserApiApiUserGetRequest {
      * @memberof UserApiApiUserGet
      */
     readonly sort?: string
+
+    /**
+     * User role
+     * @type {Array<string>}
+     * @memberof UserApiApiUserGet
+     */
+    readonly role?: Array<string>
 }
 
 /**
@@ -254,7 +268,7 @@ export class UserApi extends BaseAPI {
      * @memberof UserApi
      */
     public apiUserGet(requestParameters: UserApiApiUserGetRequest = {}, options?: any) {
-        return UserApiFp(this.configuration).apiUserGet(requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
+        return UserApiFp(this.configuration).apiUserGet(requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.role, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
