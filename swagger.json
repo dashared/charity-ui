@@ -427,6 +427,7 @@
           },
           {
             "type": "array",
+            "collectionFormat": "multi",
             "items": {
               "type": "string"
             },

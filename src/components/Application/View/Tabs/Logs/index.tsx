@@ -95,7 +95,6 @@ export const LogsTab = React.forwardRef<RefType, PropsType>((props, ref) => {
 
     {
       key: "authorUpd",
-      name: t("authorUpd"),
       render(record: Single) {
         return record.author_id;
       },
