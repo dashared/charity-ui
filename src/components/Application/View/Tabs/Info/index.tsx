@@ -2,15 +2,17 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import { Button, DatePicker, Descriptions, Input, Select, Space } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
-import { DonationRequestBody as Single } from "@generated";
+import { DonationRequestBody as Single, UserUser } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { format } from "@lib/utils/date";
-import { cred } from "@lib/utils/name";
+import { cred, fullName } from "@lib/utils/name";
 import { useTranslation } from "@providers";
+import { UserApiRole } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
 import moment from "moment";
 
 import StatusTag from "components/Application/Status/tag";
+import RoleTag from "components/User/Role/tag";
 
 import UserPreview from "../../../../User/Drawer";
 
@@ -32,7 +34,7 @@ const Actions: FC<{
     <Space>
       {!editable && (
         <Button icon={<EditOutlined />} onClick={onEdit}>
-          {t("Button.edit")}
+          {t("translation:edit")}
         </Button>
       )}
 
@@ -52,7 +54,7 @@ type EditableInfo = {
   description?: string;
   approvedAmount?: number;
   endTime?: string;
-  assignee?: string;
+  assignee?: UserUser;
 };
 
 export const GeneralInfo: FC<{
@@ -68,7 +70,7 @@ export const GeneralInfo: FC<{
     description: info.description,
     approvedAmount: info.approved_amount?.numerator,
     endTime: undefined,
-    assignee: info.assignee?.id,
+    assignee: info.assignee,
   });
 
   useEffect(() => {
@@ -77,7 +79,7 @@ export const GeneralInfo: FC<{
       description: info.description,
       approvedAmount: info.approved_amount?.numerator,
       endTime: undefined,
-      assignee: info.assignee?.id,
+      assignee: info.assignee,
     });
   }, [updateInfo, info]);
 
@@ -185,23 +187,36 @@ export const GeneralInfo: FC<{
         </Descriptions.Item>
 
         <Descriptions.Item label={t("$views.card.assignee")}>
-          {!editable && <Link>{initialInfo.assignee}</Link>}
+          {!editable && initialInfo.assignee && (
+            <>
+              <Link name="users:show" params={{ id: initialInfo.assignee.id }}>
+                {fullName(
+                  initialInfo.assignee?.first_name,
+                  initialInfo.assignee?.middle_name,
+                  initialInfo.assignee?.last_name,
+                )}
+              </Link>{" "}
+              <RoleTag
+                roles={[initialInfo.assignee?.role ?? UserApiRole.Admin]}
+              />
+            </>
+          )}
           {editable && (
             <Select
               style={{ width: "100%" }}
               showSearch
-              defaultValue={initialInfo.assignee}
+              defaultValue={initialInfo.assignee?.first_name}
               placeholder={t("$views.assignee")}
               defaultActiveFirstOption={false}
               showArrow={false}
               filterOption={false}
               // onSearch={this.handleSearch}
-              onSelect={(value) => {
-                updateInfo({
-                  ...initialInfo,
-                  assignee: value,
-                });
-              }}
+              // onSelect={(value) => {
+              //   updateInfo({
+              //     ...initialInfo,
+              //     assignee: value,
+              //   });
+              // }}
               //notFoundContent={null}
             ></Select>
           )}

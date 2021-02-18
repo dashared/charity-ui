@@ -67,8 +67,8 @@ const ApplicationView = React.forwardRef<RefType, PropsType>((props, ref) => {
           key="donee"
         >
           <DoneeInfoTab
-            applicantId={donation.assignee?.id}
-            donee={donation.donee}
+            applicantId={donation.author?.id}
+            donee={donation.donee ?? donation.author}
             relationship={donation.relationship}
           />
         </TabPane>

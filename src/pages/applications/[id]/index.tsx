@@ -7,7 +7,7 @@ import { AuthConsumer } from "@providers/authContext";
 import useAxios, { DonationRequestFactory } from "@providers/axios";
 import Redirect from "pages/_redirect";
 
-import ActionButtons from "components/Application/Buttons";
+import { ChangeButton } from "components/Application/ActionForm";
 import ApplicationView from "components/Application/View";
 
 const Actions: FC<{
@@ -15,8 +15,14 @@ const Actions: FC<{
   applicationId: number;
   availiableStatuses: ApplicationStatus[];
   onRefetch: () => Promise<void>;
-}> = (props) => {
-  return <ActionButtons {...props} />;
+}> = ({ availiableStatuses, applicationId, onRefetch }) => {
+  return (
+    <ChangeButton
+      id={applicationId}
+      refetch={onRefetch}
+      availiableStatuses={availiableStatuses}
+    />
+  );
 };
 
 type RefType = {

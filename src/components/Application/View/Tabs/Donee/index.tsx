@@ -52,7 +52,7 @@ function doneeTitle(
     );
   } else {
     return (
-      <Link name="user:show" params={{ id: applicantId }}>
+      <Link name="users:show" params={{ id: applicantId }}>
         {fullName(donee?.first_name, donee?.middle_name, donee?.last_name)}
       </Link>
     );

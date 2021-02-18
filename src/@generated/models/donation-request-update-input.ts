@@ -25,6 +25,12 @@ export interface DonationRequestUpdateInput {
      * @type {string}
      * @memberof DonationRequestUpdateInput
      */
+    assignee_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestUpdateInput
+     */
     comment?: string;
     /**
      * 

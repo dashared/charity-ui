@@ -1,26 +1,23 @@
 # ui
 
-Сначала установи yarn.
+Сначала установи yarn (версия 15.5..., не ниже 15).
 
 ## Docker
 
-Так как пока нет образа на `gitregistry.infostrategic.com/hsecharity`, то я собирала ручками вот так:
+1. Клонируешь к себе dbBuild репозиторий
+2. Комментируешь строчку в docker-compose.yaml с ui контейнером
 
-```
-> docker build . -t ui:latest
-```
-
-Именно `ui:latest` image используется в docker-compose.yml. Добавила туда также пока api, db, seeds, не добавляла Илью.
-
-Все контейнеры запускает
+up
 
 ```
 > docker-compose up
 ```
 
-WARN: Почему-то не накатываются seeds.
+down
 
-Осталось: присоединить Илью и проверить CI.
+```
+> docker-compose down --remove-orphans -v
+```
 
 ## Разработка
 
@@ -38,10 +35,14 @@ React, Redux, Typescript, ESLint, Prettier
 
 Конфиги находятся в `openapitools.json`, `swagger.json` и `config.yaml`.
 
+☢️ Будь осторожна с `@generated/base.ts` - там затирается `BASE_PATH` при каждой кодогенерации, приходится возвращать назад.
+
+Также могут быть ошибки компиляции в `@generated` - решается аннотациями `// @ts-ignore`. Работают только на следующую строчку.
+
 Для кодогенерации запусти
 
 ### `yarn codegen`
 
-Перед каждым коммитом (пушем) прогони кодстайл (git pre-commit hooks почему-то плохо справляются с этим)
+Перед каждым коммитом (пушем) прогони кодстайл (git pre-commit hooks почему-то плохо справляются с этим).
 
 ### `yarn fix`

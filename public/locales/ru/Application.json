@@ -4,6 +4,8 @@
   "listTitle": "Заявки",
   "id": "№",
   "title": "Название",
+  "assignee": "Менеджер",
+  "comment": "Комментарий",
   "file": "Файл",
   "downloadDate": "Дата, время загрузки",
   "status": "Статус",
@@ -16,6 +18,8 @@
   "authorUpd": "Автор изменения",
   "createPageTitle": "Создание заявки",
   "$views": {
+    "updateStatus": "Успешно обновлен статус заявки!",
+    "select_assignee": "Выберите менеджера",
     "title": "Заявка № {{ id }} {{ title }}",
     "createApplication": "Создать",
     "createPage": {
@@ -72,7 +76,8 @@
     },
     "buttons": {
       "actions": {
-        "title": "Действия с заявкой"
+        "title": "Действия с заявкой",
+        "formTitle": "Изменения статуса заявки"
       },
       "inProcessing": "Взять в обработку",
       "spam": "Спам",
