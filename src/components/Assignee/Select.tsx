@@ -48,7 +48,7 @@ const AssigneeSelect: FC<BaseSelectProps & SingleSelectProps> = ({
   const { data, loading } = useAxios(
     UserRequestFactory.apiUserGet,
     false,
-    1,
+    0,
     10,
     "",
     Variables[status ?? Status.Spam],
