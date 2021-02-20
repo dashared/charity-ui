@@ -11,6 +11,7 @@ import {
 } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
 import axios from "axios";
+import createAuthRefreshInterceptor from "axios-auth-refresh";
 
 export type HeaderData = {
   user_id: string;
@@ -103,6 +104,20 @@ class Auth extends Component {
     localStorage.setItem("accessToken", token);
   }
 
+  // Function that will be called to refresh authorization
+  // eslint-disable-next-line
+  refreshAuthLogic = (failedRequest: any) =>
+    LoginFactory.apiLoginRefreshPost().then((tokenRefreshResponse) => {
+      const headerData = this.parseHeader(
+        tokenRefreshResponse.headers.authorization,
+      );
+
+      this.handleAuthentication(headerData);
+      failedRequest.response.config.headers["Authorization"] =
+        tokenRefreshResponse.headers.authorization;
+      return Promise.resolve();
+    });
+
   setSession(headerData: HeaderData, user: UserApiModel): void {
     const role = mapRole(headerData.role); // TODO: remove
 
@@ -132,6 +147,9 @@ class Auth extends Component {
       handleAuthentication: this.handleAuthentication,
       logout: this.logout,
     };
+
+    // Instantiate the interceptor (you can chain it as it returns the axios instance)
+    createAuthRefreshInterceptor(axios, this.refreshAuthLogic);
 
     axios.defaults.headers.common = {
       Authorization: `${this.state.accessToken}`,
