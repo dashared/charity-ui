@@ -48,7 +48,6 @@
     "@reduxjs/toolkit": "^1.4.0",
     "antd": "^4.6.5",
     "axios": "^0.21.0",
-    "axios-auth-refresh": "^3.1.0",
     "classnames": "^2.2.6",
     "date-fns": "^2.16.1",
     "enquire-js": "^0.1.0",

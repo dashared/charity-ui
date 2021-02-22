@@ -130,8 +130,6 @@ function InnerPaginatedQuery<
   const [page, onCurrentChange] = useState(initialPage);
   const [size, onPageSizeChange] = useState(initialSize);
 
-  console.log(page, size);
-
   // save state above if needed
   useEffect(() => {
     if (stateRef !== undefined) {

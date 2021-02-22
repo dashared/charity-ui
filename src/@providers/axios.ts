@@ -28,8 +28,6 @@ export default function useAxios<R>(
   const [data, setData] = useState<R | undefined>(undefined);
   const [error, setError] = useState<string | undefined>(undefined);
 
-  console.log(JSON.stringify(variables));
-
   // Turn objects into strings for useCallback & useEffect dependencies
   const [stringifiedUrl, stringifiedInit] = [
     JSON.stringify(variables),
@@ -47,7 +45,7 @@ export default function useAxios<R>(
       }
     } catch (e) {
       console.log(e);
-      setError(e.message);
+      setError(e?.message);
     }
   };
 

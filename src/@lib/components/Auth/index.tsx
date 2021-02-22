@@ -11,12 +11,11 @@ import {
 } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
 import axios from "axios";
-import createAuthRefreshInterceptor from "axios-auth-refresh";
 
 export type HeaderData = {
   user_id: string;
   role: UserApiRole;
-  expires: number;
+  exp: number;
   token: string;
 };
 
@@ -48,6 +47,7 @@ class Auth extends Component {
       surname: localStorage.getItem("surname") ?? "",
     },
     accessToken: localStorage.getItem("accessToken") ?? "",
+    expires: parseInt(localStorage.getItem("exp") ?? "0"),
   };
 
   initiateLogin = (credentials: Credentials): void => {
@@ -72,6 +72,7 @@ class Auth extends Component {
         role: Role.visitor,
       },
       accessToken: "",
+      expires: undefined,
     });
   };
 
@@ -95,28 +96,31 @@ class Auth extends Component {
   }
 
   // Important data to save in LocalStorage
-  saveToLocalStorage(role: Role, user: UserApiModel, token: string): void {
+  saveToLocalStorage(
+    role: Role,
+    user: UserApiModel,
+    exp: number,
+    token: string,
+  ): void {
     localStorage.setItem("authenticated", "true");
     localStorage.setItem("role", role);
     localStorage.setItem("uuid", user.id ?? "");
     localStorage.setItem("name", user.first_name ?? "");
     localStorage.setItem("surname", user.last_name ?? "");
     localStorage.setItem("accessToken", token);
+    localStorage.setItem("exp", exp.toString());
   }
 
   // Function that will be called to refresh authorization
   // eslint-disable-next-line
-  refreshAuthLogic = (failedRequest: any) =>
-    LoginFactory.apiLoginRefreshPost().then((tokenRefreshResponse) => {
-      const headerData = this.parseHeader(
-        tokenRefreshResponse.headers.authorization,
-      );
-
-      this.handleAuthentication(headerData);
-      failedRequest.response.config.headers["Authorization"] =
-        tokenRefreshResponse.headers.authorization;
-      return Promise.resolve();
-    });
+  refreshAuthLogic = async (): Promise<HeaderData | undefined> =>
+    LoginFactory.apiLoginRefreshPost()
+      .then((r) => {
+        return this.parseHeader(r.headers.authorization);
+      })
+      .catch(() => {
+        return undefined;
+      });
 
   setSession(headerData: HeaderData, user: UserApiModel): void {
     const role = mapRole(headerData.role); // TODO: remove
@@ -126,7 +130,7 @@ class Auth extends Component {
       return;
     }
 
-    this.saveToLocalStorage(role, user, headerData.token);
+    this.saveToLocalStorage(role, user, headerData.exp, headerData.token);
 
     this.setState({
       authenticated: true,
@@ -137,6 +141,7 @@ class Auth extends Component {
         surname: user.last_name,
       },
       accessToken: headerData.token,
+      expires: headerData.exp,
     });
   }
 
@@ -148,8 +153,100 @@ class Auth extends Component {
       logout: this.logout,
     };
 
-    // Instantiate the interceptor (you can chain it as it returns the axios instance)
-    createAuthRefreshInterceptor(axios, this.refreshAuthLogic);
+    // Add a request interceptor
+    axios.interceptors.response.use(
+      async (response) => {
+        const originalResponce = response.config;
+
+        if (
+          originalResponce.url ===
+          `${process.env.REACT_APP_API_URL}/api/login/refresh`
+        ) {
+          return response;
+        }
+
+        const exp = parseInt(localStorage.getItem("exp") ?? "");
+
+        if (exp && new Date(exp * 1000) < new Date()) {
+          const headerData = await this.refreshAuthLogic();
+
+          if (!headerData) {
+            this.logout();
+            return Promise.reject();
+          }
+
+          const { token, exp: expires } = headerData;
+
+          localStorage.setItem("accessToken", token);
+          localStorage.setItem("exp", expires.toString());
+
+          axios.defaults.headers.common = {
+            Authorization: token,
+          };
+
+          return axios(originalResponce);
+        }
+
+        return response;
+      },
+      async (error) => {
+        const originalRequest = error.config;
+
+        if (
+          originalRequest.url ===
+          `${process.env.REACT_APP_API_URL}/api/login/refresh`
+        ) {
+          return Promise.reject(error);
+        }
+
+        const exp = parseInt(localStorage.getItem("exp") ?? "");
+
+        if (exp && new Date(exp * 1000) < new Date()) {
+          const headerData = await this.refreshAuthLogic();
+
+          if (!headerData) {
+            this.logout();
+            return Promise.reject(error);
+          }
+
+          const { token, exp: expired } = headerData;
+
+          localStorage.setItem("accessToken", token);
+          localStorage.setItem("exp", expired.toString());
+
+          axios.defaults.headers.common = {
+            Authorization: token,
+          };
+
+          return axios(originalRequest);
+        }
+
+        return Promise.reject(error);
+      },
+    );
+
+    axios.interceptors.request.use(
+      (config) => {
+        const token = localStorage.getItem("accessToken");
+        if (token) {
+          config.headers = {
+            Authorization: token,
+          };
+        }
+
+        console.log(
+          config.url,
+          config.headers.Authorization?.substr(
+            config.headers.Authorization?.length - 10,
+          ),
+        );
+
+        return config;
+      },
+      (error) => {
+        Promise.reject(error);
+      },
+    );
 
     axios.defaults.headers.common = {
       Authorization: `${this.state.accessToken}`,
