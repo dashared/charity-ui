@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Card,
@@ -12,17 +12,22 @@ import {
   Tag,
 } from "antd";
 import { Link } from "@curi/react-dom";
+import { BlockchainDonation, DonationRequestBodyStatusEnum } from "@generated";
+import { formatMoney } from "@lib/utils";
 import { cred } from "@lib/utils/name";
-import { IdComponent } from "@typings/component";
 
-import StatusTag, {
-  ApplicationStatus,
-} from "components/Application/Status/tag";
+import StatusTag from "components/Application/Status/tag";
 
 const { Step } = Steps;
 
-const TransactionView: IdComponent = () => {
+const TransactionView: FC<{ transaction: BlockchainDonation }> = ({
+  transaction,
+}) => {
   const { t } = useTranslation("Transaction");
+
+  const author = transaction.donation_author;
+  const application = transaction.donation_request;
+
   return (
     <>
       <Card>
@@ -85,24 +90,35 @@ const TransactionView: IdComponent = () => {
           column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
         >
           <Descriptions.Item label={t("who")}>
-            <Link params={{ id: 1 }} name="users:show">
-              {cred("Алексеев", "Алексеев", "Алексеев")}
+            <Link
+              params={{ id: transaction.donation_request?.id }}
+              name="users:show"
+            >
+              {cred(author?.first_name, author?.middle_name, author?.last_name)}
             </Link>
           </Descriptions.Item>
           <Descriptions.Item label={t("whom")}>
             <Link params={{ id: 1 }} name="users:show">
-              {cred("Иванов", "Иванов", "Иванов")}
+              {cred(
+                application?.donee?.first_name,
+                application?.donee?.middle_name,
+                application?.donee?.last_name,
+              )}
             </Link>
           </Descriptions.Item>
           <Descriptions.Item label={t("application_status")}>
-            <StatusTag status={ApplicationStatus.Active} />
+            <StatusTag
+              status={
+                (application?.status as unknown) as DonationRequestBodyStatusEnum
+              }
+            />
           </Descriptions.Item>
-          <Descriptions.Item label={t("sum")}>$80.00</Descriptions.Item>
-          <Descriptions.Item label={t("comission")}>$20.00</Descriptions.Item>
-          <Descriptions.Item label={t("total")}>$60.00</Descriptions.Item>
+          <Descriptions.Item label={t("sum")}>
+            {formatMoney(transaction.amount)}
+          </Descriptions.Item>
           <Descriptions.Item label={t("aim")}>
-            <Link name="applications:show" params={{ id: 1 }}>
-              Помогите Васе
+            <Link name="applications:show" params={{ id: application?.id }}>
+              {application?.title}
             </Link>
           </Descriptions.Item>
           <Descriptions.Item label={t("anon")}>

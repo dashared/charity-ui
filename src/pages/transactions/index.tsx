@@ -1,51 +1,51 @@
 import React, { FC, useRef } from "react";
-import { Button } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { Link } from "@curi/react-dom";
 import {
-  DonationRequestBody as Single,
-  DonationRequestResponse as Result,
+  BlockchainDonation as Single,
+  BlockchainDonationsResponse as Result,
+  DonationRequestBodyStatusEnum,
 } from "@generated"; // TODO: replace to TransactionRequestBody
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useListSelection } from "@lib/hooks";
-import { format } from "@lib/utils/date";
+import { formatDate, formatMoney } from "@lib/utils";
 import { cred } from "@lib/utils/name";
 import { router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
-import { DonationRequestFactory } from "@providers/axios";
+import { DonationsFactory } from "@providers/axios";
 import Redirect from "pages/_redirect";
 
-import StatusTag, {
-  TransactionStatus,
-} from "components/Transaction/Status/tag";
+// import { Button } from "antd";
+// import { PlusOutlined } from "@ant-design/icons";
+import StatusTag from "components/Application/Status/tag";
 
 import styles from "./styles.module.less";
 
 const Actions: FC = () => {
-  const { t } = useTranslation("Transaction");
+  //const { t } = useTranslation("Transaction");
 
   return (
-    <Button
-      type="primary"
-      icon={<PlusOutlined />}
-      onClick={() => {
-        router.navigate({ url: router.url({ name: "transactions:create" }) });
-      }}
-    >
-      {t("createTransaction")}
-    </Button>
+    // <Button
+    //   type="primary"
+    //   icon={<PlusOutlined />}
+    //   onClick={() => {
+    //     router.navigate({ url: router.url({ name: "transactions:create" }) });
+    //   }}
+    // >
+    //   {t("createTransaction")}
+    // </Button>
+    <></>
   );
 };
 
 const TransactionsPage: FC = () => {
-  const {
-    isTarget,
-    isSelected,
-    onElementClick,
-    setList,
-  } = useListSelection<Single>();
+  const { isTarget, isSelected, setList } = useListSelection<Single>();
+
+  const onElementClick = (id: string): void => {
+    router.navigate({
+      url: router.url({ name: "transactions:show", params: { id } }),
+    });
+  };
 
   const paginationState = useRef<StateRef>(null);
 
@@ -53,50 +53,58 @@ const TransactionsPage: FC = () => {
 
   const columns = [
     {
-      key: "id",
-      render(record: Single) {
-        return (
-          <Link params={{ id: record.id }} name="transactions:show">
-            {record.id}
-          </Link>
-        );
-      },
-    },
-    {
       key: "sum",
-      render() {
-        return "1000 $";
+      render(record: Single) {
+        return formatMoney(record.amount);
       },
     },
     {
       key: "who",
-      render() {
-        return cred("Алексей", "Юрьевич", "Андреев");
+      render(record: Single) {
+        if (!record.donation_author) {
+          return <>-</>;
+        }
+        const { first_name, middle_name, last_name } = record.donation_author;
+        return cred(first_name, middle_name, last_name);
       },
     },
     {
       key: "aim",
-      render() {
+      render(record: Single) {
         return (
-          // TODO: replace after transactions api is done
-          <Link params={{ id: 1 }} name="applications:show">
-            Заявка
-          </Link>
+          <>
+            <span>{record.donation_request?.title}</span>
+            {"  "}
+          </>
+        );
+      },
+    },
+    {
+      key: "status",
+      title: "",
+      render(record: Single) {
+        return (
+          <StatusTag
+            status={
+              (record.donation_request
+                ?.status as unknown) as DonationRequestBodyStatusEnum
+            }
+          />
         );
       },
     },
 
-    {
-      key: "status",
-      render() {
-        return <StatusTag status={TransactionStatus.Success} />;
-      },
-    },
+    // {
+    //   key: "status",
+    //   render() {
+    //     return <StatusTag status={TransactionStatus.Success} />;
+    //   },
+    // },
 
     {
-      key: "time",
+      key: "createdAt",
       render(record: Single) {
-        return format(record.until);
+        return formatDate(record.created_at);
       },
     },
   ];
@@ -106,7 +114,7 @@ const TransactionsPage: FC = () => {
     <Workspace noRefresh title={t("title")} actions={<Actions />}>
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
-        requestQuery={DonationRequestFactory.apiDonationRequestGet}
+        requestQuery={DonationsFactory.apiDonationsGet}
         stateRef={paginationState}
         onResult={(result) => {
           setList(result.data ?? []);
@@ -123,7 +131,7 @@ const TransactionsPage: FC = () => {
             })}
             onRecordClick={(event, record, index) => {
               if (index !== undefined) {
-                onElementClick(event, index);
+                onElementClick(record.id);
               }
             }}
           />

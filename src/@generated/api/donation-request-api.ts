@@ -41,7 +41,7 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
      * @summary Retrieves all donation requests
      * @param {number} [page] Page number
      * @param {number} [size] Page size
-     * @param {string} [sort] sort
+     * @param {string} [sort] Sort param
      * @param {Array<string>} [author] request author id
      * @param {Array<string>} [assignee] request assignee id
      * @param {Array<string>} [status] request status
@@ -76,19 +76,19 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
       }
 
       if (author) {
-        localVarQueryParameter['author'] = author.join(COLLECTION_FORMATS.csv);
+        localVarQueryParameter['author'] = author;
       }
 
       if (assignee) {
-        localVarQueryParameter['assignee'] = assignee.join(COLLECTION_FORMATS.csv);
+        localVarQueryParameter['assignee'] = assignee;
       }
 
       if (status) {
-        localVarQueryParameter['status'] = status.join(COLLECTION_FORMATS.csv);
+        localVarQueryParameter['status'] = status;
       }
 
       if (type) {
-        localVarQueryParameter['type'] = type.join(COLLECTION_FORMATS.csv);
+        localVarQueryParameter['type'] = type;
       }
 
       if (searchString !== undefined) {
@@ -376,7 +376,7 @@ export const DonationRequestApiFp = function (configuration?: Configuration) {
      * @summary Retrieves all donation requests
      * @param {number} [page] Page number
      * @param {number} [size] Page size
-     * @param {string} [sort] sort
+     * @param {string} [sort] Sort param
      * @param {Array<string>} [author] request author id
      * @param {Array<string>} [assignee] request assignee id
      * @param {Array<string>} [status] request status
@@ -481,7 +481,7 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
      * @summary Retrieves all donation requests
      * @param {number} [page] Page number
      * @param {number} [size] Page size
-     * @param {string} [sort] sort
+     * @param {string} [sort] Sort param
      * @param {Array<string>} [author] request author id
      * @param {Array<string>} [assignee] request assignee id
      * @param {Array<string>} [status] request status
@@ -572,7 +572,7 @@ export interface DonationRequestApiApiDonationRequestGetRequest {
   readonly size?: number
 
   /**
-   * sort
+   * Sort param
    * @type {string}
    * @memberof DonationRequestApiApiDonationRequestGet
    */

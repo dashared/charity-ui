@@ -31,9 +31,9 @@ function getColor(level: DonationRequestBodyStatusEnum): TagProps["color"] {
   }
 }
 
-const StatusTag: FC<{ status?: DonationRequestBodyStatusEnum | null }> = ({
-  status,
-}) => {
+const StatusTag: FC<{
+  status?: DonationRequestBodyStatusEnum | null | undefined;
+}> = ({ status }) => {
   const { t } = useTranslation("Application");
 
   if (!status) {
