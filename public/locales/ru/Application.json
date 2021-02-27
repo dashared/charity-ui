@@ -16,6 +16,7 @@
   "newStatus": "Новый статус",
   "statusUpdData": "Дата изменения",
   "authorUpd": "Автор изменения",
+  "authorRole": "Роль автора изменения",
   "createPageTitle": "Создание заявки",
   "$views": {
     "updateStatus": "Успешно обновлен статус заявки!",

@@ -1,5 +1,4 @@
 import React, { FC, useRef } from "react";
-import { Avatar } from "antd";
 import { CheckOutlined, SyncOutlined } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
 import { UserResponse as Result, UserUser as Single } from "@generated";
@@ -51,18 +50,18 @@ const ManagersPage: FC = () => {
   const { t } = useTranslation("Manager");
 
   const columns = [
-    {
-      key: "photo",
-      title: "",
-      width: "6%",
-      render(record: Single) {
-        return (
-          <Avatar style={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
-            {record?.role?.substr(0, 1)}
-          </Avatar>
-        );
-      },
-    },
+    // {
+    //   key: "photo",
+    //   title: "",
+    //   width: "6%",
+    //   render(record: Single) {
+    //     return (
+    //       <Avatar style={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
+    //         {record?.role?.substr(0, 1)}
+    //       </Avatar>
+    //     );
+    //   },
+    // },
     {
       key: "name",
       width: "25%",

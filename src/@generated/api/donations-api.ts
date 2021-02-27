@@ -19,27 +19,28 @@ import { Configuration } from '../configuration';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { UserResponse } from '../models';
+import { BlockchainDonation } from '../models';
 // @ts-ignore
-import { UserUser } from '../models';
+import { BlockchainDonationsResponse } from '../models';
 /**
- * UserApi - axios parameter creator
+ * DonationsApi - axios parameter creator
  * @export
  */
-export const UserApiAxiosParamCreator = function (configuration?: Configuration) {
+export const DonationsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary GetAllUsers
+         * @summary Retrieves a list of donations
          * @param {number} [page] Page number
          * @param {number} [size] Page size
-         * @param {string} [sort] sort
-         * @param {Array<string>} [role] User role
+         * @param {string} [sort] Sort param
+         * @param {string} [user] Only for manager
+         * @param {string} [application] User can access only his donations
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiUserGet: async (page?: number, size?: number, sort?: string, role?: Array<string>, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/user`;
+        apiDonationsGet: async (page?: number, size?: number, sort?: string, user?: string, application?: string, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/donations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -63,8 +64,12 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarQueryParameter['sort'] = sort;
             }
 
-            if (role) {
-                localVarQueryParameter['role'] = role;
+            if (user !== undefined) {
+                localVarQueryParameter['user'] = user;
+            }
+
+            if (application !== undefined) {
+                localVarQueryParameter['application'] = application;
             }
 
 
@@ -87,17 +92,17 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @summary Retrieves user based on given ID
-         * @param {string} id User ID
+         * @summary Returns donation with a given id
+         * @param {string} id Donation ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiUserIdGet: async (id: string, options: any = {}): Promise<RequestArgs> => {
+        apiDonationsIdGet: async (id: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling apiUserIdGet.');
+                throw new RequiredError('id','Required parameter id was null or undefined when calling apiDonationsIdGet.');
             }
-            const localVarPath = `/api/user/{id}`
+            const localVarPath = `/api/donations/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -132,23 +137,24 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
 };
 
 /**
- * UserApi - functional programming interface
+ * DonationsApi - functional programming interface
  * @export
  */
-export const UserApiFp = function(configuration?: Configuration) {
+export const DonationsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary GetAllUsers
+         * @summary Retrieves a list of donations
          * @param {number} [page] Page number
          * @param {number} [size] Page size
-         * @param {string} [sort] sort
-         * @param {Array<string>} [role] User role
+         * @param {string} [sort] Sort param
+         * @param {string} [user] Only for manager
+         * @param {string} [application] User can access only his donations
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiUserGet(page?: number, size?: number, sort?: string, role?: Array<string>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserResponse>> {
-            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).apiUserGet(page, size, sort, role, options);
+        async apiDonationsGet(page?: number, size?: number, sort?: string, user?: string, application?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlockchainDonationsResponse>> {
+            const localVarAxiosArgs = await DonationsApiAxiosParamCreator(configuration).apiDonationsGet(page, size, sort, user, application, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -156,13 +162,13 @@ export const UserApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Retrieves user based on given ID
-         * @param {string} id User ID
+         * @summary Returns donation with a given id
+         * @param {string} id Donation ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiUserIdGet(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserUser>> {
-            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).apiUserIdGet(id, options);
+        async apiDonationsIdGet(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlockchainDonation>> {
+            const localVarAxiosArgs = await DonationsApiAxiosParamCreator(configuration).apiDonationsIdGet(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -172,114 +178,122 @@ export const UserApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * UserApi - factory interface
+ * DonationsApi - factory interface
  * @export
  */
-export const UserApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const DonationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
          * 
-         * @summary GetAllUsers
+         * @summary Retrieves a list of donations
          * @param {number} [page] Page number
          * @param {number} [size] Page size
-         * @param {string} [sort] sort
-         * @param {Array<string>} [role] User role
+         * @param {string} [sort] Sort param
+         * @param {string} [user] Only for manager
+         * @param {string} [application] User can access only his donations
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiUserGet(page?: number, size?: number, sort?: string, role?: Array<string>, options?: any): AxiosPromise<UserResponse> {
-            return UserApiFp(configuration).apiUserGet(page, size, sort, role, options).then((request) => request(axios, basePath));
+        apiDonationsGet(page?: number, size?: number, sort?: string, user?: string, application?: string, options?: any): AxiosPromise<BlockchainDonationsResponse> {
+            return DonationsApiFp(configuration).apiDonationsGet(page, size, sort, user, application, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Retrieves user based on given ID
-         * @param {string} id User ID
+         * @summary Returns donation with a given id
+         * @param {string} id Donation ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiUserIdGet(id: string, options?: any): AxiosPromise<UserUser> {
-            return UserApiFp(configuration).apiUserIdGet(id, options).then((request) => request(axios, basePath));
+        apiDonationsIdGet(id: string, options?: any): AxiosPromise<BlockchainDonation> {
+            return DonationsApiFp(configuration).apiDonationsIdGet(id, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for apiUserGet operation in UserApi.
+ * Request parameters for apiDonationsGet operation in DonationsApi.
  * @export
- * @interface UserApiApiUserGetRequest
+ * @interface DonationsApiApiDonationsGetRequest
  */
-export interface UserApiApiUserGetRequest {
+export interface DonationsApiApiDonationsGetRequest {
     /**
      * Page number
      * @type {number}
-     * @memberof UserApiApiUserGet
+     * @memberof DonationsApiApiDonationsGet
      */
     readonly page?: number
 
     /**
      * Page size
      * @type {number}
-     * @memberof UserApiApiUserGet
+     * @memberof DonationsApiApiDonationsGet
      */
     readonly size?: number
 
     /**
-     * sort
+     * Sort param
      * @type {string}
-     * @memberof UserApiApiUserGet
+     * @memberof DonationsApiApiDonationsGet
      */
     readonly sort?: string
 
     /**
-     * User role
-     * @type {Array<string>}
-     * @memberof UserApiApiUserGet
+     * Only for manager
+     * @type {string}
+     * @memberof DonationsApiApiDonationsGet
      */
-    readonly role?: Array<string>
+    readonly user?: string
+
+    /**
+     * User can access only his donations
+     * @type {string}
+     * @memberof DonationsApiApiDonationsGet
+     */
+    readonly application?: string
 }
 
 /**
- * Request parameters for apiUserIdGet operation in UserApi.
+ * Request parameters for apiDonationsIdGet operation in DonationsApi.
  * @export
- * @interface UserApiApiUserIdGetRequest
+ * @interface DonationsApiApiDonationsIdGetRequest
  */
-export interface UserApiApiUserIdGetRequest {
+export interface DonationsApiApiDonationsIdGetRequest {
     /**
-     * User ID
+     * Donation ID
      * @type {string}
-     * @memberof UserApiApiUserIdGet
+     * @memberof DonationsApiApiDonationsIdGet
      */
     readonly id: string
 }
 
 /**
- * UserApi - object-oriented interface
+ * DonationsApi - object-oriented interface
  * @export
- * @class UserApi
+ * @class DonationsApi
  * @extends {BaseAPI}
  */
-export class UserApi extends BaseAPI {
+export class DonationsApi extends BaseAPI {
     /**
      * 
-     * @summary GetAllUsers
-     * @param {UserApiApiUserGetRequest} requestParameters Request parameters.
+     * @summary Retrieves a list of donations
+     * @param {DonationsApiApiDonationsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
+     * @memberof DonationsApi
      */
-    public apiUserGet(requestParameters: UserApiApiUserGetRequest = {}, options?: any) {
-        return UserApiFp(this.configuration).apiUserGet(requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.role, options).then((request) => request(this.axios, this.basePath));
+    public apiDonationsGet(requestParameters: DonationsApiApiDonationsGetRequest = {}, options?: any) {
+        return DonationsApiFp(this.configuration).apiDonationsGet(requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.user, requestParameters.application, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Retrieves user based on given ID
-     * @param {UserApiApiUserIdGetRequest} requestParameters Request parameters.
+     * @summary Returns donation with a given id
+     * @param {DonationsApiApiDonationsIdGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserApi
+     * @memberof DonationsApi
      */
-    public apiUserIdGet(requestParameters: UserApiApiUserIdGetRequest, options?: any) {
-        return UserApiFp(this.configuration).apiUserIdGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public apiDonationsIdGet(requestParameters: DonationsApiApiDonationsIdGetRequest, options?: any) {
+        return DonationsApiFp(this.configuration).apiDonationsIdGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
