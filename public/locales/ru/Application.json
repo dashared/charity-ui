@@ -103,11 +103,11 @@
     "InProcessing": "В обработке",
     "NeedsImprovement": "На доработке",
     "Spam": "Спам",
-    "SuperManagerConfirmation": "Ждет активации",
+    "SuperManagerConfirmation": "Ждет подтверждения",
     "Active": "Активна",
     "Archived": "В архиве",
     "Refused": "Отказано",
     "Deleted": "Удалено",
-    "UserConfirmation": "Ждет подтверждения пользователя"
+    "UserConfirmation": "Ждет активации"
   }
 }
