@@ -186,46 +186,47 @@ export const GeneralInfo: FC<{
           <StatusTag status={info.status} />
         </Descriptions.Item>
 
-        <Descriptions.Item label={t("$views.card.assignee")}>
-          {!editable && initialInfo.assignee && (
-            <>
-              <Link
-                name="managers:show"
-                params={{ id: initialInfo.assignee.id }}
-              >
-                {fullName(
-                  initialInfo.assignee?.first_name,
-                  initialInfo.assignee?.middle_name,
-                  initialInfo.assignee?.last_name,
-                )}
-              </Link>{" "}
-              <RoleTag
-                roles={[initialInfo.assignee?.role ?? UserApiRole.Admin]}
-              />
-            </>
-          )}
-          {editable && (
-            <Select
-              style={{ width: "100%" }}
-              showSearch
-              defaultValue={initialInfo.assignee?.first_name}
-              placeholder={t("$views.assignee")}
-              defaultActiveFirstOption={false}
-              showArrow={false}
-              filterOption={false}
-              // onSearch={this.handleSearch}
-              // onSelect={(value) => {
-              //   updateInfo({
-              //     ...initialInfo,
-              //     assignee: value,
-              //   });
-              // }}
-              //notFoundContent={null}
-            ></Select>
-          )}
-        </Descriptions.Item>
+        {initialInfo.assignee && (
+          <Descriptions.Item label={t("$views.card.assignee")}>
+            {!editable && (
+              <>
+                <Link
+                  name="managers:show"
+                  params={{ id: initialInfo.assignee.id }}
+                >
+                  {fullName(
+                    initialInfo.assignee?.first_name,
+                    initialInfo.assignee?.middle_name,
+                    initialInfo.assignee?.last_name,
+                  )}
+                </Link>{" "}
+                <RoleTag
+                  roles={[initialInfo.assignee?.role ?? UserApiRole.Admin]}
+                />
+              </>
+            )}
+            {editable && (
+              <Select
+                style={{ width: "100%" }}
+                showSearch
+                defaultValue={initialInfo.assignee?.first_name}
+                placeholder={t("$views.assignee")}
+                defaultActiveFirstOption={false}
+                showArrow={false}
+                filterOption={false}
+                // onSearch={this.handleSearch}
+                // onSelect={(value) => {
+                //   updateInfo({
+                //     ...initialInfo,
+                //     assignee: value,
+                //   });
+                // }}
+                //notFoundContent={null}
+              ></Select>
+            )}
+          </Descriptions.Item>
+        )}
       </Descriptions>
-
       {visible && (
         <UserPreview
           visible={visible}

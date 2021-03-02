@@ -4,7 +4,7 @@ import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import {
   DonationRequestResponse,
-  DonationRequestUpdateInput,
+  DonationRequestUpdateStatusInput,
 } from "@generated";
 import { notify } from "@lib/utils/notification";
 import { AxiosPromise } from "axios";
@@ -18,7 +18,7 @@ type FormValues = {
 const ModalWithMessage: FC<{
   query: (
     id: number,
-    input: DonationRequestUpdateInput,
+    input: DonationRequestUpdateStatusInput,
     // eslint-disable-next-line
     options?: any,
   ) => AxiosPromise<DonationRequestResponse>;
@@ -54,7 +54,7 @@ const ModalWithMessage: FC<{
 
         console.log(values);
 
-        const input: DonationRequestUpdateInput = {
+        const input: DonationRequestUpdateStatusInput = {
           status: newStatus,
           comment: values.message,
         };
