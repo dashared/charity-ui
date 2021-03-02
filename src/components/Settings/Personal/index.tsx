@@ -2,6 +2,8 @@ import React, { FC } from "react";
 import { Card, Form, Input, Skeleton } from "antd";
 import { useTranslation } from "@providers";
 import useAxios, { UserRequestFactory } from "@providers/axios";
+
+import RoleTag from "components/User/Role/tag";
 // import { IdComponent } from "@typings/component";
 
 const layout = {
@@ -47,6 +49,12 @@ export const PersonalSettings: FC<{ id: string }> = ({ id }) => {
         <Form.Item name="last_name" label={t("last_name")} required={true}>
           <Input />
         </Form.Item>
+
+        {data.role && (
+          <Form.Item name="role" label={t("role")}>
+            <RoleTag roles={[data.role]} />
+          </Form.Item>
+        )}
 
         <Form.Item name="email" label={t("email")} required={true}>
           <Input />
