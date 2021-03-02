@@ -189,7 +189,10 @@ export const GeneralInfo: FC<{
         <Descriptions.Item label={t("$views.card.assignee")}>
           {!editable && initialInfo.assignee && (
             <>
-              <Link name="users:show" params={{ id: initialInfo.assignee.id }}>
+              <Link
+                name="managers:show"
+                params={{ id: initialInfo.assignee.id }}
+              >
                 {fullName(
                   initialInfo.assignee?.first_name,
                   initialInfo.assignee?.middle_name,

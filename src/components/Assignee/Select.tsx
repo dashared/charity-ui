@@ -24,16 +24,16 @@ type SingleSelectProps = {
 };
 
 const Variables: Record<Status, Array<Role>> = {
-  New: [Role.Manager],
-  InProcessing: [Role.Manager],
-  NeedsImprovement: [Role.Manager],
-  Refused: [Role.Manager],
-  Spam: [Role.Manager],
+  New: [Role.Manager, Role.SuperManager],
+  InProcessing: [Role.Manager, Role.SuperManager],
+  NeedsImprovement: [Role.Manager, Role.SuperManager],
+  Refused: [Role.Manager, Role.SuperManager],
+  Spam: [Role.Manager, Role.SuperManager],
   Active: [Role.Manager],
   Deleted: [Role.Manager],
   SuperManagerConfirmation: [Role.SuperManager],
-  UserConfirmation: [Role.SuperManager],
-  Archived: [Role.Manager],
+  UserConfirmation: [Role.SuperManager, Role.Manager],
+  Archived: [Role.Manager, Role.SuperManager],
 };
 
 const { Option } = Select;
