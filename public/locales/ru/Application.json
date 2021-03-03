@@ -73,7 +73,8 @@
       "message": "Сообщение",
       "enterMessage": "Введите сообщение пользователю",
       "assignee": "Менеджер",
-      "successUpdateStatus": "Успешно обновлен статус заявки!"
+      "successUpdateStatus": "Успешно обновлен статус заявки!",
+      "received_amount": "Собрано средств"
     },
     "buttons": {
       "actions": {

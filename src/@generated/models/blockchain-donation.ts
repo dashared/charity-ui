@@ -49,22 +49,10 @@ export interface BlockchainDonation {
     donation_author?: UserUser;
     /**
      * 
-     * @type {string}
-     * @memberof BlockchainDonation
-     */
-    donation_author_id?: string;
-    /**
-     * 
      * @type {DonationRequestDonationRequest}
      * @memberof BlockchainDonation
      */
     donation_request?: DonationRequestDonationRequest;
-    /**
-     * 
-     * @type {number}
-     * @memberof BlockchainDonation
-     */
-    donation_request_id?: number;
     /**
      * 
      * @type {string}

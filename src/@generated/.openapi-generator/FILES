@@ -28,6 +28,7 @@ models/donation-request-input.ts
 models/donation-request-response.ts
 models/donation-request-status-history.ts
 models/donation-request-update-input.ts
+models/donation-request-update-status-input.ts
 models/file-response.ts
 models/index.ts
 models/user-balance.ts

@@ -61,7 +61,7 @@ const AssigneeSelect: FC<BaseSelectProps & SingleSelectProps> = ({
   return (
     <Select
       labelInValue
-      value={value ?? undefined}
+      defaultValue={value ?? undefined}
       placeholder={t("$views.select_assignee")}
       notFoundContent={loading ? <Spin size="small" /> : null}
       filterOption={false}
@@ -69,7 +69,7 @@ const AssigneeSelect: FC<BaseSelectProps & SingleSelectProps> = ({
       style={{ width: "100%" }}
     >
       {(data?.data ?? []).map((d) => (
-        <Option key={d.birth_date} value={d.id ?? ""}>
+        <Option key={d.id} value={d.id ?? ""}>
           {d.first_name}
           {"   "}
           <RoleTag roles={[d.role ?? UserUserRoleEnum.SuperManager]} />

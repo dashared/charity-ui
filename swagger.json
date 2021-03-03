@@ -139,6 +139,38 @@
             }
           }
         }
+      },
+      "patch": {
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["DonationRequest"],
+        "summary": "Updates donation request",
+        "parameters": [
+          {
+            "description": "Donation request Input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DonationRequest.UpdateInput"
+            }
+          },
+          {
+            "type": "integer",
+            "description": "Donation request ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": ""
+          }
+        }
       }
     },
     "/api/donation-request/{id}/history": {
@@ -220,7 +252,7 @@
             "name": "input",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/DonationRequest.UpdateInput"
+              "$ref": "#/definitions/DonationRequest.UpdateStatusInput"
             }
           }
         ],
@@ -690,14 +722,8 @@
         "donation_author": {
           "$ref": "#/definitions/User.User"
         },
-        "donation_author_id": {
-          "type": "string"
-        },
         "donation_request": {
           "$ref": "#/definitions/DonationRequest.DonationRequest"
-        },
-        "donation_request_id": {
-          "type": "integer"
         },
         "id": {
           "type": "string"
@@ -971,6 +997,50 @@
       }
     },
     "DonationRequest.UpdateInput": {
+      "type": "object",
+      "properties": {
+        "anonymous": {
+          "type": "boolean"
+        },
+        "approved_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "assignee_id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "donee": {
+          "$ref": "#/definitions/User.SimpleUser"
+        },
+        "file_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "relationship": {
+          "type": "string"
+        },
+        "request_type": {
+          "type": "string"
+        },
+        "requested_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "title": {
+          "type": "string"
+        },
+        "until": {
+          "type": "string"
+        }
+      }
+    },
+    "DonationRequest.UpdateStatusInput": {
       "type": "object",
       "properties": {
         "assignee_id": {
