@@ -27,7 +27,7 @@ const TransactionPage: FC<PageProps> = ({ response }) => {
   }
 
   return (
-    <Workspace noRefresh withBack title={t("pageTitle", { id })}>
+    <Workspace noRefresh withBack title={t("pageTitle")}>
       <TransactionView transaction={data} />
     </Workspace>
   );

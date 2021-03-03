@@ -1,5 +1,5 @@
 import React, { MutableRefObject, useEffect } from "react";
-import { Badge, Card, Tabs, Tooltip } from "antd";
+import { /*Badge,*/ Card, Tabs, Tooltip } from "antd";
 import {
   DiffOutlined,
   FileOutlined,
@@ -101,9 +101,9 @@ const ApplicationView = React.forwardRef<RefType, PropsType>((props, ref) => {
         <TabPane
           tab={
             <Tooltip title={t("$views.tabs.commentsTitle")}>
-              <Badge count={5}>
-                <MessageOutlined />
-              </Badge>
+              <MessageOutlined />
+              {/* <Badge count={5}>
+              </Badge> */}
             </Tooltip>
           }
         >
