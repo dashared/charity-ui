@@ -1,6 +1,5 @@
 import React, { FC } from "react";
-import { Avatar, Col, Form, Row } from "antd";
-import { ProfileFilled } from "@ant-design/icons";
+import { Col, Form, Row } from "antd";
 import { UserUser as User } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { formatDate, formatString } from "@lib/utils";
@@ -24,12 +23,12 @@ const UserInfo: FC<UserInfoProps> = ({ user, role }) => {
 
   return (
     <Row justify="space-between" align="top">
-      <Col span={4}>
+      {/* <Col span={4}>
         <Avatar
           size={{ xs: 70, sm: 80, md: 100, lg: 120, xl: 130, xxl: 140 }}
           icon={<ProfileFilled />}
         ></Avatar>
-      </Col>
+      </Col> */}
       <Col span={8}>
         <Form>
           <Form.Item label={t("credentials")}>

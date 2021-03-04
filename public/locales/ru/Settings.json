@@ -5,6 +5,7 @@
   "first_name": "Имя",
   "middle_name": "Отчество",
   "last_name": "Фамилия",
+  "role": "Роль",
   "info": "Информация",
   "email": "Почта",
   "updateButton": "Обновить данные",

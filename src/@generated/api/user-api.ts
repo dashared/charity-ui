@@ -63,15 +63,15 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         localVarQueryParameter['sort'] = sort;
       }
 
-      if (role) {
-        localVarQueryParameter['role'] = role;
-      }
-
-
-
       const queryParameters = new URLSearchParams(localVarUrlObj.search);
       for (const key in localVarQueryParameter) {
         queryParameters.set(key, localVarQueryParameter[key]);
+      }
+      // role=a&role=b
+      if (role) {
+        for (const index in role) {
+          queryParameters.append('role', role[index]);
+        }
       }
       for (const key in options.query) {
         queryParameters.set(key, options.query[key]);
@@ -80,7 +80,6 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
       let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
       localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
 
-      console.log(localVarUrlObj.search)
       return {
         url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
         options: localVarRequestOptions,

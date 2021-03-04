@@ -2,6 +2,7 @@
 .npmignore
 api.ts
 api/donation-request-api.ts
+api/donations-api.ts
 api/file-api.ts
 api/login-api.ts
 api/money-api.ts
@@ -18,6 +19,8 @@ models/auth-manager-registration-user.ts
 models/auth-registration-input.ts
 models/blockchain-deposit.ts
 models/blockchain-donate-request-input.ts
+models/blockchain-donation.ts
+models/blockchain-donations-response.ts
 models/donation-request-body.ts
 models/donation-request-donation-request.ts
 models/donation-request-history-response.ts
@@ -25,8 +28,10 @@ models/donation-request-input.ts
 models/donation-request-response.ts
 models/donation-request-status-history.ts
 models/donation-request-update-input.ts
+models/donation-request-update-status-input.ts
 models/file-response.ts
 models/index.ts
+models/user-balance.ts
 models/user-response.ts
 models/user-simple-user.ts
 models/user-user.ts

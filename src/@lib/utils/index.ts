@@ -4,6 +4,7 @@ export { queryParse, queryStringify } from "./query";
 export { copyTextToClipboard } from "./clipboard";
 export { encode as base64encode, decode as base64decode } from "./base64";
 export { format as formatDate, formatDateTime } from "./date";
+export { format as formatMoney } from "./currency";
 export { format as formatNumber } from "./number";
 export { default as transliterate } from "./transliterate";
 export { default as KVStorage } from "./kvstorage";

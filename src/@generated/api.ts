@@ -15,6 +15,7 @@
 
 
 export * from './api/donation-request-api';
+export * from './api/donations-api';
 export * from './api/file-api';
 export * from './api/login-api';
 export * from './api/money-api';

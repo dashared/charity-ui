@@ -24,16 +24,16 @@ type SingleSelectProps = {
 };
 
 const Variables: Record<Status, Array<Role>> = {
-  New: [Role.Manager],
-  InProcessing: [Role.Manager],
-  NeedsImprovement: [Role.Manager],
-  Refused: [Role.Manager],
-  Spam: [Role.Manager],
+  New: [Role.Manager, Role.SuperManager],
+  InProcessing: [Role.Manager, Role.SuperManager],
+  NeedsImprovement: [Role.Manager, Role.SuperManager],
+  Refused: [Role.Manager, Role.SuperManager],
+  Spam: [Role.Manager, Role.SuperManager],
   Active: [Role.Manager],
   Deleted: [Role.Manager],
   SuperManagerConfirmation: [Role.SuperManager],
-  UserConfirmation: [Role.SuperManager],
-  Archived: [Role.Manager],
+  UserConfirmation: [Role.SuperManager, Role.Manager],
+  Archived: [Role.Manager, Role.SuperManager],
 };
 
 const { Option } = Select;
@@ -61,7 +61,7 @@ const AssigneeSelect: FC<BaseSelectProps & SingleSelectProps> = ({
   return (
     <Select
       labelInValue
-      value={value ?? undefined}
+      defaultValue={value ?? undefined}
       placeholder={t("$views.select_assignee")}
       notFoundContent={loading ? <Spin size="small" /> : null}
       filterOption={false}
@@ -69,7 +69,7 @@ const AssigneeSelect: FC<BaseSelectProps & SingleSelectProps> = ({
       style={{ width: "100%" }}
     >
       {(data?.data ?? []).map((d) => (
-        <Option key={d.birth_date} value={d.id ?? ""}>
+        <Option key={d.id} value={d.id ?? ""}>
           {d.first_name}
           {"   "}
           <RoleTag roles={[d.role ?? UserUserRoleEnum.SuperManager]} />

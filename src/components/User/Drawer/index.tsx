@@ -18,7 +18,6 @@ const UserPreview: FC<{
     undefined,
     id,
   );
-
   return (
     <Drawer
       visible={visible}
@@ -48,22 +47,22 @@ const UserPreview: FC<{
         {data && (
           <Descriptions bordered={true}>
             <Descriptions.Item label={t("credentials")} span={3}>
-              {fullName(data.first_name, data.last_name, data.middle_name)}
+              {fullName(data.first_name, data.middle_name, data.last_name)}
             </Descriptions.Item>
             <Descriptions.Item label={t("birthday")} span={3}>
-              15.02.1999
+              {data.birth_date ?? "-"}
             </Descriptions.Item>
             <Descriptions.Item label={t("phone")} span={3}>
-              1810000000
+              {data.phone ?? "-"}
             </Descriptions.Item>
             <Descriptions.Item label={t("email")} span={3}>
-              ivanov@mail.ru
+              {data.email ?? "-"}
             </Descriptions.Item>
             <Descriptions.Item label={t("city")} span={3}>
-              Москва
+              {data.city ?? "-"}
             </Descriptions.Item>
             <Descriptions.Item label={t("country")} span={3}>
-              Россия
+              {data.country ?? "-"}
             </Descriptions.Item>
           </Descriptions>
         )}

@@ -11,93 +11,12 @@ import {
 } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
 import RoleSwitch from "@lib/components/RoleSwitch";
+import { i18n } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 
-import { buildUseMenuKeys, entryToKey, MenuEntry } from "./utils";
+import { buildUseMenuKeys, entryToKey, MenuEntry, MenuKeys } from "./utils";
 
 import styles from "./layout.module.less";
-
-const LeftBarConf: Array<MenuEntry> = [
-  {
-    display: (
-      <>
-        <FolderOpenOutlined />
-        <span>Заявки</span>
-      </>
-    ),
-    name: "applications:index",
-  },
-
-  {
-    display: (
-      <>
-        <ProfileOutlined />
-        <span>Менеджеры</span>
-      </>
-    ),
-    name: "managers:index",
-  },
-
-  {
-    display: (
-      <>
-        <MoneyCollectOutlined />
-        <span>Транзакции</span>
-      </>
-    ),
-    name: "transactions:index",
-  },
-
-  {
-    display: (
-      <>
-        <HomeOutlined />
-        <span>Фонд</span>
-      </>
-    ),
-    name: "fund:index",
-    nested: [
-      {
-        display: <span>Описание</span>,
-        name: "fund:description-index",
-      },
-      {
-        display: <span>FAQ</span>,
-        name: "faq:index",
-      },
-    ],
-  },
-
-  {
-    display: (
-      <>
-        <UserOutlined />
-        <span>Пользователи</span>
-      </>
-    ),
-    name: "users:index",
-  },
-
-  {
-    display: (
-      <>
-        <HistoryOutlined />
-        <span>Логи</span>
-      </>
-    ),
-    name: "logs:index",
-  },
-
-  {
-    display: (
-      <>
-        <SettingOutlined />
-        <span>Настройки</span>
-      </>
-    ),
-    name: "settings:index",
-  },
-];
 
 const MenuLink: FC<MenuEntry> = ({ name, params, display, ...rest }) => (
   <Menu.Item {...rest}>
@@ -149,10 +68,93 @@ const MenuItem: FC<{ entry: MenuEntry }> = ({ entry, ...rest }) => {
   );
 };
 
-const useMenuKeys = buildUseMenuKeys(LeftBarConf);
+const useMenuKeys = (conf: Array<MenuEntry>): (() => MenuKeys) =>
+  buildUseMenuKeys(conf);
 
 const LeftBar: FC = () => {
-  const menuKeys = useMenuKeys();
+  const LeftBarConf: Array<MenuEntry> = [
+    {
+      display: (
+        <>
+          <FolderOpenOutlined />
+          <span>{i18n.t("LeftBar.Application")}</span>
+        </>
+      ),
+      name: "applications:index",
+    },
+
+    {
+      display: (
+        <>
+          <ProfileOutlined />
+          <span>{i18n.t("LeftBar.Managers")}</span>
+        </>
+      ),
+      name: "managers:index",
+    },
+
+    {
+      display: (
+        <>
+          <MoneyCollectOutlined />
+          <span>{i18n.t("LeftBar.Transactions")}</span>
+        </>
+      ),
+      name: "transactions:index",
+    },
+
+    {
+      display: (
+        <>
+          <HomeOutlined />
+          <span>{i18n.t("LeftBar.Fund")}</span>
+        </>
+      ),
+      name: "fund:index",
+      nested: [
+        {
+          display: <span>{i18n.t("LeftBar.Fund_nested.Description")}</span>,
+          name: "fund:description-index",
+        },
+        {
+          display: <span>{i18n.t("LeftBar.Fund_nested.FAQ")}</span>,
+          name: "faq:index",
+        },
+      ],
+    },
+
+    {
+      display: (
+        <>
+          <UserOutlined />
+          <span>{i18n.t("LeftBar.Users")}</span>
+        </>
+      ),
+      name: "users:index",
+    },
+
+    {
+      display: (
+        <>
+          <HistoryOutlined />
+          <span>{i18n.t("LeftBar.Logs")}</span>
+        </>
+      ),
+      name: "logs:index",
+    },
+
+    {
+      display: (
+        <>
+          <SettingOutlined />
+          <span>{i18n.t("LeftBar.Settings")}</span>
+        </>
+      ),
+      name: "settings:index",
+    },
+  ];
+
+  const menuKeys = useMenuKeys(LeftBarConf);
 
   const inner = LeftBarConf.map((entry) => (
     <MenuItem key={entryToKey(entry)} entry={entry} />

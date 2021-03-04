@@ -14,6 +14,7 @@
 
 
 import { UserSimpleUser } from './user-simple-user';
+import { UtilsMoneyJson } from './utils-money-json';
 
 /**
  * 
@@ -59,10 +60,10 @@ export interface DonationRequestInput {
     relationship?: string;
     /**
      * 
-     * @type {number}
+     * @type {UtilsMoneyJson}
      * @memberof DonationRequestInput
      */
-    request_amount?: number;
+    request_amount?: UtilsMoneyJson;
     /**
      * 
      * @type {string}

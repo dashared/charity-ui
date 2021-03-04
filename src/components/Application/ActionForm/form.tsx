@@ -10,14 +10,14 @@ import { Form, Input } from "antd";
 import { FormInstance, Rule } from "antd/lib/form";
 import {
   DonationRequestBodyAvailableStatusesEnum as ApplicationStatus,
-  DonationRequestUpdateInput,
+  DonationRequestUpdateStatusInput,
 } from "@generated";
 import { useTranslation } from "@providers";
 
 import AssigneeSelect from "components/Assignee/Select";
 import StatusSelect from "components/Status/Select";
 
-export type ApplicationFormState = DonationRequestUpdateInput;
+export type ApplicationFormState = DonationRequestUpdateStatusInput;
 
 export type ApplicationFormHandler = FormInstance<ApplicationFormState>;
 

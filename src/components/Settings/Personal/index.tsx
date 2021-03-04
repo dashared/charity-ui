@@ -1,8 +1,9 @@
 import React, { FC } from "react";
-import { Card, Form, Input, Skeleton } from "antd";
+import { Card, Empty, Form, Input, Skeleton } from "antd";
 import { useTranslation } from "@providers";
 import useAxios, { UserRequestFactory } from "@providers/axios";
-// import { IdComponent } from "@typings/component";
+
+import RoleTag from "components/User/Role/tag";
 
 const layout = {
   labelCol: { span: 6 },
@@ -23,7 +24,7 @@ export const PersonalSettings: FC<{ id: string }> = ({ id }) => {
   }
 
   if (!data) {
-    return <>oh no!</>;
+    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
   }
 
   return (
@@ -47,6 +48,12 @@ export const PersonalSettings: FC<{ id: string }> = ({ id }) => {
         <Form.Item name="last_name" label={t("last_name")} required={true}>
           <Input />
         </Form.Item>
+
+        {data.role && (
+          <Form.Item name="role" label={t("role")}>
+            <RoleTag roles={[data.role]} />
+          </Form.Item>
+        )}
 
         <Form.Item name="email" label={t("email")} required={true}>
           <Input />

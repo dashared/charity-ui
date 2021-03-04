@@ -1,0 +1,20 @@
+{
+  "title": "Fund \"{{ name }}\"",
+  "generalInfo": "Main info",
+  "faq": "Frequently asked questions",
+  "description": "Description",
+  "contacts": "Contacts",
+  "docs": "Documents",
+  "reports": "Reports",
+  "$views": {
+    "buttons": {
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel"
+    }
+  },
+  "modal": {
+    "title": "All changes canceled",
+    "description": "Saving is required before moving between sections"
+  }
+}

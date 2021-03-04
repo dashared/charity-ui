@@ -11,10 +11,13 @@ export function cred(
   }`;
 }
 
+/** Surname FirstName MiddleName*/
 export function fullName(
   firstName?: string,
   middleName?: string,
   lastName?: string,
 ): string {
-  return `${firstName ?? "-"} ${middleName ?? "-"} ${lastName ?? "-"}`;
+  return `${`${lastName} ` ?? ""}${` ${firstName}` ?? ""}${
+    ` ${middleName}` ?? ""
+  }`;
 }

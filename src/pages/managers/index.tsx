@@ -1,15 +1,14 @@
 import React, { FC, useRef } from "react";
-import { Avatar } from "antd";
-import { CheckOutlined, SyncOutlined } from "@ant-design/icons";
-import { Link } from "@curi/react-dom";
+// import { CheckOutlined, SyncOutlined } from "@ant-design/icons";
 import { UserResponse as Result, UserUser as Single } from "@generated";
-import Metrics from "@lib/components/Metrics";
+// import Metrics from "@lib/components/Metrics";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useListSelection } from "@lib/hooks";
+import { formatDate } from "@lib/utils";
 import { fullName } from "@lib/utils/name";
-import { useTranslation, Workspace } from "@providers";
+import { router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import { UserApiRole, UserRequestFactory } from "@providers/axios";
 import Unauthorized from "pages/_unauthorized";
@@ -18,59 +17,60 @@ import RoleTag from "components/User/Role/tag";
 
 import styles from "./styles.module.less";
 
-function ManagersMetrics(): JSX.Element {
-  const { t } = useTranslation("Manager");
-  return (
-    <Metrics
-      metrics={[
-        {
-          title: t("metrics.inProgress"),
-          icon: <SyncOutlined />,
-          value: 4,
-        },
-        {
-          title: t("metrics.done"),
-          icon: <CheckOutlined />,
-          value: 15,
-        },
-      ]}
-    />
-  );
-}
+// function ManagersMetrics(): JSX.Element {
+//   const { t } = useTranslation("Manager");
+//   return (
+//     <Metrics
+//       metrics={[
+//         {
+//           title: t("metrics.inProgress"),
+//           icon: <SyncOutlined />,
+//           value: 4,
+//         },
+//         {
+//           title: t("metrics.done"),
+//           icon: <CheckOutlined />,
+//           value: 15,
+//         },
+//       ]}
+//     />
+//   );
+// }
 
 const ManagersPage: FC = () => {
-  const {
-    isTarget,
-    isSelected,
-    onElementClick,
-    setList,
-  } = useListSelection<Single>();
+  const { isTarget, isSelected, setList } = useListSelection<Single>();
 
   const paginationState = useRef<StateRef>(null);
 
   const { t } = useTranslation("Manager");
 
+  const onElementClick = (record: Single): void => {
+    router.navigate({
+      url: router.url({ name: "managers:show", params: { id: record.id } }),
+    });
+  };
+
   const columns = [
-    {
-      key: "photo",
-      title: "",
-      width: "6%",
-      render(record: Single) {
-        return (
-          <Avatar style={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
-            {record?.role?.substr(0, 1)}
-          </Avatar>
-        );
-      },
-    },
+    // {
+    //   key: "photo",
+    //   title: "",
+    //   width: "6%",
+    //   render(record: Single) {
+    //     return (
+    //       <Avatar style={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
+    //         {record?.role?.substr(0, 1)}
+    //       </Avatar>
+    //     );
+    //   },
+    // },
     {
       key: "name",
       width: "25%",
       render(record: Single) {
-        return (
-          <Link params={{ id: record.id }} name="managers:show">
-            {fullName(record.first_name, record.middle_name, record.last_name)}
-          </Link>
+        return fullName(
+          record.first_name,
+          record.middle_name,
+          record.last_name,
         );
       },
     },
@@ -88,12 +88,18 @@ const ManagersPage: FC = () => {
       },
     },
     {
-      key: "metric",
-      width: "20%",
-      render() {
-        return ManagersMetrics();
+      key: "createdAt",
+      render(record: Single) {
+        return formatDate(record.created_at);
       },
     },
+    // {
+    //   key: "metric",
+    //   width: "20%",
+    //   render() {
+    //     return ManagersMetrics();
+    //   },
+    // },
   ];
 
   // TODO: replace api calls to TransactionsFactory
@@ -102,6 +108,14 @@ const ManagersPage: FC = () => {
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
         requestQuery={UserRequestFactory.apiUserGet}
+        variables={{
+          role: [
+            UserApiRole.ContentManager,
+            UserApiRole.SuperManager,
+            UserApiRole.Manager,
+            UserApiRole.Operator,
+          ],
+        }}
         stateRef={paginationState}
         onResult={(result) => {
           setList(result.data ?? []);
@@ -118,7 +132,7 @@ const ManagersPage: FC = () => {
             })}
             onRecordClick={(event, record, index) => {
               if (index !== undefined) {
-                onElementClick(event, index);
+                onElementClick(record);
               }
             }}
           />

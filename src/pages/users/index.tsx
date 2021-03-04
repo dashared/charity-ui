@@ -1,6 +1,5 @@
 import React, { FC, useRef } from "react";
 import { Button } from "antd";
-import { Link } from "@curi/react-dom";
 import { UserResponse as Result, UserUser as Single } from "@generated";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
@@ -32,30 +31,19 @@ const Actions: FC = () => {
 };
 
 const UsersPage: FC = () => {
-  const {
-    isTarget,
-    isSelected,
-    onElementClick,
-    setList,
-  } = useListSelection<Single>();
+  const { isTarget, isSelected, setList } = useListSelection<Single>();
+
+  const onElementClick = (record: Single): void => {
+    router.navigate({
+      url: router.url({ name: "users:show", params: { id: record.id } }),
+    });
+  };
 
   const paginationState = useRef<StateRef>(null);
 
   const { t } = useTranslation("Users");
 
   const columns = [
-    {
-      key: "id",
-      width: "12%",
-      render(record: Single) {
-        return (
-          <Link params={{ id: record.id }} name="users:show">
-            {record.id?.substr(0, 7)}...
-          </Link>
-        );
-      },
-    },
-
     {
       key: "name",
       render(record: Single) {
@@ -76,7 +64,6 @@ const UsersPage: FC = () => {
 
     {
       key: "createdAt",
-      width: "20%",
       render(record: Single) {
         return format(record.created_at);
       },
@@ -84,7 +71,6 @@ const UsersPage: FC = () => {
 
     {
       key: "role",
-      width: "12%",
       render(record: Single) {
         return <RoleTag roles={[record.role ?? UserApiRole.User]} />;
       },
@@ -112,7 +98,7 @@ const UsersPage: FC = () => {
             })}
             onRecordClick={(event, record, index) => {
               if (index !== undefined) {
-                onElementClick(event, index);
+                onElementClick(record);
               }
             }}
           />

@@ -55,7 +55,8 @@
           },
           {
             "type": "string",
-            "description": "sort",
+            "default": "10",
+            "description": "Sort param",
             "name": "sort",
             "in": "query"
           },
@@ -64,6 +65,7 @@
             "items": {
               "type": "string"
             },
+            "collectionFormat": "multi",
             "description": "request author id",
             "name": "author",
             "in": "query"
@@ -73,6 +75,7 @@
             "items": {
               "type": "string"
             },
+            "collectionFormat": "multi",
             "description": "request assignee id",
             "name": "assignee",
             "in": "query"
@@ -82,6 +85,7 @@
             "items": {
               "type": "string"
             },
+            "collectionFormat": "multi",
             "description": "request status",
             "name": "status",
             "in": "query"
@@ -91,6 +95,7 @@
             "items": {
               "type": "string"
             },
+            "collectionFormat": "multi",
             "description": "request type",
             "name": "type",
             "in": "query"
@@ -132,6 +137,38 @@
             "schema": {
               "$ref": "#/definitions/DonationRequest.Body"
             }
+          }
+        }
+      },
+      "patch": {
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["DonationRequest"],
+        "summary": "Updates donation request",
+        "parameters": [
+          {
+            "description": "Donation request Input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DonationRequest.UpdateInput"
+            }
+          },
+          {
+            "type": "integer",
+            "description": "Donation request ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": ""
           }
         }
       }
@@ -215,7 +252,7 @@
             "name": "input",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/DonationRequest.UpdateInput"
+              "$ref": "#/definitions/DonationRequest.UpdateStatusInput"
             }
           }
         ],
@@ -224,6 +261,81 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/DonationRequest.Response"
+            }
+          }
+        }
+      }
+    },
+    "/api/donations": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["Donations"],
+        "summary": "Retrieves a list of donations",
+        "parameters": [
+          {
+            "type": "integer",
+            "default": 0,
+            "description": "Page number",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "default": 10,
+            "description": "Page size",
+            "name": "size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "default": "'created_at DESC'",
+            "description": "Sort param",
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "default": "10",
+            "description": "Only for manager",
+            "name": "user",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "User can access only his donations",
+            "name": "application",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Blockchain.DonationsResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/donations/{id}": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["Donations"],
+        "summary": "Returns donation with a given id",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Donation ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Blockchain.Donation"
             }
           }
         }
@@ -282,6 +394,21 @@
         "responses": {
           "200": {
             "description": ""
+          }
+        }
+      }
+    },
+    "/api/money/balance": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["Money"],
+        "summary": "Gets user's balance",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User.Balance"
+            }
           }
         }
       }
@@ -580,6 +707,43 @@
         }
       }
     },
+    "Blockchain.Donation": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "anonymous": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "donation_author": {
+          "$ref": "#/definitions/User.User"
+        },
+        "donation_request": {
+          "$ref": "#/definitions/DonationRequest.DonationRequest"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "Blockchain.DonationsResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Blockchain.Donation"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/utils.PageData"
+        }
+      }
+    },
     "DonationRequest.Body": {
       "type": "object",
       "properties": {
@@ -779,7 +943,7 @@
           "type": "string"
         },
         "request_amount": {
-          "type": "integer"
+          "$ref": "#/definitions/utils.MoneyJson"
         },
         "request_type": {
           "type": "string"
@@ -809,11 +973,11 @@
     "DonationRequest.StatusHistory": {
       "type": "object",
       "properties": {
-        "assignee_id": {
-          "type": "string"
+        "assignee": {
+          "$ref": "#/definitions/User.User"
         },
-        "author_id": {
-          "type": "string"
+        "author": {
+          "$ref": "#/definitions/User.User"
         },
         "created_at": {
           "type": "string"
@@ -833,6 +997,50 @@
       }
     },
     "DonationRequest.UpdateInput": {
+      "type": "object",
+      "properties": {
+        "anonymous": {
+          "type": "boolean"
+        },
+        "approved_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "assignee_id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "donee": {
+          "$ref": "#/definitions/User.SimpleUser"
+        },
+        "file_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "relationship": {
+          "type": "string"
+        },
+        "request_type": {
+          "type": "string"
+        },
+        "requested_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "title": {
+          "type": "string"
+        },
+        "until": {
+          "type": "string"
+        }
+      }
+    },
+    "DonationRequest.UpdateStatusInput": {
       "type": "object",
       "properties": {
         "assignee_id": {
@@ -857,6 +1065,14 @@
         },
         "id": {
           "type": "string"
+        }
+      }
+    },
+    "User.Balance": {
+      "type": "object",
+      "properties": {
+        "balance": {
+          "$ref": "#/definitions/utils.MoneyJson"
         }
       }
     },

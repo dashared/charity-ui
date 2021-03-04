@@ -1,0 +1,17 @@
+{
+  "title": "Managers",
+  "name": "Full name",
+  "id": "ID",
+  "roles": "Roles",
+  "metric": "Metrics",
+  "email": "Email",
+  "metrics": {
+    "done": "Processed applications",
+    "inProgress": "Applications in processing"
+  },
+  "page": {
+    "title": "Manager",
+    "statistics": "Statistic",
+    "infoTitle": "Main info"
+  }
+}

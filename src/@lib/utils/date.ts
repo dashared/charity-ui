@@ -119,3 +119,39 @@ export function formatDateTime(apiValue: DeepPartial<ApiDateTime>): string {
     { locale: ru },
   );
 }
+
+type UntilProgress = {
+  days: number;
+  percentage: number;
+};
+
+export function daysLeft(
+  started?: string,
+  until?: string,
+): UntilProgress | undefined {
+  if (!until || !started) {
+    return undefined;
+  }
+
+  const startDate = new Date(started);
+  const untilDate = new Date(until);
+  const currentDate = new Date();
+
+  if (untilDate < currentDate) {
+    return {
+      days: 0,
+      percentage: 100,
+    };
+  }
+
+  const diff = Math.abs(untilDate.getTime() - currentDate.getTime());
+  const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+
+  const totalDiff = Math.abs(untilDate.getTime() - startDate.getTime());
+  const diffTotalDays = Math.ceil(totalDiff / (1000 * 3600 * 24));
+
+  return {
+    days: diffDays,
+    percentage: (diffDays / diffTotalDays) * 100,
+  };
+}

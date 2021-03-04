@@ -3,6 +3,7 @@
   "name": "ФИО",
   "id": "ID",
   "roles": "Роли",
+  "createdAt": "Зарегистрирован",
   "metric": "Метрики",
   "email": "Почта",
   "metrics": {
@@ -12,6 +13,7 @@
   "page": {
     "title": "Менеджер",
     "statistics": "Статистика",
-    "infoTitle": "Основная информация"
+    "infoTitle": "Основная информация",
+    "applications": "Заявки"
   }
 }
