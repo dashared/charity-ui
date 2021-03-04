@@ -5,9 +5,14 @@
   "first_name": "Name",
   "middle_name": "Second name",
   "last_name": "Surname",
-  "info": "information",
+  "upload": "Upload",
+  "profile_picture": "Avatar",
+  "birth_date": "Birthday",
+  "city": "City",
+  "country": "Country",
+  "info": "Bio",
   "email": "Email",
-  "updateButton": "Update info",
+  "updateButton": "Update",
   "languageSetting": {
     "russian": "Russian",
     "english": "English"

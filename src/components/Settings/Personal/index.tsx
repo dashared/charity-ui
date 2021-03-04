@@ -1,42 +1,98 @@
-import React, { FC } from "react";
-import { Card, Empty, Form, Input, Skeleton } from "antd";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, {
+  FC,
+  forwardRef,
+  ForwardRefRenderFunction,
+  useState,
+} from "react";
+import { Card, DatePicker, Form, Input, Upload } from "antd";
+import { FormInstance } from "antd/lib/form";
+import { PlusOutlined } from "@ant-design/icons";
+import { UserUser } from "@generated";
 import { useTranslation } from "@providers";
-import useAxios, { UserRequestFactory } from "@providers/axios";
+import { FileFactory } from "@providers/axios";
 
 import RoleTag from "components/User/Role/tag";
+
+export type PersonalSettingsFormState = UserUser;
+
+export type PersonalSettingsHandler = FormInstance<PersonalSettingsFormState>;
+
+type PersonalSettingsFormProps = {
+  initial?: PersonalSettingsFormState;
+  onSubmit?: (values: PersonalSettingsFormState) => void | Promise<void>;
+};
 
 const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 12 },
 };
 
-export const PersonalSettings: FC<{ id: string }> = ({ id }) => {
+const UploadButton: FC = () => {
+  const { t } = useTranslation("Settings");
+  return (
+    <div>
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>{t("upload")}</div>
+    </div>
+  );
+};
+
+const PersonalSettingsForm: ForwardRefRenderFunction<
+  PersonalSettingsHandler,
+  PersonalSettingsFormProps
+> = ({ initial, onSubmit }, ref) => {
   const { t } = useTranslation("Settings");
 
-  const { data, loading } = useAxios(
-    UserRequestFactory.apiUserIdGet,
-    undefined,
-    id,
-  );
+  const [profileList, setFileList] = useState([]);
 
-  if (loading) {
-    return <Skeleton active={loading} />;
-  }
+  const uploadImage = async (options: any): Promise<void> => {
+    const { onSuccess, onError, file } = options;
+    try {
+      const config = {
+        headers: { "content-type": "multipart/form-data" },
+      };
+      await FileFactory.apiFileUploadPost({
+        file,
+        config,
+      });
 
-  if (!data) {
-    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
-  }
+      onSuccess("Ok");
+    } catch (err) {
+      console.error(err);
+      onError({ err });
+    }
+  };
+
+  const handleOnChange = ({ fileList }: any): void => {
+    setFileList(fileList);
+  };
 
   return (
     <Card bordered={false} title={t("personal")} id="personal">
-      {/* <h3>{t("personal")}</h3>
-      <br /> */}
       <Form
         {...layout}
+        ref={ref}
         initialValues={{
-          ...data,
+          ...initial,
+        }}
+        onFinish={(values) => {
+          console.log(values);
+          onSubmit?.(values);
         }}
       >
+        <Form.Item label={t("profile_picture")} name="image">
+          <Upload
+            accept="image/*"
+            customRequest={uploadImage}
+            listType="picture-card"
+            fileList={profileList}
+            onChange={handleOnChange}
+          >
+            {profileList.length >= 1 ? null : <UploadButton />}
+          </Upload>
+        </Form.Item>
+
         <Form.Item name="first_name" label={t("first_name")} required={true}>
           <Input />
         </Form.Item>
@@ -49,14 +105,26 @@ export const PersonalSettings: FC<{ id: string }> = ({ id }) => {
           <Input />
         </Form.Item>
 
-        {data.role && (
+        {initial?.role && (
           <Form.Item name="role" label={t("role")}>
-            <RoleTag roles={[data.role]} />
+            <RoleTag roles={[initial?.role]} />
           </Form.Item>
         )}
 
         <Form.Item name="email" label={t("email")} required={true}>
           <Input />
+        </Form.Item>
+
+        <Form.Item name="country" label={t("country")}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item name="city" label={t("city")}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item name="birth_date" label={t("birth_date")}>
+          <DatePicker />
         </Form.Item>
 
         <Form.Item name="info" label={t("info")}>
@@ -66,3 +134,5 @@ export const PersonalSettings: FC<{ id: string }> = ({ id }) => {
     </Card>
   );
 };
+
+export default forwardRef(PersonalSettingsForm);
