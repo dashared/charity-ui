@@ -50,4 +50,3 @@ deploy-docker:
     - docker logout
   only:
     - master
-

@@ -11,6 +11,7 @@
     "title": "Charity CRM",
     "description": "CRM for automating the Fund's business processes. Our goal is to ensure transparency of actions. We strive to be open and honest about donations.",
     "login": "Authorization",
+    "blockchain": "Blockchain",
     "data": {
       "fund": "About fund",
       "fDescription": "A non-profit organization whose purpose is to raise funds for needs.",

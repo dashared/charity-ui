@@ -77,7 +77,7 @@ const LeftBar: FC = () => {
       display: (
         <>
           <FolderOpenOutlined />
-          <span>{i18n.t("LeftBar.Application")}</span>
+          <span>{i18n.t("LeftBar.Applications")}</span>
         </>
       ),
       name: "applications:index",
