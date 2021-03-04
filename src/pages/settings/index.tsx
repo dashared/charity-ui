@@ -4,6 +4,7 @@ import { Button, Card, Select } from "antd";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
+import i18n from "i18next";
 import Redirect from "pages/_redirect";
 
 import { PersonalSettings } from "components/Settings";
@@ -27,11 +28,17 @@ const SettingsPage: FC = () => {
               style={{ marginTop: "4px" }}
               id="language"
             >
-              <Select value={"rus"} style={{ width: 180, margin: "0 8px" }}>
-                <Select.Option value="rus">
+              <Select
+                onChange={(value) => {
+                  i18n.changeLanguage(value);
+                }}
+                value={i18n.language}
+                style={{ width: 180, margin: "0 8px" }}
+              >
+                <Select.Option value="ru">
                   {t("languageSetting.russian")}
                 </Select.Option>
-                <Select.Option value="eng">
+                <Select.Option value="en">
                   {t("languageSetting.english")}
                 </Select.Option>
               </Select>

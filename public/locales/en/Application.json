@@ -1,0 +1,113 @@
+{
+  "yes": "Yes",
+  "no": "No",
+  "listTitle": "Applications",
+  "id": "№",
+  "title": "Title",
+  "assignee": "Manager",
+  "comment": "Comment",
+  "file": "File",
+  "downloadDate": "Date and time of downloading",
+  "status": "Status",
+  "type": "Type",
+  "author": "Author",
+  "createdAt": "Creation date and time",
+  "prevStatus": "Previous status",
+  "newStatus": "New status",
+  "statusUpdData": "Last update",
+  "authorUpd": "Update author",
+  "authorRole": "Author's role",
+  "createPageTitle": "Create application",
+  "$views": {
+    "updateStatus": "Status updated successfully!",
+    "select_assignee": "Select the manager",
+    "title": "Application № {{ id }} {{ title }}",
+    "createApplication": "Create",
+    "createPage": {
+      "title": "Title",
+      "description": "Description",
+      "message": "Message for manager",
+      "anon": {
+        "title": "Anonymous application",
+        "description": "Some application fields will be hidden from users"
+      },
+      "files": "Documents",
+      "relationship": "Relationship with creator",
+      "donee": "Create an application for somebody",
+      "dragger": {
+        "title": "Download document(s)",
+        "description": "These files will be available only to the fund"
+      }
+    },
+    "message": {
+      "title": "Enter an application title"
+    },
+    "tabs": {
+      "generalInfoTitle": "Main info",
+      "doneeInfoTitle": "Donee",
+      "logsTitle": "History",
+      "filesTitle": "Documents",
+      "commentsTitle": "Comments"
+    },
+    "confirm": {
+      "spam": "Send an application to spam?",
+      "processing": "Take the application for processing?",
+      "stopProcessing": "Stop processing the application?",
+      "returnFromSpam": "Return application from spam?"
+    },
+    "card": {
+      "doneeInfoTitle": "Donee info",
+      "generalInfoTitle": "Application info",
+      "description": "Description",
+      "requestedAmount": "Requested sum",
+      "approvedAmount": "Approved sum",
+      "createdAt": "Creation date",
+      "endTime": "Goal date",
+      "status": "Status",
+      "createdBy": "Creator",
+      "city": "City",
+      "country": "Country",
+      "birthday": "Birth date",
+      "phone": "Phone number",
+      "relationship": "Relationship with application creator",
+      "message": "Message",
+      "enterMessage": "Enter a message to the user",
+      "assignee": "Manager",
+      "successUpdateStatus": "Application status updated successfully!"
+    },
+    "buttons": {
+      "actions": {
+        "title": "Activities for application",
+        "formTitle": "Status changes"
+      },
+      "inProcessing": "Start processing",
+      "spam": "Spam",
+      "request_changes": "Send for improvement",
+      "stopProcessing": "Stop processing",
+      "require_confirmation": "Confirm",
+      "returnFromSpam": "Return from spam",
+      "refuse": "Refuse",
+      "activate": "Activate",
+      "add": "Add",
+      "reset": "Clear"
+    },
+    "modal": {
+      "requestChangesTitle": "Send for improvement",
+      "spamTitle": "Move to spam",
+      "refuse": "Refuse reason",
+      "editTitle": "Edit application"
+    }
+  },
+  "Status": {
+    "New": "New",
+    "InProcessing": "In processing",
+    "NeedsImprovement": "Needs improvement",
+    "Spam": "Spam",
+    "SuperManagerConfirmation": "Waiting confirmation",
+    "Active": "Active",
+    "Archived": "Archived",
+    "Refused": "Refused",
+    "Deleted": "Deleted",
+    "UserConfirmation": "Waiting activation"
+  }
+}

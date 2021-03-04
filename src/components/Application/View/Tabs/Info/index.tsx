@@ -60,11 +60,11 @@ const Actions: FC<{
           </Button>
         )}
 
-      {editable && <Button onClick={onClose}>{t("cancel")}</Button>}
+      {editable && <Button onClick={onClose}>{t("translation:cancel")}</Button>}
 
       {editable && (
         <Button onClick={saveAndClose} loading={loading} type="primary">
-          {t("save")}
+          {t("translation:save")}
         </Button>
       )}
     </Space>

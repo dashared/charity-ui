@@ -24,6 +24,19 @@
       "faq": "FAQ"
     }
   },
+  "LeftBar": {
+    "Applications": "Заявки",
+    "Managers": "Менеджеры",
+    "Transactions": "Транзакции",
+    "Fund": "Фонд",
+    "Fund_nested": {
+      "Description": "Описание",
+      "FAQ": "FAQ"
+    },
+    "Users": "Пользователи",
+    "Logs": "Логи",
+    "Settings": "Настройки"
+  },
   "cancel": "Отменить",
   "edit": "Изменить",
   "save": "Сохранить"

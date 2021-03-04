@@ -1,0 +1,19 @@
+{
+  "title": "Login",
+  "email": "Email",
+  "error": "Invalid email or password! {{ error }}",
+  "denied": "You do not have sufficient rights to authorize",
+  "password": "Password",
+  "rememberMe": "Remember me",
+  "login": "Login",
+  "forgotPassword": "Forgot password",
+  "messages": {
+    "enterEmail": "Enter your email",
+    "enterPassword": "Enter your password"
+  },
+  "logout": "Logout",
+  "message": {
+    "title": "If you are not a fund worker",
+    "link": "download the mobile application"
+  }
+}
