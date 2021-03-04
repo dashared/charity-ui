@@ -1,0 +1,43 @@
+{
+  "Pagination": {
+    "showTotal": "Show {{from}}-{{to}} out of {{total}}"
+  },
+  "Button": {
+    "edit": "Edit",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "Landing": {
+    "title": "Charity CRM",
+    "description": "CRM for automating the Fund's business processes. Our goal is to ensure transparency of actions. We strive to be open and honest about donations.",
+    "login": "Authorization",
+    "data": {
+      "fund": "About fund",
+      "fDescription": "A non-profit organization whose purpose is to raise funds for needs.",
+      "donee": "Donee",
+      "dDescription": "People who have found themselves in one or another critical situation in life. They really need your help!",
+      "transactions": "Transactions",
+      "tDescription": "We strive for a transparent money transfer process. Transactions are based on blockchain technology."
+    },
+    "footer": {
+      "contacts": "About fund",
+      "faq": "FAQ"
+    }
+  },
+  "LeftBar": {
+    "Applications": "Applications",
+    "Managers": "Managers",
+    "Transactions": "Transactions",
+    "Fund": "Fund",
+    "Fund_nested": {
+      "Description": "Description",
+      "FAQ": "FAQ"
+    },
+    "Users": "Users",
+    "Logs": "Logs",
+    "Settings": "Settings"
+  },
+  "cancel": "Cancel",
+  "edit": "Edit",
+  "save": "Save"
+}

@@ -1,0 +1,15 @@
+{
+  "title": "Settings",
+  "personal": "Personal info",
+  "language": "Language settings",
+  "first_name": "Name",
+  "middle_name": "Second name",
+  "last_name": "Surname",
+  "info": "information",
+  "email": "Email",
+  "updateButton": "Update info",
+  "languageSetting": {
+    "russian": "Russian",
+    "english": "English"
+  }
+}

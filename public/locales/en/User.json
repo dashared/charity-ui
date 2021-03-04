@@ -1,0 +1,25 @@
+{
+  "title": "Information about user",
+  "first_name": "Name",
+  "middle_name": "Second name",
+  "last_name": "Surname",
+  "city": "City",
+  "country": "Country",
+  "phone": "Phone number",
+  "email": "Email",
+  "credentials": "Full name",
+  "roles": "Roles",
+  "created_at": "Creation date",
+  "birthday": "Birth date",
+  "uuid": "ID",
+  "$views": {
+    "tab": {
+      "info": "Main info",
+      "sessions": "Sessions",
+      "applications": "Applications history"
+    },
+    "buttons": {
+      "visitPage": "Visit page"
+    }
+  }
+}

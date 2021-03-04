@@ -4,7 +4,6 @@ import { useTranslation } from "@providers";
 import useAxios, { UserRequestFactory } from "@providers/axios";
 
 import RoleTag from "components/User/Role/tag";
-// import { IdComponent } from "@typings/component";
 
 const layout = {
   labelCol: { span: 6 },
