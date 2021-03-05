@@ -358,8 +358,54 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/File.Response"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/File.Info"
+              }
             }
+          }
+        }
+      }
+    },
+    "/api/file/{id}": {
+      "get": {
+        "consumes": ["application/octet-stream"],
+        "tags": ["File"],
+        "summary": "Gets the info about file",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "File Id",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/File.Info"
+            }
+          }
+        }
+      }
+    },
+    "/api/file/{id}/download": {
+      "get": {
+        "produces": ["application/octet-stream"],
+        "tags": ["File"],
+        "summary": "Gets the binary representation of a file",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "File Id",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
           }
         }
       }
@@ -756,6 +802,12 @@
         "assignee": {
           "$ref": "#/definitions/User.User"
         },
+        "attached_files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/File.Info"
+          }
+        },
         "author": {
           "$ref": "#/definitions/User.User"
         },
@@ -785,12 +837,6 @@
         },
         "donee": {
           "$ref": "#/definitions/User.SimpleUser"
-        },
-        "file_id": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         },
         "id": {
           "type": "integer"
@@ -942,11 +988,11 @@
         "relationship": {
           "type": "string"
         },
-        "request_amount": {
-          "$ref": "#/definitions/utils.MoneyJson"
-        },
         "request_type": {
           "type": "string"
+        },
+        "requested_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
         },
         "title": {
           "type": "string"
@@ -1057,13 +1103,19 @@
         }
       }
     },
-    "File.Response": {
+    "File.Info": {
       "type": "object",
       "properties": {
-        "createdAt": {
+        "created_at": {
           "type": "string"
         },
         "id": {
+          "type": "string"
+        },
+        "mime_type": {
+          "type": "string"
+        },
+        "title": {
           "type": "string"
         }
       }

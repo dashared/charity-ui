@@ -60,16 +60,16 @@ export interface DonationRequestInput {
     relationship?: string;
     /**
      * 
-     * @type {UtilsMoneyJson}
-     * @memberof DonationRequestInput
-     */
-    request_amount?: UtilsMoneyJson;
-    /**
-     * 
      * @type {string}
      * @memberof DonationRequestInput
      */
     request_type?: string;
+    /**
+     * 
+     * @type {UtilsMoneyJson}
+     * @memberof DonationRequestInput
+     */
+    requested_amount?: UtilsMoneyJson;
     /**
      * 
      * @type {string}

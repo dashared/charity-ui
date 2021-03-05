@@ -49,7 +49,7 @@ const CreatePage: FC<{ onCreate: (values: DonationRequestInput) => void }> = ({
     beforeUpload(file: RcFile) {
       FileFactory.apiFileUploadPost(file)
         .then((r) => {
-          setIds(ids.concat([r.data.id ?? ""]));
+          setIds(ids.concat(r.data.map((value) => value.id ?? "")));
         })
         .catch((e) => {
           console.error(e);

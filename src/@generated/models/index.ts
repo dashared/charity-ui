@@ -15,7 +15,7 @@ export * from './donation-request-response';
 export * from './donation-request-status-history';
 export * from './donation-request-update-input';
 export * from './donation-request-update-status-input';
-export * from './file-response';
+export * from './file-info';
 export * from './user-balance';
 export * from './user-response';
 export * from './user-simple-user';
