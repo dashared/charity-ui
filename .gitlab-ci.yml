@@ -33,7 +33,6 @@ docker-build:
     - >
       if [ "$CI_COMMIT_REF_NAME" == "master" ]; then
         docker-compose down -v
-        docker image rm ${IMAGE_TAG}
       fi
     - docker-compose build --pull
     - docker-compose push
@@ -45,7 +44,6 @@ deploy-docker:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - echo "IMAGE_APP_TAG=$IMAGE_TAG" >> .env
     - docker-compose down -v
-    - docker image rm ${IMAGE_TAG}
     - docker-compose pull
     - docker-compose up -d
     - docker logout
