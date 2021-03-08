@@ -7,7 +7,7 @@
   "assignee": "Manager",
   "comment": "Comment",
   "file": "File",
-  "downloadDate": "Date and time of downloading",
+  "uploadDate": "Uploaded at",
   "status": "Status",
   "type": "Type",
   "author": "Author",
@@ -19,10 +19,12 @@
   "authorRole": "Author's role",
   "createPageTitle": "Create application",
   "$views": {
-    "updateStatus": "Status updated successfully!",
+    "updateStatus": "Status updated successfully",
     "select_assignee": "Select the manager",
     "title": "Application № {{ id }} {{ title }}",
     "createApplication": "Create",
+    "download": "Download",
+    "createSuccess": "Application is successfully created",
     "createPage": {
       "title": "Title",
       "description": "Description",
@@ -35,7 +37,7 @@
       "relationship": "Relationship with creator",
       "donee": "Create an application for somebody",
       "dragger": {
-        "title": "Download document(s)",
+        "title": "Upload document(s)",
         "description": "These files will be available only to the fund"
       }
     },

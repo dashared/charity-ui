@@ -1,14 +1,15 @@
 import React, { FC } from "react";
-import { Space } from "antd";
+import { useTranslation } from "react-i18next";
+import { Button } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
+import { FileInfo as Single } from "@generated";
 import RegistryTable from "@lib/components/RegistryTable";
 import { useListSelection } from "@lib/hooks";
+import { formatDate } from "@lib/utils";
 
-type File = {
-  fileName: string;
-};
+export const FilesTab: FC<{ files: Single[] }> = ({ files }) => {
+  const { t } = useTranslation("Application");
 
-export const FilesTab: FC<{ files: string[] }> = ({ files }) => {
   const {
     isTarget,
     isSelected,
@@ -19,25 +20,33 @@ export const FilesTab: FC<{ files: string[] }> = ({ files }) => {
   const columns = [
     {
       key: "file",
-      render(record: File) {
-        return record.fileName;
+      render(record: Single) {
+        return `${record.title}${
+          record.mime_type ? `.${record.mime_type}` : ""
+        }`;
       },
     },
     {
-      key: "downloadDate",
-      name: "",
-      render() {
-        return "2019-04-24 18:00:00";
+      key: "uploadDate",
+      width: "20%",
+      render(record: Single) {
+        return formatDate(record.created_at);
       },
     },
     {
       key: "",
       name: "actions",
-      render() {
+      width: "10%",
+      render(record: Single) {
         return (
-          <Space>
-            <DownloadOutlined></DownloadOutlined>
-          </Space>
+          <Button
+            type="link"
+            icon={<DownloadOutlined />}
+            target="_blank"
+            href={`${process.env.REACT_APP_API_URL}/api/file/${record.id}/download`}
+          >
+            {t("$views.download")}
+          </Button>
         );
       },
     },
@@ -47,9 +56,8 @@ export const FilesTab: FC<{ files: string[] }> = ({ files }) => {
     <RegistryTable
       entity="Application"
       columns={columns}
-      rows={files.map((f) => {
-        return { fileName: f };
-      })} // TODO
+      // eslint-disable-next-line
+      rows={files as Record<string, any>[]} // TODO
       rowState={(record, index) => ({
         selected: isSelected(index),
         target: isTarget(index),

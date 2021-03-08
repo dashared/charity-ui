@@ -13,6 +13,7 @@
  */
 
 
+import { FileInfo } from './file-info';
 import { UserSimpleUser } from './user-simple-user';
 import { UserUser } from './user-user';
 import { UtilsMoneyJson } from './utils-money-json';
@@ -43,6 +44,12 @@ export interface DonationRequestBody {
     assignee?: UserUser;
     /**
      * 
+     * @type {Array<FileInfo>}
+     * @memberof DonationRequestBody
+     */
+    attached_files?: Array<FileInfo>;
+    /**
+     * 
      * @type {UserUser}
      * @memberof DonationRequestBody
      */
@@ -71,12 +78,6 @@ export interface DonationRequestBody {
      * @memberof DonationRequestBody
      */
     donee?: UserSimpleUser;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof DonationRequestBody
-     */
-    file_id?: Array<string>;
     /**
      * 
      * @type {number}

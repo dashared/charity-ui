@@ -19,13 +19,99 @@ import { Configuration } from '../configuration';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { FileResponse } from '../models';
+import { FileInfo } from '../models';
 /**
  * FileApi - axios parameter creator
  * @export
  */
 export const FileApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @summary Gets the binary representation of a file
+         * @param {string} id File Id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFileIdDownloadGet: async (id: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling apiFileIdDownloadGet.');
+            }
+            const localVarPath = `/api/file/{id}/download`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            const queryParameters = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                queryParameters.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                queryParameters.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Gets the info about file
+         * @param {string} id File Id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFileIdGet: async (id: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError('id','Required parameter id was null or undefined when calling apiFileIdGet.');
+            }
+            const localVarPath = `/api/file/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            const queryParameters = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                queryParameters.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                queryParameters.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Uploads given file
@@ -83,12 +169,40 @@ export const FileApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Gets the binary representation of a file
+         * @param {string} id File Id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiFileIdDownloadGet(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await FileApiAxiosParamCreator(configuration).apiFileIdDownloadGet(id, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary Gets the info about file
+         * @param {string} id File Id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiFileIdGet(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileInfo>> {
+            const localVarAxiosArgs = await FileApiAxiosParamCreator(configuration).apiFileIdGet(id, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @summary Uploads given file
          * @param {object} [file] File
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiFileUploadPost(file?: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileResponse>> {
+        async apiFileUploadPost(file?: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FileInfo>>> {
             const localVarAxiosArgs = await FileApiAxiosParamCreator(configuration).apiFileUploadPost(file, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -106,16 +220,64 @@ export const FileApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
+         * @summary Gets the binary representation of a file
+         * @param {string} id File Id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFileIdDownloadGet(id: string, options?: any): AxiosPromise<void> {
+            return FileApiFp(configuration).apiFileIdDownloadGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Gets the info about file
+         * @param {string} id File Id
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiFileIdGet(id: string, options?: any): AxiosPromise<FileInfo> {
+            return FileApiFp(configuration).apiFileIdGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Uploads given file
          * @param {object} [file] File
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiFileUploadPost(file?: object, options?: any): AxiosPromise<FileResponse> {
+        apiFileUploadPost(file?: object, options?: any): AxiosPromise<Array<FileInfo>> {
             return FileApiFp(configuration).apiFileUploadPost(file, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for apiFileIdDownloadGet operation in FileApi.
+ * @export
+ * @interface FileApiApiFileIdDownloadGetRequest
+ */
+export interface FileApiApiFileIdDownloadGetRequest {
+    /**
+     * File Id
+     * @type {string}
+     * @memberof FileApiApiFileIdDownloadGet
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for apiFileIdGet operation in FileApi.
+ * @export
+ * @interface FileApiApiFileIdGetRequest
+ */
+export interface FileApiApiFileIdGetRequest {
+    /**
+     * File Id
+     * @type {string}
+     * @memberof FileApiApiFileIdGet
+     */
+    readonly id: string
+}
 
 /**
  * Request parameters for apiFileUploadPost operation in FileApi.
@@ -138,6 +300,30 @@ export interface FileApiApiFileUploadPostRequest {
  * @extends {BaseAPI}
  */
 export class FileApi extends BaseAPI {
+    /**
+     * 
+     * @summary Gets the binary representation of a file
+     * @param {FileApiApiFileIdDownloadGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FileApi
+     */
+    public apiFileIdDownloadGet(requestParameters: FileApiApiFileIdDownloadGetRequest, options?: any) {
+        return FileApiFp(this.configuration).apiFileIdDownloadGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Gets the info about file
+     * @param {FileApiApiFileIdGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FileApi
+     */
+    public apiFileIdGet(requestParameters: FileApiApiFileIdGetRequest, options?: any) {
+        return FileApiFp(this.configuration).apiFileIdGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Uploads given file

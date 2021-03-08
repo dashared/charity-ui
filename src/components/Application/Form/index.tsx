@@ -1,20 +1,10 @@
 import React, { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  Button,
-  Card,
-  Divider,
-  Form,
-  Input,
-  message,
-  Space,
-  Upload,
-} from "antd";
+import { Button, Card, Divider, Form, Input, Space, Upload } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import { RcFile } from "antd/lib/upload/interface";
+import { RcCustomRequestOptions } from "antd/lib/upload/interface";
 import { InboxOutlined } from "@ant-design/icons";
-import { DonationRequestInput } from "@generated";
-import { FileFactory } from "@providers/axios";
+import { DonationRequestInput, FileInfo } from "@generated";
 
 import RelationshipSelect from "./relationship_select";
 
@@ -46,17 +36,28 @@ const CreatePage: FC<{ onCreate: (values: DonationRequestInput) => void }> = ({
     name: "file",
     multiple: true,
     defaultFileList: [],
-    beforeUpload(file: RcFile) {
-      FileFactory.apiFileUploadPost(file)
-        .then((r) => {
-          setIds(ids.concat([r.data.id ?? ""]));
-        })
-        .catch((e) => {
-          console.error(e);
-          message.error(t("$views.createPage.dragger.fileUploadError"));
-        });
+    customRequest(options: RcCustomRequestOptions) {
+      const { file, onError, onSuccess } = options;
 
-      return false;
+      const url = `${process.env.REACT_APP_API_URL}/api/file/upload`;
+
+      const formData = new FormData();
+      formData.append("file", file as Blob);
+      const request = new XMLHttpRequest();
+
+      request.open("POST", url);
+      request.send(formData);
+
+      request.onload = function () {
+        if (request.status === 200) {
+          const parsed: FileInfo[] = JSON.parse(request.responseText);
+          setIds(ids.concat(parsed.map((value) => value.id ?? "")));
+
+          return onSuccess(parsed, file);
+        } else {
+          return onError(Error(request.statusText));
+        }
+      };
     },
   };
 
