@@ -19,10 +19,11 @@ import { Actions } from "components/Application/Buttons/create";
 import StatusTag, {
   ApplicationStatus,
 } from "components/Application/Status/tag";
+import RoleTag from "components/User/Role/tag";
 
 import styles from "./styles.module.less";
 
-const ApplicationsPage: FC = () => {
+const ProcessingApplicationsPage: FC = () => {
   const {
     isTarget,
     isSelected,
@@ -66,27 +67,50 @@ const ApplicationsPage: FC = () => {
       },
     },
     {
-      key: "author",
-      name: t("author"),
+      key: "createdAt",
       render(record: Single) {
-        const { first_name, middle_name, last_name } = { ...record.author };
+        return format(record.created_at);
+      },
+    },
+    {
+      key: "assignee",
+      render(record: Single) {
+        const { first_name, middle_name, last_name } = { ...record.assignee };
         return cred(first_name, middle_name, last_name);
       },
     },
     {
-      key: "createdAt",
-      name: t("createdAt"),
+      key: "assignee_status",
       render(record: Single) {
-        return format(record.created_at);
+        return (
+          <RoleTag
+            roles={record.assignee?.role ? [record.assignee?.role] : []}
+          />
+        );
       },
     },
   ];
 
   return (
-    <Workspace noRefresh title={t("listTitle_all")} actions={<Actions />}>
+    <Workspace
+      noRefresh
+      title={t("listTitle_processing")}
+      actions={<Actions />}
+    >
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
         requestQuery={DonationRequestFactory.apiDonationRequestGet}
+        variables={{
+          sort: "",
+          author: null,
+          assignee: null,
+          status: [
+            ApplicationStatus.InProcessing,
+            ApplicationStatus.NeedsImprovement,
+            ApplicationStatus.SuperManagerConfirmation,
+            ApplicationStatus.UserConfirmation,
+          ],
+        }}
         stateRef={paginationState}
         onResult={(result) => {
           setList(result.data ?? []);
@@ -113,6 +137,8 @@ const ApplicationsPage: FC = () => {
   );
 };
 
+export const name = "applications:processing";
+
 export const pageComponent: FC = () => (
   <AuthConsumer>
     {({ user }) => {
@@ -120,7 +146,7 @@ export const pageComponent: FC = () => (
         <RoleSwitch
           role={user.role}
           perform="applications:index"
-          yes={() => <ApplicationsPage />}
+          yes={() => <ProcessingApplicationsPage />}
           no={() => <Redirect name="home"></Redirect>}
         />
       );

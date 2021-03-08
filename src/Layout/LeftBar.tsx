@@ -77,10 +77,24 @@ const LeftBar: FC = () => {
       display: (
         <>
           <FolderOpenOutlined />
-          <span>{i18n.t("LeftBar.Applications")}</span>
+          <span>{i18n.t("LeftBar.Applications.title")}</span>
         </>
       ),
       name: "applications:index",
+      nested: [
+        {
+          display: <span>{i18n.t("LeftBar.Applications.All")}</span>,
+          name: "applications:index",
+        },
+        {
+          display: <span>{i18n.t("LeftBar.Applications.Processing")}</span>,
+          name: "applications:processing",
+        },
+        {
+          display: <span>{i18n.t("LeftBar.Applications.Active")}</span>,
+          name: "applications:active",
+        },
+      ],
     },
 
     {

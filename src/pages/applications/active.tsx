@@ -1,4 +1,5 @@
 import React, { FC, useRef } from "react";
+import { Progress } from "antd";
 import { Link } from "@curi/react-dom";
 import {
   DonationRequestBody as Single,
@@ -8,8 +9,9 @@ import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useListSelection } from "@lib/hooks";
+import { formatDate } from "@lib/utils";
+import { moneyCollected } from "@lib/utils/currency";
 import { format } from "@lib/utils/date";
-import { cred } from "@lib/utils/name";
 import { useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import { DonationRequestFactory } from "@providers/axios";
@@ -22,7 +24,7 @@ import StatusTag, {
 
 import styles from "./styles.module.less";
 
-const ApplicationsPage: FC = () => {
+const ProcessingApplicationsPage: FC = () => {
   const {
     isTarget,
     isSelected,
@@ -47,6 +49,7 @@ const ApplicationsPage: FC = () => {
     },
     {
       key: "title",
+      width: "35%",
       render(record: Single) {
         return record.title;
       },
@@ -66,27 +69,40 @@ const ApplicationsPage: FC = () => {
       },
     },
     {
-      key: "author",
-      name: t("author"),
+      key: "createdAt",
       render(record: Single) {
-        const { first_name, middle_name, last_name } = { ...record.author };
-        return cred(first_name, middle_name, last_name);
+        return format(record.created_at);
       },
     },
     {
-      key: "createdAt",
-      name: t("createdAt"),
+      key: "collected",
       render(record: Single) {
-        return format(record.created_at);
+        const percent = moneyCollected(
+          record.approved_amount,
+          record.received_amount,
+        );
+        return percent ? <Progress percent={10} /> : "-";
+      },
+    },
+    {
+      key: "until",
+      render(record: Single) {
+        return <span>{formatDate(record.until)}</span>;
       },
     },
   ];
 
   return (
-    <Workspace noRefresh title={t("listTitle_all")} actions={<Actions />}>
+    <Workspace noRefresh title={t("listTitle_active")} actions={<Actions />}>
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
         requestQuery={DonationRequestFactory.apiDonationRequestGet}
+        variables={{
+          sort: "",
+          author: null,
+          assignee: null,
+          status: [ApplicationStatus.Active],
+        }}
         stateRef={paginationState}
         onResult={(result) => {
           setList(result.data ?? []);
@@ -113,6 +129,8 @@ const ApplicationsPage: FC = () => {
   );
 };
 
+export const name = "applications:active";
+
 export const pageComponent: FC = () => (
   <AuthConsumer>
     {({ user }) => {
@@ -120,7 +138,7 @@ export const pageComponent: FC = () => (
         <RoleSwitch
           role={user.role}
           perform="applications:index"
-          yes={() => <ApplicationsPage />}
+          yes={() => <ProcessingApplicationsPage />}
           no={() => <Redirect name="home"></Redirect>}
         />
       );
