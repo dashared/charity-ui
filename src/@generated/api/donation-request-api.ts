@@ -85,10 +85,6 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
         localVarQueryParameter['assignee'] = assignee;
       }
 
-      if (status) {
-        localVarQueryParameter['status'] = status;
-      }
-
       if (type) {
         localVarQueryParameter['type'] = type;
       }
@@ -102,6 +98,12 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
       const queryParameters = new URLSearchParams(localVarUrlObj.search);
       for (const key in localVarQueryParameter) {
         queryParameters.set(key, localVarQueryParameter[key]);
+      }
+      // status=a&status=b
+      if (status) {
+        for (const index in status) {
+          queryParameters.append('status', status[index]);
+        }
       }
       for (const key in options.query) {
         queryParameters.set(key, options.query[key]);

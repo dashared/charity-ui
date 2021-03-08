@@ -26,7 +26,13 @@
     }
   },
   "LeftBar": {
-    "Applications": "Applications",
+    "Applications": {
+      "title": "Applications",
+      "All": "All",
+      "Active": "Active",
+      "Processing": "Processing",
+      "Archived": "Archived"
+    },
     "Managers": "Managers",
     "Transactions": "Transactions",
     "Fund": "Fund",

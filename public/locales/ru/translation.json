@@ -26,7 +26,13 @@
     }
   },
   "LeftBar": {
-    "Applications": "Заявки",
+    "Applications": {
+      "title": "Заявки",
+      "All": "Все",
+      "Active": "Активные",
+      "Processing": "В обработке",
+      "Archived": "Архивированные"
+    },
     "Managers": "Менеджеры",
     "Transactions": "Транзакции",
     "Fund": "Фонд",
