@@ -22,7 +22,8 @@
     },
     "footer": {
       "contacts": "О фонде",
-      "faq": "FAQ"
+      "faq": "FAQ",
+      "app": "Android приложение"
     }
   },
   "LeftBar": {
