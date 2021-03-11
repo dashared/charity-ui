@@ -8,8 +8,7 @@ export default function Header(props) {
     <header {...props}>
       <div className="logo-wrapper">
         <Link name="home">
-          <i className="logo" />
-          <span>Charity CRM</span>
+          <i className="logo" /> <span>Charity CRM</span>
         </Link>
       </div>
       <div className="buttons">
