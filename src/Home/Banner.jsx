@@ -3,6 +3,7 @@ import { i18n } from "@providers";
 import PropTypes from "prop-types";
 import QueueAnim from "rc-queue-anim";
 import { Element } from "rc-scroll-anim";
+import { withTranslation } from "react-i18next";
 
 import BannerImage from "./BannerImage";
 import { assets } from "./data";
@@ -53,4 +54,4 @@ class Banner extends React.PureComponent {
   }
 }
 
-export default Banner;
+export default withTranslation()(Banner);

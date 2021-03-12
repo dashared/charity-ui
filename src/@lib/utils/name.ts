@@ -17,7 +17,9 @@ export function fullName(
   middleName?: string,
   lastName?: string,
 ): string {
-  return `${`${lastName} ` ?? ""}${` ${firstName}` ?? ""}${
-    ` ${middleName}` ?? ""
-  }`;
+  const lName = lastName ? `${lastName} ` : "";
+  const fName = firstName ? ` ${firstName}` : "";
+  const mName = middleName ? ` ${middleName}` : "";
+
+  return lName + fName + mName;
 }
