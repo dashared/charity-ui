@@ -59,7 +59,13 @@ class Auth extends Component {
       })
       .catch((e) => {
         console.error(e);
-        notify(i18n.t("Login:error", { error: e.message }), "error");
+        if (e.response.status === 404) {
+          notify(i18n.t("Login:error.404"), "error");
+        } else if (e.response.status === 401) {
+          notify(i18n.t("Login:error.401"), "error");
+        } else {
+          notify(i18n.t("Login:error.undefined"), "error");
+        }
       });
   };
 
@@ -126,7 +132,7 @@ class Auth extends Component {
     const role = mapRole(headerData.role); // TODO: remove
 
     if (role === Role.visitor) {
-      notify(i18n.t("Login:denied"));
+      notify(i18n.t("Login:error.denied"));
       return;
     }
 
@@ -172,7 +178,7 @@ class Auth extends Component {
 
           if (!headerData) {
             this.logout();
-            return Promise.reject();
+            return Promise.reject(response);
           }
 
           const { token, exp: expires } = headerData;
