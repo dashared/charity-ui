@@ -5,19 +5,12 @@ import {
   FileOutlined,
   InfoCircleOutlined,
   MessageOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
 import { DonationRequestBody } from "@generated";
 import { useTranslation } from "@providers";
 
 // import { DonationRequestFactory } from "@providers/axios";
-import {
-  CommentTab,
-  DoneeInfoTab,
-  FilesTab,
-  GeneralInfoTab,
-  LogsTab,
-} from "./Tabs";
+import { CommentTab, FilesTab, GeneralInfoTab, LogsTab } from "./Tabs";
 
 const { TabPane } = Tabs;
 
@@ -58,7 +51,7 @@ const ApplicationView = React.forwardRef<RefType, PropsType>((props, ref) => {
           <GeneralInfoTab info={donation} onRefetch={onRefetch} />
         </TabPane>
 
-        <TabPane
+        {/* <TabPane
           tab={
             <Tooltip title={t("$views.tabs.doneeInfoTitle")}>
               <UserOutlined />
@@ -71,7 +64,7 @@ const ApplicationView = React.forwardRef<RefType, PropsType>((props, ref) => {
             donee={donation.donee ?? donation.author}
             relationship={donation.relationship}
           />
-        </TabPane>
+        </TabPane> */}
 
         <TabPane
           tab={

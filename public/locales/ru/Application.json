@@ -27,6 +27,8 @@
   "createPageTitle": "Создание заявки",
   "$views": {
     "updateStatus": "Успешно обновлен статус заявки",
+    "update_success": "Заявка успешно обновлена",
+    "update_error": "Ошибка обновления заявки, попробуйте позже",
     "select_assignee": "Выберите менеджера",
     "title": "Заявка № {{ id }} {{ title }}",
     "createApplication": "Создать",
@@ -78,7 +80,9 @@
       "country": "Страна",
       "birthday": "Дата рождения",
       "phone": "Телефон",
+      "donee": "Нуждающийся",
       "relationship": "Отношения с заявителем",
+      "donee_fullname": "ФИО",
       "message": "Сообщение",
       "enterMessage": "Введите сообщение пользователю",
       "assignee": "Менеджер",

@@ -10,6 +10,7 @@
   "rememberMe": "Запомнить меня",
   "login": "Войти",
   "forgotPassword": "Не помню пароль",
+  "forgotPassword_message": "Пожалуйста, свяжитесь с администратором CRM",
   "messages": {
     "enterEmail": "Введите, пожалуйста, Вашу почту",
     "enterPassword": "Введите, пожалуйста, пароль"

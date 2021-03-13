@@ -27,6 +27,8 @@
   "createPageTitle": "Create application",
   "$views": {
     "updateStatus": "Status updated successfully",
+    "update_success": "Application info updated successfully",
+    "update_error": "Error updating aplication, try again",
     "select_assignee": "Select the manager",
     "title": "Application № {{ id }} {{ title }}",
     "createApplication": "Create",
@@ -78,6 +80,8 @@
       "country": "Country",
       "birthday": "Birth date",
       "phone": "Phone number",
+      "donee": "Donee",
+      "donee_fullname": "Full name",
       "relationship": "Relationship with application creator",
       "message": "Message",
       "enterMessage": "Enter a message to the user",

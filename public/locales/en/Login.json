@@ -10,6 +10,7 @@
   "rememberMe": "Remember me",
   "login": "Login",
   "forgotPassword": "Forgot password",
+  "forgotPassword_message": "Please, contact the CRM administrator",
   "messages": {
     "enterEmail": "Enter your email",
     "enterPassword": "Enter your password"

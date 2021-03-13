@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Button, Card, Checkbox, Form, Input, Row, Typography } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { LockOutlined, UserOutlined, WarningOutlined } from "@ant-design/icons";
+import { notify } from "@lib/utils/notification";
 import { Credentials } from "@providers/authContext";
 
 import styles from "./styles.module.less";
@@ -63,15 +64,29 @@ const LoginForm: FC<LoginProps> = ({ onLogin }) => {
                 <Checkbox>{t("rememberMe")}</Checkbox>
               </Form.Item>
 
-              <a className={styles.forgot} href="">
+              <Button
+                size="small"
+                type="link"
+                className={styles.forgot}
+                onClick={() => {
+                  notify(t("forgotPassword_message"), "warning");
+                }}
+              >
                 {t("forgotPassword")}
-              </a>
+              </Button>
             </Form.Item>
 
             <div className={styles.desc}>
               <Paragraph>
                 <WarningOutlined className={styles.icon} /> {t("message.title")}
-                <a> {t("message.link")} &gt;</a>
+                <a
+                  target="_blank"
+                  href="https://play.google.com/store/apps/details?id=com.hse.charity"
+                  rel="noopener noreferrer"
+                >
+                  {" "}
+                  {t("message.link")} &gt;
+                </a>
               </Paragraph>
             </div>
 

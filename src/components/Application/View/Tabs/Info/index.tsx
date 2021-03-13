@@ -24,6 +24,7 @@ import AssigneeSelect from "components/Assignee/Select";
 import RoleTag from "components/User/Role/tag";
 
 import UserPreview from "../../../../User/Drawer";
+import { DoneeInfo } from "../Donee";
 
 const Actions: FC<{
   status?: ApplicationStatus;
@@ -83,6 +84,8 @@ export const GeneralInfo: FC<{
 }> = ({ info, onRefetch }) => {
   const [visible, setVisible] = useState(false);
 
+  const { t } = useTranslation("Application");
+
   const [editable, setEditable] = useState<boolean>(false);
 
   const [initialInfo, updateInfo] = useState<EditableInfo>({
@@ -93,24 +96,27 @@ export const GeneralInfo: FC<{
 
   const onSave = useCallback(
     async (updInfo: EditableInfo) => {
-      // TODO: api call
-      console.log(updInfo);
-      await DonationRequestFactory.apiDonationRequestIdPatch(info.id ?? 0, {
-        approved_amount: {
-          currency: "RUB",
-          numerator:
-            updInfo.approvedAmount === null ? 0 : updInfo.approvedAmount,
-          denominator: 1,
-        },
-        until: updInfo.endTime,
-        assignee_id: updInfo.assigneeId,
-      });
-      onRefetch();
-    },
-    [onRefetch, info],
-  );
+      try {
+        await DonationRequestFactory.apiDonationRequestIdPatch(info.id ?? 0, {
+          approved_amount: {
+            currency: "RUB",
+            numerator: updInfo.approvedAmount,
+            denominator: 1,
+          },
+          until: updInfo.endTime,
+          assignee_id: updInfo.assigneeId,
+        });
 
-  const { t } = useTranslation("Application");
+        notify(t("$views.update_success"), "success");
+      } catch (e) {
+        console.error(e);
+        notify(t("$views.update_error"), "error");
+      } finally {
+        onRefetch();
+      }
+    },
+    [onRefetch, t, info],
+  );
 
   return (
     <>
@@ -236,6 +242,8 @@ export const GeneralInfo: FC<{
           </Descriptions.Item>
         )}
       </Descriptions>
+      <br />
+      <DoneeInfo donee={info.donee} relationship={info.relationship} />
       {visible && (
         <UserPreview
           visible={visible}
