@@ -58,11 +58,8 @@ class Auth extends Component {
         this.handleAuthentication(headerData); // TODO: replace
       })
       .catch((e) => {
-        console.error(e);
-        if (e.response.status === 404) {
-          notify(i18n.t("Login:error.404"), "error");
-        } else if (e.response.status === 401) {
-          notify(i18n.t("Login:error.401"), "error");
+        if (e.response.status === 404 || e.response.status === 401) {
+          notify(i18n.t(`Login:error.${e.response.status}`), "error");
         } else {
           notify(i18n.t("Login:error.undefined"), "error");
         }
@@ -164,10 +161,7 @@ class Auth extends Component {
       async (response) => {
         const originalResponce = response.config;
 
-        if (
-          originalResponce.url ===
-          `${process.env.REACT_APP_API_URL}/api/login/refresh`
-        ) {
+        if (originalResponce.url === `/api/login/refresh`) {
           return response;
         }
 
@@ -198,10 +192,7 @@ class Auth extends Component {
       async (error) => {
         const originalRequest = error.config;
 
-        if (
-          originalRequest.url ===
-          `${process.env.REACT_APP_API_URL}/api/login/refresh`
-        ) {
+        if (originalRequest.url === `/api/login/refresh`) {
           return Promise.reject(error);
         }
 
