@@ -5,6 +5,12 @@
   "role": "Roles",
   "email": "Email",
   "blocked": "Blocked",
+  "filter": {
+    "roles": "Filter user by role"
+  },
+  "sort": {
+    "roles": "Sort roles"
+  },
   "createdAt": "Registration date",
   "Role": {
     "Manager": "Manager",

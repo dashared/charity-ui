@@ -67,7 +67,7 @@ export const ApplicationsTab: FC<{ userId: string }> = ({ userId }) => {
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         //className={styles.pagination}
         requestQuery={DonationRequestFactory.apiDonationRequestGet}
-        variables={{ author: [userId] }}
+        variables={{ sort: "", author: [userId] }}
         stateRef={paginationState}
         onResult={(result) => {
           setList(result.data ?? []);

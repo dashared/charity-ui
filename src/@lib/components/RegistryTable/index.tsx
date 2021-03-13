@@ -19,6 +19,7 @@ export type RegistryColumnConf<Element> = {
     | "Text"
     | "DateTime";
   width?: string;
+  sortOrder?: "descend" | "ascend";
 };
 
 export type RegistryRowState = {
@@ -76,7 +77,13 @@ function buildSingleColumn<Element>(
   const title = column.title ?? t(column.key);
   const render = cellRenderer(t, key, column.render);
 
-  return { key, title, render, width: column.width };
+  return {
+    key,
+    title,
+    render,
+    width: column.width,
+    sortOrder: column.sortOrder,
+  };
 }
 
 function buildColumns<Element>(

@@ -143,7 +143,7 @@ function InnerPaginatedQuery<
     refetch,
     ...Object.values(
       variables
-        ? { page: page - 1, size, sort: "", ...variables }
+        ? { page: page - 1, size, ...variables }
         : { page: page - 1, size, sort: "" },
     ),
   );

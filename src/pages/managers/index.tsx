@@ -109,6 +109,7 @@ const ManagersPage: FC = () => {
         className={styles.pagination}
         requestQuery={UserRequestFactory.apiUserGet}
         variables={{
+          sort: "",
           role: [
             UserApiRole.ContentManager,
             UserApiRole.SuperManager,
