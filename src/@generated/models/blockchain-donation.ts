@@ -13,6 +13,7 @@
  */
 
 
+import { AuthUnregisteredUser } from './auth-unregistered-user';
 import { DonationRequestDonationRequest } from './donation-request-donation-request';
 import { UserUser } from './user-user';
 import { UtilsMoneyJson } from './utils-money-json';
@@ -59,6 +60,12 @@ export interface BlockchainDonation {
      * @memberof BlockchainDonation
      */
     id?: string;
+    /**
+     * 
+     * @type {AuthUnregisteredUser}
+     * @memberof BlockchainDonation
+     */
+    unverified_author?: AuthUnregisteredUser;
 }
 
 

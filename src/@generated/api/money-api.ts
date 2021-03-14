@@ -19,9 +19,9 @@ import { Configuration } from '../configuration';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { BlockchainDeposit } from '../models';
+import { ControllersDeposit } from '../models';
 // @ts-ignore
-import { BlockchainDonateRequestInput } from '../models';
+import { ControllersDonateRequestInput } from '../models';
 // @ts-ignore
 import { UserBalance } from '../models';
 /**
@@ -69,17 +69,17 @@ export const MoneyApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @summary Donation to an application with a given ID
-         * @param {BlockchainDonateRequestInput} request DonateRequestInput
+         * @summary Deposit money to user with given ID
+         * @param {ControllersDeposit} request Deposit
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiMoneyDepositApplicationPost: async (request: BlockchainDonateRequestInput, options: any = {}): Promise<RequestArgs> => {
+        apiMoneyDepositPost: async (request: ControllersDeposit, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling apiMoneyDepositApplicationPost.');
+                throw new RequiredError('request','Required parameter request was null or undefined when calling apiMoneyDepositPost.');
             }
-            const localVarPath = `/api/money/deposit/application`;
+            const localVarPath = `/api/money/deposit`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -120,17 +120,17 @@ export const MoneyApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @summary Deposit money to user with given ID
-         * @param {BlockchainDeposit} request Deposit
+         * @summary Donation to an application with a given ID
+         * @param {ControllersDonateRequestInput} request DonateRequestInput
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiMoneyDepositPost: async (request: BlockchainDeposit, options: any = {}): Promise<RequestArgs> => {
+        apiMoneyDonateApplicationPost: async (request: ControllersDonateRequestInput, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling apiMoneyDepositPost.');
+                throw new RequiredError('request','Required parameter request was null or undefined when calling apiMoneyDonateApplicationPost.');
             }
-            const localVarPath = `/api/money/deposit`;
+            const localVarPath = `/api/money/donate/application`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -193,13 +193,13 @@ export const MoneyApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Donation to an application with a given ID
-         * @param {BlockchainDonateRequestInput} request DonateRequestInput
+         * @summary Deposit money to user with given ID
+         * @param {ControllersDeposit} request Deposit
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiMoneyDepositApplicationPost(request: BlockchainDonateRequestInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await MoneyApiAxiosParamCreator(configuration).apiMoneyDepositApplicationPost(request, options);
+        async apiMoneyDepositPost(request: ControllersDeposit, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await MoneyApiAxiosParamCreator(configuration).apiMoneyDepositPost(request, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -207,13 +207,13 @@ export const MoneyApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Deposit money to user with given ID
-         * @param {BlockchainDeposit} request Deposit
+         * @summary Donation to an application with a given ID
+         * @param {ControllersDonateRequestInput} request DonateRequestInput
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiMoneyDepositPost(request: BlockchainDeposit, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await MoneyApiAxiosParamCreator(configuration).apiMoneyDepositPost(request, options);
+        async apiMoneyDonateApplicationPost(request: ControllersDonateRequestInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await MoneyApiAxiosParamCreator(configuration).apiMoneyDonateApplicationPost(request, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -239,40 +239,26 @@ export const MoneyApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
-         * @summary Donation to an application with a given ID
-         * @param {BlockchainDonateRequestInput} request DonateRequestInput
+         * @summary Deposit money to user with given ID
+         * @param {ControllersDeposit} request Deposit
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiMoneyDepositApplicationPost(request: BlockchainDonateRequestInput, options?: any): AxiosPromise<void> {
-            return MoneyApiFp(configuration).apiMoneyDepositApplicationPost(request, options).then((request) => request(axios, basePath));
+        apiMoneyDepositPost(request: ControllersDeposit, options?: any): AxiosPromise<void> {
+            return MoneyApiFp(configuration).apiMoneyDepositPost(request, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Deposit money to user with given ID
-         * @param {BlockchainDeposit} request Deposit
+         * @summary Donation to an application with a given ID
+         * @param {ControllersDonateRequestInput} request DonateRequestInput
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiMoneyDepositPost(request: BlockchainDeposit, options?: any): AxiosPromise<void> {
-            return MoneyApiFp(configuration).apiMoneyDepositPost(request, options).then((request) => request(axios, basePath));
+        apiMoneyDonateApplicationPost(request: ControllersDonateRequestInput, options?: any): AxiosPromise<void> {
+            return MoneyApiFp(configuration).apiMoneyDonateApplicationPost(request, options).then((request) => request(axios, basePath));
         },
     };
 };
-
-/**
- * Request parameters for apiMoneyDepositApplicationPost operation in MoneyApi.
- * @export
- * @interface MoneyApiApiMoneyDepositApplicationPostRequest
- */
-export interface MoneyApiApiMoneyDepositApplicationPostRequest {
-    /**
-     * DonateRequestInput
-     * @type {BlockchainDonateRequestInput}
-     * @memberof MoneyApiApiMoneyDepositApplicationPost
-     */
-    readonly request: BlockchainDonateRequestInput
-}
 
 /**
  * Request parameters for apiMoneyDepositPost operation in MoneyApi.
@@ -282,10 +268,24 @@ export interface MoneyApiApiMoneyDepositApplicationPostRequest {
 export interface MoneyApiApiMoneyDepositPostRequest {
     /**
      * Deposit
-     * @type {BlockchainDeposit}
+     * @type {ControllersDeposit}
      * @memberof MoneyApiApiMoneyDepositPost
      */
-    readonly request: BlockchainDeposit
+    readonly request: ControllersDeposit
+}
+
+/**
+ * Request parameters for apiMoneyDonateApplicationPost operation in MoneyApi.
+ * @export
+ * @interface MoneyApiApiMoneyDonateApplicationPostRequest
+ */
+export interface MoneyApiApiMoneyDonateApplicationPostRequest {
+    /**
+     * DonateRequestInput
+     * @type {ControllersDonateRequestInput}
+     * @memberof MoneyApiApiMoneyDonateApplicationPost
+     */
+    readonly request: ControllersDonateRequestInput
 }
 
 /**
@@ -308,18 +308,6 @@ export class MoneyApi extends BaseAPI {
 
     /**
      * 
-     * @summary Donation to an application with a given ID
-     * @param {MoneyApiApiMoneyDepositApplicationPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof MoneyApi
-     */
-    public apiMoneyDepositApplicationPost(requestParameters: MoneyApiApiMoneyDepositApplicationPostRequest, options?: any) {
-        return MoneyApiFp(this.configuration).apiMoneyDepositApplicationPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Deposit money to user with given ID
      * @param {MoneyApiApiMoneyDepositPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -328,5 +316,17 @@ export class MoneyApi extends BaseAPI {
      */
     public apiMoneyDepositPost(requestParameters: MoneyApiApiMoneyDepositPostRequest, options?: any) {
         return MoneyApiFp(this.configuration).apiMoneyDepositPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Donation to an application with a given ID
+     * @param {MoneyApiApiMoneyDonateApplicationPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MoneyApi
+     */
+    public apiMoneyDonateApplicationPost(requestParameters: MoneyApiApiMoneyDonateApplicationPostRequest, options?: any) {
+        return MoneyApiFp(this.configuration).apiMoneyDonateApplicationPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
     }
 }
