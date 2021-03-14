@@ -25,6 +25,11 @@
   "authorUpd": "Update author",
   "authorRole": "Author's role",
   "createPageTitle": "Create application",
+  "Filters": {
+    "assignee": "Assigned to me",
+    "status": "Application statuses",
+    "statusTagPlaceholder": "Other statuses..."
+  },
   "$views": {
     "updateStatus": "Status updated successfully",
     "update_success": "Application info updated successfully",

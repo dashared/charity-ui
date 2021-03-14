@@ -25,6 +25,11 @@
   "authorUpd": "Автор изменения",
   "authorRole": "Роль автора изменения",
   "createPageTitle": "Создание заявки",
+  "Filters": {
+    "assignee": "Назначены на меня",
+    "status": "Статусы заявки",
+    "statusTagPlaceholder": "Остальные статусы..."
+  },
   "$views": {
     "updateStatus": "Успешно обновлен статус заявки",
     "update_success": "Заявка успешно обновлена",

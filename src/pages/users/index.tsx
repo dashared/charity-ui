@@ -1,6 +1,6 @@
 import React, { FC, useRef, useState } from "react";
-import { Button, Select, Space } from "antd";
-import { ClearOutlined, DownOutlined } from "@ant-design/icons";
+import { Button, Card, Select, Space } from "antd";
+import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { UserResponse as Result, UserUser as Single } from "@generated";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable, {
@@ -15,9 +15,56 @@ import { AuthConsumer } from "@providers/authContext";
 import { UserApiRole, UserRequestFactory } from "@providers/axios";
 import Redirect from "pages/_redirect";
 
+import ClearButton from "components/Application/Filters/clear";
 import RoleTag from "components/User/Role/tag";
 
 import styles from "./styles.module.less";
+
+function sortIcon(sortedInfo?: string): React.ReactNode {
+  if (sortedInfo === "role,asc") {
+    return <DownOutlined />;
+  } else if (sortedInfo === "role,desc") {
+    return <UpOutlined />;
+  } else {
+    return null;
+  }
+}
+
+const Filter: FC<{
+  initial: FilterState;
+  onChange: (values: FilterState) => void;
+}> = ({ initial, onChange }) => {
+  const { t } = useTranslation("Users");
+
+  return (
+    <Card style={{ marginBottom: "5px" }}>
+      <Space>
+        <RoleFilter
+          initial={initial.filteredInfo ?? []}
+          setFilter={(roles) => {
+            onChange({
+              ...initial,
+              filteredInfo: roles,
+            });
+          }}
+        />
+        <Button
+          icon={sortIcon()}
+          onClick={() => {
+            onChange({
+              ...initial,
+              sortedInfo:
+                initial.sortedInfo === "role,asc" ? "role,desc" : "role,asc",
+            });
+          }}
+        >
+          {t("sort.roles")}
+        </Button>
+        <ClearButton onClearAll={() => onChange({})} />
+      </Space>
+    </Card>
+  );
+};
 
 const RoleFilter: FC<{
   initial: string[];
@@ -33,9 +80,9 @@ const RoleFilter: FC<{
         setFilter(value);
       }}
       allowClear
-      defaultValue={initial}
+      value={initial}
       onClear={() => setFilter(undefined)}
-      style={{ width: "auto", margin: "0px 0px 20px 0px", minWidth: 300 }}
+      style={{ width: "auto", minWidth: 300 }}
     >
       <Select.Option value={UserApiRole.Admin}>
         {t(`Role.${UserApiRole.Admin}`)}
@@ -126,6 +173,7 @@ const UsersPage: FC = () => {
 
   return (
     <Workspace noRefresh title={t("title")} actions={<Actions />}>
+      <Filter initial={filter} onChange={setFilter} />
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
         variables={{
@@ -139,29 +187,6 @@ const UsersPage: FC = () => {
         }}
         render={(entries) => (
           <>
-            <Space>
-              <RoleFilter
-                initial={filter.filteredInfo ?? []}
-                setFilter={(roles) => {
-                  setFilter({
-                    ...filter,
-                    filteredInfo: roles,
-                  });
-                }}
-              />
-              <Button
-                icon={filter.sortedInfo ? <ClearOutlined /> : <DownOutlined />}
-                onClick={() => {
-                  setFilter({
-                    ...filter,
-                    sortedInfo: filter.sortedInfo ? undefined : "role",
-                  });
-                }}
-                style={{ width: "auto", margin: "0px 0px 20px 0px" }}
-              >
-                {t("sort.roles")}
-              </Button>
-            </Space>
             <RegistryTable
               entity="Users"
               columns={columns}

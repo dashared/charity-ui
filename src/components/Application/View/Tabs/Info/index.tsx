@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useState } from "react";
 import { toInteger } from "lodash";
-import { Button, DatePicker, Descriptions, Input, Space } from "antd";
+import { Button, DatePicker, Descriptions, InputNumber, Space } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
 import {
@@ -162,16 +162,16 @@ export const GeneralInfo: FC<{
         <Descriptions.Item label={t("$views.card.approvedAmount")}>
           {!editable && <span>{formatMoney(info.approved_amount)}</span>}
           {editable && (
-            <Input
+            <InputNumber
               defaultValue={
                 (info.approved_amount?.numerator ?? 0) /
                 (info.approved_amount?.denominator ?? 1)
               }
-              onChange={(e) => {
-                console.log(e.target.value);
+              onChange={(value) => {
+                console.log(value);
                 updateInfo({
                   ...initialInfo,
-                  approvedAmount: toInteger(e.target.value),
+                  approvedAmount: toInteger(value),
                 });
               }}
             />

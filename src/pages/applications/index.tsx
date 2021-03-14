@@ -1,4 +1,5 @@
-import React, { FC, useRef } from "react";
+import React, { FC, useRef, useState } from "react";
+import { Card, Space } from "antd";
 import { Link } from "@curi/react-dom";
 import {
   DonationRequestBody as Single,
@@ -16,19 +17,70 @@ import { DonationRequestFactory } from "@providers/axios";
 import Redirect from "pages/_redirect";
 
 import { Actions } from "components/Application/Buttons/create";
+import AssignedToMe from "components/Application/Filters/assignee";
+import ClearButton from "components/Application/Filters/clear";
+import StatusFilter from "components/Application/Filters/status";
 import StatusTag, {
   ApplicationStatus,
 } from "components/Application/Status/tag";
 
 import styles from "./styles.module.less";
 
-const ApplicationsPage: FC = () => {
+type FilterInfo = {
+  assignedToMe?: boolean;
+  status?: string[];
+};
+
+type FilterSetting = {
+  filterInfo?: FilterInfo;
+};
+
+const Filter: FC<{
+  initial: FilterSetting;
+  onChange: (values: FilterSetting) => void;
+}> = ({ initial, onChange }) => {
+  return (
+    <Card style={{ marginBottom: "5px" }}>
+      <Space>
+        <AssignedToMe
+          initial={initial.filterInfo?.assignedToMe ?? false}
+          onChange={() => {
+            onChange({
+              ...initial,
+              filterInfo: {
+                ...initial.filterInfo,
+                assignedToMe: !(initial.filterInfo?.assignedToMe ?? false),
+              },
+            });
+          }}
+        />
+        <StatusFilter
+          initial={initial.filterInfo?.status}
+          onChange={(value) => {
+            onChange({
+              ...initial,
+              filterInfo: {
+                ...initial.filterInfo,
+                status: value,
+              },
+            });
+          }}
+        />
+        <ClearButton onClearAll={() => onChange({})} />
+      </Space>
+    </Card>
+  );
+};
+
+const ApplicationsPage: FC<{ userId?: string }> = ({ userId }) => {
   const {
     isTarget,
     isSelected,
     onElementClick,
     setList,
   } = useListSelection<Single>();
+
+  const [filter, setFilter] = useState<FilterSetting>({});
 
   const paginationState = useRef<StateRef>(null);
 
@@ -84,9 +136,16 @@ const ApplicationsPage: FC = () => {
 
   return (
     <Workspace noRefresh title={t("listTitle_all")} actions={<Actions />}>
+      <Filter initial={filter} onChange={setFilter} />
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
         requestQuery={DonationRequestFactory.apiDonationRequestGet}
+        variables={{
+          sort: "",
+          author: undefined,
+          assignee: filter.filterInfo?.assignedToMe ? [userId] : undefined,
+          status: filter.filterInfo?.status,
+        }}
         stateRef={paginationState}
         onResult={(result) => {
           setList(result.data ?? []);
@@ -120,7 +179,7 @@ export const pageComponent: FC = () => (
         <RoleSwitch
           role={user.role}
           perform="applications:index"
-          yes={() => <ApplicationsPage />}
+          yes={() => <ApplicationsPage userId={user.uuid} />}
           no={() => <Redirect name="home"></Redirect>}
         />
       );
