@@ -39,6 +39,7 @@
     ]
   },
   "dependencies": {
+    "@ant-design/charts": "^1.0.21",
     "@ant-design/icons": "^4.2.2",
     "@curi/helpers": "^2.0.2",
     "@curi/react-dom": "^2.0.3",

@@ -43,13 +43,13 @@ export interface AuthManagerRegistrationUser {
      * @type {string}
      * @memberof AuthManagerRegistrationUser
      */
-    email?: string;
+    email: string;
     /**
      * 
      * @type {string}
      * @memberof AuthManagerRegistrationUser
      */
-    first_name?: string;
+    first_name: string;
     /**
      * 
      * @type {string}
@@ -61,7 +61,7 @@ export interface AuthManagerRegistrationUser {
      * @type {string}
      * @memberof AuthManagerRegistrationUser
      */
-    last_name?: string;
+    last_name: string;
     /**
      * 
      * @type {string}

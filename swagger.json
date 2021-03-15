@@ -6,6 +6,70 @@
     "contact": {}
   },
   "paths": {
+    "/api/charity/balance": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["Charity"],
+        "summary": "Get balance of charity",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/utils.MoneyJson"
+            }
+          }
+        }
+      }
+    },
+    "/api/donate/application/from_charity": {
+      "post": {
+        "produces": ["application/json"],
+        "tags": ["Donations"],
+        "summary": "Donate to application from charity",
+        "parameters": [
+          {
+            "description": "Donation Input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Blockchain.DonationToApplicationFromFund"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Blockchain.Donation"
+            }
+          }
+        }
+      }
+    },
+    "/api/donate/charity/from_user": {
+      "post": {
+        "produces": ["application/json"],
+        "tags": ["Donations"],
+        "summary": "Donate to charity from user",
+        "parameters": [
+          {
+            "description": "Donation Input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Blockchain.DonationToCharityFromUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/donation-request": {
       "post": {
         "consumes": ["application/json"],
@@ -471,7 +535,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/blockchain.Deposit"
+              "$ref": "#/definitions/controllers.Deposit"
             }
           }
         ],
@@ -482,7 +546,7 @@
         }
       }
     },
-    "/api/money/deposit/application": {
+    "/api/money/donate/application": {
       "post": {
         "produces": ["application/json"],
         "tags": ["Money"],
@@ -494,7 +558,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/blockchain.DonateRequestInput"
+              "$ref": "#/definitions/controllers.DonateRequestInput"
             }
           }
         ],
@@ -688,6 +752,7 @@
     },
     "Auth.ManagerRegistrationUser": {
       "type": "object",
+      "required": ["email", "first_name", "last_name"],
       "properties": {
         "birth_date": {
           "type": "string"
@@ -720,6 +785,7 @@
     },
     "Auth.RegistrationInput": {
       "type": "object",
+      "required": ["email", "first_name", "last_name", "password"],
       "properties": {
         "birth_date": {
           "type": "string"
@@ -753,6 +819,55 @@
         }
       }
     },
+    "Auth.UnregisteredUser": {
+      "type": "object",
+      "properties": {
+        "birth_date": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "middle_name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "User",
+            "Manager",
+            "SuperManager",
+            "ContentManager",
+            "Operator",
+            "Admin"
+          ]
+        }
+      }
+    },
     "Blockchain.Donation": {
       "type": "object",
       "properties": {
@@ -772,6 +887,42 @@
           "$ref": "#/definitions/DonationRequest.DonationRequest"
         },
         "id": {
+          "type": "string"
+        },
+        "unverified_author": {
+          "$ref": "#/definitions/Auth.UnregisteredUser"
+        }
+      }
+    },
+    "Blockchain.DonationToApplicationFromFund": {
+      "type": "object",
+      "required": ["amount", "application_id"],
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "anonymous": {
+          "type": "boolean"
+        },
+        "application_id": {
+          "type": "integer"
+        },
+        "donor_id": {
+          "type": "string"
+        }
+      }
+    },
+    "Blockchain.DonationToCharityFromUser": {
+      "type": "object",
+      "required": ["amount", "password"],
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "anonymous": {
+          "type": "boolean"
+        },
+        "password": {
           "type": "string"
         }
       }
@@ -1208,7 +1359,7 @@
         }
       }
     },
-    "blockchain.Deposit": {
+    "controllers.Deposit": {
       "type": "object",
       "required": ["amount", "user_id"],
       "properties": {
@@ -1220,7 +1371,7 @@
         }
       }
     },
-    "blockchain.DonateRequestInput": {
+    "controllers.DonateRequestInput": {
       "type": "object",
       "required": ["amount", "application", "password"],
       "properties": {

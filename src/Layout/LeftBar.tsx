@@ -76,6 +76,15 @@ const LeftBar: FC = () => {
     {
       display: (
         <>
+          <HomeOutlined />
+          <span>{i18n.t("LeftBar.Fund")}</span>
+        </>
+      ),
+      name: "fund:index",
+    },
+    {
+      display: (
+        <>
           <FolderOpenOutlined />
           <span>{i18n.t("LeftBar.Applications.title")}</span>
         </>
@@ -115,26 +124,6 @@ const LeftBar: FC = () => {
         </>
       ),
       name: "transactions:index",
-    },
-
-    {
-      display: (
-        <>
-          <HomeOutlined />
-          <span>{i18n.t("LeftBar.Fund")}</span>
-        </>
-      ),
-      name: "fund:index",
-      nested: [
-        {
-          display: <span>{i18n.t("LeftBar.Fund_nested.Description")}</span>,
-          name: "fund:description-index",
-        },
-        {
-          display: <span>{i18n.t("LeftBar.Fund_nested.FAQ")}</span>,
-          name: "faq:index",
-        },
-      ],
     },
 
     {
