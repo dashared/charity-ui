@@ -1,6 +1,11 @@
-import React, { FC, useRef } from "react";
+import React, { FC, useRef, useState } from "react";
+import { Card, Select, Space } from "antd";
 // import { CheckOutlined, SyncOutlined } from "@ant-design/icons";
-import { UserResponse as Result, UserUser as Single } from "@generated";
+import {
+  AuthManagerRegistrationInputRoleEnum as Roles,
+  UserResponse as Result,
+  UserUser as Single,
+} from "@generated";
 // import Metrics from "@lib/components/Metrics";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
@@ -13,29 +18,56 @@ import { AuthConsumer } from "@providers/authContext";
 import { UserApiRole, UserRequestFactory } from "@providers/axios";
 import Unauthorized from "pages/_unauthorized";
 
+import ClearButton from "components/Application/Filters/clear";
 import RoleTag from "components/User/Role/tag";
 
 import styles from "./styles.module.less";
 
-// function ManagersMetrics(): JSX.Element {
-//   const { t } = useTranslation("Manager");
-//   return (
-//     <Metrics
-//       metrics={[
-//         {
-//           title: t("metrics.inProgress"),
-//           icon: <SyncOutlined />,
-//           value: 4,
-//         },
-//         {
-//           title: t("metrics.done"),
-//           icon: <CheckOutlined />,
-//           value: 15,
-//         },
-//       ]}
-//     />
-//   );
-// }
+const FilterRolesArr = [
+  Roles.SuperManager,
+  Roles.Operator,
+  Roles.Manager,
+  Roles.ContentManager,
+  Roles.Admin,
+];
+
+const ManagersFilters: FC<{
+  initial?: string[];
+  setFilter: (roles?: string[]) => void;
+}> = ({ initial, setFilter }) => {
+  const { t } = useTranslation("Users");
+
+  return (
+    <Card>
+      <Space>
+        <Select
+          placeholder={t("filter.roles")}
+          mode="multiple"
+          onChange={(value) => {
+            setFilter(value);
+          }}
+          allowClear
+          value={initial}
+          onClear={() => setFilter(undefined)}
+          style={{ width: "auto", minWidth: 300 }}
+        >
+          {FilterRolesArr.map((value, ind) => {
+            return (
+              <Select.Option value={value} key={ind}>
+                {t(`Role.${value}`)}
+              </Select.Option>
+            );
+          })}
+        </Select>
+        <ClearButton onClearAll={() => setFilter()} />
+      </Space>
+    </Card>
+  );
+};
+
+type ManagerFilter = {
+  roles?: string[];
+};
 
 const ManagersPage: FC = () => {
   const { isTarget, isSelected, setList } = useListSelection<Single>();
@@ -43,6 +75,8 @@ const ManagersPage: FC = () => {
   const paginationState = useRef<StateRef>(null);
 
   const { t } = useTranslation("Manager");
+
+  const [filter, setFilter] = useState<ManagerFilter>({});
 
   const onElementClick = (record: Single): void => {
     router.navigate({
@@ -93,29 +127,20 @@ const ManagersPage: FC = () => {
         return formatDate(record.created_at);
       },
     },
-    // {
-    //   key: "metric",
-    //   width: "20%",
-    //   render() {
-    //     return ManagersMetrics();
-    //   },
-    // },
   ];
 
-  // TODO: replace api calls to TransactionsFactory
   return (
     <Workspace noRefresh title={t("title")}>
+      <ManagersFilters
+        initial={filter.roles}
+        setFilter={(roles) => setFilter({ roles })}
+      />
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
         requestQuery={UserRequestFactory.apiUserGet}
         variables={{
           sort: "",
-          role: [
-            UserApiRole.ContentManager,
-            UserApiRole.SuperManager,
-            UserApiRole.Manager,
-            UserApiRole.Operator,
-          ],
+          role: filter.roles ?? FilterRolesArr,
         }}
         stateRef={paginationState}
         onResult={(result) => {

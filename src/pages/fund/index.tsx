@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { Button, Card, Col, Row, Statistic } from "antd";
+import { Card, Col, Row, Statistic } from "antd";
 import { Bar } from "@ant-design/charts";
 import { formatMoney } from "@lib/utils";
 import { useTranslation, Workspace } from "@providers";
@@ -251,9 +251,6 @@ const FundPage: FC = () => {
               value={formatMoney(balance)}
               precision={2}
             />
-            <Button style={{ marginTop: 16 }} type="primary">
-              {t("top_up")}
-            </Button>
           </Col>
         </Row>
       </Card>
