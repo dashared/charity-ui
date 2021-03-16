@@ -1,4 +1,6 @@
 import React, { FC, useRef } from "react";
+import { Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import {
   BlockchainDonation as Single,
   BlockchainDonationsResponse as Result,
@@ -15,26 +17,23 @@ import { AuthConsumer } from "@providers/authContext";
 import { DonationsFactory } from "@providers/axios";
 import Redirect from "pages/_redirect";
 
-// import { Button } from "antd";
-// import { PlusOutlined } from "@ant-design/icons";
 import StatusTag from "components/Application/Status/tag";
 
 import styles from "./styles.module.less";
 
 const Actions: FC = () => {
-  //const { t } = useTranslation("Transaction");
+  const { t } = useTranslation("Transaction");
 
   return (
-    // <Button
-    //   type="primary"
-    //   icon={<PlusOutlined />}
-    //   onClick={() => {
-    //     router.navigate({ url: router.url({ name: "transactions:create" }) });
-    //   }}
-    // >
-    //   {t("createTransaction")}
-    // </Button>
-    <></>
+    <Button
+      type="primary"
+      icon={<PlusOutlined />}
+      onClick={() => {
+        router.navigate({ url: router.url({ name: "transactions:create" }) });
+      }}
+    >
+      {t("createTransaction")}
+    </Button>
   );
 };
 

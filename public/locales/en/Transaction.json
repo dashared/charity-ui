@@ -15,8 +15,12 @@
   "createPageTitle": "Donation input",
   "time": "Transaction time",
   "status": "Status",
-  "createTransaction": "Donate",
+  "createTransaction": "Input donation",
   "application_status": "Application status",
+  "create_donation_application_err": "Can not donate to the application",
+  "create_donation_application": "Successfully donated money to the application",
+  "create_donation_fund_success": "Successfully donated money to the fund",
+  "create_donation_fund_error": "Can't donate to the fund",
   "aim": "Goal",
   "Status": {
     "Success": "Successed",
@@ -32,7 +36,7 @@
   },
   "form": {
     "amount": "Sum",
-    "anon": "Anonymity",
+    "anon": "Anonymous donation",
     "application": "Application",
     "applicationMessage": "Please, chose an application",
     "applicationPlaceholder": "Choose an application",

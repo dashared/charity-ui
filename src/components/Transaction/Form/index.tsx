@@ -1,9 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Card, Form, Input, Radio, Select, Switch } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { MoneyCollectOutlined } from "@ant-design/icons";
+import { DonationRequestBody } from "@generated";
 import { AmountInput, Currency } from "@lib/components/AmountInput";
+import { DonationRequestFactory } from "@providers/axios";
 
 const formItemLayout = {
   labelCol: { span: 6 },
@@ -16,7 +18,7 @@ type TransactionFormProps = {
   onSubmit: (values: TransactionFormState) => void | Promise<void>;
 };
 
-type TransactionFormState = {
+export type TransactionFormState = {
   first_name?: string;
   middle_name?: string;
   last_name?: string;
@@ -36,6 +38,54 @@ const DEFAULTS: TransactionFormState = {
     amount: 0,
     currency: "rmb",
   },
+};
+
+const ApplicationSelect: FC = ({ ...rest }) => {
+  const { t } = useTranslation("Transaction");
+
+  const [data, setData] = useState<DonationRequestBody[] | undefined>();
+
+  const onSearch = useCallback(async (value?: string) => {
+    try {
+      const { data: d } = await DonationRequestFactory.apiDonationRequestGet(
+        0,
+        10,
+        "",
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        value,
+      );
+
+      setData(d.data);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!data) {
+      onSearch(undefined);
+    }
+  }, [data, onSearch]);
+
+  return (
+    <Select
+      {...rest}
+      showSearch
+      placeholder={t("form.applicationPlaceholder")}
+      onSearch={onSearch}
+    >
+      {data?.map((value) => {
+        return (
+          <Option value={value.id ?? 0} key={value.id}>
+            {value.title}
+          </Option>
+        );
+      })}
+    </Select>
+  );
 };
 
 const TransactionForm: FC<TransactionFormProps> = ({ onSubmit }) => {
@@ -89,23 +139,21 @@ const TransactionForm: FC<TransactionFormProps> = ({ onSubmit }) => {
           <Input />
         </Form.Item>
 
-        <Form.Item
-          name="applicationId"
-          label={t("form.application")}
-          hasFeedback
-          hidden={type === "fund"}
-          rules={[
-            {
-              required: type !== "fund",
-              message: t("form.applicationMessage"),
-            },
-          ]}
-        >
-          <Select placeholder={t("form.applicationPlaceholder")}>
-            <Option value="china">China</Option>
-            <Option value="usa">U.S.A</Option>
-          </Select>
-        </Form.Item>
+        {type !== "fund" && (
+          <Form.Item
+            name="applicationId"
+            label={t("form.application")}
+            hasFeedback
+            rules={[
+              {
+                required: type !== "fund",
+                message: t("form.applicationMessage"),
+              },
+            ]}
+          >
+            <ApplicationSelect />
+          </Form.Item>
+        )}
 
         <Form.Item
           name="donation"
@@ -115,6 +163,7 @@ const TransactionForm: FC<TransactionFormProps> = ({ onSubmit }) => {
           <AmountInput />
         </Form.Item>
         <Form.Item
+          hidden={type === "fund"}
           name="anonymous"
           label={t("form.anon")}
           valuePropName="checked"

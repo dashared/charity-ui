@@ -19,6 +19,10 @@
   "createTransaction": "Ввести пожертвование",
   "application_status": "Статус заявки",
   "aim": "Цель сбора",
+  "create_donation_application_err": "Деньги на заявку не переведены",
+  "create_donation_application": "Успешно внесено пожертвование на заявку",
+  "create_donation_fund_success": "Успешно внесены деньги на счет фонда",
+  "create_donation_fund_error": "Деньги на счет фонда не переведены",
   "Status": {
     "Success": "Успешно",
     "Registered": "Зарегистрировано",
