@@ -87,6 +87,49 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
     },
     /**
      * 
+     * @summary Block or unblock user
+     * @param {string} id User id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    apiUserIdBlockPatch: async (id: string, options: any = {}): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      if (id === null || id === undefined) {
+        throw new RequiredError('id', 'Required parameter id was null or undefined when calling apiUserIdBlockPatch.');
+      }
+      const localVarPath = `/api/user/{id}/block`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+
+
+      const queryParameters = new URLSearchParams(localVarUrlObj.search);
+      for (const key in localVarQueryParameter) {
+        queryParameters.set(key, localVarQueryParameter[key]);
+      }
+      for (const key in options.query) {
+        queryParameters.set(key, options.query[key]);
+      }
+      localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+
+      return {
+        url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * 
      * @summary Retrieves user based on given ID
      * @param {string} id User ID
      * @param {*} [options] Override http request option.
@@ -156,6 +199,20 @@ export const UserApiFp = function (configuration?: Configuration) {
     },
     /**
      * 
+     * @summary Block or unblock user
+     * @param {string} id User id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async apiUserIdBlockPatch(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserUser>> {
+      const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).apiUserIdBlockPatch(id, options);
+      return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+        const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+        return axios.request(axiosRequestArgs);
+      };
+    },
+    /**
+     * 
      * @summary Retrieves user based on given ID
      * @param {string} id User ID
      * @param {*} [options] Override http request option.
@@ -189,6 +246,16 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
      */
     apiUserGet(page?: number, size?: number, sort?: string, role?: Array<string>, options?: any): AxiosPromise<UserResponse> {
       return UserApiFp(configuration).apiUserGet(page, size, sort, role, options).then((request) => request(axios, basePath));
+    },
+    /**
+     * 
+     * @summary Block or unblock user
+     * @param {string} id User id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    apiUserIdBlockPatch(id: string, options?: any): AxiosPromise<UserUser> {
+      return UserApiFp(configuration).apiUserIdBlockPatch(id, options).then((request) => request(axios, basePath));
     },
     /**
      * 
@@ -239,6 +306,20 @@ export interface UserApiApiUserGetRequest {
 }
 
 /**
+ * Request parameters for apiUserIdBlockPatch operation in UserApi.
+ * @export
+ * @interface UserApiApiUserIdBlockPatchRequest
+ */
+export interface UserApiApiUserIdBlockPatchRequest {
+  /**
+   * User id
+   * @type {string}
+   * @memberof UserApiApiUserIdBlockPatch
+   */
+  readonly id: string
+}
+
+/**
  * Request parameters for apiUserIdGet operation in UserApi.
  * @export
  * @interface UserApiApiUserIdGetRequest
@@ -269,6 +350,18 @@ export class UserApi extends BaseAPI {
    */
   public apiUserGet(requestParameters: UserApiApiUserGetRequest = {}, options?: any) {
     return UserApiFp(this.configuration).apiUserGet(requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.role, options).then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * 
+   * @summary Block or unblock user
+   * @param {UserApiApiUserIdBlockPatchRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof UserApi
+   */
+  public apiUserIdBlockPatch(requestParameters: UserApiApiUserIdBlockPatchRequest, options?: any) {
+    return UserApiFp(this.configuration).apiUserIdBlockPatch(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
   }
 
   /**
