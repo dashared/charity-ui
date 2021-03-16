@@ -28,6 +28,12 @@ export interface UserUser {
     birth_date?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof UserUser
+     */
+    blocked?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof UserUser
      */

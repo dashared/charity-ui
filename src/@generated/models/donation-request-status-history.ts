@@ -13,6 +13,7 @@
  */
 
 
+import { DonationRequestComment } from './donation-request-comment';
 import { UserUser } from './user-user';
 
 /**
@@ -33,6 +34,12 @@ export interface DonationRequestStatusHistory {
      * @memberof DonationRequestStatusHistory
      */
     author?: UserUser;
+    /**
+     * 
+     * @type {DonationRequestComment}
+     * @memberof DonationRequestStatusHistory
+     */
+    comment?: DonationRequestComment;
     /**
      * 
      * @type {string}

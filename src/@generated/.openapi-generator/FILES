@@ -21,11 +21,13 @@ models/auth-registration-input.ts
 models/auth-unregistered-user.ts
 models/blockchain-donation-to-application-from-fund.ts
 models/blockchain-donation-to-charity-from-user.ts
+models/blockchain-donation-to-charity.ts
 models/blockchain-donation.ts
 models/blockchain-donations-response.ts
 models/controllers-deposit.ts
 models/controllers-donate-request-input.ts
 models/donation-request-body.ts
+models/donation-request-comment.ts
 models/donation-request-donation-request.ts
 models/donation-request-history-response.ts
 models/donation-request-input.ts

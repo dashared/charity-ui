@@ -21,55 +21,6 @@
         }
       }
     },
-    "/api/donate/application/from_charity": {
-      "post": {
-        "produces": ["application/json"],
-        "tags": ["Donations"],
-        "summary": "Donate to application from charity",
-        "parameters": [
-          {
-            "description": "Donation Input",
-            "name": "request",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Blockchain.DonationToApplicationFromFund"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/Blockchain.Donation"
-            }
-          }
-        }
-      }
-    },
-    "/api/donate/charity/from_user": {
-      "post": {
-        "produces": ["application/json"],
-        "tags": ["Donations"],
-        "summary": "Donate to charity from user",
-        "parameters": [
-          {
-            "description": "Donation Input",
-            "name": "request",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Blockchain.DonationToCharityFromUser"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/api/donation-request": {
       "post": {
         "consumes": ["application/json"],
@@ -233,6 +184,32 @@
           },
           "400": {
             "description": ""
+          }
+        }
+      }
+    },
+    "/api/donation-request/{id}/comments": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["DonationRequest"],
+        "summary": "Get comments for a given application",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "donation request id",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DonationRequest.Comment"
+              }
+            }
           }
         }
       }
@@ -569,6 +546,81 @@
         }
       }
     },
+    "/api/money/donate/application/from_charity": {
+      "post": {
+        "produces": ["application/json"],
+        "tags": ["Money"],
+        "summary": "Donate to application from charity",
+        "parameters": [
+          {
+            "description": "Donation Input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Blockchain.DonationToApplicationFromFund"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Blockchain.Donation"
+            }
+          }
+        }
+      }
+    },
+    "/api/money/donate/charity/from_manager": {
+      "post": {
+        "produces": ["application/json"],
+        "tags": ["Money"],
+        "summary": "Donate to charity from manager",
+        "parameters": [
+          {
+            "description": "Donation Input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Blockchain.DonationToCharity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Auth.UnregisteredUser"
+            }
+          }
+        }
+      }
+    },
+    "/api/money/donate/charity/from_user": {
+      "post": {
+        "produces": ["application/json"],
+        "tags": ["Money"],
+        "summary": "Donate to charity from user",
+        "parameters": [
+          {
+            "description": "Donation Input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Blockchain.DonationToCharityFromUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/register": {
       "post": {
         "description": "Register with this route",
@@ -706,6 +758,29 @@
           }
         }
       }
+    },
+    "/api/user/{id}/block": {
+      "patch": {
+        "produces": ["application/json"],
+        "tags": ["User"],
+        "summary": "Block or unblock user",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "User id",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User.User"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -825,6 +900,9 @@
         "birth_date": {
           "type": "string"
         },
+        "blocked": {
+          "type": "boolean"
+        },
         "city": {
           "type": "string"
         },
@@ -912,6 +990,17 @@
         }
       }
     },
+    "Blockchain.DonationToCharity": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "donor": {
+          "$ref": "#/definitions/User.User"
+        }
+      }
+    },
     "Blockchain.DonationToCharityFromUser": {
       "type": "object",
       "required": ["amount", "password"],
@@ -980,6 +1069,9 @@
             ]
           }
         },
+        "comment": {
+          "type": "string"
+        },
         "created_at": {
           "type": "string"
         },
@@ -991,9 +1083,6 @@
         },
         "id": {
           "type": "integer"
-        },
-        "message": {
-          "type": "string"
         },
         "received_amount": {
           "$ref": "#/definitions/utils.MoneyJson"
@@ -1033,6 +1122,26 @@
         }
       }
     },
+    "DonationRequest.Comment": {
+      "type": "object",
+      "properties": {
+        "author": {
+          "$ref": "#/definitions/User.User"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "donation_request_id": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
     "DonationRequest.DonationRequest": {
       "type": "object",
       "properties": {
@@ -1048,6 +1157,9 @@
         "author": {
           "$ref": "#/definitions/User.User"
         },
+        "comment": {
+          "type": "string"
+        },
         "created_at": {
           "type": "string"
         },
@@ -1059,9 +1171,6 @@
         },
         "id": {
           "type": "integer"
-        },
-        "message": {
-          "type": "string"
         },
         "received_amount": {
           "$ref": "#/definitions/utils.MoneyJson"
@@ -1121,6 +1230,9 @@
         "assignee_id": {
           "type": "string"
         },
+        "comment": {
+          "type": "string"
+        },
         "description": {
           "type": "string"
         },
@@ -1132,9 +1244,6 @@
           "items": {
             "type": "string"
           }
-        },
-        "message": {
-          "type": "string"
         },
         "relationship": {
           "type": "string"
@@ -1175,6 +1284,9 @@
         },
         "author": {
           "$ref": "#/definitions/User.User"
+        },
+        "comment": {
+          "$ref": "#/definitions/DonationRequest.Comment"
         },
         "created_at": {
           "type": "string"
@@ -1315,6 +1427,9 @@
       "properties": {
         "birth_date": {
           "type": "string"
+        },
+        "blocked": {
+          "type": "boolean"
         },
         "city": {
           "type": "string"

@@ -21,10 +21,6 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { BlockchainDonation } from '../models';
 // @ts-ignore
-import { BlockchainDonationToApplicationFromFund } from '../models';
-// @ts-ignore
-import { BlockchainDonationToCharityFromUser } from '../models';
-// @ts-ignore
 import { BlockchainDonationsResponse } from '../models';
 /**
  * DonationsApi - axios parameter creator
@@ -32,108 +28,6 @@ import { BlockchainDonationsResponse } from '../models';
  */
 export const DonationsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @summary Donate to application from charity
-         * @param {BlockchainDonationToApplicationFromFund} request Donation Input
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiDonateApplicationFromCharityPost: async (request: BlockchainDonationToApplicationFromFund, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling apiDonateApplicationFromCharityPost.');
-            }
-            const localVarPath = `/api/donate/application/from_charity`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            const queryParameters = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                queryParameters.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                queryParameters.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const nonString = typeof request !== 'string';
-            const needsSerialization = nonString && configuration && configuration.isJsonMime
-                ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
-                : nonString;
-            localVarRequestOptions.data =  needsSerialization
-                ? JSON.stringify(request !== undefined ? request : {})
-                : (request || "");
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Donate to charity from user
-         * @param {BlockchainDonationToCharityFromUser} request Donation Input
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiDonateCharityFromUserPost: async (request: BlockchainDonationToCharityFromUser, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling apiDonateCharityFromUserPost.');
-            }
-            const localVarPath = `/api/donate/charity/from_user`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            const queryParameters = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                queryParameters.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                queryParameters.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const nonString = typeof request !== 'string';
-            const needsSerialization = nonString && configuration && configuration.isJsonMime
-                ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
-                : nonString;
-            localVarRequestOptions.data =  needsSerialization
-                ? JSON.stringify(request !== undefined ? request : {})
-                : (request || "");
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * 
          * @summary Retrieves a list of donations
@@ -250,34 +144,6 @@ export const DonationsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Donate to application from charity
-         * @param {BlockchainDonationToApplicationFromFund} request Donation Input
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiDonateApplicationFromCharityPost(request: BlockchainDonationToApplicationFromFund, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlockchainDonation>> {
-            const localVarAxiosArgs = await DonationsApiAxiosParamCreator(configuration).apiDonateApplicationFromCharityPost(request, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @summary Donate to charity from user
-         * @param {BlockchainDonationToCharityFromUser} request Donation Input
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiDonateCharityFromUserPost(request: BlockchainDonationToCharityFromUser, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await DonationsApiAxiosParamCreator(configuration).apiDonateCharityFromUserPost(request, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
          * @summary Retrieves a list of donations
          * @param {number} [page] Page number
          * @param {number} [size] Page size
@@ -319,26 +185,6 @@ export const DonationsApiFactory = function (configuration?: Configuration, base
     return {
         /**
          * 
-         * @summary Donate to application from charity
-         * @param {BlockchainDonationToApplicationFromFund} request Donation Input
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiDonateApplicationFromCharityPost(request: BlockchainDonationToApplicationFromFund, options?: any): AxiosPromise<BlockchainDonation> {
-            return DonationsApiFp(configuration).apiDonateApplicationFromCharityPost(request, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Donate to charity from user
-         * @param {BlockchainDonationToCharityFromUser} request Donation Input
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiDonateCharityFromUserPost(request: BlockchainDonationToCharityFromUser, options?: any): AxiosPromise<void> {
-            return DonationsApiFp(configuration).apiDonateCharityFromUserPost(request, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Retrieves a list of donations
          * @param {number} [page] Page number
          * @param {number} [size] Page size
@@ -363,34 +209,6 @@ export const DonationsApiFactory = function (configuration?: Configuration, base
         },
     };
 };
-
-/**
- * Request parameters for apiDonateApplicationFromCharityPost operation in DonationsApi.
- * @export
- * @interface DonationsApiApiDonateApplicationFromCharityPostRequest
- */
-export interface DonationsApiApiDonateApplicationFromCharityPostRequest {
-    /**
-     * Donation Input
-     * @type {BlockchainDonationToApplicationFromFund}
-     * @memberof DonationsApiApiDonateApplicationFromCharityPost
-     */
-    readonly request: BlockchainDonationToApplicationFromFund
-}
-
-/**
- * Request parameters for apiDonateCharityFromUserPost operation in DonationsApi.
- * @export
- * @interface DonationsApiApiDonateCharityFromUserPostRequest
- */
-export interface DonationsApiApiDonateCharityFromUserPostRequest {
-    /**
-     * Donation Input
-     * @type {BlockchainDonationToCharityFromUser}
-     * @memberof DonationsApiApiDonateCharityFromUserPost
-     */
-    readonly request: BlockchainDonationToCharityFromUser
-}
 
 /**
  * Request parameters for apiDonationsGet operation in DonationsApi.
@@ -455,30 +273,6 @@ export interface DonationsApiApiDonationsIdGetRequest {
  * @extends {BaseAPI}
  */
 export class DonationsApi extends BaseAPI {
-    /**
-     * 
-     * @summary Donate to application from charity
-     * @param {DonationsApiApiDonateApplicationFromCharityPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DonationsApi
-     */
-    public apiDonateApplicationFromCharityPost(requestParameters: DonationsApiApiDonateApplicationFromCharityPostRequest, options?: any) {
-        return DonationsApiFp(this.configuration).apiDonateApplicationFromCharityPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Donate to charity from user
-     * @param {DonationsApiApiDonateCharityFromUserPostRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DonationsApi
-     */
-    public apiDonateCharityFromUserPost(requestParameters: DonationsApiApiDonateCharityFromUserPostRequest, options?: any) {
-        return DonationsApiFp(this.configuration).apiDonateCharityFromUserPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * 
      * @summary Retrieves a list of donations

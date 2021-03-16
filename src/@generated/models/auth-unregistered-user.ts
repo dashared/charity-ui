@@ -28,6 +28,12 @@ export interface AuthUnregisteredUser {
     birth_date?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof AuthUnregisteredUser
+     */
+    blocked?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof AuthUnregisteredUser
      */

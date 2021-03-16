@@ -21,6 +21,8 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { DonationRequestBody } from '../models';
 // @ts-ignore
+import { DonationRequestComment } from '../models';
+// @ts-ignore
 import { DonationRequestDonationRequest } from '../models';
 // @ts-ignore
 import { DonationRequestHistoryResponse } from '../models';
@@ -104,6 +106,49 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
         for (const index in status) {
           queryParameters.append('status', status[index]);
         }
+      }
+      for (const key in options.query) {
+        queryParameters.set(key, options.query[key]);
+      }
+      localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+
+      return {
+        url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * 
+     * @summary Get comments for a given application
+     * @param {number} id donation request id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    apiDonationRequestIdCommentsGet: async (id: number, options: any = {}): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      if (id === null || id === undefined) {
+        throw new RequiredError('id', 'Required parameter id was null or undefined when calling apiDonationRequestIdCommentsGet.');
+      }
+      const localVarPath = `/api/donation-request/{id}/comments`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+
+
+      const queryParameters = new URLSearchParams(localVarUrlObj.search);
+      for (const key in localVarQueryParameter) {
+        queryParameters.set(key, localVarQueryParameter[key]);
       }
       for (const key in options.query) {
         queryParameters.set(key, options.query[key]);
@@ -455,6 +500,20 @@ export const DonationRequestApiFp = function (configuration?: Configuration) {
     },
     /**
      * 
+     * @summary Get comments for a given application
+     * @param {number} id donation request id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async apiDonationRequestIdCommentsGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DonationRequestComment>>> {
+      const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestIdCommentsGet(id, options);
+      return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+        const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+        return axios.request(axiosRequestArgs);
+      };
+    },
+    /**
+     * 
      * @summary Retrieves donation request based on given ID
      * @param {number} id Donation request ID
      * @param {*} [options] Override http request option.
@@ -568,6 +627,16 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
      */
     apiDonationRequestGet(page?: number, size?: number, sort?: string, author?: Array<string>, assignee?: Array<string>, status?: Array<string>, type?: Array<string>, searchString?: string, options?: any): AxiosPromise<DonationRequestResponse> {
       return DonationRequestApiFp(configuration).apiDonationRequestGet(page, size, sort, author, assignee, status, type, searchString, options).then((request) => request(axios, basePath));
+    },
+    /**
+     * 
+     * @summary Get comments for a given application
+     * @param {number} id donation request id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    apiDonationRequestIdCommentsGet(id: number, options?: any): AxiosPromise<Array<DonationRequestComment>> {
+      return DonationRequestApiFp(configuration).apiDonationRequestIdCommentsGet(id, options).then((request) => request(axios, basePath));
     },
     /**
      * 
@@ -699,6 +768,20 @@ export interface DonationRequestApiApiDonationRequestGetRequest {
    * @memberof DonationRequestApiApiDonationRequestGet
    */
   readonly searchString?: string
+}
+
+/**
+ * Request parameters for apiDonationRequestIdCommentsGet operation in DonationRequestApi.
+ * @export
+ * @interface DonationRequestApiApiDonationRequestIdCommentsGetRequest
+ */
+export interface DonationRequestApiApiDonationRequestIdCommentsGetRequest {
+  /**
+   * donation request id
+   * @type {number}
+   * @memberof DonationRequestApiApiDonationRequestIdCommentsGet
+   */
+  readonly id: number
 }
 
 /**
@@ -837,6 +920,18 @@ export class DonationRequestApi extends BaseAPI {
    */
   public apiDonationRequestGet(requestParameters: DonationRequestApiApiDonationRequestGetRequest = {}, options?: any) {
     return DonationRequestApiFp(this.configuration).apiDonationRequestGet(requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.author, requestParameters.assignee, requestParameters.status, requestParameters.type, requestParameters.searchString, options).then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * 
+   * @summary Get comments for a given application
+   * @param {DonationRequestApiApiDonationRequestIdCommentsGetRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DonationRequestApi
+   */
+  public apiDonationRequestIdCommentsGet(requestParameters: DonationRequestApiApiDonationRequestIdCommentsGetRequest, options?: any) {
+    return DonationRequestApiFp(this.configuration).apiDonationRequestIdCommentsGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
   }
 
   /**

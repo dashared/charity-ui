@@ -1,9 +1,11 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Avatar, Button, Card, Comment, Empty, Form, Input } from "antd";
+import { Button, Card, Comment, Empty, Form, Input } from "antd";
 import { CommentProps } from "antd/lib/comment";
+import { UserUser } from "@generated";
+import { formatDate } from "@lib/utils";
+import { DonationRequestFactory } from "@providers/axios";
 import { IdComponent } from "@typings/component";
-import moment from "moment";
 
 import styles from "./styles.module.less";
 
@@ -23,7 +25,7 @@ const CommentList: FC<{ comments: CommentProps[] }> = ({ comments }) => {
   useEffect(scrollToBottom, [comments]);
 
   return (
-    <Card title={t("title", { count: 5 })} bordered={false}>
+    <Card title={t("title", { count: comments.length })} bordered={false}>
       <div className={styles.list}>
         {comments.length === 0 && (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
@@ -64,7 +66,9 @@ const Editor: FC<{
   );
 };
 
-export const CommentTab: IdComponent = () => {
+export const CommentTab: IdComponent = ({ id }) => {
+  const { t } = useTranslation("Users");
+
   const [state, setState] = useState<{
     comments: CommentProps[];
     submitting: boolean;
@@ -75,33 +79,75 @@ export const CommentTab: IdComponent = () => {
     value: "",
   });
 
-  const handleSubmit = useCallback(() => {
-    if (!state.value) {
-      return;
-    }
+  const formatName = (author?: UserUser): string => {
+    return `${author?.first_name} ${author?.last_name} (${t(
+      `Role.${author?.role}`,
+    )})`;
+  };
 
-    setState({
-      ...state,
-      submitting: true,
-    });
+  const fetchAPI = useCallback(
+    async () => {
+      const {
+        data,
+      } = await DonationRequestFactory.apiDonationRequestIdCommentsGet(id);
 
-    setTimeout(() => {
+      if (data) {
+        setState({
+          ...state,
+          comments: data.map((comment) => {
+            return {
+              author: formatName(comment.author),
+              content: comment.text,
+              datetime: formatDate(comment.created_at),
+            };
+          }),
+        });
+      }
+    },
+    // eslint-disable-next-line
+    [id, setState, state],
+  );
+
+  const sendMessage = useCallback(async () => {
+    try {
+      await DonationRequestFactory.apiDonationRequestIdStatusPatch(id, {
+        comment: state.value,
+      });
+    } finally {
       setState({
         submitting: false,
         value: "",
-        comments: [
-          ...state.comments,
-          {
-            author: "Han Solo",
-            avatar:
-              "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-            content: <p>{state.value}</p>,
-            datetime: moment().fromNow(),
-          },
-        ],
+        comments: [],
       });
-    }, 1000);
-  }, [state, setState]);
+    }
+  }, [state, setState, id]);
+
+  useEffect(
+    () => {
+      if (!state.submitting) {
+        fetchAPI();
+      }
+    },
+    // eslint-disable-next-line
+    [state.submitting],
+  );
+
+  const handleSubmit = useCallback(
+    () => {
+      if (!state.value) {
+        return;
+      }
+
+      setState({
+        ...state,
+        submitting: true,
+      });
+
+      sendMessage();
+    },
+    // eslint-disable-next-line
+    [state, setState],
+  );
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -119,12 +165,6 @@ export const CommentTab: IdComponent = () => {
     <>
       {<CommentList comments={comments} />}
       <Comment
-        avatar={
-          <Avatar
-            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            alt="Han Solo"
-          />
-        }
         content={
           <Editor
             onChange={handleChange}

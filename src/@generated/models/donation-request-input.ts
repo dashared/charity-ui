@@ -33,6 +33,12 @@ export interface DonationRequestInput {
      * @type {string}
      * @memberof DonationRequestInput
      */
+    comment?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestInput
+     */
     description?: string;
     /**
      * 
@@ -46,12 +52,6 @@ export interface DonationRequestInput {
      * @memberof DonationRequestInput
      */
     file_ids?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof DonationRequestInput
-     */
-    message?: string;
     /**
      * 
      * @type {string}

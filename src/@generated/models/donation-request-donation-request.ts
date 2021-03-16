@@ -52,6 +52,12 @@ export interface DonationRequestDonationRequest {
      * @type {string}
      * @memberof DonationRequestDonationRequest
      */
+    comment?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestDonationRequest
+     */
     created_at?: string;
     /**
      * 
@@ -71,12 +77,6 @@ export interface DonationRequestDonationRequest {
      * @memberof DonationRequestDonationRequest
      */
     id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof DonationRequestDonationRequest
-     */
-    message?: string;
     /**
      * 
      * @type {UtilsMoneyJson}

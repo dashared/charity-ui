@@ -65,6 +65,12 @@ export interface DonationRequestBody {
      * @type {string}
      * @memberof DonationRequestBody
      */
+    comment?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestBody
+     */
     created_at?: string;
     /**
      * 
@@ -84,12 +90,6 @@ export interface DonationRequestBody {
      * @memberof DonationRequestBody
      */
     id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof DonationRequestBody
-     */
-    message?: string;
     /**
      * 
      * @type {UtilsMoneyJson}
