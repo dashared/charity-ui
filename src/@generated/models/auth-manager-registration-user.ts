@@ -55,7 +55,7 @@ export interface AuthManagerRegistrationUser {
      * @type {string}
      * @memberof AuthManagerRegistrationUser
      */
-    image?: string;
+    image_id?: string;
     /**
      * 
      * @type {string}

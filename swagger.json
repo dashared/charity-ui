@@ -6,6 +6,44 @@
     "contact": {}
   },
   "paths": {
+    "/api/charity": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["Charity"],
+        "summary": "Get info about fund",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Charity.FundInfoResponse"
+            }
+          }
+        }
+      },
+      "patch": {
+        "produces": ["application/json"],
+        "tags": ["Charity"],
+        "summary": "Update info about fund",
+        "parameters": [
+          {
+            "description": "input",
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Charity.FundInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Charity.FundInfo"
+            }
+          }
+        }
+      }
+    },
     "/api/charity/balance": {
       "get": {
         "produces": ["application/json"],
@@ -16,6 +54,44 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/utils.MoneyJson"
+            }
+          }
+        }
+      }
+    },
+    "/api/charity/faq": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["Charity"],
+        "summary": "Get fund's faq",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Charity.Faq"
+            }
+          }
+        }
+      },
+      "patch": {
+        "produces": ["application/json"],
+        "tags": ["Charity"],
+        "summary": "Update fund's faq",
+        "parameters": [
+          {
+            "description": "faq",
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Charity.Faq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Charity.Faq"
             }
           }
         }
@@ -757,6 +833,35 @@
             }
           }
         }
+      },
+      "patch": {
+        "produces": ["application/json"],
+        "tags": ["User"],
+        "summary": "Update user info",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "User id",
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "description": "Input",
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/User.EditableInfo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User.User"
+            }
+          }
+        }
       }
     },
     "/api/user/{id}/block": {
@@ -844,7 +949,7 @@
         "first_name": {
           "type": "string"
         },
-        "image": {
+        "image_id": {
           "type": "string"
         },
         "last_name": {
@@ -877,7 +982,7 @@
         "first_name": {
           "type": "string"
         },
-        "image": {
+        "image_id": {
           "type": "string"
         },
         "last_name": {
@@ -921,7 +1026,7 @@
         "id": {
           "type": "string"
         },
-        "image": {
+        "image_id": {
           "type": "string"
         },
         "last_name": {
@@ -1030,6 +1135,89 @@
         }
       }
     },
+    "Charity.Faq": {
+      "type": "object",
+      "properties": {
+        "faq": {
+          "type": "string"
+        },
+        "fund_id": {
+          "type": "string"
+        }
+      }
+    },
+    "Charity.FundInfo": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "Charity.FundInfoResponse": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/File.Info"
+          }
+        },
+        "phone": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "Charity.FundInput": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "file_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "phone": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
     "DonationRequest.Body": {
       "type": "object",
       "properties": {
@@ -1068,9 +1256,6 @@
               "Deleted"
             ]
           }
-        },
-        "comment": {
-          "type": "string"
         },
         "created_at": {
           "type": "string"
@@ -1156,9 +1341,6 @@
         },
         "author": {
           "$ref": "#/definitions/User.User"
-        },
-        "comment": {
-          "type": "string"
         },
         "created_at": {
           "type": "string"
@@ -1391,6 +1573,49 @@
         }
       }
     },
+    "User.EditableInfo": {
+      "type": "object",
+      "properties": {
+        "birth_date": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "image_id": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "middle_name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "User",
+            "Manager",
+            "SuperManager",
+            "ContentMaRolnager",
+            "Operator",
+            "Admin"
+          ]
+        }
+      }
+    },
     "User.Response": {
       "type": "object",
       "properties": {
@@ -1449,7 +1674,7 @@
         "id": {
           "type": "string"
         },
-        "image": {
+        "image_id": {
           "type": "string"
         },
         "last_name": {

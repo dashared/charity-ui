@@ -13,6 +13,8 @@
   "country": "Страна",
   "info": "Информация",
   "email": "Почта",
+  "update_success": "Информация успешно обновлена",
+  "update_error": "Ошибка обновления информации",
   "updateButton": "Обновить данные",
   "languageSetting": {
     "russian": "Русский",

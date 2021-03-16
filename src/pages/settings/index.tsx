@@ -1,8 +1,9 @@
-import React, { FC, useRef } from "react";
+import React, { FC, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Card, Empty, Select, Skeleton } from "antd";
-import { UserUser as UserData } from "@generated";
+import { UserEditableInfo } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
+import { notify } from "@lib/utils/notification";
 import { Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import useAxios, { UserRequestFactory } from "@providers/axios";
@@ -19,6 +20,21 @@ const SettingsPage: FC = () => {
 
   const handlers = useRef<PersonalSettingsHandler>(null);
 
+  const onSubmit = useCallback(
+    async (values: UserEditableInfo) => {
+      try {
+        await UserRequestFactory.apiUserIdPatch(id ?? "", {
+          ...values,
+        });
+
+        notify(t("update_success"), "success");
+      } catch {
+        notify(t("update_success"), "error");
+      }
+    },
+    [id, t],
+  );
+
   const { data, loading } = useAxios(
     UserRequestFactory.apiUserIdGet,
     undefined,
@@ -33,9 +49,7 @@ const SettingsPage: FC = () => {
     return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
   }
 
-  const onSubmit = (values: UserData): void => {
-    console.log(values);
-  };
+  console.log(data.image_id);
 
   return (
     <Workspace

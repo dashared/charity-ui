@@ -73,7 +73,7 @@ export interface UserUser {
      * @type {string}
      * @memberof UserUser
      */
-    image?: string;
+    image_id?: string;
     /**
      * 
      * @type {string}

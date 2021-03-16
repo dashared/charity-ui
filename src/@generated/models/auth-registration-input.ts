@@ -55,7 +55,7 @@ export interface AuthRegistrationInput {
      * @type {string}
      * @memberof AuthRegistrationInput
      */
-    image?: string;
+    image_id?: string;
     /**
      * 
      * @type {string}

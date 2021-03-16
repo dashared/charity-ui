@@ -7,19 +7,25 @@ import React, {
 } from "react";
 import { Card, DatePicker, Form, Input, Upload } from "antd";
 import { FormInstance } from "antd/lib/form";
+import { RcCustomRequestOptions, UploadFile } from "antd/lib/upload/interface";
 import { PlusOutlined } from "@ant-design/icons";
-import { UserUser } from "@generated";
+import {
+  FileInfo,
+  UserEditableInfo,
+  UserUser,
+  UserUserRoleEnum,
+} from "@generated";
 import { useTranslation } from "@providers";
-import { FileFactory } from "@providers/axios";
+import moment from "moment";
 
 import RoleTag from "components/User/Role/tag";
 
-export type PersonalSettingsFormState = UserUser;
+export type PersonalSettingsFormState = UserEditableInfo;
 
 export type PersonalSettingsHandler = FormInstance<PersonalSettingsFormState>;
 
 type PersonalSettingsFormProps = {
-  initial?: PersonalSettingsFormState;
+  initial?: UserUser;
   onSubmit?: (values: PersonalSettingsFormState) => void | Promise<void>;
 };
 
@@ -44,24 +50,45 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
 > = ({ initial, onSubmit }, ref) => {
   const { t } = useTranslation("Settings");
 
-  const [profileList, setFileList] = useState([]);
+  const [id, setId] = useState<string | undefined>();
 
-  const uploadImage = async (options: any): Promise<void> => {
-    const { onSuccess, onError, file } = options;
-    try {
-      const config = {
-        headers: { "content-type": "multipart/form-data" },
-      };
-      await FileFactory.apiFileUploadPost({
-        file,
-        config,
-      });
+  const [profileList, setFileList] = useState<Array<UploadFile<any>>>(
+    initial?.image_id
+      ? [
+          {
+            uid: "-1",
+            status: "done",
+            name: "avatar",
+            size: 0,
+            type: "image/png",
+            url: `/api/file/${initial?.image_id}/download`,
+          },
+        ]
+      : [],
+  );
 
-      onSuccess("Ok");
-    } catch (err) {
-      console.error(err);
-      onError({ err });
-    }
+  const customRequest = (options: RcCustomRequestOptions): void => {
+    const { file, onError, onSuccess } = options;
+
+    const url = `${process.env.REACT_APP_API_URL}/api/file/upload`;
+
+    const formData = new FormData();
+    formData.append("file", file as Blob);
+    const request = new XMLHttpRequest();
+
+    request.open("POST", url);
+    request.send(formData);
+
+    request.onload = function () {
+      if (request.status === 200) {
+        const parsed: FileInfo[] = JSON.parse(request.responseText);
+        setId(parsed.map((value) => value.id ?? "")[0]);
+
+        return onSuccess(parsed, file);
+      } else {
+        return onError(Error(request.statusText));
+      }
+    };
   };
 
   const handleOnChange = ({ fileList }: any): void => {
@@ -75,16 +102,19 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
         ref={ref}
         initialValues={{
           ...initial,
+          birth_date: moment(initial?.birth_date),
         }}
         onFinish={(values) => {
-          console.log(values);
-          onSubmit?.(values);
+          onSubmit?.({
+            ...values,
+            image_id: id,
+          });
         }}
       >
         <Form.Item label={t("profile_picture")} name="image">
           <Upload
             accept="image/*"
-            customRequest={uploadImage}
+            customRequest={customRequest}
             listType="picture-card"
             fileList={profileList}
             onChange={handleOnChange}
@@ -107,7 +137,7 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
 
         {initial?.role && (
           <Form.Item name="role" label={t("role")}>
-            <RoleTag roles={[initial?.role]} />
+            <RoleTag roles={[(initial?.role as unknown) as UserUserRoleEnum]} />
           </Form.Item>
         )}
 

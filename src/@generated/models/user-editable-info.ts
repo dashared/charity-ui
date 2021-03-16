@@ -17,98 +17,80 @@
 /**
  * 
  * @export
- * @interface AuthUnregisteredUser
+ * @interface UserEditableInfo
  */
-export interface AuthUnregisteredUser {
+export interface UserEditableInfo {
     /**
      * 
      * @type {string}
-     * @memberof AuthUnregisteredUser
+     * @memberof UserEditableInfo
      */
     birth_date?: string;
     /**
      * 
-     * @type {boolean}
-     * @memberof AuthUnregisteredUser
-     */
-    blocked?: boolean;
-    /**
-     * 
      * @type {string}
-     * @memberof AuthUnregisteredUser
+     * @memberof UserEditableInfo
      */
     city?: string;
     /**
      * 
      * @type {string}
-     * @memberof AuthUnregisteredUser
+     * @memberof UserEditableInfo
      */
     country?: string;
     /**
      * 
      * @type {string}
-     * @memberof AuthUnregisteredUser
-     */
-    created_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AuthUnregisteredUser
+     * @memberof UserEditableInfo
      */
     email?: string;
     /**
      * 
      * @type {string}
-     * @memberof AuthUnregisteredUser
+     * @memberof UserEditableInfo
      */
     first_name?: string;
     /**
      * 
      * @type {string}
-     * @memberof AuthUnregisteredUser
-     */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AuthUnregisteredUser
+     * @memberof UserEditableInfo
      */
     image_id?: string;
     /**
      * 
      * @type {string}
-     * @memberof AuthUnregisteredUser
+     * @memberof UserEditableInfo
      */
     last_name?: string;
     /**
      * 
      * @type {string}
-     * @memberof AuthUnregisteredUser
+     * @memberof UserEditableInfo
      */
     middle_name?: string;
     /**
      * 
      * @type {string}
-     * @memberof AuthUnregisteredUser
+     * @memberof UserEditableInfo
      */
     phone?: string;
     /**
      * 
      * @type {string}
-     * @memberof AuthUnregisteredUser
+     * @memberof UserEditableInfo
      */
-    role?: AuthUnregisteredUserRoleEnum;
+    role?: UserEditableInfoRoleEnum;
 }
 
 /**
     * @export
     * @enum {string}
     */
-export enum AuthUnregisteredUserRoleEnum {
+export enum UserEditableInfoRoleEnum {
     User = 'User',
     Manager = 'Manager',
     SuperManager = 'SuperManager',
-    ContentManager = 'ContentManager',
+    ContentMaRolnager = 'ContentMaRolnager',
     Operator = 'Operator',
     Admin = 'Admin'
 }

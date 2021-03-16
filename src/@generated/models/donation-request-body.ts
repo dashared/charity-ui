@@ -65,12 +65,6 @@ export interface DonationRequestBody {
      * @type {string}
      * @memberof DonationRequestBody
      */
-    comment?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DonationRequestBody
-     */
     created_at?: string;
     /**
      * 

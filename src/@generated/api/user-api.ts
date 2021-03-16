@@ -19,6 +19,8 @@ import { Configuration } from '../configuration';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
+import { UserEditableInfo } from '../models';
+// @ts-ignore
 import { UserResponse } from '../models';
 // @ts-ignore
 import { UserUser } from '../models';
@@ -171,6 +173,59 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         options: localVarRequestOptions,
       };
     },
+    /**
+     * 
+     * @summary Update user info
+     * @param {string} id User id
+     * @param {UserEditableInfo} [body] Input
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    apiUserIdPatch: async (id: string, body?: UserEditableInfo, options: any = {}): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      if (id === null || id === undefined) {
+        throw new RequiredError('id', 'Required parameter id was null or undefined when calling apiUserIdPatch.');
+      }
+      const localVarPath = `/api/user/{id}`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      const queryParameters = new URLSearchParams(localVarUrlObj.search);
+      for (const key in localVarQueryParameter) {
+        queryParameters.set(key, localVarQueryParameter[key]);
+      }
+      for (const key in options.query) {
+        queryParameters.set(key, options.query[key]);
+      }
+      localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+      const nonString = typeof body !== 'string';
+      const needsSerialization = nonString && configuration && configuration.isJsonMime
+        ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
+        : nonString;
+      localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(body !== undefined ? body : {})
+        : (body || "");
+
+      return {
+        url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+        options: localVarRequestOptions,
+      };
+    },
   }
 };
 
@@ -225,6 +280,21 @@ export const UserApiFp = function (configuration?: Configuration) {
         return axios.request(axiosRequestArgs);
       };
     },
+    /**
+     * 
+     * @summary Update user info
+     * @param {string} id User id
+     * @param {UserEditableInfo} [body] Input
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async apiUserIdPatch(id: string, body?: UserEditableInfo, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserUser>> {
+      const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).apiUserIdPatch(id, body, options);
+      return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+        const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+        return axios.request(axiosRequestArgs);
+      };
+    },
   }
 };
 
@@ -266,6 +336,17 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
      */
     apiUserIdGet(id: string, options?: any): AxiosPromise<UserUser> {
       return UserApiFp(configuration).apiUserIdGet(id, options).then((request) => request(axios, basePath));
+    },
+    /**
+     * 
+     * @summary Update user info
+     * @param {string} id User id
+     * @param {UserEditableInfo} [body] Input
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    apiUserIdPatch(id: string, body?: UserEditableInfo, options?: any): AxiosPromise<UserUser> {
+      return UserApiFp(configuration).apiUserIdPatch(id, body, options).then((request) => request(axios, basePath));
     },
   };
 };
@@ -334,6 +415,27 @@ export interface UserApiApiUserIdGetRequest {
 }
 
 /**
+ * Request parameters for apiUserIdPatch operation in UserApi.
+ * @export
+ * @interface UserApiApiUserIdPatchRequest
+ */
+export interface UserApiApiUserIdPatchRequest {
+  /**
+   * User id
+   * @type {string}
+   * @memberof UserApiApiUserIdPatch
+   */
+  readonly id: string
+
+  /**
+   * Input
+   * @type {UserEditableInfo}
+   * @memberof UserApiApiUserIdPatch
+   */
+  readonly body?: UserEditableInfo
+}
+
+/**
  * UserApi - object-oriented interface
  * @export
  * @class UserApi
@@ -374,5 +476,17 @@ export class UserApi extends BaseAPI {
    */
   public apiUserIdGet(requestParameters: UserApiApiUserIdGetRequest, options?: any) {
     return UserApiFp(this.configuration).apiUserIdGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * 
+   * @summary Update user info
+   * @param {UserApiApiUserIdPatchRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof UserApi
+   */
+  public apiUserIdPatch(requestParameters: UserApiApiUserIdPatchRequest, options?: any) {
+    return UserApiFp(this.configuration).apiUserIdPatch(requestParameters.id, requestParameters.body, options).then((request) => request(this.axios, this.basePath));
   }
 }

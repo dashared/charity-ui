@@ -13,6 +13,8 @@
   "info": "Bio",
   "email": "Email",
   "updateButton": "Update",
+  "update_success": "Information is successfully updated",
+  "update_error": "Information was not updated",
   "languageSetting": {
     "russian": "Russian",
     "english": "English"
