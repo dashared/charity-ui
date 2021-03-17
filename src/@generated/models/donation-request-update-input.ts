@@ -45,6 +45,12 @@ export interface DonationRequestUpdateInput {
      * @type {string}
      * @memberof DonationRequestUpdateInput
      */
+    category_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestUpdateInput
+     */
     description?: string;
     /**
      * 
@@ -70,12 +76,6 @@ export interface DonationRequestUpdateInput {
      * @memberof DonationRequestUpdateInput
      */
     relationship?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DonationRequestUpdateInput
-     */
-    request_type?: string;
     /**
      * 
      * @type {UtilsMoneyJson}

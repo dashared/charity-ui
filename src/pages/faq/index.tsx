@@ -1,10 +1,11 @@
 import React, { FC, useCallback, useState } from "react";
 import Editor from "react-markdown-editor-lite";
 import { Button } from "antd";
-import { SaveOutlined } from "@ant-design/icons";
 import RoleSwitch from "@lib/components/RoleSwitch";
+import { notify } from "@lib/utils/notification";
 import { useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
+import useAxios, { CharityFactory } from "@providers/axios";
 import PrettyFAQ from "Home/FAQ";
 
 import FAQ from "components/FAQ";
@@ -16,12 +17,7 @@ const Actions: FC<{ onSubmit: () => Promise<void>; loading: boolean }> = ({
   const { t } = useTranslation("FAQ");
 
   return (
-    <Button
-      type="primary"
-      onClick={onSubmit}
-      loading={loading}
-      icon={<SaveOutlined />}
-    >
+    <Button type="primary" onClick={onSubmit} loading={loading}>
       {t("save")}
     </Button>
   );
@@ -30,7 +26,10 @@ const Actions: FC<{ onSubmit: () => Promise<void>; loading: boolean }> = ({
 const FAQPage: FC = () => {
   const [loading, setLoading] = useState(false);
 
-  // const {data, loading} = useAxios() ... API CALL TODO
+  const { data, refetchQuery } = useAxios(
+    CharityFactory.apiCharityFaqGet,
+    false,
+  );
 
   const { t } = useTranslation("FAQ");
 
@@ -39,15 +38,18 @@ const FAQPage: FC = () => {
   const onSubmit = useCallback(async () => {
     try {
       setLoading(true);
-      console.log((editorRef as React.RefObject<Editor>).current?.getMdValue());
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const text = (editorRef as React.RefObject<Editor>).current?.getMdValue();
+      await CharityFactory.apiCharityFaqPatch({ faq: text });
+
+      notify(t("update_success"), "success");
     } catch (e) {
       console.log(e);
+      notify(t("update_error"), "error");
     } finally {
       setLoading(false);
-      // onRefetch
+      await refetchQuery();
     }
-  }, [editorRef]);
+  }, [editorRef, refetchQuery, t]);
 
   return (
     <AuthConsumer>
@@ -73,7 +75,7 @@ const FAQPage: FC = () => {
               >
                 <FAQ
                   role={user.role}
-                  text={`###  Heading`}
+                  text={data?.faq ?? ""}
                   editorRef={editorRef}
                 />
               </Workspace>
@@ -85,6 +87,6 @@ const FAQPage: FC = () => {
   );
 };
 
-export const name = "faq:index";
+export const name = "fund:faq-index";
 
 export default FAQPage;

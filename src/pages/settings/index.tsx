@@ -49,8 +49,6 @@ const SettingsPage: FC = () => {
     return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
   }
 
-  console.log(data.image_id);
-
   return (
     <Workspace
       title={t("title")}
@@ -68,7 +66,7 @@ const SettingsPage: FC = () => {
           onChange={(value) => {
             i18n.changeLanguage(value);
           }}
-          value={i18n.language}
+          value={i18n.language.startsWith("en") ? "en" : "ru"}
           style={{ width: 180, margin: "0 8px" }}
         >
           <Select.Option value="ru">

@@ -6,6 +6,7 @@ import {
   HomeOutlined,
   MoneyCollectOutlined,
   ProfileOutlined,
+  QuestionOutlined,
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -81,6 +82,15 @@ const LeftBar: FC = () => {
         </>
       ),
       name: "fund:index",
+    },
+    {
+      display: (
+        <>
+          <QuestionOutlined />
+          <span>{i18n.t("LeftBar.Fund_nested.FAQ")}</span>
+        </>
+      ),
+      name: "fund:faq-index",
     },
     {
       display: (

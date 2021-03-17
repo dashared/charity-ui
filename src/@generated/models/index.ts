@@ -9,6 +9,7 @@ export * from './blockchain-donation-to-application-from-fund';
 export * from './blockchain-donation-to-charity';
 export * from './blockchain-donation-to-charity-from-user';
 export * from './blockchain-donations-response';
+export * from './category-category';
 export * from './charity-faq';
 export * from './charity-fund-info';
 export * from './charity-fund-info-response';

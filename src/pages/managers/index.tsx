@@ -1,5 +1,6 @@
 import React, { FC, useRef, useState } from "react";
-import { Card, Select, Space } from "antd";
+import { Avatar, Card, Select, Space } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 // import { CheckOutlined, SyncOutlined } from "@ant-design/icons";
 import {
   AuthManagerRegistrationInputRoleEnum as Roles,
@@ -85,18 +86,20 @@ const ManagersPage: FC = () => {
   };
 
   const columns = [
-    // {
-    //   key: "photo",
-    //   title: "",
-    //   width: "6%",
-    //   render(record: Single) {
-    //     return (
-    //       <Avatar style={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>
-    //         {record?.role?.substr(0, 1)}
-    //       </Avatar>
-    //     );
-    //   },
-    // },
+    {
+      key: "photo",
+      title: "",
+      width: "6%",
+      render(record: Single) {
+        const props = {
+          src: record.image_id
+            ? `/api/file/${record.image_id}/download`
+            : undefined,
+          icon: record.image_id ? undefined : <UserOutlined />,
+        };
+        return <Avatar {...props} />;
+      },
+    },
     {
       key: "name",
       width: "25%",

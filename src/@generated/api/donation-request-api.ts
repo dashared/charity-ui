@@ -49,12 +49,12 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
      * @param {Array<string>} [author] request author id
      * @param {Array<string>} [assignee] request assignee id
      * @param {Array<string>} [status] request status
-     * @param {Array<string>} [type] request type
+     * @param {Array<string>} [category] request category
      * @param {string} [searchString] id &#x3D;&#x3D; searchString OR title LIKE searchString OR description LIKE searchString
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    apiDonationRequestGet: async (page?: number, size?: number, sort?: string, author?: Array<string>, assignee?: Array<string>, status?: Array<string>, type?: Array<string>, searchString?: string, options: any = {}): Promise<RequestArgs> => {
+    apiDonationRequestGet: async (page?: number, size?: number, sort?: string, author?: Array<string>, assignee?: Array<string>, status?: Array<string>, category?: Array<string>, searchString?: string, options: any = {}): Promise<RequestArgs> => {
       const localVarPath = `/api/donation-request/`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -87,8 +87,8 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
         localVarQueryParameter['assignee'] = assignee;
       }
 
-      if (type) {
-        localVarQueryParameter['type'] = type;
+      if (category) {
+        localVarQueryParameter['category'] = category;
       }
 
       if (searchString !== undefined) {
@@ -486,13 +486,13 @@ export const DonationRequestApiFp = function (configuration?: Configuration) {
      * @param {Array<string>} [author] request author id
      * @param {Array<string>} [assignee] request assignee id
      * @param {Array<string>} [status] request status
-     * @param {Array<string>} [type] request type
+     * @param {Array<string>} [category] request category
      * @param {string} [searchString] id &#x3D;&#x3D; searchString OR title LIKE searchString OR description LIKE searchString
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async apiDonationRequestGet(page?: number, size?: number, sort?: string, author?: Array<string>, assignee?: Array<string>, status?: Array<string>, type?: Array<string>, searchString?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestResponse>> {
-      const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestGet(page, size, sort, author, assignee, status, type, searchString, options);
+    async apiDonationRequestGet(page?: number, size?: number, sort?: string, author?: Array<string>, assignee?: Array<string>, status?: Array<string>, category?: Array<string>, searchString?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestResponse>> {
+      const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestGet(page, size, sort, author, assignee, status, category, searchString, options);
       return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
         const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
         return axios.request(axiosRequestArgs);
@@ -581,7 +581,7 @@ export const DonationRequestApiFp = function (configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async apiDonationRequestIdStatusPatch(id: number, input?: DonationRequestUpdateStatusInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestResponse>> {
+    async apiDonationRequestIdStatusPatch(id: number, input?: DonationRequestUpdateStatusInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
       const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestIdStatusPatch(id, input, options);
       return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
         const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
@@ -620,13 +620,13 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
      * @param {Array<string>} [author] request author id
      * @param {Array<string>} [assignee] request assignee id
      * @param {Array<string>} [status] request status
-     * @param {Array<string>} [type] request type
+     * @param {Array<string>} [category] request category
      * @param {string} [searchString] id &#x3D;&#x3D; searchString OR title LIKE searchString OR description LIKE searchString
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    apiDonationRequestGet(page?: number, size?: number, sort?: string, author?: Array<string>, assignee?: Array<string>, status?: Array<string>, type?: Array<string>, searchString?: string, options?: any): AxiosPromise<DonationRequestResponse> {
-      return DonationRequestApiFp(configuration).apiDonationRequestGet(page, size, sort, author, assignee, status, type, searchString, options).then((request) => request(axios, basePath));
+    apiDonationRequestGet(page?: number, size?: number, sort?: string, author?: Array<string>, assignee?: Array<string>, status?: Array<string>, category?: Array<string>, searchString?: string, options?: any): AxiosPromise<DonationRequestResponse> {
+      return DonationRequestApiFp(configuration).apiDonationRequestGet(page, size, sort, author, assignee, status, category, searchString, options).then((request) => request(axios, basePath));
     },
     /**
      * 
@@ -691,7 +691,7 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    apiDonationRequestIdStatusPatch(id: number, input?: DonationRequestUpdateStatusInput, options?: any): AxiosPromise<DonationRequestResponse> {
+    apiDonationRequestIdStatusPatch(id: number, input?: DonationRequestUpdateStatusInput, options?: any): AxiosPromise<void> {
       return DonationRequestApiFp(configuration).apiDonationRequestIdStatusPatch(id, input, options).then((request) => request(axios, basePath));
     },
     /**
@@ -756,11 +756,11 @@ export interface DonationRequestApiApiDonationRequestGetRequest {
   readonly status?: Array<string>
 
   /**
-   * request type
+   * request category
    * @type {Array<string>}
    * @memberof DonationRequestApiApiDonationRequestGet
    */
-  readonly type?: Array<string>
+  readonly category?: Array<string>
 
   /**
    * id &#x3D;&#x3D; searchString OR title LIKE searchString OR description LIKE searchString
@@ -919,7 +919,7 @@ export class DonationRequestApi extends BaseAPI {
    * @memberof DonationRequestApi
    */
   public apiDonationRequestGet(requestParameters: DonationRequestApiApiDonationRequestGetRequest = {}, options?: any) {
-    return DonationRequestApiFp(this.configuration).apiDonationRequestGet(requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.author, requestParameters.assignee, requestParameters.status, requestParameters.type, requestParameters.searchString, options).then((request) => request(this.axios, this.basePath));
+    return DonationRequestApiFp(this.configuration).apiDonationRequestGet(requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.author, requestParameters.assignee, requestParameters.status, requestParameters.category, requestParameters.searchString, options).then((request) => request(this.axios, this.basePath));
   }
 
   /**

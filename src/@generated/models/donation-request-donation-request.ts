@@ -13,6 +13,7 @@
  */
 
 
+import { CategoryCategory } from './category-category';
 import { UserSimpleUser } from './user-simple-user';
 import { UserUser } from './user-user';
 import { UtilsMoneyJson } from './utils-money-json';
@@ -49,6 +50,12 @@ export interface DonationRequestDonationRequest {
     author?: UserUser;
     /**
      * 
+     * @type {CategoryCategory}
+     * @memberof DonationRequestDonationRequest
+     */
+    category?: CategoryCategory;
+    /**
+     * 
      * @type {string}
      * @memberof DonationRequestDonationRequest
      */
@@ -83,12 +90,6 @@ export interface DonationRequestDonationRequest {
      * @memberof DonationRequestDonationRequest
      */
     relationship?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DonationRequestDonationRequest
-     */
-    request_type?: string;
     /**
      * 
      * @type {UtilsMoneyJson}

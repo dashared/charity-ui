@@ -8,9 +8,10 @@ import {
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import { useListSelection } from "@lib/hooks";
+import { format as formatCategory } from "@lib/utils/category";
 import { format } from "@lib/utils/date";
 import { cred } from "@lib/utils/name";
-import { useTranslation } from "@providers";
+import { i18n, useTranslation } from "@providers";
 import { DonationRequestFactory } from "@providers/axios";
 
 import StatusTag, {
@@ -28,6 +29,8 @@ const ManagersApplications: FC<{ user: User }> = ({ user }) => {
   } = useListSelection<Single>();
 
   const paginationState = useRef<StateRef>(null);
+
+  const language = i18n.language.substring(0, 2);
 
   const { t } = useTranslation("Application");
 
@@ -59,7 +62,7 @@ const ManagersApplications: FC<{ user: User }> = ({ user }) => {
     {
       key: "type",
       render(record: Single) {
-        return <span>{record.request_type}</span>;
+        return <span>{formatCategory(language, record.category)}</span>;
       },
     },
     {

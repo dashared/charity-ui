@@ -14,13 +14,30 @@
 
 
 
-export * from './api/category-api';
-export * from './api/charity-api';
-export * from './api/donation-request-api';
-export * from './api/donations-api';
-export * from './api/file-api';
-export * from './api/login-api';
-export * from './api/money-api';
-export * from './api/registration-api';
-export * from './api/user-api';
+/**
+ * 
+ * @export
+ * @interface CategoryCategory
+ */
+export interface CategoryCategory {
+    /**
+     * 
+     * @type {string}
+     * @memberof CategoryCategory
+     */
+    eng?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CategoryCategory
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CategoryCategory
+     */
+    rus?: string;
+}
+
 

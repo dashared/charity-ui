@@ -156,7 +156,7 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
         </Form.Item>
 
         <Form.Item name="birth_date" label={t("birth_date")}>
-          <DatePicker />
+          <DatePicker style={{ width: 200 }} />
         </Form.Item>
 
         <Form.Item name="info" label={t("info")}>

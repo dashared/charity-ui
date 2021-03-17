@@ -2,10 +2,7 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import {
-  DonationRequestResponse,
-  DonationRequestUpdateStatusInput,
-} from "@generated";
+import { DonationRequestUpdateStatusInput } from "@generated";
 import { notify } from "@lib/utils/notification";
 import { AxiosPromise } from "axios";
 
@@ -18,10 +15,10 @@ type FormValues = {
 const ModalWithMessage: FC<{
   query: (
     id: number,
-    input: DonationRequestUpdateStatusInput,
+    input?: DonationRequestUpdateStatusInput,
     // eslint-disable-next-line
     options?: any,
-  ) => AxiosPromise<DonationRequestResponse>;
+  ) => AxiosPromise<void>;
   title: string;
   applicationId: number;
   newStatus: ApplicationStatus;

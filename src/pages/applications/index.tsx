@@ -1,6 +1,5 @@
 import React, { FC, useRef, useState } from "react";
 import { Card, Space } from "antd";
-import { Link } from "@curi/react-dom";
 import {
   DonationRequestBody as Single,
   DonationRequestResponse as Result,
@@ -9,9 +8,10 @@ import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useListSelection } from "@lib/hooks";
+import { formatCategory } from "@lib/utils";
 import { format } from "@lib/utils/date";
 import { cred } from "@lib/utils/name";
-import { useTranslation, Workspace } from "@providers";
+import { i18n, router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import { DonationRequestFactory } from "@providers/axios";
 import Redirect from "pages/_redirect";
@@ -25,6 +25,12 @@ import StatusTag, {
 } from "components/Application/Status/tag";
 
 import styles from "./styles.module.less";
+
+export const onElementClick = (record: Single): void => {
+  router.navigate({
+    url: router.url({ name: "applications:show", params: { id: record.id } }),
+  });
+};
 
 type FilterInfo = {
   assignedToMe?: boolean;
@@ -73,16 +79,13 @@ const Filter: FC<{
 };
 
 const ApplicationsPage: FC<{ userId?: string }> = ({ userId }) => {
-  const {
-    isTarget,
-    isSelected,
-    onElementClick,
-    setList,
-  } = useListSelection<Single>();
+  const { isTarget, isSelected, setList } = useListSelection<Single>();
 
   const [filter, setFilter] = useState<FilterSetting>({});
 
   const paginationState = useRef<StateRef>(null);
+
+  const language = i18n.language.substr(0, 2);
 
   const { t } = useTranslation("Application");
 
@@ -90,15 +93,12 @@ const ApplicationsPage: FC<{ userId?: string }> = ({ userId }) => {
     {
       key: "id",
       render(record: Single) {
-        return (
-          <Link params={{ id: record.id }} name="applications:show">
-            {record.id}
-          </Link>
-        );
+        return record.id;
       },
     },
     {
       key: "title",
+      width: "35%",
       render(record: Single) {
         return record.title;
       },
@@ -114,7 +114,7 @@ const ApplicationsPage: FC<{ userId?: string }> = ({ userId }) => {
     {
       key: "type",
       render(record: Single) {
-        return <span>{record.request_type}</span>;
+        return <span>{formatCategory(language, record.category)}</span>;
       },
     },
     {
@@ -162,7 +162,7 @@ const ApplicationsPage: FC<{ userId?: string }> = ({ userId }) => {
             })}
             onRecordClick={(event, record, index) => {
               if (index !== undefined) {
-                onElementClick(event, index);
+                onElementClick(record);
               }
             }}
           />

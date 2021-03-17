@@ -1,4 +1,6 @@
 {
   "title": "FAQ",
-  "save": "Save updates"
+  "save": "Save",
+  "update_success": "FAQ updated successfully",
+  "update_error": "Error updating FAQ"
 }

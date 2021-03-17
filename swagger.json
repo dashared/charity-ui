@@ -6,6 +6,24 @@
     "contact": {}
   },
   "paths": {
+    "/api/categories": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["Category"],
+        "summary": "Get categories of fund",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Category.Category"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/charity": {
       "get": {
         "produces": ["application/json"],
@@ -187,8 +205,8 @@
               "type": "string"
             },
             "collectionFormat": "multi",
-            "description": "request type",
-            "name": "type",
+            "description": "request category",
+            "name": "category",
             "in": "query"
           },
           {
@@ -375,10 +393,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/DonationRequest.Response"
-            }
+            "description": ""
           }
         }
       }
@@ -1135,6 +1150,20 @@
         }
       }
     },
+    "Category.Category": {
+      "type": "object",
+      "properties": {
+        "eng": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "rus": {
+          "type": "string"
+        }
+      }
+    },
     "Charity.Faq": {
       "type": "object",
       "properties": {
@@ -1257,6 +1286,9 @@
             ]
           }
         },
+        "category": {
+          "$ref": "#/definitions/Category.Category"
+        },
         "created_at": {
           "type": "string"
         },
@@ -1273,9 +1305,6 @@
           "$ref": "#/definitions/utils.MoneyJson"
         },
         "relationship": {
-          "type": "string"
-        },
-        "request_type": {
           "type": "string"
         },
         "requested_amount": {
@@ -1342,6 +1371,9 @@
         "author": {
           "$ref": "#/definitions/User.User"
         },
+        "category": {
+          "$ref": "#/definitions/Category.Category"
+        },
         "created_at": {
           "type": "string"
         },
@@ -1358,9 +1390,6 @@
           "$ref": "#/definitions/utils.MoneyJson"
         },
         "relationship": {
-          "type": "string"
-        },
-        "request_type": {
           "type": "string"
         },
         "requested_amount": {
@@ -1412,6 +1441,9 @@
         "assignee_id": {
           "type": "string"
         },
+        "category_id": {
+          "type": "string"
+        },
         "comment": {
           "type": "string"
         },
@@ -1428,9 +1460,6 @@
           }
         },
         "relationship": {
-          "type": "string"
-        },
-        "request_type": {
           "type": "string"
         },
         "requested_amount": {
@@ -1499,6 +1528,9 @@
         "assignee_id": {
           "type": "string"
         },
+        "category_id": {
+          "type": "string"
+        },
         "description": {
           "type": "string"
         },
@@ -1515,9 +1547,6 @@
           "type": "string"
         },
         "relationship": {
-          "type": "string"
-        },
-        "request_type": {
           "type": "string"
         },
         "requested_amount": {

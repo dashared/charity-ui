@@ -1,5 +1,6 @@
 import React, { FC } from "react";
-import { Col, Form, Row } from "antd";
+import { Avatar, Col, Form, Row } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import { UserUser as User } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { formatDate, formatString } from "@lib/utils";
@@ -8,7 +9,7 @@ import { useTranslation } from "@providers";
 import { UserApiRole } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
 
-//import BlockedTag from "components/User/Block/tag";
+import BlockedTag from "components/User/Block/tag";
 import RoleTag from "components/User/Role/tag";
 
 type UserInfoProps = {
@@ -19,16 +20,19 @@ type UserInfoProps = {
 const UserInfo: FC<UserInfoProps> = ({ user, role }) => {
   const { t } = useTranslation("User");
 
-  const { first_name, middle_name, last_name } = user;
+  const { first_name, middle_name, last_name, image_id } = user;
+
+  const props = {
+    size: { xs: 24, sm: 40, md: 60, lg: 80, xl: 100, xxl: 150 },
+    src: image_id ? `/api/file/${image_id}/download` : undefined,
+    icon: image_id ? undefined : <UserOutlined />,
+  };
 
   return (
-    <Row justify="space-between" align="top">
-      {/* <Col span={4}>
-        <Avatar
-          size={{ xs: 70, sm: 80, md: 100, lg: 120, xl: 130, xxl: 140 }}
-          icon={<ProfileFilled />}
-        ></Avatar>
-      </Col> */}
+    <Row align="top" justify="center" gutter={16}>
+      <Col span={3}>
+        <Avatar {...props} />
+      </Col>
       <Col span={8}>
         <Form>
           <Form.Item label={t("credentials")}>
@@ -40,10 +44,11 @@ const UserInfo: FC<UserInfoProps> = ({ user, role }) => {
           <Form.Item label={t("country")}>
             <span>{formatString(user.country)}</span>
           </Form.Item>
-
-          {/* <Form.Item>
-            <BlockedTag isBlocked={true} />
-          </Form.Item> */}
+          {(user.blocked ?? false) && (
+            <Form.Item>
+              <BlockedTag isBlocked={user.blocked ?? false} />
+            </Form.Item>
+          )}
         </Form>
       </Col>
       <Col span={12}>

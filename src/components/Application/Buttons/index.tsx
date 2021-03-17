@@ -4,7 +4,6 @@ import { Dropdown, Menu } from "antd";
 import {
   DonationRequestBodyAvailableStatusesEnum as ApplicationStatus,
   DonationRequestBodyStatusEnum,
-  DonationRequestResponse,
   DonationRequestUpdateInput,
 } from "@generated";
 import { DonationRequestFactory } from "@providers/axios";
@@ -27,10 +26,10 @@ type ModalState = {
   newStatus: ApplicationStatus;
   query: (
     id: number,
-    input: DonationRequestUpdateInput,
+    input?: DonationRequestUpdateInput,
     // eslint-disable-next-line
     options?: any,
-  ) => AxiosPromise<DonationRequestResponse>;
+  ) => AxiosPromise<void>;
 };
 
 const ActionButtons: FC<ApplicationButtonsProps> = (props) => {

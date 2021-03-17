@@ -13,6 +13,7 @@
  */
 
 
+import { CategoryCategory } from './category-category';
 import { FileInfo } from './file-info';
 import { UserSimpleUser } from './user-simple-user';
 import { UserUser } from './user-user';
@@ -62,6 +63,12 @@ export interface DonationRequestBody {
     available_statuses?: Array<DonationRequestBodyAvailableStatusesEnum>;
     /**
      * 
+     * @type {CategoryCategory}
+     * @memberof DonationRequestBody
+     */
+    category?: CategoryCategory;
+    /**
+     * 
      * @type {string}
      * @memberof DonationRequestBody
      */
@@ -96,12 +103,6 @@ export interface DonationRequestBody {
      * @memberof DonationRequestBody
      */
     relationship?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DonationRequestBody
-     */
-    request_type?: string;
     /**
      * 
      * @type {UtilsMoneyJson}

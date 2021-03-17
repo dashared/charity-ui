@@ -1,6 +1,7 @@
 .gitignore
 .npmignore
 api.ts
+api/category-api.ts
 api/charity-api.ts
 api/donation-request-api.ts
 api/donations-api.ts
@@ -24,6 +25,7 @@ models/blockchain-donation-to-charity-from-user.ts
 models/blockchain-donation-to-charity.ts
 models/blockchain-donation.ts
 models/blockchain-donations-response.ts
+models/category-category.ts
 models/charity-faq.ts
 models/charity-fund-info-response.ts
 models/charity-fund-info.ts

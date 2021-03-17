@@ -1,6 +1,5 @@
 import React, { FC, useRef } from "react";
 import { Progress } from "antd";
-import { Link } from "@curi/react-dom";
 import {
   DonationRequestBody as Single,
   DonationRequestResponse as Result,
@@ -9,10 +8,9 @@ import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useListSelection } from "@lib/hooks";
-import { formatDate } from "@lib/utils";
+import { formatCategory, formatDate } from "@lib/utils";
 import { moneyCollected } from "@lib/utils/currency";
-import { format } from "@lib/utils/date";
-import { useTranslation, Workspace } from "@providers";
+import { i18n, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import { DonationRequestFactory } from "@providers/axios";
 import Redirect from "pages/_redirect";
@@ -22,17 +20,16 @@ import StatusTag, {
   ApplicationStatus,
 } from "components/Application/Status/tag";
 
+import { onElementClick } from "./index";
+
 import styles from "./styles.module.less";
 
 const ProcessingApplicationsPage: FC = () => {
-  const {
-    isTarget,
-    isSelected,
-    onElementClick,
-    setList,
-  } = useListSelection<Single>();
+  const { isTarget, isSelected, setList } = useListSelection<Single>();
 
   const paginationState = useRef<StateRef>(null);
+
+  const language = i18n.language.substr(0, 2);
 
   const { t } = useTranslation("Application");
 
@@ -40,11 +37,7 @@ const ProcessingApplicationsPage: FC = () => {
     {
       key: "id",
       render(record: Single) {
-        return (
-          <Link params={{ id: record.id }} name="applications:show">
-            {record.id}
-          </Link>
-        );
+        return record.id;
       },
     },
     {
@@ -65,13 +58,13 @@ const ProcessingApplicationsPage: FC = () => {
     {
       key: "type",
       render(record: Single) {
-        return <span>{record.request_type}</span>;
+        return <span>{formatCategory(language, record.category)}</span>;
       },
     },
     {
       key: "createdAt",
       render(record: Single) {
-        return format(record.created_at);
+        return formatDate(record.created_at);
       },
     },
     {
@@ -119,7 +112,7 @@ const ProcessingApplicationsPage: FC = () => {
             })}
             onRecordClick={(event, record, index) => {
               if (index !== undefined) {
-                onElementClick(event, index);
+                onElementClick(record);
               }
             }}
           />
