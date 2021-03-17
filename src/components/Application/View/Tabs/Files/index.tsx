@@ -21,9 +21,7 @@ export const FilesTab: FC<{ files: Single[] }> = ({ files }) => {
     {
       key: "file",
       render(record: Single) {
-        return `${record.title}${
-          record.mime_type ? `.${record.mime_type}` : ""
-        }`;
+        return `${record.title}`;
       },
     },
     {
@@ -43,7 +41,7 @@ export const FilesTab: FC<{ files: Single[] }> = ({ files }) => {
             type="link"
             icon={<DownloadOutlined />}
             target="_blank"
-            href={`${process.env.REACT_APP_API_URL}/api/file/${record.id}/download`}
+            href={`/api/file/${record.id}/download`}
           >
             {t("$views.download")}
           </Button>

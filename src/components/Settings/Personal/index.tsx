@@ -70,7 +70,7 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
   const customRequest = (options: RcCustomRequestOptions): void => {
     const { file, onError, onSuccess } = options;
 
-    const url = `${process.env.REACT_APP_API_URL}/api/file/upload`;
+    const url = `/api/file/upload`;
 
     const formData = new FormData();
     formData.append("file", file as Blob);
@@ -102,7 +102,9 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
         ref={ref}
         initialValues={{
           ...initial,
-          birth_date: moment(initial?.birth_date),
+          birth_date: initial?.birth_date
+            ? moment(initial?.birth_date)
+            : undefined,
         }}
         onFinish={(values) => {
           onSubmit?.({

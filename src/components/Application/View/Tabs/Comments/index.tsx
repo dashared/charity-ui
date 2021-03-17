@@ -1,7 +1,8 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Card, Comment, Empty, Form, Input } from "antd";
+import { Avatar, Button, Card, Comment, Empty, Form, Input } from "antd";
 import { CommentProps } from "antd/lib/comment";
+import { UserOutlined } from "@ant-design/icons";
 import { UserUser } from "@generated";
 import { formatDate } from "@lib/utils";
 import { DonationRequestFactory } from "@providers/axios";
@@ -99,6 +100,11 @@ export const CommentTab: IdComponent = ({ id }) => {
               author: formatName(comment.author),
               content: comment.text,
               datetime: formatDate(comment.created_at),
+              avatar: comment.author?.image_id ? (
+                `/api/file/${comment.author?.image_id}/download`
+              ) : (
+                <Avatar icon={<UserOutlined />} />
+              ),
             };
           }),
         });
