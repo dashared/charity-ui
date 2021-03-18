@@ -45,6 +45,7 @@
     },
     "Managers": "Managers",
     "Transactions": "Transactions",
+    "Category": "Categories",
     "Fund": "Fund",
     "Fund_nested": {
       "Description": "Description",

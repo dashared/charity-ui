@@ -1,0 +1,17 @@
+{
+  "title": "Categories for applications",
+  "placeholder": {
+    "id": "ID",
+    "rus": "In russian",
+    "eng": "In english"
+  },
+  "add": "Add category",
+  "submit": "Submit changes",
+  "missing": {
+    "id": "ID not present",
+    "rus": "Russian localization not present",
+    "eng": "English localization not present"
+  },
+  "updated": "Successfully updated category list",
+  "updated_err": "Error, try again!"
+}
