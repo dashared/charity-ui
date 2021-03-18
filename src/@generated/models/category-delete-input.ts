@@ -17,27 +17,15 @@
 /**
  * 
  * @export
- * @interface CategoryCategory
+ * @interface CategoryDeleteInput
  */
-export interface CategoryCategory {
+export interface CategoryDeleteInput {
     /**
      * 
-     * @type {string}
-     * @memberof CategoryCategory
+     * @type {Array<string>}
+     * @memberof CategoryDeleteInput
      */
-    eng: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CategoryCategory
-     */
-    id: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CategoryCategory
-     */
-    rus: string;
+    categories: Array<string>;
 }
 
 

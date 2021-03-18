@@ -10,6 +10,7 @@ import RoleSwitch from "@lib/components/RoleSwitch";
 import { useListSelection } from "@lib/hooks";
 import { formatCategory, formatDate } from "@lib/utils";
 import { moneyCollected } from "@lib/utils/currency";
+import { DateTimeFormat } from "@lib/utils/date";
 import { i18n, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import { DonationRequestFactory } from "@providers/axios";
@@ -74,13 +75,15 @@ const ProcessingApplicationsPage: FC = () => {
           record.approved_amount,
           record.received_amount,
         );
-        return percent ? <Progress percent={10} /> : "-";
+        return percent ? <Progress percent={percent} /> : "-";
       },
     },
     {
       key: "until",
       render(record: Single) {
-        return <span>{formatDate(record.until)}</span>;
+        return (
+          <span>{formatDate(record.until, DateTimeFormat.DATE_SHORT)}</span>
+        );
       },
     },
   ];

@@ -17,6 +17,7 @@
     "login": "Authorization",
     "blockchain": {
       "title": "Blockchain",
+      "button": "Check transaction status",
       "description_1": "The blockchain is a way for donors, charities, and donees that don't trust each other to reach an agreement without the need for a trusted environment. Each party only needs to trust themselves, which is always the case.",
       "description_2": "Ordinarily if you want to reach a trustable agreement with someone you would need to agree on the terms of the agreement and assert that the exact document was agreed upon by all parties. This is usually limited to putting your signature on a piece of paper. However, handwritten signatures are easily forged and copied and disputed. They are also hard to track. Blockchain aims to solve these problems by replacing natural language with computer code, making it more precise. Moreover, the donors and donees that are reaching an agreement don't even have to trust each other, which is not the case in traditional paper agreements."
     },

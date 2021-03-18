@@ -17,27 +17,21 @@
 /**
  * 
  * @export
- * @interface CategoryCategory
+ * @interface UserPrettyPublicKey
  */
-export interface CategoryCategory {
+export interface UserPrettyPublicKey {
     /**
      * 
      * @type {string}
-     * @memberof CategoryCategory
+     * @memberof UserPrettyPublicKey
      */
-    eng: string;
+    _long?: string;
     /**
      * 
      * @type {string}
-     * @memberof CategoryCategory
+     * @memberof UserPrettyPublicKey
      */
-    id: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CategoryCategory
-     */
-    rus: string;
+    _short?: string;
 }
 
 

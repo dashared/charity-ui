@@ -8,6 +8,7 @@ import {
   Progress,
   Row,
   Statistic,
+  Tag,
 } from "antd";
 import { Link } from "@curi/react-dom";
 import { BlockchainDonation, DonationRequestBodyStatusEnum } from "@generated";
@@ -23,12 +24,11 @@ const TransactionView: FC<{ transaction: BlockchainDonation }> = ({
 }) => {
   const { t } = useTranslation("Transaction");
 
-  const author = transaction.donation_author;
   const application = transaction.donation_request;
 
   const untilProgress = daysLeft(application?.started_at, application?.until);
 
-  console.log(untilProgress);
+  console.log(application?.started_at);
 
   return (
     <>
@@ -45,15 +45,17 @@ const TransactionView: FC<{ transaction: BlockchainDonation }> = ({
               </Col>
             </Row>
             <br />
-            <Row>
-              <Col>
-                <Statistic
-                  title={t("application_sum")}
-                  value={formatMoney(application?.approved_amount)}
-                  precision={2}
-                />
-              </Col>
-            </Row>
+            {application && (
+              <Row>
+                <Col>
+                  <Statistic
+                    title={t("application_sum")}
+                    value={formatMoney(application?.approved_amount)}
+                    precision={2}
+                  />
+                </Col>
+              </Row>
+            )}
             <br />
             <Row>
               <Col>
@@ -68,75 +70,109 @@ const TransactionView: FC<{ transaction: BlockchainDonation }> = ({
               </Col>
             </Row>
           </Col>
-          <Col span={4}>
-            <Progress
-              type="circle"
-              percent={moneyCollected(
-                application?.approved_amount,
-                application?.received_amount,
-              )}
-            />
+          <Col span={7}>
+            <Row>
+              <Col>
+                <Statistic
+                  title={t("donation_format")}
+                  valueRender={() => {
+                    if (application) {
+                      return (
+                        <Tag color="blue">
+                          {t("to_application", { id: application.id })}
+                        </Tag>
+                      );
+                    } else {
+                      return <Tag color="default">{t("to_fund")}</Tag>;
+                    }
+                  }}
+                ></Statistic>
+              </Col>
+            </Row>
+            <br />
+            <br />
+            <Row>
+              <Col>
+                <Statistic
+                  title={t("who")}
+                  valueRender={() => {
+                    if (!transaction.donation_author) {
+                      return "-";
+                    } else {
+                      const {
+                        first_name,
+                        middle_name,
+                        last_name,
+                      } = transaction.donation_author;
+                      return (
+                        <span>{cred(first_name, middle_name, last_name)}</span>
+                      );
+                    }
+                  }}
+                ></Statistic>
+              </Col>
+            </Row>
           </Col>
-          <Col span={1}>
-            {untilProgress && (
+          {application && (
+            <Col span={1}>
               <Divider type="vertical" style={{ height: "200px" }} />
-            )}
-          </Col>
-          <Col span={13}>
-            {untilProgress && (
+            </Col>
+          )}
+          {application && (
+            <Col span={4}>
+              <Progress
+                type="circle"
+                percent={moneyCollected(
+                  application?.approved_amount,
+                  application?.received_amount,
+                )}
+              />
+            </Col>
+          )}
+          {untilProgress && (
+            <Col span={4}>
               <Progress
                 type="circle"
                 percent={untilProgress.percentage}
                 format={() => t("until", { days: untilProgress.days })}
               />
-            )}
-          </Col>
+            </Col>
+          )}
         </Row>
       </Card>
 
-      <Card>
-        <Descriptions
-          title={t("info")}
-          bordered
-          column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
-        >
-          <Descriptions.Item label={t("who")}>
-            <Link
-              params={{ id: transaction.donation_request?.id }}
-              name="users:show"
-            >
-              {cred(author?.first_name, author?.middle_name, author?.last_name)}
-            </Link>
-          </Descriptions.Item>
-          {application?.donee && (
-            <Descriptions.Item label={t("whom")}>
-              <Link params={{ id: 1 }} name="users:show">
+      {application && (
+        <Card>
+          <Descriptions
+            title={t("info")}
+            bordered
+            column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
+          >
+            {application?.donee && (
+              <Descriptions.Item label={t("whom")}>
                 {cred(
                   application?.donee?.first_name,
                   application?.donee?.middle_name,
                   application?.donee?.last_name,
                 )}
+              </Descriptions.Item>
+            )}
+            <Descriptions.Item label={t("application_status")}>
+              <StatusTag
+                status={
+                  (application?.status as unknown) as DonationRequestBodyStatusEnum
+                }
+              />
+            </Descriptions.Item>
+
+            <Descriptions.Item label={t("aim")}>
+              <Link name="applications:show" params={{ id: application?.id }}>
+                {application?.title}
               </Link>
             </Descriptions.Item>
-          )}
-          <Descriptions.Item label={t("application_status")} span={2}>
-            <StatusTag
-              status={
-                (application?.status as unknown) as DonationRequestBodyStatusEnum
-              }
-            />
-          </Descriptions.Item>
-
-          <Descriptions.Item label={t("aim")}>
-            <Link name="applications:show" params={{ id: application?.id }}>
-              {application?.title}
-            </Link>
-          </Descriptions.Item>
-          <Descriptions.Item label={t("id")}>
-            <span>{transaction.id}</span>
-          </Descriptions.Item>
-        </Descriptions>
-      </Card>
+          </Descriptions>
+        </Card>
+      )}
     </>
   );
 };

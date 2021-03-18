@@ -27,7 +27,7 @@ function Footer() {
             </a>
           </span>
           <span style={{ marginRight: 24 }}>
-            <Link name="faq:index">{i18n.t("Landing.footer.faq")}</Link>
+            <Link name="fund:faq-index">{i18n.t("Landing.footer.faq")}</Link>
           </span>
           <span style={{ marginRight: 12 }}>Copyright © Charity CRM </span>
         </Col>

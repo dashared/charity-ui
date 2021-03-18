@@ -1,10 +1,9 @@
 import React, { FC, useRef } from "react";
-import { Button } from "antd";
+import { Button, Tag } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import {
   BlockchainDonation as Single,
   BlockchainDonationsResponse as Result,
-  DonationRequestBodyStatusEnum,
 } from "@generated"; // TODO: replace to TransactionRequestBody
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
@@ -16,8 +15,6 @@ import { router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import { DonationsFactory } from "@providers/axios";
 import Redirect from "pages/_redirect";
-
-import StatusTag from "components/Application/Status/tag";
 
 import styles from "./styles.module.less";
 
@@ -72,33 +69,18 @@ const TransactionsPage: FC = () => {
       render(record: Single) {
         return (
           <>
-            <span>{record.donation_request?.title}</span>
-            {"  "}
+            {record.donation_request && (
+              <Tag color="blue">
+                {t("to_application", { id: record.donation_request.id })}
+              </Tag>
+            )}
+            {!record.donation_request && (
+              <Tag color="default">{t("to_fund")}</Tag>
+            )}
           </>
         );
       },
     },
-    {
-      key: "status",
-      title: "",
-      render(record: Single) {
-        return (
-          <StatusTag
-            status={
-              (record.donation_request
-                ?.status as unknown) as DonationRequestBodyStatusEnum
-            }
-          />
-        );
-      },
-    },
-
-    // {
-    //   key: "status",
-    //   render() {
-    //     return <StatusTag status={TransactionStatus.Success} />;
-    //   },
-    // },
 
     {
       key: "createdAt",

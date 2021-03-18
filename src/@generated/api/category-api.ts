@@ -20,12 +20,63 @@ import { Configuration } from '../configuration';
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
 import { CategoryCategory } from '../models';
+// @ts-ignore
+import { CategoryDeleteInput } from '../models';
+// @ts-ignore
+import { CategoryUpdateInput } from '../models';
 /**
  * CategoryApi - axios parameter creator
  * @export
  */
 export const CategoryApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @summary Delete categories of fund
+         * @param {CategoryDeleteInput} [body] array of ids to be deleted
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCategoriesDelete: async (body?: CategoryDeleteInput, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/categories`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            const queryParameters = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                queryParameters.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                queryParameters.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const nonString = typeof body !== 'string';
+            const needsSerialization = nonString && configuration && configuration.isJsonMime
+                ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
+                : nonString;
+            localVarRequestOptions.data =  needsSerialization
+                ? JSON.stringify(body !== undefined ? body : {})
+                : (body || "");
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Get categories of fund
@@ -63,6 +114,53 @@ export const CategoryApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Create or update existing categories of fund
+         * @param {CategoryUpdateInput} [body] array with new categories
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCategoriesPost: async (body?: CategoryUpdateInput, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/categories`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            const queryParameters = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                queryParameters.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                queryParameters.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const nonString = typeof body !== 'string';
+            const needsSerialization = nonString && configuration && configuration.isJsonMime
+                ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
+                : nonString;
+            localVarRequestOptions.data =  needsSerialization
+                ? JSON.stringify(body !== undefined ? body : {})
+                : (body || "");
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -74,12 +172,40 @@ export const CategoryApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Delete categories of fund
+         * @param {CategoryDeleteInput} [body] array of ids to be deleted
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCategoriesDelete(body?: CategoryDeleteInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await CategoryApiAxiosParamCreator(configuration).apiCategoriesDelete(body, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @summary Get categories of fund
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async apiCategoriesGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CategoryCategory>>> {
             const localVarAxiosArgs = await CategoryApiAxiosParamCreator(configuration).apiCategoriesGet(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary Create or update existing categories of fund
+         * @param {CategoryUpdateInput} [body] array with new categories
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiCategoriesPost(body?: CategoryUpdateInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await CategoryApiAxiosParamCreator(configuration).apiCategoriesPost(body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -96,6 +222,16 @@ export const CategoryApiFactory = function (configuration?: Configuration, baseP
     return {
         /**
          * 
+         * @summary Delete categories of fund
+         * @param {CategoryDeleteInput} [body] array of ids to be deleted
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCategoriesDelete(body?: CategoryDeleteInput, options?: any): AxiosPromise<void> {
+            return CategoryApiFp(configuration).apiCategoriesDelete(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get categories of fund
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -103,8 +239,46 @@ export const CategoryApiFactory = function (configuration?: Configuration, baseP
         apiCategoriesGet(options?: any): AxiosPromise<Array<CategoryCategory>> {
             return CategoryApiFp(configuration).apiCategoriesGet(options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Create or update existing categories of fund
+         * @param {CategoryUpdateInput} [body] array with new categories
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiCategoriesPost(body?: CategoryUpdateInput, options?: any): AxiosPromise<void> {
+            return CategoryApiFp(configuration).apiCategoriesPost(body, options).then((request) => request(axios, basePath));
+        },
     };
 };
+
+/**
+ * Request parameters for apiCategoriesDelete operation in CategoryApi.
+ * @export
+ * @interface CategoryApiApiCategoriesDeleteRequest
+ */
+export interface CategoryApiApiCategoriesDeleteRequest {
+    /**
+     * array of ids to be deleted
+     * @type {CategoryDeleteInput}
+     * @memberof CategoryApiApiCategoriesDelete
+     */
+    readonly body?: CategoryDeleteInput
+}
+
+/**
+ * Request parameters for apiCategoriesPost operation in CategoryApi.
+ * @export
+ * @interface CategoryApiApiCategoriesPostRequest
+ */
+export interface CategoryApiApiCategoriesPostRequest {
+    /**
+     * array with new categories
+     * @type {CategoryUpdateInput}
+     * @memberof CategoryApiApiCategoriesPost
+     */
+    readonly body?: CategoryUpdateInput
+}
 
 /**
  * CategoryApi - object-oriented interface
@@ -115,6 +289,18 @@ export const CategoryApiFactory = function (configuration?: Configuration, baseP
 export class CategoryApi extends BaseAPI {
     /**
      * 
+     * @summary Delete categories of fund
+     * @param {CategoryApiApiCategoriesDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CategoryApi
+     */
+    public apiCategoriesDelete(requestParameters: CategoryApiApiCategoriesDeleteRequest = {}, options?: any) {
+        return CategoryApiFp(this.configuration).apiCategoriesDelete(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get categories of fund
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -122,5 +308,17 @@ export class CategoryApi extends BaseAPI {
      */
     public apiCategoriesGet(options?: any) {
         return CategoryApiFp(this.configuration).apiCategoriesGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create or update existing categories of fund
+     * @param {CategoryApiApiCategoriesPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CategoryApi
+     */
+    public apiCategoriesPost(requestParameters: CategoryApiApiCategoriesPostRequest = {}, options?: any) {
+        return CategoryApiFp(this.configuration).apiCategoriesPost(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
     }
 }

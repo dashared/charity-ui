@@ -13,6 +13,7 @@
  */
 
 
+import { UserPrettyPublicKey } from './user-pretty-public-key';
 
 /**
  * 
@@ -92,6 +93,12 @@ export interface AuthUnregisteredUser {
      * @memberof AuthUnregisteredUser
      */
     phone?: string;
+    /**
+     * 
+     * @type {UserPrettyPublicKey}
+     * @memberof AuthUnregisteredUser
+     */
+    pretty_public_key?: UserPrettyPublicKey;
     /**
      * 
      * @type {string}

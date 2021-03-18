@@ -22,6 +22,46 @@
             }
           }
         }
+      },
+      "post": {
+        "produces": ["application/json"],
+        "tags": ["Category"],
+        "summary": "Create or update existing categories of fund",
+        "parameters": [
+          {
+            "description": "array with new categories",
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Category.UpdateInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "produces": ["application/json"],
+        "tags": ["Category"],
+        "summary": "Delete categories of fund",
+        "parameters": [
+          {
+            "description": "array of ids to be deleted",
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Category.DeleteInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
       }
     },
     "/api/charity": {
@@ -101,7 +141,7 @@
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/Charity.Faq"
+              "$ref": "#/definitions/Charity.FaqInput"
             }
           }
         ],
@@ -1053,6 +1093,9 @@
         "phone": {
           "type": "string"
         },
+        "pretty_public_key": {
+          "$ref": "#/definitions/User.PrettyPublicKey"
+        },
         "role": {
           "type": "string",
           "enum": [
@@ -1152,6 +1195,7 @@
     },
     "Category.Category": {
       "type": "object",
+      "required": ["eng", "id", "rus"],
       "properties": {
         "eng": {
           "type": "string"
@@ -1164,6 +1208,30 @@
         }
       }
     },
+    "Category.DeleteInput": {
+      "type": "object",
+      "required": ["categories"],
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Category.UpdateInput": {
+      "type": "object",
+      "required": ["categories"],
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Category.Category"
+          }
+        }
+      }
+    },
     "Charity.Faq": {
       "type": "object",
       "properties": {
@@ -1171,6 +1239,14 @@
           "type": "string"
         },
         "fund_id": {
+          "type": "string"
+        }
+      }
+    },
+    "Charity.FaqInput": {
+      "type": "object",
+      "properties": {
+        "faq": {
           "type": "string"
         }
       }
@@ -1645,6 +1721,17 @@
         }
       }
     },
+    "User.PrettyPublicKey": {
+      "type": "object",
+      "properties": {
+        "long": {
+          "type": "string"
+        },
+        "short": {
+          "type": "string"
+        }
+      }
+    },
     "User.Response": {
       "type": "object",
       "properties": {
@@ -1714,6 +1801,9 @@
         },
         "phone": {
           "type": "string"
+        },
+        "pretty_public_key": {
+          "$ref": "#/definitions/User.PrettyPublicKey"
         },
         "role": {
           "type": "string",

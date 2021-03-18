@@ -9,7 +9,7 @@ import Redirect from "pages/_redirect";
 import TransactionView from "components/Transaction/View";
 
 const TransactionPage: FC<PageProps> = ({ response }) => {
-  const id = response.params.id;
+  const id = response.params.id as string;
 
   const { t } = useTranslation("Transaction");
 

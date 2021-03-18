@@ -8,7 +8,7 @@ export function format(
     return category?.rus ?? "-";
   }
 
-  if (lang === "eng") {
+  if (lang === "en") {
     return category?.eng ?? "-";
   }
 
