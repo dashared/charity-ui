@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { Button } from "antd";
 import { i18n } from "@providers";
 import QueueAnim from "rc-queue-anim";
 import OverPack from "rc-scroll-anim/lib/ScrollOverPack";
@@ -25,6 +26,9 @@ const Page2: FC = () => {
           <p className="main-info" key="2">
             {i18n.t("Landing.blockchain.description_2")}
           </p>
+          <Button href="http://blockchaincharity.infostrategic.com" type="link">
+            {i18n.t("Landing.blockchain.button")}
+          </Button>
         </QueueAnim>
       </QueueAnim>
     </OverPack>
