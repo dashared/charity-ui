@@ -17,27 +17,15 @@
 /**
  * 
  * @export
- * @interface CategoryCategory
+ * @interface CharityFaqInput
  */
-export interface CategoryCategory {
+export interface CharityFaqInput {
     /**
      * 
      * @type {string}
-     * @memberof CategoryCategory
+     * @memberof CharityFaqInput
      */
-    eng: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CategoryCategory
-     */
-    id: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CategoryCategory
-     */
-    rus: string;
+    faq?: string;
 }
 
 

@@ -21,6 +21,8 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { CharityFaq } from '../models';
 // @ts-ignore
+import { CharityFaqInput } from '../models';
+// @ts-ignore
 import { CharityFundInfo } from '../models';
 // @ts-ignore
 import { CharityFundInfoResponse } from '../models';
@@ -111,11 +113,11 @@ export const CharityApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Update fund\'s faq
-         * @param {CharityFaq} [body] faq
+         * @param {CharityFaqInput} [body] faq
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCharityFaqPatch: async (body?: CharityFaq, options: any = {}): Promise<RequestArgs> => {
+        apiCharityFaqPatch: async (body?: CharityFaqInput, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/charity/faq`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -277,11 +279,11 @@ export const CharityApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Update fund\'s faq
-         * @param {CharityFaq} [body] faq
+         * @param {CharityFaqInput} [body] faq
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiCharityFaqPatch(body?: CharityFaq, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CharityFaq>> {
+        async apiCharityFaqPatch(body?: CharityFaqInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CharityFaq>> {
             const localVarAxiosArgs = await CharityApiAxiosParamCreator(configuration).apiCharityFaqPatch(body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -345,11 +347,11 @@ export const CharityApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Update fund\'s faq
-         * @param {CharityFaq} [body] faq
+         * @param {CharityFaqInput} [body] faq
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCharityFaqPatch(body?: CharityFaq, options?: any): AxiosPromise<CharityFaq> {
+        apiCharityFaqPatch(body?: CharityFaqInput, options?: any): AxiosPromise<CharityFaq> {
             return CharityApiFp(configuration).apiCharityFaqPatch(body, options).then((request) => request(axios, basePath));
         },
         /**
@@ -382,10 +384,10 @@ export const CharityApiFactory = function (configuration?: Configuration, basePa
 export interface CharityApiApiCharityFaqPatchRequest {
     /**
      * faq
-     * @type {CharityFaq}
+     * @type {CharityFaqInput}
      * @memberof CharityApiApiCharityFaqPatch
      */
-    readonly body?: CharityFaq
+    readonly body?: CharityFaqInput
 }
 
 /**

@@ -13,31 +13,20 @@
  */
 
 
+import { CategoryCategory } from './category-category';
 
 /**
  * 
  * @export
- * @interface CategoryCategory
+ * @interface CategoryUpdateInput
  */
-export interface CategoryCategory {
+export interface CategoryUpdateInput {
     /**
      * 
-     * @type {string}
-     * @memberof CategoryCategory
+     * @type {Array<CategoryCategory>}
+     * @memberof CategoryUpdateInput
      */
-    eng: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CategoryCategory
-     */
-    id: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CategoryCategory
-     */
-    rus: string;
+    categories: Array<CategoryCategory>;
 }
 
 

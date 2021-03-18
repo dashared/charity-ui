@@ -1,9 +1,12 @@
 import React, { FC, useState } from "react";
 import { Button, Select, Space } from "antd";
+import { LoginOutlined } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
 import { i18n, router } from "@providers";
 
-const Header: FC = (props) => {
+const Header: FC<{ isMobile: boolean }> = (props) => {
+  const { isMobile } = props;
+
   const [lang, setLang] = useState(
     i18n.language.substr(0, 2) === "ru" ? "ru" : "en",
   );
@@ -12,7 +15,7 @@ const Header: FC = (props) => {
     <header {...props}>
       <div className="logo-wrapper">
         <Link name="home">
-          <i className="logo" /> <span>Charity CRM</span>
+          <i className="logo" /> {!isMobile && <span>Charity CRM</span>}
         </Link>
       </div>
       <div className="buttons">
@@ -24,13 +27,13 @@ const Header: FC = (props) => {
                 setLang(value);
               }}
               value={lang}
-              style={{ width: 120, margin: "0 8px" }}
+              style={{ width: isMobile ? 80 : 120, margin: "0 8px" }}
             >
               <Select.Option value="ru">
-                {i18n.t("Landing.languageSetting.ru")}
+                {isMobile ? "🇷🇺" : i18n.t("Landing.languageSetting.ru")}
               </Select.Option>
               <Select.Option value="en">
-                {i18n.t("Landing.languageSetting.eng")}
+                {isMobile ? "🇺🇸" : i18n.t("Landing.languageSetting.eng")}
               </Select.Option>
             </Select>
           </div>
@@ -40,8 +43,9 @@ const Header: FC = (props) => {
               onClick={() => {
                 router.navigate({ url: router.url({ name: "login:index" }) });
               }}
+              icon={isMobile ? <LoginOutlined /> : undefined}
             >
-              {i18n.t("Landing.login")}
+              {!isMobile && i18n.t("Landing.login")}
             </Button>
           </div>
         </Space>

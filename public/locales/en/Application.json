@@ -18,7 +18,7 @@
   "status": "Status",
   "type": "Type",
   "author": "Author",
-  "createdAt": "Creation date and time",
+  "createdAt": "Created at",
   "prevStatus": "Previous status",
   "newStatus": "New status",
   "statusUpdData": "Last update",

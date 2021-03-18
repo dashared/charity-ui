@@ -40,6 +40,7 @@ const rules = {
       "application:edit",
       "applications:create",
       "settings:index",
+      "categories:index",
       "users:show",
       "user:view-applications",
       "fund:description-index",

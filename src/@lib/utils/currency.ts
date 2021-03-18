@@ -25,8 +25,6 @@ export function moneyCollected(
   const collectedNumber =
     (collected?.numerator ?? 0) / (collected?.denominator ?? 1);
 
-  console.log(approved, collected);
-
   if (approvedNumber < collectedNumber) {
     return 100;
   }

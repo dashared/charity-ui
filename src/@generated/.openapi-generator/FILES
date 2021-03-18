@@ -26,6 +26,9 @@ models/blockchain-donation-to-charity.ts
 models/blockchain-donation.ts
 models/blockchain-donations-response.ts
 models/category-category.ts
+models/category-delete-input.ts
+models/category-update-input.ts
+models/charity-faq-input.ts
 models/charity-faq.ts
 models/charity-fund-info-response.ts
 models/charity-fund-info.ts
@@ -45,6 +48,7 @@ models/file-info.ts
 models/index.ts
 models/user-balance.ts
 models/user-editable-info.ts
+models/user-pretty-public-key.ts
 models/user-response.ts
 models/user-simple-user.ts
 models/user-user.ts

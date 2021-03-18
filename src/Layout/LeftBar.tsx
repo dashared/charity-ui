@@ -8,6 +8,7 @@ import {
   ProfileOutlined,
   QuestionOutlined,
   SettingOutlined,
+  UnorderedListOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
@@ -91,6 +92,15 @@ const LeftBar: FC = () => {
         </>
       ),
       name: "fund:faq-index",
+    },
+    {
+      display: (
+        <>
+          <UnorderedListOutlined />
+          <span>{i18n.t("LeftBar.Category")}</span>
+        </>
+      ),
+      name: "categories:index",
     },
     {
       display: (

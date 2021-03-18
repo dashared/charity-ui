@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  CategoryApiFactory,
   CharityApiFactory,
   DonationRequestApiFactory,
   DonationsApiFactory,
@@ -86,6 +87,11 @@ export const UserRequestFactory = UserApiFactory(
   axios,
 );
 export const CharityFactory = CharityApiFactory(configuration, basePath, axios);
+export const CategoryFactory = CategoryApiFactory(
+  configuration,
+  basePath,
+  axios,
+);
 export const RegistrationFactory = RegistrationApiFactory(
   configuration,
   basePath,
