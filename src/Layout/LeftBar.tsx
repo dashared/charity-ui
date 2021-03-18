@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import { Menu } from "antd";
 import {
   FolderOpenOutlined,
-  HistoryOutlined,
   HomeOutlined,
   MoneyCollectOutlined,
   ProfileOutlined,
@@ -156,15 +155,15 @@ const LeftBar: FC = () => {
       name: "users:index",
     },
 
-    {
-      display: (
-        <>
-          <HistoryOutlined />
-          <span>{i18n.t("LeftBar.Logs")}</span>
-        </>
-      ),
-      name: "logs:index",
-    },
+    // {
+    //   display: (
+    //     <>
+    //       <HistoryOutlined />
+    //       <span>{i18n.t("LeftBar.Logs")}</span>
+    //     </>
+    //   ),
+    //   name: "logs:index",
+    // },
 
     {
       display: (

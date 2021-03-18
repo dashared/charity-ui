@@ -1,5 +1,6 @@
 {
   "title": "Settings",
+  "edit_title": "Edit profile",
   "personal": "Personal info",
   "language": "Language settings",
   "first_name": "Name",
@@ -8,6 +9,17 @@
   "upload": "Upload",
   "profile_picture": "Avatar",
   "birth_date": "Birthday",
+  "phone": "Phone",
+  "role": "Role",
+  "blocked": "Blocked",
+  "Role": {
+    "Manager": "Manager",
+    "SuperManager": "Committee",
+    "Admin": "Administrator",
+    "Operator": "Operator",
+    "ContentManager": "Content manager",
+    "User": "User"
+  },
   "city": "City",
   "country": "Country",
   "info": "Bio",

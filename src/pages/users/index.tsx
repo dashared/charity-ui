@@ -1,6 +1,6 @@
 import React, { FC, useRef, useState } from "react";
-import { Button, Card, Select, Space } from "antd";
-import { DownOutlined, UpOutlined } from "@ant-design/icons";
+import { Avatar, Button, Card, Select, Space } from "antd";
+import { DownOutlined, UpOutlined, UserOutlined } from "@ant-design/icons";
 import { UserResponse as Result, UserUser as Single } from "@generated";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable, {
@@ -129,7 +129,7 @@ const UsersPage: FC = () => {
 
   const onElementClick = (record: Single): void => {
     router.navigate({
-      url: router.url({ name: "users:show", params: { id: record.id } }),
+      url: router.url({ name: "user:edit", params: { id: record.id } }),
     });
   };
 
@@ -138,6 +138,20 @@ const UsersPage: FC = () => {
   const { t } = useTranslation("Users");
 
   const columns: Array<RegistryColumnConf<Single>> = [
+    {
+      key: "photo",
+      title: "",
+      width: "6%",
+      render(record: Single) {
+        const props = {
+          src: record.image_id
+            ? `/api/file/${record.image_id}/download`
+            : undefined,
+          icon: record.image_id ? undefined : <UserOutlined />,
+        };
+        return <Avatar {...props} />;
+      },
+    },
     {
       key: "name",
       render(record: Single) {
