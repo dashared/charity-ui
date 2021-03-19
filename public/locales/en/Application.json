@@ -41,6 +41,8 @@
     "createSuccess": "Application is successfully created",
     "createPage": {
       "title": "Title",
+      "category": "Category",
+      "select_category": "Choose application category",
       "description": "Description",
       "message": "Message for manager",
       "anon": {
@@ -49,14 +51,18 @@
       },
       "files": "Documents",
       "relationship": "Relationship with creator",
-      "donee": "Create an application for somebody",
+      "donee": {
+        "first_name": "Donee name",
+        "last_name": "Donee last name"
+      },
       "dragger": {
         "title": "Upload document(s)",
         "description": "These files will be available only to the fund"
       }
     },
     "message": {
-      "title": "Enter an application title"
+      "title": "Enter an application title",
+      "category": "Enter an application category"
     },
     "tabs": {
       "generalInfoTitle": "Main info",

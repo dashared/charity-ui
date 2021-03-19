@@ -1,12 +1,21 @@
 import React, { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Card, Divider, Form, Input, Space, Upload } from "antd";
+import {
+  Button,
+  Card,
+  Divider,
+  Form,
+  Input,
+  Select,
+  Space,
+  Upload,
+} from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { RcCustomRequestOptions } from "antd/lib/upload/interface";
 import { InboxOutlined } from "@ant-design/icons";
-import { DonationRequestInput, FileInfo } from "@generated";
-
-import RelationshipSelect from "./relationship_select";
+import { CategoryCategory, DonationRequestInput, FileInfo } from "@generated";
+import { formatCategory } from "@lib/utils";
+import { i18n } from "@providers";
 
 const { Dragger } = Upload;
 
@@ -19,10 +28,13 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 8 },
 };
 
-const CreatePage: FC<{ onCreate: (values: DonationRequestInput) => void }> = ({
-  onCreate,
-}) => {
+const CreatePage: FC<{
+  onCreate: (values: DonationRequestInput) => void;
+  categories: CategoryCategory[];
+}> = ({ categories, onCreate }) => {
   const { t } = useTranslation("Application");
+
+  console.log(categories);
 
   const [ids, setIds] = useState<string[]>([]);
 
@@ -60,6 +72,8 @@ const CreatePage: FC<{ onCreate: (values: DonationRequestInput) => void }> = ({
       };
     },
   };
+
+  const lang = i18n.language.substr(0, 2);
 
   return (
     <Card>
@@ -104,15 +118,49 @@ const CreatePage: FC<{ onCreate: (values: DonationRequestInput) => void }> = ({
         </Form.Item>
 
         <Form.Item
-          name="relationship"
-          label={t("$views.createPage.relationship")}
+          name={["donee", "first_name"]}
+          label={t("$views.createPage.donee.first_name")}
         >
-          <RelationshipSelect />
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name={["donee", "last_name"]}
+          label={t("$views.createPage.donee.last_name")}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="category_id"
+          rules={[{ required: true, message: t("$views.message.category") }]}
+          label={t("$views.createPage.category")}
+        >
+          <Select
+            showSearch
+            optionFilterProp="children"
+            placeholder={t("$views.createPage.select_category")}
+            filterOption={(input, option) => {
+              return (
+                (option?.children?.toString() ?? "")
+                  .toLowerCase()
+                  .indexOf(input.toLowerCase()) >= 0
+              );
+            }}
+          >
+            {categories.map((category) => {
+              return (
+                <Select.Option value={category.id} key={category.id}>
+                  {formatCategory(lang, category)}
+                </Select.Option>
+              );
+            })}
+          </Select>
         </Form.Item>
 
         <Divider />
 
-        <Form.Item name={["message"]} label={t("$views.createPage.message")}>
+        <Form.Item name={["comment"]} label={t("$views.createPage.message")}>
           <Input.TextArea />
         </Form.Item>
 

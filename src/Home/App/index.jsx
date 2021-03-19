@@ -32,6 +32,7 @@ class PrivacyPolicy extends React.PureComponent {
   render() {
     return [
       <Header
+        isMobile={isMobile}
         key="header"
         className={this.state.showShadow ? "header.show-shadow" : "header"}
       />,

@@ -21,11 +21,6 @@ function Footer() {
               {i18n.t("Landing.footer.app")}
             </Link>
           </span>
-          <span style={border}>
-            <a rel="noopener noreferrer" target="_blank">
-              {i18n.t("Landing.footer.contacts")}
-            </a>
-          </span>
           <span style={{ marginRight: 24 }}>
             <Link name="fund:faq-index">{i18n.t("Landing.footer.faq")}</Link>
           </span>
