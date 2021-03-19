@@ -7,13 +7,15 @@ import { Role } from "@providers/rbac-rules";
 import FAQEditor from "./Editor";
 import FAQView from "./View";
 
+import styles from "./styles.module.less";
+
 const FAQ: FC<{
   role: Role;
   text: string;
   editorRef?: RefObject<Editor>;
 }> = ({ role, text, editorRef }) => {
   return (
-    <Card>
+    <Card className={styles.card}>
       <RoleSwitch
         role={role}
         perform="faq:edit"

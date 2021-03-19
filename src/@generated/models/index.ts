@@ -26,6 +26,7 @@ export * from './donation-request-history-response';
 export * from './donation-request-input';
 export * from './donation-request-response';
 export * from './donation-request-status-history';
+export * from './donation-request-super-manager-input';
 export * from './donation-request-update-input';
 export * from './donation-request-update-status-input';
 export * from './file-info';

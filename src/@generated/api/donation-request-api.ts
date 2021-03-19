@@ -31,6 +31,8 @@ import { DonationRequestInput } from '../models';
 // @ts-ignore
 import { DonationRequestResponse } from '../models';
 // @ts-ignore
+import { DonationRequestSuperManagerInput } from '../models';
+// @ts-ignore
 import { DonationRequestUpdateInput } from '../models';
 // @ts-ignore
 import { DonationRequestUpdateStatusInput } from '../models';
@@ -40,6 +42,57 @@ import { DonationRequestUpdateStatusInput } from '../models';
  */
 export const DonationRequestApiAxiosParamCreator = function (configuration?: Configuration) {
   return {
+    /**
+     * 
+     * @summary Creates donation request from fund
+     * @param {DonationRequestSuperManagerInput} request Donation request Input
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    apiDonationRequestFromManagerPost: async (request: DonationRequestSuperManagerInput, options: any = {}): Promise<RequestArgs> => {
+      // verify required parameter 'request' is not null or undefined
+      if (request === null || request === undefined) {
+        throw new RequiredError('request', 'Required parameter request was null or undefined when calling apiDonationRequestFromManagerPost.');
+      }
+      const localVarPath = `/api/donation-request/from_manager`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      const queryParameters = new URLSearchParams(localVarUrlObj.search);
+      for (const key in localVarQueryParameter) {
+        queryParameters.set(key, localVarQueryParameter[key]);
+      }
+      for (const key in options.query) {
+        queryParameters.set(key, options.query[key]);
+      }
+      localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+      const nonString = typeof request !== 'string';
+      const needsSerialization = nonString && configuration && configuration.isJsonMime
+        ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
+        : nonString;
+      localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(request !== undefined ? request : {})
+        : (request || "");
+
+      return {
+        url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+        options: localVarRequestOptions,
+      };
+    },
     /**
      * 
      * @summary Retrieves all donation requests
@@ -479,6 +532,20 @@ export const DonationRequestApiFp = function (configuration?: Configuration) {
   return {
     /**
      * 
+     * @summary Creates donation request from fund
+     * @param {DonationRequestSuperManagerInput} request Donation request Input
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async apiDonationRequestFromManagerPost(request: DonationRequestSuperManagerInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+      const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestFromManagerPost(request, options);
+      return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+        const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+        return axios.request(axiosRequestArgs);
+      };
+    },
+    /**
+     * 
      * @summary Retrieves all donation requests
      * @param {number} [page] Page number
      * @param {number} [size] Page size
@@ -613,6 +680,16 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
   return {
     /**
      * 
+     * @summary Creates donation request from fund
+     * @param {DonationRequestSuperManagerInput} request Donation request Input
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    apiDonationRequestFromManagerPost(request: DonationRequestSuperManagerInput, options?: any): AxiosPromise<void> {
+      return DonationRequestApiFp(configuration).apiDonationRequestFromManagerPost(request, options).then((request) => request(axios, basePath));
+    },
+    /**
+     * 
      * @summary Retrieves all donation requests
      * @param {number} [page] Page number
      * @param {number} [size] Page size
@@ -706,6 +783,20 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
     },
   };
 };
+
+/**
+ * Request parameters for apiDonationRequestFromManagerPost operation in DonationRequestApi.
+ * @export
+ * @interface DonationRequestApiApiDonationRequestFromManagerPostRequest
+ */
+export interface DonationRequestApiApiDonationRequestFromManagerPostRequest {
+  /**
+   * Donation request Input
+   * @type {DonationRequestSuperManagerInput}
+   * @memberof DonationRequestApiApiDonationRequestFromManagerPost
+   */
+  readonly request: DonationRequestSuperManagerInput
+}
 
 /**
  * Request parameters for apiDonationRequestGet operation in DonationRequestApi.
@@ -910,6 +1001,18 @@ export interface DonationRequestApiApiDonationRequestPostRequest {
  * @extends {BaseAPI}
  */
 export class DonationRequestApi extends BaseAPI {
+  /**
+   * 
+   * @summary Creates donation request from fund
+   * @param {DonationRequestApiApiDonationRequestFromManagerPostRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DonationRequestApi
+   */
+  public apiDonationRequestFromManagerPost(requestParameters: DonationRequestApiApiDonationRequestFromManagerPostRequest, options?: any) {
+    return DonationRequestApiFp(this.configuration).apiDonationRequestFromManagerPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
+  }
+
   /**
    * 
    * @summary Retrieves all donation requests

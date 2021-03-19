@@ -39,8 +39,11 @@
     "createApplication": "Create",
     "download": "Download",
     "createSuccess": "Application is successfully created",
+    "createError": "Failure creating application, try again",
     "createPage": {
       "title": "Title",
+      "approved_amount": "Sum",
+      "until": "Until",
       "category": "Category",
       "select_category": "Choose application category",
       "description": "Description",
@@ -53,6 +56,7 @@
       "relationship": "Relationship with creator",
       "donee": {
         "first_name": "Donee name",
+        "middle_name": "Donee middle name",
         "last_name": "Donee last name"
       },
       "dragger": {
@@ -62,7 +66,9 @@
     },
     "message": {
       "title": "Enter an application title",
-      "category": "Enter an application category"
+      "category": "Enter an application category",
+      "donee_last": "Enter donee last name",
+      "donee_first": "Enter donee name"
     },
     "tabs": {
       "generalInfoTitle": "Main info",

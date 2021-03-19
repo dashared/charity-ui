@@ -266,6 +266,30 @@
         }
       }
     },
+    "/api/donation-request/from_manager": {
+      "post": {
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["DonationRequest"],
+        "summary": "Creates donation request from fund",
+        "parameters": [
+          {
+            "description": "Donation request Input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DonationRequest.SuperManagerInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/donation-request/{id}": {
       "get": {
         "produces": ["application/json"],
@@ -1592,6 +1616,48 @@
         }
       }
     },
+    "DonationRequest.SuperManagerInput": {
+      "type": "object",
+      "required": ["category_id"],
+      "properties": {
+        "approved_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "assignee_id": {
+          "type": "string"
+        },
+        "category_id": {
+          "type": "string"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "donee": {
+          "$ref": "#/definitions/User.SimpleUser"
+        },
+        "file_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "relationship": {
+          "type": "string"
+        },
+        "requested_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "title": {
+          "type": "string"
+        },
+        "until": {
+          "type": "string"
+        }
+      }
+    },
     "DonationRequest.UpdateInput": {
       "type": "object",
       "properties": {
@@ -1815,6 +1881,9 @@
             "Operator",
             "Admin"
           ]
+        },
+        "tech_user": {
+          "type": "boolean"
         }
       }
     },

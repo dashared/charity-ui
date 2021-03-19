@@ -1,8 +1,7 @@
 import React, { FC, useCallback } from "react";
-import { DonationRequestInput } from "@generated";
+import { DonationRequestSuperManagerInput } from "@generated/models/donation-request-super-manager-input";
 import RoleSwitch from "@lib/components/RoleSwitch";
-import { notify } from "@lib/utils/notification";
-import { router, useTranslation, Workspace } from "@providers";
+import { useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import useAxios, {
   CategoryFactory,
@@ -18,19 +17,9 @@ const CreatePage: FC = () => {
   const { data } = useAxios(CategoryFactory.apiCategoriesGet);
 
   const onCreateApplication = useCallback(
-    (values: DonationRequestInput) => {
-      DonationRequestFactory.apiDonationRequestPost(values)
-        .then(() => {
-          notify(t("$views.createSuccess"), "success");
-
-          router.navigate({ url: router.url({ name: "applications:index" }) });
-        })
-        .catch((e) => {
-          console.error(e);
-          notify(t("$views.createError"), "error");
-        });
-    },
-    [t],
+    async (values: DonationRequestSuperManagerInput) =>
+      DonationRequestFactory.apiDonationRequestFromManagerPost(values),
+    [],
   );
 
   return (

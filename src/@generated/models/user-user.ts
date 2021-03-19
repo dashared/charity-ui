@@ -105,6 +105,12 @@ export interface UserUser {
      * @memberof UserUser
      */
     role?: UserUserRoleEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserUser
+     */
+    tech_user?: boolean;
 }
 
 /**

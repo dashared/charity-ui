@@ -1,8 +1,9 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Button,
   Card,
+  DatePicker,
   Divider,
   Form,
   Input,
@@ -13,9 +14,12 @@ import {
 import { useForm } from "antd/lib/form/Form";
 import { RcCustomRequestOptions } from "antd/lib/upload/interface";
 import { InboxOutlined } from "@ant-design/icons";
-import { CategoryCategory, DonationRequestInput, FileInfo } from "@generated";
+import { CategoryCategory, FileInfo } from "@generated";
+import { DonationRequestSuperManagerInput } from "@generated/models/donation-request-super-manager-input";
 import { formatCategory } from "@lib/utils";
-import { i18n } from "@providers";
+import { notify } from "@lib/utils/notification";
+import { i18n, router } from "@providers";
+import { AxiosResponse } from "axios";
 
 const { Dragger } = Upload;
 
@@ -29,16 +33,17 @@ const tailLayout = {
 };
 
 const CreatePage: FC<{
-  onCreate: (values: DonationRequestInput) => void;
+  onCreate: (
+    values: DonationRequestSuperManagerInput,
+  ) => Promise<AxiosResponse<void>>;
   categories: CategoryCategory[];
 }> = ({ categories, onCreate }) => {
   const { t } = useTranslation("Application");
 
-  console.log(categories);
-
   const [ids, setIds] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  const [form] = useForm<DonationRequestInput>();
+  const [form] = useForm<DonationRequestSuperManagerInput>();
 
   const onReset = (): void => {
     form.resetFields();
@@ -73,6 +78,35 @@ const CreatePage: FC<{
     },
   };
 
+  const onFinish = useCallback(
+    async (values: DonationRequestSuperManagerInput) => {
+      try {
+        setLoading(true);
+
+        const numberator = values.approved_amount?.numerator?.toString();
+
+        await onCreate({
+          ...values,
+          approved_amount: {
+            numerator: parseInt(numberator ?? "0"),
+            denominator: 1,
+            currency: "RUB",
+          },
+        });
+
+        notify(t("$views.createSuccess"), "success");
+
+        router.navigate({ url: router.url({ name: "applications:index" }) });
+      } catch (e) {
+        console.error(e);
+        notify(t("$views.createError"), "error");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [setLoading, t, onCreate],
+  );
+
   const lang = i18n.language.substr(0, 2);
 
   return (
@@ -81,12 +115,7 @@ const CreatePage: FC<{
         {...formLayout}
         form={form}
         name="control-hooks"
-        onFinish={(values) => {
-          onCreate({
-            ...values,
-            file_ids: ids,
-          });
-        }}
+        onFinish={onFinish}
       >
         <Form.Item
           name={["title"]}
@@ -118,22 +147,13 @@ const CreatePage: FC<{
         </Form.Item>
 
         <Form.Item
-          name={["donee", "first_name"]}
-          label={t("$views.createPage.donee.first_name")}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name={["donee", "last_name"]}
-          label={t("$views.createPage.donee.last_name")}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
           name="category_id"
-          rules={[{ required: true, message: t("$views.message.category") }]}
+          rules={[
+            {
+              required: true,
+              message: t("$views.message.category"),
+            },
+          ]}
           label={t("$views.createPage.category")}
         >
           <Select
@@ -158,6 +178,42 @@ const CreatePage: FC<{
           </Select>
         </Form.Item>
 
+        <Form.Item
+          name={["approved_amount", "numerator"]}
+          label={t("$views.createPage.approved_amount")}
+        >
+          <Input prefix="₽" suffix="RUB" />
+        </Form.Item>
+
+        <Form.Item name={["until"]} label={t("$views.createPage.until")}>
+          <DatePicker style={{ width: 200 }} />
+        </Form.Item>
+
+        <Divider />
+
+        <Form.Item
+          name={["donee", "first_name"]}
+          rules={[{ required: true, message: t("$views.message.donee_first") }]}
+          label={t("$views.createPage.donee.first_name")}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name={["donee", "middle_name"]}
+          label={t("$views.createPage.donee.middle_name")}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name={["donee", "last_name"]}
+          rules={[{ required: true, message: t("$views.message.donee_last") }]}
+          label={t("$views.createPage.donee.last_name")}
+        >
+          <Input />
+        </Form.Item>
+
         <Divider />
 
         <Form.Item name={["comment"]} label={t("$views.createPage.message")}>
@@ -166,7 +222,7 @@ const CreatePage: FC<{
 
         <Form.Item {...tailLayout}>
           <Space>
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               {t("$views.buttons.add")}
             </Button>
 

@@ -1,8 +1,9 @@
 import React, { FC } from "react";
-import ReactMarkdown from "react-markdown";
+import Markdown from "react-markdown";
+import gfm from "remark-gfm";
 
 const FAQView: FC<{ text: string }> = ({ text }) => {
-  return <ReactMarkdown>{text}</ReactMarkdown>;
+  return <Markdown plugins={[gfm]}>{text}</Markdown>;
 };
 
 export default FAQView;
