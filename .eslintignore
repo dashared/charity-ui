@@ -7,6 +7,7 @@
 !*.tsx
 
 Dockerfile
+Caddyfile
 LICENSE
 node_modules
 /build

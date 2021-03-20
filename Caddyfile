@@ -1,0 +1,11 @@
+http://charity.infostrategic.com:80 {
+	reverse_proxy /api/* api:8080
+  try_files /usr/share/nginx/html/{path} /usr/share/nginx/html/index.html
+	file_server {
+		root /usr/share/nginx/html
+	}
+}
+
+http://blockchaincharity.infostrategic.com:7778 {
+	reverse_proxy /* charity-blockchain-server:8011
+}
