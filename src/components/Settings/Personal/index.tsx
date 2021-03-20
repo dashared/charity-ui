@@ -65,7 +65,7 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
 > = ({ initial, onSubmit }, ref) => {
   const { t } = useTranslation("Settings");
 
-  const [id, setId] = useState<string | undefined>();
+  const [id, setId] = useState<string | undefined>(initial?.image_id);
 
   const [profileList, setFileList] = useState<Array<UploadFile<any>>>(
     initial?.image_id
