@@ -16,7 +16,7 @@ export const init = (): Promise<TFunction> =>
       detection: DETECTION_OPTIONS,
       ns: ["translation", "form", "_error"],
       defaultNS: "translation",
-      fallbackLng: "ru",
+      fallbackLng: "en",
       interpolation: {
         escapeValue: false,
       },

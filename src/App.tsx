@@ -1,21 +1,20 @@
 import React, { FC, Suspense } from "react";
 import Provider, { useTranslation } from "@providers";
-import { requestFirebaseNotificationPermission } from "@providers/firebase";
 
+import { getToken, onMessageListener } from "./firebase";
 import Layout from "./Layout";
 
 const App: FC = () => {
   const { t } = useTranslation();
   const loadingMessage = <div>{t("loading")} </div>;
 
-  requestFirebaseNotificationPermission()
-    .then((firebaseToken) => {
-      // eslint-disable-next-line no-console
-      console.log(firebaseToken);
+  getToken();
+
+  onMessageListener()
+    .then((payload) => {
+      console.log(payload);
     })
-    .catch((err) => {
-      return err;
-    });
+    .catch((err) => console.log("failed: ", err));
 
   return (
     <Suspense fallback={loadingMessage}>
