@@ -1,9 +1,11 @@
 import React, { FC } from "react";
+import Elm from "react-elm-components";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { AuthConsumer } from "@providers/authContext";
 import { Role } from "@providers/rbac-rules";
-import Home from "Home";
+import Main from "Elm/Main.elm";
 
+//import Home from "Home";
 import Redirect from "./_redirect";
 
 const Index: FC = () => {
@@ -14,7 +16,12 @@ const Index: FC = () => {
           <RoleSwitch
             role={user.role}
             perform="auth:login"
-            yes={() => <Home />}
+            yes={() => (
+              <Elm
+                src={Main.Elm.Elm.Main}
+                flags={{ width: window.innerWidth, height: window.innerHeight }}
+              />
+            )}
             no={() => {
               switch (user.role) {
                 case Role.admin:
