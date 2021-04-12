@@ -1,12 +1,20 @@
 import React, { FC } from "react";
 import Elm from "react-elm-components";
 import RoleSwitch from "@lib/components/RoleSwitch";
+import { router } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import { Role } from "@providers/rbac-rules";
 import Main from "Elm/Main.elm";
 
 //import Home from "Home";
 import Redirect from "./_redirect";
+
+// eslint-disable-next-line
+function setupPorts(ports: { clickedUrl: any }): void {
+  ports.clickedUrl.subscribe((urlName: string) => {
+    router.navigate({ url: router.url({ name: urlName }) });
+  });
+}
 
 const Index: FC = () => {
   return (
@@ -20,6 +28,7 @@ const Index: FC = () => {
               <Elm
                 src={Main.Elm.Elm.Main}
                 flags={{ width: window.innerWidth, height: window.innerHeight }}
+                ports={setupPorts}
               />
             )}
             no={() => {
