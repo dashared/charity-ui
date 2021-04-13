@@ -20,6 +20,9 @@ const rules = {
       "fund:description-index",
       "fund:description-edit",
       "faq:edit",
+      "news:edit",
+      "news:create",
+      "news:index",
     ],
   },
   manager: {

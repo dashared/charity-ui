@@ -8,6 +8,7 @@ api/donations-api.ts
 api/file-api.ts
 api/login-api.ts
 api/money-api.ts
+api/news-api.ts
 api/notifications-api.ts
 api/registration-api.ts
 api/user-api.ts
@@ -49,6 +50,9 @@ models/donation-request-update-input.ts
 models/donation-request-update-status-input.ts
 models/file-info.ts
 models/index.ts
+models/news-input.ts
+models/news-response.ts
+models/news-view.ts
 models/user-balance.ts
 models/user-editable-info.ts
 models/user-pretty-public-key.ts
