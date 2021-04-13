@@ -1,4 +1,5 @@
 import React, { FC, useCallback, useState } from "react";
+import Elm from "react-elm-components";
 import Editor from "react-markdown-editor-lite";
 import { Button } from "antd";
 import RoleSwitch from "@lib/components/RoleSwitch";
@@ -6,8 +7,9 @@ import { notify } from "@lib/utils/notification";
 import { useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import useAxios, { CharityFactory } from "@providers/axios";
-import PrettyFAQ from "Home/FAQ";
+import FaqElm from "Elm/FAQ.elm";
 
+// import PrettyFAQ from "Home/FAQ";
 import FAQ from "components/FAQ";
 
 const Actions: FC<{ onSubmit: () => Promise<void>; loading: boolean }> = ({
@@ -58,7 +60,15 @@ const FAQPage: FC = () => {
           <RoleSwitch
             role={user.role}
             perform="faq:pretty"
-            yes={() => <PrettyFAQ />}
+            yes={() => (
+              <Elm
+                key={data?.faq}
+                src={FaqElm.Elm.Elm.FAQ}
+                flags={{
+                  faq: data?.faq ?? "",
+                }}
+              />
+            )}
             no={() => (
               <Workspace
                 noRefresh

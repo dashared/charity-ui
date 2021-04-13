@@ -16,6 +16,8 @@ declare module "react-elm-components" {
   type ElmProps = {
     src: any;
     flags?: any;
+    ports?: any;
+    key?: string;
   };
   class Elm extends Component<ElmProps> {}
   export = Elm;
