@@ -18,15 +18,15 @@
 .env.test.local
 .env.production.local
 
+.env
+
+# misc
+.DS_Store
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-.env
-.idea/.gitignore
-.idea/modules.xml
-.idea/ui.iml
-.idea/vcs.xml
-.idea/codeStyles/codeStyleConfig.xml
-.idea/codeStyles/Project.xml
-.idea/inspectionProfiles/Project_Default.xml
+# elm
+/elm-stuff
+!/node_modules/react-scripts/config/webpack.config.js
