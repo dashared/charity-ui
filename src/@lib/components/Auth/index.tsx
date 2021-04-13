@@ -11,6 +11,7 @@ import {
 } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
 import axios from "axios";
+import { getToken, onMessageListener, sendTokenToServer } from "firebase.js";
 
 export type HeaderData = {
   user_id: string;
@@ -156,6 +157,18 @@ class Auth extends Component {
       logout: this.logout,
     };
 
+    if (this.state.authenticated) {
+      getToken().then((maybeToken) => {
+        sendTokenToServer(maybeToken);
+      });
+
+      onMessageListener()
+        .then((payload) => {
+          console.log(payload);
+        })
+        .catch((err) => console.log("failed: ", err));
+    }
+
     // Add a request interceptor
     axios.interceptors.response.use(
       async (response) => {
@@ -183,6 +196,7 @@ class Auth extends Component {
           axios.defaults.headers.common = {
             Authorization: token,
           };
+          axios.defaults.withCredentials = true;
 
           return axios(originalResponce);
         }
@@ -214,6 +228,8 @@ class Auth extends Component {
           axios.defaults.headers.common = {
             Authorization: token,
           };
+
+          axios.defaults.withCredentials = true;
 
           return axios(originalRequest);
         }

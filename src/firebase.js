@@ -1,3 +1,4 @@
+import { NotificationsFactory } from "@providers/axios";
 import firebase from "firebase/app";
 
 import "firebase/messaging";
@@ -26,6 +27,7 @@ export const getToken = () => {
         console.log("current token for client: ", currentToken);
         // Track the token -> client mapping, by sending to backend server
         // show on the UI that permission is secured
+        return currentToken;
       } else {
         console.log(
           "No registration token available. Request permission to generate one.",
@@ -49,5 +51,23 @@ export const onMessageListener = () =>
 export const onTokenExprired = () => {
   return messaging.onTokenExprired((token) => {
     console.log(`token expired ${token}`);
+
+    getToken().then((maybeToken) => {
+      sendTokenToServer(maybeToken);
+    });
   });
 };
+
+export function sendTokenToServer(currentToken) {
+  if (currentToken) {
+    NotificationsFactory.apiNotificationsSetTokenPatch({
+      id: currentToken,
+    })
+      .then(() => {
+        console.log("Successfully sent token to server: " + currentToken);
+      })
+      .catch((e) => {
+        console.error("Error sending token to server: " + e.message);
+      });
+  }
+}

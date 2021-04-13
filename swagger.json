@@ -776,6 +776,28 @@
         }
       }
     },
+    "/api/notifications/set-token": {
+      "patch": {
+        "tags": ["Notifications"],
+        "summary": "Sets firebase token to current session for sending notifications",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "client registration id",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/controllers.fcmId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/register": {
       "post": {
         "description": "Register with this route",
@@ -1910,6 +1932,15 @@
           "type": "integer"
         },
         "password": {
+          "type": "string"
+        }
+      }
+    },
+    "controllers.fcmId": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {
           "type": "string"
         }
       }
