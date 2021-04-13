@@ -19,6 +19,7 @@ export * from './charity-fund-info-response';
 export * from './charity-fund-input';
 export * from './controllers-deposit';
 export * from './controllers-donate-request-input';
+export * from './controllers-fcm-id';
 export * from './donation-request-body';
 export * from './donation-request-comment';
 export * from './donation-request-donation-request';

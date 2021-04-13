@@ -7,6 +7,7 @@ import {
   FileApiFactory,
   LoginApiFactory,
   MoneyApiFactory,
+  NotificationsApiFactory,
   RegistrationApiFactory,
   UserApiFactory,
 } from "@generated";
@@ -81,6 +82,11 @@ export const DonationsFactory = DonationsApiFactory(
 );
 export const FileFactory = FileApiFactory(configuration, basePath, axios);
 export const MoneyFactory = MoneyApiFactory(configuration, basePath, axios);
+export const NotificationsFactory = NotificationsApiFactory(
+  configuration,
+  basePath,
+  axios,
+);
 export const UserRequestFactory = UserApiFactory(
   configuration,
   basePath,
