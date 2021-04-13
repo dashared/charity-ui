@@ -7,6 +7,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 
 
+main : Program Flags Model Model
 main =
     Browser.element
         { init = init
@@ -29,9 +30,9 @@ view : Model -> Html msg
 view model =
     let
         mdFaq =
-            Elm.Center.markdown "600px" model.faq
+            Elm.Center.markdown model.faq
     in
-    div [] (Elm.Skeleton.skeleton "" FAQ [ mdFaq ])
+    Elm.Skeleton.skeleton "" FAQ [ mdFaq ]
 
 
 type alias Flags =

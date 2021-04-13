@@ -8,7 +8,7 @@ import Element.Events
 import Element.Font as F
 import Element.Region as R
 import Elm.Colors as C
-import Elm.Skeleton exposing (charityTitle)
+import Elm.Skeleton exposing (charityTitle, container)
 import Elm.Ui exposing (Link)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -172,17 +172,7 @@ viewMedium model =
                 ]
               <|
                 List.map viewFeature features
-            , E.row
-                [ E.centerX
-                , E.spacing 20
-                , E.paddingEach { top = 20, bottom = 20, left = 0, right = 0 }
-                , F.size 14
-                , F.color C.darkGray
-                , R.footer
-                ]
-              <|
-                List.map Elm.Ui.grayLink sources
-                    ++ [ E.text "© 2021 Charity CRM" ]
+            , Elm.Skeleton.footer
             ]
 
 
@@ -260,33 +250,12 @@ viewSmall model =
                 ]
               <|
                 List.map viewFeature features
-            , E.row
-                [ E.centerX
-                , E.spacing 20
-                , E.paddingEach { top = 20, bottom = 20, left = 0, right = 0 }
-                , F.size 14
-                , F.color C.darkGray
-                , R.footer
-                ]
-              <|
-                List.map Elm.Ui.grayLink sources
-                    ++ [ E.text "© 2021 Charity CRM" ]
+            , Elm.Skeleton.footer
             ]
 
 
 
 -- VIEW HELPERS
-
-
-container : E.Element Msg -> Html Msg
-container =
-    E.layout
-        [ E.width E.fill
-        , F.family [ F.typeface "IBM Plex Sans", F.sansSerif ]
-        ]
-
-
-
 -- CONTENT / INTRODUCTION
 
 
@@ -372,11 +341,6 @@ featureText feature =
             ]
             feature.description
         ]
-
-
-sources : List Link
-sources =
-    [ Link "Facebook" "", Link "Instagram" "" ]
 
 
 features : List (Feature msg)

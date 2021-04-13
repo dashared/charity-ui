@@ -25,11 +25,13 @@ const Index: FC = () => {
             role={user.role}
             perform="auth:login"
             yes={() => (
+              /*<div style={{ background: "white" }}>*/
               <Elm
                 src={Main.Elm.Elm.Main}
                 flags={{ width: window.innerWidth, height: window.innerHeight }}
                 ports={setupPorts}
               />
+              //</div>
             )}
             no={() => {
               switch (user.role) {

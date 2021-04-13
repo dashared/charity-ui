@@ -3,14 +3,15 @@ module Elm.Center exposing
     , styles
     )
 
+import Element.Font as F
 import Html exposing (..)
 import Html.Attributes as Attr exposing (..)
 import Markdown
 
 
-markdown : String -> String -> Html msg
-markdown width string =
-    div (class "content" :: styles width) [ Markdown.toHtmlWith options [] string ]
+markdown : String -> Html msg
+markdown string =
+    Markdown.toHtmlWith options [] string
 
 
 styles : String -> List (Attribute msg)

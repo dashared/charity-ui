@@ -3,13 +3,13 @@ module Elm.Skeleton exposing
     , Date
     , Tab(..)
     , charityTitle
+    , container
     , evan
     ,  footer
        --
 
     , header
     , michael
-    , news
     , skeleton
     )
 
@@ -22,8 +22,11 @@ import Browser
 import Browser.Dom exposing (Element)
 import Dict
 import Element as E
-import Element.Events
+import Element.Events as Ev
 import Element.Font as F
+import Element.Region as R
+import Elm.Colors as C
+import Elm.Ui exposing (Link)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 
@@ -32,9 +35,19 @@ import Html.Attributes exposing (..)
 -- SKELETON
 
 
-skeleton : String -> Tab -> List (Html msg) -> List (Html msg)
+skeleton : String -> Tab -> List (Html msg) -> Html msg
 skeleton title tab content =
-    [ header tab, div [ style "flex" "1" ] content, footer ]
+    container <|
+        E.column
+            [ E.width (E.maximum 600 E.fill)
+            , E.centerX
+            , E.paddingXY 20 0
+            , E.spacing 60
+            ]
+            [ header tab
+            , E.paragraph [ F.size 14, E.spacing 14 ] (List.map E.html content)
+            , footer
+            ]
 
 
 
@@ -54,72 +67,89 @@ charityTitle size =
         [ F.size size
         , E.alignTop
         , E.width E.fill
+
+        -- , Ev.onClick (Navigate "index")
         ]
         (E.text "Charity CRM")
 
 
-header : Tab -> Html msg
-header tab =
-    div [ class "nav" ]
-        [ E.layout [] (charityTitle 30)
-        , div [ class "tabs" ]
-            [ viewTab tab Applications "Applications" "/applications"
-            , viewTab tab News "News" "/docs"
-            , viewTab tab FAQ "FAQ" "/faq"
-            ]
+container : E.Element msg -> Html msg
+container =
+    E.layout
+        [ E.width E.fill
+        , F.family [ F.typeface "IBM Plex Sans", F.sansSerif ]
         ]
 
 
-viewTab : Tab -> Tab -> String -> String -> Html msg
+header : Tab -> E.Element msg
+header tab =
+    E.row
+        [ E.width E.fill
+        , E.spaceEvenly
+        , E.centerX
+        , F.size 14
+        , E.paddingXY 0 20
+        ]
+        [ charityTitle 20
+        , E.row
+            [ E.width E.fill
+            , E.alignRight
+            , E.spacing 20
+            , R.navigation
+            ]
+            (headerTabs tab)
+        ]
+
+
+headerTabs : Tab -> List (E.Element msg)
+headerTabs tab =
+    [ viewTab tab FAQ "FAQ" "/faq"
+    , viewTab tab Applications "Applications" "/applications"
+    , viewTab tab News "News" "/news"
+    ]
+
+
+viewTab : Tab -> Tab -> String -> String -> E.Element msg
 viewTab currentTab targetTab name link =
     let
         attrs =
             if currentTab == targetTab then
-                [ style "font-weight" "bold" ]
+                [ F.bold ]
 
             else
                 []
     in
-    a (href link :: attrs) [ text name ]
+    E.link (F.color C.darkBlue :: attrs) { url = link, label = E.text name }
 
 
 
 -- FOOTER
 
 
-footer : Html msg
+footer : E.Element msg
 footer =
-    div [ class "footer" ]
-        [ text " — © 2021 Charity CRM" ]
+    E.row
+        [ E.centerX
+        , E.spacing 20
+        , E.paddingEach { top = 20, bottom = 20, left = 0, right = 0 }
+        , F.size 14
+        , F.color C.darkGray
+        , R.footer
+        ]
+    <|
+        List.map Elm.Ui.grayLink sources
+            ++ [ E.text "© 2021 Charity CRM" ]
+
+
+sources : List Link
+sources =
+    [ Link "Facebook" "", Link "Instagram" "" ]
 
 
 
 -- DOCS
 -- HINT
 -- NEWS
-
-
-news : String -> String -> Author -> Date -> List (Html Never) -> List (Html Never)
-news title subtitle author date body =
-    skeleton title
-        News
-        [ div
-            [ style "padding" "4em 0 1em"
-            , style "text-align" "center"
-            ]
-            [ div [ style "font-size" "4em" ] [ text title ]
-            , div [ style "font-size" "1.5em" ] [ text subtitle ]
-            , div [ class "author" ]
-                [ text "by "
-                , a [ href author.url ] [ text author.name ]
-                , text (" / " ++ dateToString date)
-                ]
-            ]
-        , div [] body
-        ]
-
-
-
 -- AUTHORS
 
 
