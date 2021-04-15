@@ -9,14 +9,20 @@ stages:
 
 prettier:
   stage: prettier
+  tags:
+    - develop
   before_script:
     - yarn install
     - node -v
     - yarn -v
   script: yarn lint:prettier
+  only:
+    - develop
 
 eslint:
   stage: eslint
+  tags:
+    - develop
   before_script:
     - yarn install
     - node -v
@@ -24,9 +30,13 @@ eslint:
   needs:
     - job: prettier
   script: yarn lint:eslint
+  only:
+    - develop
 
 docker-build:
   stage: build
+  tags:
+    - develop
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - echo "IMAGE_APP_TAG=$IMAGE_TAG" >> .env
@@ -39,16 +49,76 @@ docker-build:
     - docker image rm ${IMAGE_TAG}
     - docker logout
   only:
-    - master
+    - develop
 
 deploy-docker:
   stage: deploy
+  tags:
+    - develop
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - echo "IMAGE_APP_TAG=$IMAGE_TAG" >> .env
     - docker-compose down -v
     - docker-compose pull
     - docker-compose up -d
+    - docker logout
+  only:
+    - develop
+
+prettier-master:
+  stage: prettier
+  tags:
+    - master
+  before_script:
+    - yarn install
+    - node -v
+    - yarn -v
+  script: yarn lint:prettier
+  only:
+    - master
+
+eslint-master:
+  stage: eslint
+  tags:
+    - master
+  before_script:
+    - yarn install
+    - node -v
+    - yarn -v
+  needs:
+    - job: prettier-master
+  script: yarn lint:eslint
+  only:
+    - master
+
+docker-build-master:
+  stage: build
+  tags:
+    - master
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - echo "IMAGE_APP_TAG=$IMAGE_TAG" >> .env
+    - docker-compose -f docker-compose-master.yml build --pull
+    - >
+      if [ "$CI_COMMIT_REF_NAME" == "master" ]; then
+        docker-compose -f docker-compose-master.yml down -v
+      fi
+    - docker-compose -f docker-compose-master.yml push
+    - docker image rm ${IMAGE_TAG}
+    - docker logout
+  only:
+    - master
+
+deploy-docker-master:
+  stage: deploy
+  tags:
+    - master
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - echo "IMAGE_APP_TAG=$IMAGE_TAG" >> .env
+    - docker-compose -f docker-compose-master.yml down -v
+    - docker-compose -f docker-compose-master.yml pull
+    - docker-compose -f docker-compose-master.yml up -d
     - docker logout
   only:
     - master
