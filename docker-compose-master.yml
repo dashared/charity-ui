@@ -5,10 +5,10 @@ services:
     image: ${IMAGE_APP_TAG}
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-master
     container_name: charity_ui
     ports:
-      - "7999:7999"
+      - "80:80"
       - "7778:7778"
     environment:
       - REACT_APP_API_URL=http://api:9000

@@ -16,5 +16,6 @@
 /node_modules
 introspection.json
 Dockerfile
+Dockerfile-master
 Caddyfile
 LICENSE

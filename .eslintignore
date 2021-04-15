@@ -7,6 +7,7 @@
 !*.tsx
 
 Dockerfile
+Dockerfile-master
 Caddyfile
 LICENSE
 node_modules
