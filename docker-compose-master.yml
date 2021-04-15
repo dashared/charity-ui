@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile-master
     container_name: charity_ui
     ports:
-      - "80:80"
+      - "7999:7999"
       - "7778:7778"
     environment:
       - REACT_APP_API_URL=http://api:9000
