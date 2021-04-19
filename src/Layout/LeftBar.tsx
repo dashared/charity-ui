@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { Menu } from "antd";
 import {
+  AlignLeftOutlined,
   FolderOpenOutlined,
   HomeOutlined,
   MoneyCollectOutlined,
@@ -91,6 +92,15 @@ const LeftBar: FC = () => {
         </>
       ),
       name: "fund:faq-index",
+    },
+    {
+      display: (
+        <>
+          <AlignLeftOutlined />
+          <span>{i18n.t("LeftBar.News")}</span>
+        </>
+      ),
+      name: "news:index",
     },
     {
       display: (
