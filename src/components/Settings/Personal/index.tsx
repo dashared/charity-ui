@@ -7,11 +7,10 @@ import React, {
 } from "react";
 import { Card, DatePicker, Form, Input, Select, Switch, Upload } from "antd";
 import { FormInstance } from "antd/lib/form";
-import { RcCustomRequestOptions, UploadFile } from "antd/lib/upload/interface";
+import { UploadFile } from "antd/lib/upload/interface";
 import { PlusOutlined } from "@ant-design/icons";
 import {
   AuthManagerRegistrationInputRoleEnum as Roles,
-  FileInfo,
   UserEditableInfo,
   UserUser,
   UserUserRoleEnum,
@@ -19,6 +18,7 @@ import {
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useTranslation } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
+import { customRequest } from "@providers/cusomUpload";
 import moment from "moment";
 
 import BlockedTag from "components/User/Block/tag";
@@ -82,30 +82,6 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
       : [],
   );
 
-  const customRequest = (options: RcCustomRequestOptions): void => {
-    const { file, onError, onSuccess } = options;
-
-    const url = `/api/file/upload`;
-
-    const formData = new FormData();
-    formData.append("file", file as Blob);
-    const request = new XMLHttpRequest();
-
-    request.open("POST", url);
-    request.send(formData);
-
-    request.onload = function () {
-      if (request.status === 200) {
-        const parsed: FileInfo[] = JSON.parse(request.responseText);
-        setId(parsed.map((value) => value.id ?? "")[0]);
-
-        return onSuccess(parsed, file);
-      } else {
-        return onError(Error(request.statusText));
-      }
-    };
-  };
-
   const handleOnChange = ({ fileList }: any): void => {
     setFileList(fileList);
   };
@@ -134,7 +110,9 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
               <Form.Item label={t("profile_picture")} name="image">
                 <Upload
                   accept="image/*"
-                  customRequest={customRequest}
+                  customRequest={(options) => {
+                    customRequest(options, setId);
+                  }}
                   listType="picture-card"
                   fileList={profileList}
                   onChange={handleOnChange}

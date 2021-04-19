@@ -1,11 +1,16 @@
-import React, { FC } from "react";
-import { Button, Card, List, Skeleton } from "antd";
-import Avatar from "antd/lib/avatar/avatar";
+import React, { FC, useRef } from "react";
+import { Button, Col, Image, List, Row } from "antd";
+import { NewsResponse as Result, NewsView as Single } from "@generated";
+import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RoleSwitch from "@lib/components/RoleSwitch";
+import { useListSelection } from "@lib/hooks";
+import { DateTimeFormat, format } from "@lib/utils/date";
 import { router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
-import useAxios, { NewsFactory } from "@providers/axios";
+import { NewsFactory } from "@providers/axios";
 import Unauthorized from "pages/_unauthorized";
+
+import styles from "./styles.module.less";
 
 const Actions: FC = () => {
   const { t } = useTranslation("News");
@@ -27,81 +32,61 @@ const Actions: FC = () => {
 const NewsPage: FC = () => {
   const { t } = useTranslation("News");
 
-  const { data, loading } = useAxios(NewsFactory.apiNewsGet, false, 0, 10);
-  const loadMore = !loading ? (
-    <div
-      style={{
-        textAlign: "center",
-        marginTop: 12,
-        height: 32,
-        lineHeight: "32px",
-      }}
-    >
-      <Button>{t("load_more")}</Button>
-    </div>
-  ) : null;
+  const { setList } = useListSelection<Single>();
 
-  // return <Workspace title={t("title")} actions={<Actions />} noRefresh>
-  //   <PaginatedQuery<{ page: number; size: number }, Result, Single>
-  //     className={styles.pagination}
-  //     requestQuery={NewsFactory.apiNewsGet}
-  //     stateRef={paginationState}
-  //     onResult={(result) => {
-  //       setList(result.data ?? []);
-  //     }}
-  //     render={(entries) => (
-  //       <RegistryTable
-  //         entity="Users"
-  //         columns={columns}
-  //         // eslint-disable-next-line
-  //         rows={entries as Record<string, any>[]} // TODO
-  //         rowState={(record, index) => ({
-  //           selected: isSelected(index),
-  //           target: isTarget(index),
-  //         })}
-  //         onRecordClick={(event, record, index) => {
-  //           if (index !== undefined) {
-  //             onElementClick(record);
-  //           }
-  //         }}
-  //       />
-  //     )}
-  //   />
-  // </Workspace>;
+  const paginationState = useRef<StateRef>(null);
 
   return (
     <Workspace title={t("title")} noRefresh actions={<Actions />}>
-      <Card>
-        <List
-          className="demo-loadmore-list"
-          loading={loading}
-          itemLayout="horizontal"
-          loadMore={loadMore}
-          dataSource={data?.data}
-          renderItem={(item) => (
-            <List.Item
-              actions={[
-                <Button key="1" type="link">
-                  {t("edit")}
-                </Button>,
-                <Button key="2" type="link">
-                  {t("delete")}
-                </Button>,
-              ]}
-            >
-              <Skeleton avatar title={false} loading={loading} active>
-                <List.Item.Meta
-                  avatar={
-                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                  }
-                  title={<a href="https://ant.design">{item.title}</a>}
-                  description={item.description}
-                />
-              </Skeleton>
-            </List.Item>
-          )}
-        />
-      </Card>
+      <PaginatedQuery<{ page: number; size: number }, Result, Single>
+        className={styles.pagination}
+        requestQuery={NewsFactory.apiNewsGet}
+        stateRef={paginationState}
+        onResult={(result) => {
+          setList(result.data ?? []);
+        }}
+        render={(entries) => (
+          <List
+            className="demo-loadmore-list"
+            itemLayout="horizontal"
+            dataSource={entries}
+            renderItem={(item) => (
+              <List.Item
+                key={item.title}
+                actions={[
+                  <Button key="0" type="link">
+                    {t("delete")}
+                  </Button>,
+                  <Button key="1" type="link">
+                    {t("edit")}
+                  </Button>,
+                ]}
+              >
+                <Row justify="space-between" gutter={16}>
+                  <Col>
+                    <Image
+                      width={150}
+                      style={{ padding: 8 }}
+                      src={`/api/file/${item.image_id}/download`}
+                      fallback={"https://placeholder.pics/svg/300"}
+                    />
+                  </Col>
+                  <Col>
+                    <h3>{item.title}</h3>
+                    <List.Item.Meta
+                      description={format(
+                        item.updated_at,
+                        DateTimeFormat.DATE_SHORT,
+                      )}
+                    />
+                    {item.description}
+                  </Col>
+                </Row>
+              </List.Item>
+            )}
+          />
+        )}
+      />
     </Workspace>
   );
 };

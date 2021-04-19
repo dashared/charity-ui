@@ -16,7 +16,9 @@
     "create": {
       "title": "Title",
       "text": "Text",
-      "description": "Description"
+      "description": "Description",
+      "image": "Image",
+      "imageUpload": "Upload"
     },
     "buttons": {
       "add": "Publish",
