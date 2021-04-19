@@ -1,0 +1,26 @@
+{
+  "create": "Add",
+  "createTitle": "New story",
+  "load_more": "Load more",
+  "title": "News",
+  "edit": "Edit",
+  "delete": "Delete",
+  "$views": {
+    "createSuccess": "Successfully added content!",
+    "createError": "Error publishing the news",
+    "message": {
+      "title": "Please, enter the title",
+      "text": "Please, enter the text",
+      "description": "Please, enter the description"
+    },
+    "create": {
+      "title": "Title",
+      "text": "Text",
+      "description": "Description"
+    },
+    "buttons": {
+      "add": "Publish",
+      "reset": "Reset"
+    }
+  }
+}

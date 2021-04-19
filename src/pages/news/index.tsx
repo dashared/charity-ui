@@ -37,7 +37,7 @@ const NewsPage: FC = () => {
         lineHeight: "32px",
       }}
     >
-      <Button>loading more</Button>
+      <Button>{t("load_more")}</Button>
     </div>
   ) : null;
 
@@ -81,8 +81,12 @@ const NewsPage: FC = () => {
           renderItem={(item) => (
             <List.Item
               actions={[
-                <a key="list-loadmore-edit">Edit</a>,
-                <a key="list-loadmore-more">Delete</a>,
+                <Button key="1" type="link">
+                  {t("edit")}
+                </Button>,
+                <Button key="2" type="link">
+                  {t("delete")}
+                </Button>,
               ]}
             >
               <Skeleton avatar title={false} loading={loading} active>
