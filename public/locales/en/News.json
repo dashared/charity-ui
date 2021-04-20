@@ -8,6 +8,8 @@
   "$views": {
     "createSuccess": "Successfully added content!",
     "createError": "Error publishing the news",
+    "deleteSuccess": "Post successfully deleted!",
+    "deleteError": "Error deleting post",
     "message": {
       "title": "Please, enter the title",
       "text": "Please, enter the text",

@@ -37,7 +37,7 @@ const CreateNewsPage: FC = () => {
     const data = form.getFieldsValue();
     NewsFactory.apiNewsPost({
       ...data,
-      image_id: id ?? "",
+      image_id: id,
     })
       .then(() => {
         notify(t("$views.createSuccess"), "success");
