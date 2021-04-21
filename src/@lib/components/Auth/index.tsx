@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { message } from "antd";
 import { decode } from "@lib/utils/base64";
 import { notify } from "@lib/utils/notification";
 import { i18n } from "@providers";
@@ -164,6 +165,7 @@ class Auth extends Component {
 
       onMessageListener()
         .then((payload) => {
+          message.success(payload.body);
           console.log(payload);
         })
         .catch((err) => console.log("failed: ", err));

@@ -28,14 +28,3 @@ messaging.onBackgroundMessage((payload) => {
 
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
-
-messaging.onMessage((payload) => {
-  console.log("Received foreground message ", payload);
-
-  const notificationTitle = payload.notification.title;
-  const notificationOptions = {
-    body: payload.notification.body,
-  };
-
-  self.registration.showNotification(notificationTitle, notificationOptions);
-});

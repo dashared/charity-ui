@@ -44,6 +44,7 @@ export const getToken = () => {
 export const onMessageListener = () =>
   new Promise((resolve) => {
     messaging.onMessage((payload) => {
+      console.log("Received foreground message ", payload);
       resolve(payload);
     });
   });

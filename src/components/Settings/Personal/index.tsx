@@ -68,10 +68,10 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
   const [id, setId] = useState<string | undefined>(initial?.image_id);
 
   const [profileList, setFileList] = useState<Array<UploadFile<any>>>(
-    initial?.image_id
+    id
       ? [
           {
-            uid: "-1",
+            uid: id,
             status: "done",
             name: "avatar",
             size: 0,
@@ -101,9 +101,12 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
                   : undefined,
               }}
               onFinish={(values) => {
+                const image_id = profileList[0]?.response
+                  ? profileList[0]?.response[0]?.id
+                  : undefined;
                 onSubmit?.({
                   ...values,
-                  image_id: id ?? "",
+                  image_id,
                 });
               }}
             >
