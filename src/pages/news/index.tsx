@@ -77,7 +77,7 @@ const NewsPage: FC = () => {
             dataSource={entries}
             renderItem={(item) => (
               <List.Item
-                key={item.title}
+                key={item.created_at}
                 actions={[
                   <Button
                     key="0"
