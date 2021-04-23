@@ -6,6 +6,83 @@
     "contact": {}
   },
   "paths": {
+    "/api/batch-statuses": {
+      "get": {
+        "tags": ["BatchStatus"],
+        "summary": "Retrieves a list of all operation statuses in blockchain",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "type": "integer",
+            "default": 10
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort param",
+            "required": false,
+            "type": "string",
+            "default": "'created_at DESC'"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Request type",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "enum": [
+              "DonateToCharity",
+              "DonateFromCharityToApplication",
+              "DonateToCharityFromExistingUser",
+              "DonateToCharityFromNewUser",
+              "DepositMoney",
+              "DonateToApplication",
+              "ProposeApplication",
+              "PublishApplication",
+              "CancelApplication",
+              "Registration",
+              "CloseApplication"
+            ]
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Request status",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "enum": ["Success", "Pending", "Failure"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Blockchain.StatusResponse"
+            }
+          }
+        }
+      }
+    },
     "/api/categories": {
       "get": {
         "produces": ["application/json"],
@@ -1374,6 +1451,57 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Blockchain.Donation"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/utils.PageData"
+        }
+      }
+    },
+    "Blockchain.Status": {
+      "type": "object",
+      "properties": {
+        "batch_id": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "error_string": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["Pending", "Success", "Failure"]
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "DonateToCharity",
+            "DonateFromCharityToApplication",
+            "DonateToCharityFromExistingUser",
+            "DonateToCharityFromNewUser",
+            "DepositMoney",
+            "DonateToApplication",
+            "ProposeApplication",
+            "PublishApplication",
+            "CancelApplication",
+            "Registration",
+            "CloseApplication"
+          ]
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      }
+    },
+    "Blockchain.StatusResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Blockchain.Status"
           }
         },
         "page": {

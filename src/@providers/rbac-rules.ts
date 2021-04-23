@@ -23,6 +23,7 @@ const rules = {
       "news:edit",
       "news:create",
       "news:index",
+      "notifications:index",
     ],
   },
   manager: {
@@ -34,6 +35,7 @@ const rules = {
       "applications:create",
       "users:show",
       "user:view-applications",
+      "notifications:index",
     ],
   },
   supermanager: {
@@ -55,6 +57,7 @@ const rules = {
       "fund:index",
       "fund:faq-index",
       "fund:description-index",
+      "notifications:index",
     ],
   },
   admin: {
@@ -67,6 +70,7 @@ const rules = {
       "user:show-admin",
       "settings:index",
       "logs:index",
+      "notifications:index",
     ],
   },
 };
