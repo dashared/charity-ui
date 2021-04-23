@@ -35,17 +35,17 @@ import Html.Attributes exposing (..)
 -- SKELETON
 
 
-skeleton : String -> Tab -> List (Html msg) -> Html msg
-skeleton title tab content =
+skeleton : Tab -> List (E.Element msg) -> Html msg
+skeleton tab content =
     container <|
         E.column
-            [ E.width (E.maximum 600 E.fill)
+            [ E.width (E.maximum 700 E.fill)
             , E.centerX
-            , E.paddingXY 20 0
+            , E.paddingXY 20 20
             , E.spacing 60
             ]
             [ header tab
-            , E.paragraph [ F.size 14, E.spacing 14 ] (List.map E.html content)
+            , E.paragraph [ F.size 14, E.spacing 14 ] content
             , footer
             ]
 
@@ -56,7 +56,7 @@ skeleton title tab content =
 
 type Tab
     = Applications
-    | News
+    | NewsTab
     | FAQ
     | Other
 
@@ -88,7 +88,6 @@ header tab =
         , E.spaceEvenly
         , E.centerX
         , F.size 14
-        , E.paddingXY 0 20
         ]
         [ charityTitle 20
         , E.row
@@ -104,8 +103,9 @@ header tab =
 headerTabs : Tab -> List (E.Element msg)
 headerTabs tab =
     [ viewTab tab FAQ "FAQ" "/faq"
-    , viewTab tab Applications "Applications" "/applications"
-    , viewTab tab News "News" "/news"
+
+    ---, viewTab tab Applications "Applications" "/applications"
+    ---, viewTab tab NewsTab "News" "/news/public"
     ]
 
 

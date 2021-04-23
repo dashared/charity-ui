@@ -1,12 +1,14 @@
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Dropdown, Layout, Menu } from "antd";
+import { Badge, Divider, Dropdown, Layout, Menu } from "antd";
 import {
+  BellOutlined,
   DownOutlined,
   LogoutOutlined,
   MenuOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { router } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 
 import styles from "./layout.module.less";
@@ -54,10 +56,29 @@ const UserDropdown: FC<{ className?: string }> = ({ className }) => {
   );
 };
 
+const NotificationItem: FC = () => {
+  return (
+    <Badge count={0}>
+      <BellOutlined
+        style={{ fontSize: "18px" }}
+        onClick={() => {
+          router.navigate({ url: router.url({ name: "notifications:index" }) });
+        }}
+      />
+    </Badge>
+  );
+};
+
 const AppHeader: FC<AppHeaderProps> = ({ onMenuToggle }) => {
   return (
     <Header className={styles.header}>
       <MenuOutlined className={styles.trigger} onClick={onMenuToggle} />
+      <Divider
+        type="vertical"
+        orientation="center"
+        style={{ margin: "0px 20px 0px 20px" }}
+      />
+      <NotificationItem />
       <UserDropdown className={styles.user} />
     </Header>
   );
