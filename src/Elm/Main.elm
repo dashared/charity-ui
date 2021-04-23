@@ -7,7 +7,6 @@ import Element as E
 import Element.Events
 import Element.Font as F
 import Element.Region as R
-import Elm.Colors as C
 import Elm.Skeleton exposing (charityTitle, container)
 import Elm.Ui exposing (Link)
 import Html exposing (..)
@@ -82,8 +81,9 @@ subscriptions model =
 toplevel : List Link
 toplevel =
     [ Link "FAQ" "fund:faq-index"
-    , Link "Applications" "applications-public:index"
-    , Link "News" "news:index"
+
+    ---, Link "Applications" "applications-public:index"
+    ---, Link "News" "news:public"
     ]
 
 
