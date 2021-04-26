@@ -114,7 +114,9 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
                 <Upload
                   accept="image/*"
                   customRequest={(options) => {
-                    customRequest(options, setId);
+                    customRequest(options, (ids) => {
+                      setId(ids[0]);
+                    });
                   }}
                   listType="picture-card"
                   fileList={profileList}

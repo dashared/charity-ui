@@ -3,7 +3,7 @@ import { FileInfo } from "@generated";
 
 export const customRequest = (
   options: RcCustomRequestOptions,
-  setId: (id: string) => void,
+  setIds: (ids: string[]) => void,
 ): void => {
   const { file, onError, onSuccess } = options;
 
@@ -19,8 +19,7 @@ export const customRequest = (
   request.onload = function () {
     if (request.status === 200) {
       const parsed: FileInfo[] = JSON.parse(request.responseText);
-      console.log(parsed.map((value) => value.id ?? "")[0]);
-      setId(parsed.map((value) => value.id ?? "")[0]);
+      setIds(parsed.map((value) => value.id ?? ""));
 
       return onSuccess(parsed, file);
     } else {

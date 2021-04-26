@@ -8,7 +8,12 @@ export enum Role {
 
 const rules = {
   visitor: {
-    static: ["auth:login", "faq:pretty", "news:public"],
+    static: [
+      "auth:login",
+      "faq:pretty",
+      "fund:description-pretty",
+      "news:public",
+    ],
   },
   operator: {
     static: [
@@ -17,7 +22,7 @@ const rules = {
       "users:show",
       "fund:index",
       "fund:faq-index",
-      "fund:description-index",
+      "fund:description",
       "fund:description-edit",
       "faq:edit",
       "news:edit",
@@ -48,15 +53,14 @@ const rules = {
       "categories:index",
       "users:show",
       "user:view-applications",
-      "fund:description-index",
+      "fund:index",
+      "fund:description",
       "transactions:show",
       "transactions:index",
       "transactions:create",
       "managers:index",
       "managers:show",
-      "fund:index",
       "fund:faq-index",
-      "fund:description-index",
       "notifications:index",
     ],
   },

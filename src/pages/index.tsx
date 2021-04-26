@@ -38,7 +38,7 @@ const Index: FC = () => {
                 case Role.admin:
                   return <Redirect name="users:index" />;
                 case Role.operator:
-                  return <Redirect name="fund:index" />;
+                  return <Redirect name="fund:description" />;
                 default:
                   return <Redirect name="applications:index" />;
               }

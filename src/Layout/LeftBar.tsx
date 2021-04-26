@@ -83,6 +83,16 @@ const LeftBar: FC = () => {
         </>
       ),
       name: "fund:index",
+      nested: [
+        {
+          display: <span>{i18n.t("LeftBar.Fund_nested.Dashboard")}</span>,
+          name: "fund:dashboard",
+        },
+        {
+          display: <span>{i18n.t("LeftBar.Fund_nested.Description")}</span>,
+          name: "fund:description",
+        },
+      ],
     },
     {
       display: (
