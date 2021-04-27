@@ -81,8 +81,8 @@ subscriptions model =
 toplevel : List Link
 toplevel =
     [ Link "FAQ" "fund:faq-index"
+    , Link "Fund" "fund:description"
 
-    ---, Link "Applications" "applications-public:index"
     ---, Link "News" "news:public"
     ]
 

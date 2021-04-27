@@ -71,7 +71,7 @@ const NewsForm: ForwardRefRenderFunction<NewsFormHandler, NewsFormProps> = (
         <Upload
           listType="picture"
           customRequest={(options) => {
-            customRequest(options, setId);
+            customRequest(options, (ids) => setId(ids[0]));
           }}
           fileList={profileList}
           onChange={handleOnChange}

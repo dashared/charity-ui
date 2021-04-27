@@ -22,6 +22,21 @@
       "edit": "Редактировать",
       "save": "Сохранить",
       "cancel": "Отменить"
+    },
+    "editPage": {
+      "title": "Название",
+      "address": "Адрес",
+      "phone": "Телефон",
+      "email": "E-mail",
+      "files": "Файлы",
+      "upload": "Загрузить",
+      "description": "Описание"
+    },
+    "viewPage": {
+      "contacts": "Контакты",
+      "address": "Адрес",
+      "email": "E-mail",
+      "phone": "Телефон"
     }
   },
   "modal": {

@@ -49,6 +49,7 @@
     "Fund": "Fund",
     "Fund_nested": {
       "Description": "Description",
+      "Dashboard": "Dashboard",
       "FAQ": "FAQ"
     },
     "Users": "Users",

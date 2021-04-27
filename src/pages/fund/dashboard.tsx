@@ -1,7 +1,6 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { Card, Col, Row, Statistic } from "antd";
+import { Card } from "antd";
 import { Bar } from "@ant-design/charts";
-import { formatMoney } from "@lib/utils";
 import { useTranslation, Workspace } from "@providers";
 import useAxios, {
   CharityFactory,
@@ -11,6 +10,7 @@ import useAxios, {
 } from "@providers/axios";
 
 import { ApplicationStatus } from "components/Application/Status/tag";
+import StatisticsCard from "components/Fund/Statistics";
 
 type BarData = {
   title: string;
@@ -206,54 +206,17 @@ const FundPage: FC = () => {
     [ApplicationStatus.Active],
   );
 
-  const staffLabel = t("staff_title", {
-    count: staff?.page?.totalElements ?? 0,
-  });
-  const usersLabel = t("staff_title", {
-    count: users?.page?.totalElements ?? 0,
-  });
-  const applicationsLabel = t("applications", {
-    count: applications?.page?.totalElements ?? 0,
-  });
-
   return (
     <Workspace title={t("title", { name: "Charity" })}>
-      <Card>
-        <Row>
-          <Col span={12}>
-            <Statistic
-              title={t("active_users")}
-              value={usersLabel}
-              loading={usersLoading}
-            />
-          </Col>
-          <Col span={12}>
-            <Statistic
-              title={t("active_applications")}
-              value={applicationsLabel}
-              loading={applicationsLoading}
-            />
-          </Col>
-        </Row>
-
-        <Row style={{ marginTop: 32 }}>
-          <Col span={12}>
-            <Statistic
-              title={t("staff")}
-              value={staffLabel}
-              loading={staffLoading}
-            />
-          </Col>
-          <Col span={12}>
-            <Statistic
-              title={t("balance")}
-              loading={balanceLoading}
-              value={formatMoney(balance)}
-              precision={2}
-            />
-          </Col>
-        </Row>
-      </Card>
+      <StatisticsCard
+        loading={
+          staffLoading || applicationsLoading || usersLoading || balanceLoading
+        }
+        balance={balance}
+        usersCount={users?.page?.totalElements}
+        activeApplications={applications?.page?.totalElements}
+        staffCount={staff?.page?.totalElements}
+      />
       <Card style={{ marginTop: 5 }}>
         <ApplicationStat />
       </Card>
@@ -261,6 +224,6 @@ const FundPage: FC = () => {
   );
 };
 
-export const name = "fund:index";
+export const name = "fund:dashboard";
 
 export default FundPage;

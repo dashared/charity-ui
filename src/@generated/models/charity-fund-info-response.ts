@@ -32,7 +32,7 @@ export interface CharityFundInfoResponse {
      * @type {string}
      * @memberof CharityFundInfoResponse
      */
-    description?: string;
+    description: string;
     /**
      * 
      * @type {string}
@@ -56,7 +56,7 @@ export interface CharityFundInfoResponse {
      * @type {string}
      * @memberof CharityFundInfoResponse
      */
-    title?: string;
+    title: string;
 }
 
 

@@ -1569,6 +1569,7 @@
     },
     "Charity.FundInfo": {
       "type": "object",
+      "required": ["title", "description"],
       "properties": {
         "address": {
           "type": "string"
@@ -1589,6 +1590,7 @@
     },
     "Charity.FundInfoResponse": {
       "type": "object",
+      "required": ["title", "description"],
       "properties": {
         "address": {
           "type": "string"
@@ -1615,6 +1617,7 @@
     },
     "Charity.FundInput": {
       "type": "object",
+      "required": ["title", "description"],
       "properties": {
         "address": {
           "type": "string"
@@ -2030,7 +2033,7 @@
     },
     "News.Input": {
       "type": "object",
-      "required": ["description", "image_id", "text", "title"],
+      "required": ["description", "text", "title"],
       "properties": {
         "description": {
           "type": "string"
