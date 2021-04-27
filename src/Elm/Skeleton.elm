@@ -41,11 +41,11 @@ skeleton tab content =
         E.column
             [ E.width (E.maximum 700 E.fill)
             , E.centerX
-            , E.paddingXY 20 20
+            , E.paddingXY 20 0
             , E.spacing 60
             ]
             [ header tab
-            , E.paragraph [ F.size 14, E.spacing 14 ] content
+            , E.paragraph [ F.size 14, E.spacing 14 ] content -- E.spacing 14
             , footer
             ]
 
@@ -58,6 +58,7 @@ type Tab
     = Applications
     | NewsTab
     | FAQ
+    | FundTab
     | Other
 
 
@@ -88,6 +89,7 @@ header tab =
         , E.spaceEvenly
         , E.centerX
         , F.size 14
+        , E.paddingXY 0 20
         ]
         [ charityTitle 20
         , E.row
@@ -103,8 +105,8 @@ header tab =
 headerTabs : Tab -> List (E.Element msg)
 headerTabs tab =
     [ viewTab tab FAQ "FAQ" "/faq"
+    , viewTab tab FundTab "Fund" "/fund/description"
 
-    ---, viewTab tab Applications "Applications" "/applications"
     ---, viewTab tab NewsTab "News" "/news/public"
     ]
 
@@ -114,10 +116,10 @@ viewTab currentTab targetTab name link =
     let
         attrs =
             if currentTab == targetTab then
-                [ F.bold ]
+                [ E.alignRight, F.bold ]
 
             else
-                []
+                [ E.alignRight, F.regular ]
     in
     E.link (F.color C.darkBlue :: attrs) { url = link, label = E.text name }
 

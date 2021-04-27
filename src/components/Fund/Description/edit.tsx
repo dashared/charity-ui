@@ -68,7 +68,9 @@ const EditFundDescription: ForwardRefRenderFunction<
         onFinish={(values) => {
           onSubmit?.({
             ...values,
-            description: (editorRef as React.RefObject<Editor>).current?.getMdValue(),
+            description:
+              (editorRef as React.RefObject<Editor>).current?.getMdValue() ??
+              "",
             file_ids: ids,
           });
         }}
@@ -119,6 +121,7 @@ const EditFundDescription: ForwardRefRenderFunction<
         <Form.Item
           name={["description"]}
           label={t("$views.editPage.description")}
+          rules={[{ required: true, message: t("$views.message.description") }]}
         >
           <FAQEditor
             editorRef={editorRef}

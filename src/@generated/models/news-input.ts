@@ -20,30 +20,30 @@
  * @interface NewsInput
  */
 export interface NewsInput {
-  /**
-   * 
-   * @type {string}
-   * @memberof NewsInput
-   */
-  description: string;
-  /**
-   * 
-   * @type {string}
-   * @memberof NewsInput
-   */
-  image_id?: string;
-  /**
-   * 
-   * @type {string}
-   * @memberof NewsInput
-   */
-  text: string;
-  /**
-   * 
-   * @type {string}
-   * @memberof NewsInput
-   */
-  title: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewsInput
+     */
+    description: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewsInput
+     */
+    image_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewsInput
+     */
+    text: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NewsInput
+     */
+    title: string;
 }
 
 

@@ -31,7 +31,7 @@ export interface CharityFundInfo {
      * @type {string}
      * @memberof CharityFundInfo
      */
-    description?: string;
+    description: string;
     /**
      * 
      * @type {string}
@@ -49,7 +49,7 @@ export interface CharityFundInfo {
      * @type {string}
      * @memberof CharityFundInfo
      */
-    title?: string;
+    title: string;
 }
 
 

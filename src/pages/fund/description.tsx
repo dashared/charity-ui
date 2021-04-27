@@ -1,4 +1,5 @@
 import React, { FC, useCallback, useRef } from "react";
+import Elm from "react-elm-components";
 import { Button, Empty, Skeleton } from "antd";
 import { CharityFundInput } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
@@ -6,6 +7,7 @@ import { notify } from "@lib/utils/notification";
 import { useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import useAxios, { CharityFactory } from "@providers/axios";
+import FundElm from "Elm/Fund.elm";
 
 import EditFundDescription, {
   CharityInfoHandler,
@@ -50,7 +52,7 @@ const FundDescription: FC = () => {
           <RoleSwitch
             role={user.role}
             perform="fund:description-pretty" // visitor or not
-            yes={() => <>pretty for visitor</>}
+            yes={() => <Elm src={FundElm.Elm.Elm.Fund} flags={data} />}
             no={() => (
               <Workspace
                 noRefresh
