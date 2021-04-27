@@ -10,6 +10,7 @@ import useAxios, { CharityFactory } from "@providers/axios";
 import EditFundDescription, {
   CharityInfoHandler,
 } from "components/Fund/Description/edit";
+import { FundDescriptionView } from "components/Fund/Description/view";
 
 const FundDescription: FC = () => {
   const { t } = useTranslation("Fund");
@@ -28,7 +29,7 @@ const FundDescription: FC = () => {
         notify(t("update_success"), "success");
       } catch (e) {
         console.error(e);
-        notify(t("update_success"), "error");
+        notify(t("update_error"), "error");
       }
     },
     [t],
@@ -69,10 +70,17 @@ const FundDescription: FC = () => {
                   />
                 }
               >
-                <EditFundDescription
-                  ref={handlers}
-                  onSubmit={onSubmit}
-                  initialInfo={data}
+                <RoleSwitch
+                  role={user.role}
+                  perform="fund:description-edit"
+                  yes={() => (
+                    <EditFundDescription
+                      ref={handlers}
+                      onSubmit={onSubmit}
+                      initialInfo={data}
+                    />
+                  )}
+                  no={() => <FundDescriptionView data={data} />}
                 />
               </Workspace>
             )}

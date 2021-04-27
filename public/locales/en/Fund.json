@@ -32,6 +32,13 @@
       "files": "Files",
       "upload": "Upload",
       "description": "Description"
+    },
+    "viewPage": {
+      "mainInfo": "Main information",
+      "contacts": "Contacts",
+      "address": "Address",
+      "email": "E-mail",
+      "phone": "Phone"
     }
   },
   "modal": {
