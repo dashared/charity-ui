@@ -21,6 +21,8 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { AuthEmailConfirmationInput } from '../models';
 // @ts-ignore
+import { AuthManagerRegistrationInput } from '../models';
+// @ts-ignore
 import { AuthRegistrationInput } from '../models';
 /**
  * RegistrationApi - axios parameter creator
@@ -41,6 +43,57 @@ export const RegistrationApiAxiosParamCreator = function (configuration?: Config
                 throw new RequiredError('request','Required parameter request was null or undefined when calling apiRegisterConfirmPost.');
             }
             const localVarPath = `/api/register/confirm`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            const queryParameters = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                queryParameters.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                queryParameters.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const nonString = typeof request !== 'string';
+            const needsSerialization = nonString && configuration && configuration.isJsonMime
+                ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
+                : nonString;
+            localVarRequestOptions.data =  needsSerialization
+                ? JSON.stringify(request !== undefined ? request : {})
+                : (request || "");
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Register another user
+         * @summary Register another user from manager
+         * @param {AuthManagerRegistrationInput} request Registration input
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRegisterManagerPost: async (request: AuthManagerRegistrationInput, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling apiRegisterManagerPost.');
+            }
+            const localVarPath = `/api/register/manager`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -154,6 +207,20 @@ export const RegistrationApiFp = function(configuration?: Configuration) {
             };
         },
         /**
+         * Register another user
+         * @summary Register another user from manager
+         * @param {AuthManagerRegistrationInput} request Registration input
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiRegisterManagerPost(request: AuthManagerRegistrationInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await RegistrationApiAxiosParamCreator(configuration).apiRegisterManagerPost(request, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
          * Register with this route
          * @summary Register
          * @param {AuthRegistrationInput} request Email registration input
@@ -187,6 +254,16 @@ export const RegistrationApiFactory = function (configuration?: Configuration, b
             return RegistrationApiFp(configuration).apiRegisterConfirmPost(request, options).then((request) => request(axios, basePath));
         },
         /**
+         * Register another user
+         * @summary Register another user from manager
+         * @param {AuthManagerRegistrationInput} request Registration input
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiRegisterManagerPost(request: AuthManagerRegistrationInput, options?: any): AxiosPromise<void> {
+            return RegistrationApiFp(configuration).apiRegisterManagerPost(request, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Register with this route
          * @summary Register
          * @param {AuthRegistrationInput} request Email registration input
@@ -211,6 +288,20 @@ export interface RegistrationApiApiRegisterConfirmPostRequest {
      * @memberof RegistrationApiApiRegisterConfirmPost
      */
     readonly request: AuthEmailConfirmationInput
+}
+
+/**
+ * Request parameters for apiRegisterManagerPost operation in RegistrationApi.
+ * @export
+ * @interface RegistrationApiApiRegisterManagerPostRequest
+ */
+export interface RegistrationApiApiRegisterManagerPostRequest {
+    /**
+     * Registration input
+     * @type {AuthManagerRegistrationInput}
+     * @memberof RegistrationApiApiRegisterManagerPost
+     */
+    readonly request: AuthManagerRegistrationInput
 }
 
 /**
@@ -244,6 +335,18 @@ export class RegistrationApi extends BaseAPI {
      */
     public apiRegisterConfirmPost(requestParameters: RegistrationApiApiRegisterConfirmPostRequest, options?: any) {
         return RegistrationApiFp(this.configuration).apiRegisterConfirmPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Register another user
+     * @summary Register another user from manager
+     * @param {RegistrationApiApiRegisterManagerPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RegistrationApi
+     */
+    public apiRegisterManagerPost(requestParameters: RegistrationApiApiRegisterManagerPostRequest, options?: any) {
+        return RegistrationApiFp(this.configuration).apiRegisterManagerPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

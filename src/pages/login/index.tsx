@@ -1,7 +1,9 @@
 import React, { FC } from "react";
-import { Button, Card } from "antd";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { AuthConsumer } from "@providers/authContext";
+import Redirect from "pages/_redirect";
+
+import LoginForm from "components/Login";
 
 const LoginPage: FC = () => {
   return (
@@ -11,15 +13,8 @@ const LoginPage: FC = () => {
           <RoleSwitch
             role={user.role}
             perform="auth:login"
-            yes={() => (
-              <Card>
-                Hello!{" "}
-                <Button type="primary" onClick={initiateLogin}>
-                  Login
-                </Button>
-              </Card>
-            )}
-            no={() => <>You are authenticated {user.role}!</>}
+            yes={() => <LoginForm onLogin={initiateLogin} />}
+            no={() => <Redirect name="home" />}
           />
         );
       }}

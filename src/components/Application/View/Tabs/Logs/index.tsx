@@ -13,12 +13,14 @@ import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import { useListSelection } from "@lib/hooks";
 import { format } from "@lib/utils/date";
+import { fullName } from "@lib/utils/name";
 import { useTranslation } from "@providers";
 import { DonationRequestFactory } from "@providers/axios";
 
 import StatusTag, {
   ApplicationStatus,
 } from "components/Application/Status/tag";
+import RoleTag from "components/User/Role/tag";
 
 import styles from "./styles.module.less";
 
@@ -95,20 +97,35 @@ export const LogsTab = React.forwardRef<RefType, PropsType>((props, ref) => {
 
     {
       key: "authorUpd",
-      name: t("authorUpd"),
       render(record: Single) {
-        return record.author_id;
+        const author = record.author;
+
+        return author ? (
+          fullName(author.first_name, author.middle_name, author.last_name)
+        ) : (
+          <>-</>
+        );
+      },
+    },
+
+    {
+      key: "authorRole",
+      render(record: Single) {
+        const author = record.author;
+        return <RoleTag roles={author?.role ? [author?.role] : []} />;
       },
     },
   ];
 
   return (
-    <PaginatedQuery<{ id: number; page: number; size: number }, Result, Single>
+    <PaginatedQuery<{ page: number; size: number }, Result, Single>
       className={styles.pagination}
+      // eslint-disable-next-line
+      // @ts-ignore
       requestQuery={DonationRequestFactory.apiDonationRequestIdHistoryGet}
       stateRef={paginationState}
       refetch={refetch}
-      variables={{ id }}
+      variables={{ sort: "", id }}
       onResult={onResult}
       render={(entries) => (
         <RegistryTable

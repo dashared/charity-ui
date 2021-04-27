@@ -1,0 +1,48 @@
+{
+  "title": "Fund description",
+  "generalInfo": "Main info",
+  "save": "Save",
+  "balance": "Balance",
+  "top_up": "Top up",
+  "staff": "Fund workers",
+  "active_users": "Active users",
+  "active_applications": "Open applications",
+  "applications": "{{count }} application",
+  "applications_plural": "{{count}} applications",
+  "staff_title": "{{ count }} person",
+  "staff_title_plural": "{{count }} people",
+  "faq": "Frequently asked questions",
+  "description": "Description",
+  "contacts": "Contacts",
+  "docs": "Documents",
+  "reports": "Reports",
+  "update_success": "Successfully updated fund info!",
+  "update_error": "Error updating fund info",
+  "$views": {
+    "buttons": {
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "editPage": {
+      "title": "Title",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "E-mail",
+      "files": "Files",
+      "upload": "Upload",
+      "description": "Description"
+    },
+    "viewPage": {
+      "mainInfo": "Main information",
+      "contacts": "Contacts",
+      "address": "Address",
+      "email": "E-mail",
+      "phone": "Phone"
+    }
+  },
+  "modal": {
+    "title": "All changes canceled",
+    "description": "Saving is required before moving between sections"
+  }
+}

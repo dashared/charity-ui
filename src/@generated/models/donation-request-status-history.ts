@@ -13,6 +13,8 @@
  */
 
 
+import { DonationRequestComment } from './donation-request-comment';
+import { UserUser } from './user-user';
 
 /**
  * 
@@ -22,16 +24,22 @@
 export interface DonationRequestStatusHistory {
     /**
      * 
-     * @type {string}
+     * @type {UserUser}
      * @memberof DonationRequestStatusHistory
      */
-    assignee_id?: string;
+    assignee?: UserUser;
     /**
      * 
-     * @type {string}
+     * @type {UserUser}
      * @memberof DonationRequestStatusHistory
      */
-    author_id?: string;
+    author?: UserUser;
+    /**
+     * 
+     * @type {DonationRequestComment}
+     * @memberof DonationRequestStatusHistory
+     */
+    comment?: DonationRequestComment;
     /**
      * 
      * @type {string}

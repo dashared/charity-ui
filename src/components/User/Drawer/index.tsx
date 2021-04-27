@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Card, Descriptions, Drawer, Empty, Skeleton } from "antd";
-import { FileSearchOutlined } from "@ant-design/icons";
 import { UserApiFactory } from "@generated";
 import { fullName } from "@lib/utils/name";
 import { router } from "@providers";
@@ -19,7 +18,6 @@ const UserPreview: FC<{
     undefined,
     id,
   );
-
   return (
     <Drawer
       visible={visible}
@@ -33,8 +31,6 @@ const UserPreview: FC<{
         title={t("title")}
         extra={
           <Button
-            type="primary"
-            icon={<FileSearchOutlined />}
             onClick={() =>
               router.navigate({
                 url: router.url({ name: "users:show", params: { id } }),
@@ -51,19 +47,22 @@ const UserPreview: FC<{
         {data && (
           <Descriptions bordered={true}>
             <Descriptions.Item label={t("credentials")} span={3}>
-              {fullName(data.first_name, data.last_name, data.middle_name)}
+              {fullName(data.first_name, data.middle_name, data.last_name)}
+            </Descriptions.Item>
+            <Descriptions.Item label={t("birthday")} span={3}>
+              {data.birth_date ?? "-"}
             </Descriptions.Item>
             <Descriptions.Item label={t("phone")} span={3}>
-              1810000000
-            </Descriptions.Item>
-            <Descriptions.Item label={t("country")} span={3}>
-              Hangzhou, Zhejiang
+              {data.phone ?? "-"}
             </Descriptions.Item>
             <Descriptions.Item label={t("email")} span={3}>
-              ivanov@mail.ru
+              {data.email ?? "-"}
             </Descriptions.Item>
-            <Descriptions.Item label={t("address")} span={3}>
-              No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+            <Descriptions.Item label={t("city")} span={3}>
+              {data.city ?? "-"}
+            </Descriptions.Item>
+            <Descriptions.Item label={t("country")} span={3}>
+              {data.country ?? "-"}
             </Descriptions.Item>
           </Descriptions>
         )}

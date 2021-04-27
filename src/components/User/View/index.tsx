@@ -46,7 +46,7 @@ const UserView: FC<UserViewProps> = ({ user }) => {
                   </Tooltip>
                 }
               >
-                <ApplicationsTab />
+                <ApplicationsTab userId={user.id ?? ""} />
               </Tabs.TabPane>
 
               <Tabs.TabPane

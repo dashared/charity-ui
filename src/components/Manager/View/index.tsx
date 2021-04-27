@@ -1,30 +1,50 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Card } from "antd";
-import { UserUser as User } from "@generated";
+import { UserUser as User, UserUserRoleEnum as ApiRole } from "@generated";
 import { Role } from "@providers/rbac-rules";
 
 import UserInfo from "components/User/Info";
 
+import ManagersApplications from "./applications";
+
 type ManagerViewProps = {
   user: User;
-  role: Role;
+  role: Role; // TODO: remove, already in User
 };
 
 const ManagerView: FC<ManagerViewProps> = ({ user, role }) => {
   const { t } = useTranslation("Manager");
 
+  const [tab, setTab] = useState("tab1");
+
+  const tabList = [
+    {
+      key: "tab1",
+      tab: t("page.applications"),
+    },
+  ];
+
+  const contentList: Record<string, React.ReactNode> = {
+    tab1: <ManagersApplications user={user} />,
+  };
+
   return (
     <>
-      <Card>
-        <h3>{t("page.infoTitle")}</h3>
+      <Card title={t("page.infoTitle")} style={{ marginBottom: "10px" }}>
         <br />
         <UserInfo user={user} role={role} />
       </Card>
-      <Card>
-        <h3>{t("page.statistics")}</h3>
-        <br />
-      </Card>
+      {(user.role === ApiRole.SuperManager ||
+        user.role === ApiRole.Manager) && (
+        <Card
+          tabList={tabList}
+          onTabChange={(key) => setTab(key)}
+          activeTabKey={tab}
+        >
+          {contentList[tab]}
+        </Card>
+      )}
     </>
   );
 };

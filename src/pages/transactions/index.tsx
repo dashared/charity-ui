@@ -1,25 +1,20 @@
 import React, { FC, useRef } from "react";
-import { Button } from "antd";
+import { Button, Tag } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { Link } from "@curi/react-dom";
 import {
-  DonationRequestBody as Single,
-  DonationRequestResponse as Result,
+  BlockchainDonation as Single,
+  BlockchainDonationsResponse as Result,
 } from "@generated"; // TODO: replace to TransactionRequestBody
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useListSelection } from "@lib/hooks";
-import { format } from "@lib/utils/date";
+import { formatDate, formatMoney } from "@lib/utils";
 import { cred } from "@lib/utils/name";
 import { router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
-import { DonationRequestFactory } from "@providers/axios";
+import { DonationsFactory } from "@providers/axios";
 import Redirect from "pages/_redirect";
-
-import StatusTag, {
-  TransactionStatus,
-} from "components/Transaction/Status/tag";
 
 import styles from "./styles.module.less";
 
@@ -40,12 +35,13 @@ const Actions: FC = () => {
 };
 
 const TransactionsPage: FC = () => {
-  const {
-    isTarget,
-    isSelected,
-    onElementClick,
-    setList,
-  } = useListSelection<Single>();
+  const { isTarget, isSelected, setList } = useListSelection<Single>();
+
+  const onElementClick = (id: string): void => {
+    router.navigate({
+      url: router.url({ name: "transactions:show", params: { id } }),
+    });
+  };
 
   const paginationState = useRef<StateRef>(null);
 
@@ -53,50 +49,43 @@ const TransactionsPage: FC = () => {
 
   const columns = [
     {
-      key: "id",
-      render(record: Single) {
-        return (
-          <Link params={{ id: record.id }} name="transactions:show">
-            {record.id}
-          </Link>
-        );
-      },
-    },
-    {
       key: "sum",
-      render() {
-        return "1000 $";
+      render(record: Single) {
+        return formatMoney(record.amount);
       },
     },
     {
       key: "who",
-      render() {
-        return cred("Алексей", "Юрьевич", "Андреев");
+      render(record: Single) {
+        if (!record.donation_author) {
+          return <>-</>;
+        }
+        const { first_name, middle_name, last_name } = record.donation_author;
+        return cred(first_name, middle_name, last_name);
       },
     },
     {
       key: "aim",
-      render() {
+      render(record: Single) {
         return (
-          // TODO: replace after transactions api is done
-          <Link params={{ id: 1 }} name="applications:show">
-            Имя заявки как дела
-          </Link>
+          <>
+            {record.donation_request && (
+              <Tag color="blue">
+                {t("to_application", { id: record.donation_request.id })}
+              </Tag>
+            )}
+            {!record.donation_request && (
+              <Tag color="default">{t("to_fund")}</Tag>
+            )}
+          </>
         );
       },
     },
 
     {
-      key: "status",
-      render() {
-        return <StatusTag status={TransactionStatus.Success} />;
-      },
-    },
-
-    {
-      key: "time",
+      key: "createdAt",
       render(record: Single) {
-        return format(record.until);
+        return formatDate(record.created_at);
       },
     },
   ];
@@ -106,7 +95,7 @@ const TransactionsPage: FC = () => {
     <Workspace noRefresh title={t("title")} actions={<Actions />}>
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
-        requestQuery={DonationRequestFactory.apiDonationRequestGet}
+        requestQuery={DonationsFactory.apiDonationsGet}
         stateRef={paginationState}
         onResult={(result) => {
           setList(result.data ?? []);
@@ -123,7 +112,7 @@ const TransactionsPage: FC = () => {
             })}
             onRecordClick={(event, record, index) => {
               if (index !== undefined) {
-                onElementClick(event, index);
+                onElementClick(record.id);
               }
             }}
           />
@@ -142,7 +131,7 @@ export const pageComponent: FC = () => {
             role={user.role}
             perform="transactions:index"
             yes={() => <TransactionsPage />}
-            no={() => <Redirect name="home"></Redirect>}
+            no={() => <Redirect name="home" />}
           />
         );
       }}

@@ -43,25 +43,25 @@ export interface AuthRegistrationInput {
      * @type {string}
      * @memberof AuthRegistrationInput
      */
-    email?: string;
+    email: string;
     /**
      * 
      * @type {string}
      * @memberof AuthRegistrationInput
      */
-    first_name?: string;
+    first_name: string;
     /**
      * 
      * @type {string}
      * @memberof AuthRegistrationInput
      */
-    image?: string;
+    image_id?: string;
     /**
      * 
      * @type {string}
      * @memberof AuthRegistrationInput
      */
-    last_name?: string;
+    last_name: string;
     /**
      * 
      * @type {string}
@@ -73,7 +73,7 @@ export interface AuthRegistrationInput {
      * @type {string}
      * @memberof AuthRegistrationInput
      */
-    password?: string;
+    password: string;
     /**
      * 
      * @type {string}

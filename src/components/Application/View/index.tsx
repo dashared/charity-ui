@@ -1,23 +1,16 @@
 import React, { MutableRefObject, useEffect } from "react";
-import { Badge, Card, Tabs, Tooltip } from "antd";
+import { /*Badge,*/ Card, Tabs, Tooltip } from "antd";
 import {
   DiffOutlined,
   FileOutlined,
   InfoCircleOutlined,
   MessageOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
 import { DonationRequestBody } from "@generated";
 import { useTranslation } from "@providers";
 
 // import { DonationRequestFactory } from "@providers/axios";
-import {
-  CommentTab,
-  DoneeInfoTab,
-  FilesTab,
-  GeneralInfoTab,
-  LogsTab,
-} from "./Tabs";
+import { CommentTab, FilesTab, GeneralInfoTab, LogsTab } from "./Tabs";
 
 const { TabPane } = Tabs;
 
@@ -58,7 +51,7 @@ const ApplicationView = React.forwardRef<RefType, PropsType>((props, ref) => {
           <GeneralInfoTab info={donation} onRefetch={onRefetch} />
         </TabPane>
 
-        <TabPane
+        {/* <TabPane
           tab={
             <Tooltip title={t("$views.tabs.doneeInfoTitle")}>
               <UserOutlined />
@@ -67,11 +60,11 @@ const ApplicationView = React.forwardRef<RefType, PropsType>((props, ref) => {
           key="donee"
         >
           <DoneeInfoTab
-            applicantId={donation.assignee?.id}
-            donee={donation.donee}
+            applicantId={donation.author?.id}
+            donee={donation.donee ?? donation.author}
             relationship={donation.relationship}
           />
-        </TabPane>
+        </TabPane> */}
 
         <TabPane
           tab={
@@ -81,7 +74,7 @@ const ApplicationView = React.forwardRef<RefType, PropsType>((props, ref) => {
           }
           key="files"
         >
-          <FilesTab files={["fff.pfd", "xxx.hfhf"]} />
+          <FilesTab files={donation.attached_files ?? []} />
         </TabPane>
 
         <TabPane
@@ -101,9 +94,9 @@ const ApplicationView = React.forwardRef<RefType, PropsType>((props, ref) => {
         <TabPane
           tab={
             <Tooltip title={t("$views.tabs.commentsTitle")}>
-              <Badge count={5}>
-                <MessageOutlined />
-              </Badge>
+              <MessageOutlined />
+              {/* <Badge count={5}>
+              </Badge> */}
             </Tooltip>
           }
         >

@@ -1,0 +1,143 @@
+{
+  "yes": "Yes",
+  "no": "No",
+  "listTitle": "Applications",
+  "listTitle_all": "Applications - all",
+  "listTitle_processing": "Application - processing",
+  "listTitle_active": "Application - active",
+  "listTitle_archived": "Application - archieved",
+  "id": "№",
+  "title": "Title",
+  "assignee": "Manager",
+  "assignee_status": "Role",
+  "collected": "Money collected",
+  "until": "Until",
+  "comment": "Comment",
+  "file": "File",
+  "uploadDate": "Uploaded at",
+  "status": "Status",
+  "type": "Type",
+  "author": "Author",
+  "createdAt": "Created at",
+  "prevStatus": "Previous status",
+  "newStatus": "New status",
+  "statusUpdData": "Last update",
+  "authorUpd": "Update author",
+  "authorRole": "Author's role",
+  "createPageTitle": "Create application",
+  "Filters": {
+    "assignee": "Assigned to me",
+    "status": "Application statuses",
+    "statusTagPlaceholder": "Other statuses..."
+  },
+  "$views": {
+    "updateStatus": "Status updated successfully",
+    "update_success": "Application info updated successfully",
+    "update_error": "Error updating aplication, try again",
+    "select_assignee": "Select the manager",
+    "title": "Application № {{ id }} {{ title }}",
+    "createApplication": "Create",
+    "download": "Download",
+    "createSuccess": "Application is successfully created",
+    "createError": "Failure creating application, try again",
+    "createPage": {
+      "title": "Title",
+      "approved_amount": "Sum",
+      "until": "Until",
+      "category": "Category",
+      "select_category": "Choose application category",
+      "description": "Description",
+      "message": "Message for manager",
+      "anon": {
+        "title": "Anonymous application",
+        "description": "Some application fields will be hidden from users"
+      },
+      "files": "Documents",
+      "relationship": "Relationship with creator",
+      "donee": {
+        "first_name": "Donee name",
+        "middle_name": "Donee middle name",
+        "last_name": "Donee last name"
+      },
+      "dragger": {
+        "title": "Upload document(s)",
+        "description": "These files will be available only to the fund"
+      }
+    },
+    "message": {
+      "title": "Enter an application title",
+      "category": "Enter an application category",
+      "donee_last": "Enter donee last name",
+      "donee_first": "Enter donee name"
+    },
+    "tabs": {
+      "generalInfoTitle": "Main info",
+      "doneeInfoTitle": "Donee",
+      "logsTitle": "History",
+      "filesTitle": "Documents",
+      "commentsTitle": "Comments"
+    },
+    "confirm": {
+      "spam": "Send an application to spam?",
+      "processing": "Take the application for processing?",
+      "stopProcessing": "Stop processing the application?",
+      "returnFromSpam": "Return application from spam?"
+    },
+    "card": {
+      "doneeInfoTitle": "Donee info",
+      "generalInfoTitle": "Application info",
+      "description": "Description",
+      "requestedAmount": "Requested sum",
+      "approvedAmount": "Approved sum",
+      "createdAt": "Creation date",
+      "endTime": "Goal date",
+      "status": "Status",
+      "createdBy": "Creator",
+      "city": "City",
+      "country": "Country",
+      "birthday": "Birth date",
+      "phone": "Phone number",
+      "donee": "Donee",
+      "donee_fullname": "Full name",
+      "relationship": "Relationship with application creator",
+      "message": "Message",
+      "enterMessage": "Enter a message to the user",
+      "assignee": "Manager",
+      "successUpdateStatus": "Application status updated successfully!"
+    },
+    "buttons": {
+      "actions": {
+        "title": "Activities for application",
+        "formTitle": "Status changes"
+      },
+      "inProcessing": "Start processing",
+      "spam": "Spam",
+      "request_changes": "Send for improvement",
+      "stopProcessing": "Stop processing",
+      "require_confirmation": "Confirm",
+      "returnFromSpam": "Return from spam",
+      "refuse": "Refuse",
+      "activate": "Activate",
+      "add": "Add",
+      "reset": "Clear"
+    },
+    "modal": {
+      "requestChangesTitle": "Send for improvement",
+      "spamTitle": "Move to spam",
+      "refuse": "Refuse reason",
+      "editTitle": "Edit application"
+    }
+  },
+  "Status": {
+    "New": "New",
+    "InProcessing": "In processing",
+    "NeedsImprovement": "Needs improvement",
+    "Spam": "Spam",
+    "SuperManagerConfirmation": "Waiting confirmation",
+    "Active": "Active",
+    "Archived": "Archived",
+    "Refused": "Refused",
+    "Deleted": "Deleted",
+    "UserConfirmation": "Waiting activation"
+  }
+}

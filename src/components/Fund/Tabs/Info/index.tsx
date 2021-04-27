@@ -142,7 +142,7 @@ export const InfoTab = React.forwardRef<RefType, PropsType>((props, ref) => {
 
         <Row>
           <Col>
-            <span>TODO: обсудить что будет</span>
+            <span>+ 7(4852) 21-33-59</span>
           </Col>
         </Row>
       </Col>

@@ -1,68 +1,83 @@
-import React, { FC } from "react";
+import React, { FC, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Anchor, Card, Layout, PageHeader } from "antd";
+import { Button, Card, Empty, Select, Skeleton } from "antd";
+import { UserEditableInfo } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
+import { notify } from "@lib/utils/notification";
+import { Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
+import useAxios, { UserRequestFactory } from "@providers/axios";
+import i18n from "i18next";
 import Redirect from "pages/_redirect";
 
 import { PersonalSettings } from "components/Settings";
-
-import styles from "./styles.module.less";
-
-const { Header, Sider, Content } = Layout;
-const { Link } = Anchor;
+import { PersonalSettingsHandler } from "components/Settings/Personal";
 
 const SettingsPage: FC = () => {
   const { t } = useTranslation("Settings");
 
+  const id = localStorage.getItem("uuid");
+
+  const handlers = useRef<PersonalSettingsHandler>(null);
+
+  const onSubmit = useCallback(
+    async (values: UserEditableInfo) => {
+      try {
+        await UserRequestFactory.apiUserIdPatch(id ?? "", {
+          ...values,
+        });
+
+        notify(t("update_success"), "success");
+      } catch {
+        notify(t("update_success"), "error");
+      }
+    },
+    [id, t],
+  );
+
+  const { data, loading } = useAxios(
+    UserRequestFactory.apiUserIdGet,
+    undefined,
+    id,
+  );
+
+  if (loading) {
+    return <Skeleton active={loading} />;
+  }
+
+  if (!data) {
+    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+  }
+
   return (
-    <Layout>
-      <Header className={styles.header}>
-        <PageHeader
-          title={t("title")}
-          style={{ backgroundColor: "transparent" }}
-        />
-      </Header>
+    <Workspace
+      title={t("title")}
+      noRefresh
+      actions={
+        <Button onClick={() => handlers.current?.submit()}>
+          {t("updateButton")}
+        </Button>
+      }
+    >
+      <PersonalSettings ref={handlers} onSubmit={onSubmit} initial={data} />
 
-      <Layout className={styles.layout}>
-        <Sider className={styles.sider}>
-          <Anchor>
-            <Link href="#personal" title={t("personal")} />
-            <Link href="#language" title={t("language")} />
-          </Anchor>
-        </Sider>
-
-        <Content id="content">
-          <PersonalSettings id={"24b74642-7926-4669-a6c4-755502efa06f"} />
-
-          <Card
-            title={t("language")}
-            style={{ marginTop: "4px" }}
-            id="language"
-          >
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-            <br />
-            TEST DATA
-          </Card>
-        </Content>
-      </Layout>
-    </Layout>
+      <Card title={t("language")} style={{ marginTop: "4px" }} id="language">
+        <Select
+          onChange={(value) => {
+            i18n.changeLanguage(value);
+          }}
+          value={i18n.language.startsWith("en") ? "en" : "ru"}
+          style={{ width: 180, margin: "0 8px" }}
+        >
+          <Select.Option value="ru">
+            {t("languageSetting.russian")}
+          </Select.Option>
+          <Select.Option value="en">
+            {t("languageSetting.english")}
+          </Select.Option>
+        </Select>
+      </Card>
+    </Workspace>
   );
 };
 

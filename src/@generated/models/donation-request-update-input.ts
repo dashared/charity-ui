@@ -13,6 +13,8 @@
  */
 
 
+import { UserSimpleUser } from './user-simple-user';
+import { UtilsMoneyJson } from './utils-money-json';
 
 /**
  * 
@@ -22,16 +24,76 @@
 export interface DonationRequestUpdateInput {
     /**
      * 
-     * @type {string}
+     * @type {boolean}
      * @memberof DonationRequestUpdateInput
      */
-    comment?: string;
+    anonymous?: boolean;
+    /**
+     * 
+     * @type {UtilsMoneyJson}
+     * @memberof DonationRequestUpdateInput
+     */
+    approved_amount?: UtilsMoneyJson;
     /**
      * 
      * @type {string}
      * @memberof DonationRequestUpdateInput
      */
-    status?: string;
+    assignee_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestUpdateInput
+     */
+    category_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestUpdateInput
+     */
+    description?: string;
+    /**
+     * 
+     * @type {UserSimpleUser}
+     * @memberof DonationRequestUpdateInput
+     */
+    donee?: UserSimpleUser;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DonationRequestUpdateInput
+     */
+    file_ids?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestUpdateInput
+     */
+    message?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestUpdateInput
+     */
+    relationship?: string;
+    /**
+     * 
+     * @type {UtilsMoneyJson}
+     * @memberof DonationRequestUpdateInput
+     */
+    requested_amount?: UtilsMoneyJson;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestUpdateInput
+     */
+    title?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestUpdateInput
+     */
+    until?: string;
 }
 
 

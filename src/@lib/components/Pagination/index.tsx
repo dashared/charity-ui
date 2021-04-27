@@ -125,12 +125,10 @@ function InnerPaginatedQuery<
   RestProps): JSX.Element | null {
   // pagination state handlers
 
-  const { t } = useTranslation("Common");
+  const { t } = useTranslation("translation");
 
   const [page, onCurrentChange] = useState(initialPage);
   const [size, onPageSizeChange] = useState(initialSize);
-
-  console.log(page, size);
 
   // save state above if needed
   useEffect(() => {
@@ -145,7 +143,7 @@ function InnerPaginatedQuery<
     refetch,
     ...Object.values(
       variables
-        ? { ...variables, page: page - 1, size, sort: "" }
+        ? { page: page - 1, size, ...variables }
         : { page: page - 1, size, sort: "" },
     ),
   );
@@ -158,6 +156,7 @@ function InnerPaginatedQuery<
   }, [onResult, data]);
 
   if (error) {
+    console.error(error);
     // TODO : make more userfriendly and consice
     return <DisplayResult status="500" title="500" subTitle={t("error")} />;
   }

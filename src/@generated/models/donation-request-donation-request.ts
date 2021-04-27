@@ -13,8 +13,10 @@
  */
 
 
+import { CategoryCategory } from './category-category';
 import { UserSimpleUser } from './user-simple-user';
 import { UserUser } from './user-user';
+import { UtilsMoneyJson } from './utils-money-json';
 
 /**
  * 
@@ -30,10 +32,10 @@ export interface DonationRequestDonationRequest {
     anonymous?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {UtilsMoneyJson}
      * @memberof DonationRequestDonationRequest
      */
-    approved_amount?: number;
+    approved_amount?: UtilsMoneyJson;
     /**
      * 
      * @type {UserUser}
@@ -46,6 +48,12 @@ export interface DonationRequestDonationRequest {
      * @memberof DonationRequestDonationRequest
      */
     author?: UserUser;
+    /**
+     * 
+     * @type {CategoryCategory}
+     * @memberof DonationRequestDonationRequest
+     */
+    category?: CategoryCategory;
     /**
      * 
      * @type {string}
@@ -72,10 +80,10 @@ export interface DonationRequestDonationRequest {
     id?: number;
     /**
      * 
-     * @type {string}
+     * @type {UtilsMoneyJson}
      * @memberof DonationRequestDonationRequest
      */
-    message?: string;
+    received_amount?: UtilsMoneyJson;
     /**
      * 
      * @type {string}
@@ -84,16 +92,10 @@ export interface DonationRequestDonationRequest {
     relationship?: string;
     /**
      * 
-     * @type {string}
+     * @type {UtilsMoneyJson}
      * @memberof DonationRequestDonationRequest
      */
-    request_type?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof DonationRequestDonationRequest
-     */
-    requested_amount?: number;
+    requested_amount?: UtilsMoneyJson;
     /**
      * 
      * @type {string}

@@ -43,4 +43,30 @@ module.exports = override(
       analyzerMode: IS_DEV ? "server" : "static",
     }),
   ),
+  // elm-loader
+  (config) => {
+    return {
+      ...config,
+      resolve: {
+        ...config.resolve,
+        extensions: config.resolve.extensions.concat([".elm"]),
+      },
+      module: {
+        ...config.module,
+        rules: config.module.rules.concat([
+          {
+            test: /\.elm$/,
+            exclude: [/elm-stuff/, /node_modules/],
+            use: {
+              loader: "elm-webpack-loader",
+              options: {
+                pathToElm: "node_modules/.bin/elm",
+                optimize: IS_PROD,
+              },
+            },
+          },
+        ]),
+      },
+    };
+  },
 );

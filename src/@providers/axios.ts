@@ -1,5 +1,18 @@
 import { useEffect, useState } from "react";
-import { DonationRequestApiFactory, UserApiFactory } from "@generated";
+import {
+  BatchStatusApiFactory,
+  CategoryApiFactory,
+  CharityApiFactory,
+  DonationRequestApiFactory,
+  DonationsApiFactory,
+  FileApiFactory,
+  LoginApiFactory,
+  MoneyApiFactory,
+  NewsApiFactory,
+  NotificationsApiFactory,
+  RegistrationApiFactory,
+  UserApiFactory,
+} from "@generated";
 import { AxiosResponse as Response } from "axios";
 
 // i18n reexports
@@ -38,7 +51,8 @@ export default function useAxios<R>(
         console.error(`Error ${response.status} ${response.statusText}`);
       }
     } catch (e) {
-      setError(e.message);
+      console.log(e);
+      setError(e?.message);
     }
   };
 
@@ -63,8 +77,42 @@ export const DonationRequestFactory = DonationRequestApiFactory(
   basePath,
   axios,
 );
+export const DonationsFactory = DonationsApiFactory(
+  configuration,
+  basePath,
+  axios,
+);
+export const FileFactory = FileApiFactory(configuration, basePath, axios);
+export const BatchStatusFactory = BatchStatusApiFactory(
+  configuration,
+  basePath,
+  axios,
+);
+export const MoneyFactory = MoneyApiFactory(configuration, basePath, axios);
+export const NewsFactory = NewsApiFactory(configuration, basePath, axios);
+export const NotificationsFactory = NotificationsApiFactory(
+  configuration,
+  basePath,
+  axios,
+);
 export const UserRequestFactory = UserApiFactory(
   configuration,
   basePath,
   axios,
 );
+export const CharityFactory = CharityApiFactory(configuration, basePath, axios);
+export const CategoryFactory = CategoryApiFactory(
+  configuration,
+  basePath,
+  axios,
+);
+export const RegistrationFactory = RegistrationApiFactory(
+  configuration,
+  basePath,
+  axios,
+);
+
+export const LoginFactory = LoginApiFactory(configuration, basePath, axios);
+
+export { UserUserRoleEnum as UserApiRole } from "@generated";
+export type { UserUser as UserApiModel } from "@generated";

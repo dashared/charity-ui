@@ -11,10 +11,15 @@ export function cred(
   }`;
 }
 
+/** Surname FirstName MiddleName*/
 export function fullName(
   firstName?: string,
   middleName?: string,
   lastName?: string,
 ): string {
-  return `${firstName ?? "-"} ${middleName ?? "-"} ${lastName ?? "-"}`;
+  const lName = lastName ? `${lastName} ` : "";
+  const fName = firstName ? ` ${firstName}` : "";
+  const mName = middleName ? ` ${middleName}` : "";
+
+  return lName + fName + mName;
 }

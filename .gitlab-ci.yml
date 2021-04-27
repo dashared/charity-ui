@@ -1,18 +1,94 @@
-before_script:
-  - yarn install
-  - node -v
-  - yarn -v
+variables:
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
 
 stages:
   - prettier
   - eslint
+  - build
+  - deploy
 
 prettier:
   stage: prettier
+  tags:
+    - develop
+  before_script:
+    - yarn install
+    - node -v
+    - yarn -v
   script: yarn lint:prettier
 
 eslint:
   stage: eslint
+  tags:
+    - develop
+  before_script:
+    - yarn install
+    - node -v
+    - yarn -v
   needs:
     - job: prettier
   script: yarn lint:eslint
+
+docker-build:
+  stage: build
+  tags:
+    - develop
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - echo "IMAGE_APP_TAG=$IMAGE_TAG" >> .env
+    - docker-compose build --pull
+    - >
+      if [ "$CI_COMMIT_REF_NAME" == "master" ]; then
+        docker-compose down -v
+      fi
+    - docker-compose push
+    - docker image rm ${IMAGE_TAG}
+    - docker logout
+  only:
+    - develop
+
+deploy-docker:
+  stage: deploy
+  tags:
+    - develop
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - echo "IMAGE_APP_TAG=$IMAGE_TAG" >> .env
+    - docker-compose down -v
+    - docker-compose pull
+    - docker-compose up -d
+    - docker logout
+  only:
+    - develop
+
+docker-build-master:
+  stage: build
+  tags:
+    - master
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - echo "IMAGE_APP_TAG=$IMAGE_TAG" >> .env
+    - docker-compose -f docker-compose-master.yml build --pull
+    - >
+      if [ "$CI_COMMIT_REF_NAME" == "master" ]; then
+        docker-compose -f docker-compose-master.yml down -v
+      fi
+    - docker-compose -f docker-compose-master.yml push
+    - docker image rm ${IMAGE_TAG}
+    - docker logout
+  only:
+    - master
+
+deploy-docker-master:
+  stage: deploy
+  tags:
+    - master
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - echo "IMAGE_APP_TAG=$IMAGE_TAG" >> .env
+    - docker-compose -f docker-compose-master.yml down -v
+    - docker-compose -f docker-compose-master.yml pull
+    - docker-compose -f docker-compose-master.yml up -d
+    - docker logout
+  only:
+    - master

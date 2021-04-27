@@ -9,7 +9,12 @@ export enum Role {
 
 const rules = {
   visitor: {
-    static: ["auth:login"],
+    static: [
+      "auth:login",
+      "faq:pretty",
+      "fund:description-pretty",
+      "news:public",
+    ],
   },
   contentManager: {
     static: [
@@ -18,9 +23,13 @@ const rules = {
       "users:show",
       "fund:index",
       "fund:faq-index",
-      "fund:description-index",
+      "fund:description",
       "fund:description-edit",
       "faq:edit",
+      "news:edit",
+      "news:create",
+      "news:index",
+      "notifications:index",
     ],
   },
   operator: {
@@ -32,8 +41,10 @@ const rules = {
       "settings:index",
       "application:edit",
       "applications:show",
+      "applications:create",
       "users:show",
       "user:view-applications",
+      "notifications:index",
     ],
   },
   supermanager: {
@@ -41,29 +52,33 @@ const rules = {
       "applications:index",
       "applications:show",
       "application:edit",
+      "applications:create",
       "settings:index",
+      "categories:index",
       "users:show",
       "user:view-applications",
-      "fund:description-index",
+      "fund:index",
+      "fund:description",
       "transactions:show",
       "transactions:index",
       "transactions:create",
       "managers:index",
       "managers:show",
-      "fund:index",
       "fund:faq-index",
-      "fund:description-index",
+      "notifications:index",
     ],
   },
   admin: {
     static: [
       "users:index",
       "users:show",
+      "user:edit",
       "users:create",
       "user:view-sessions",
       "user:show-admin",
       "settings:index",
       "logs:index",
+      "notifications:index",
     ],
   },
 };

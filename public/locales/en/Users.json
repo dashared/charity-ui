@@ -1,0 +1,46 @@
+{
+  "title": "Users",
+  "id": "ID",
+  "name": "Full name",
+  "role": "Roles",
+  "email": "Email",
+  "blocked": "Blocked",
+  "filter": {
+    "roles": "Filter user by role"
+  },
+  "sort": {
+    "roles": "Sort roles"
+  },
+  "createdAt": "Registration date",
+  "Role": {
+    "Manager": "Manager",
+    "SuperManager": "Committee",
+    "Admin": "Administrator",
+    "Operator": "Operator",
+    "ContentManager": "Content manager",
+    "User": "User"
+  },
+  "$views": {
+    "registrationSuccess": "User registered successfully",
+    "registrationError": "User registration error",
+    "buttons": {
+      "registerUser": "Register",
+      "add": "Register",
+      "reset": "Clear"
+    },
+    "register": {
+      "title": "Add user",
+      "name": "Name",
+      "middle_name": "Second name",
+      "last_name": "Surname",
+      "email": "Email",
+      "roles": "Roles"
+    },
+    "message": {
+      "first_name": "Fill user's name",
+      "last_name": "Fill user's surname",
+      "email": "Fill user's email",
+      "roles": "Fill user's roles"
+    }
+  }
+}

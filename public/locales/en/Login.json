@@ -1,0 +1,23 @@
+{
+  "title": "Login",
+  "email": "Email",
+  "error": {
+    "denied": "You do not have sufficient rights to authorize",
+    "401": "Incorrect password, try again",
+    "404": "User with provided credentials wasn't registered"
+  },
+  "password": "Password",
+  "rememberMe": "Remember me",
+  "login": "Login",
+  "forgotPassword": "Forgot password",
+  "forgotPassword_message": "Please, contact the CRM administrator",
+  "messages": {
+    "enterEmail": "Enter your email",
+    "enterPassword": "Enter your password"
+  },
+  "logout": "Logout",
+  "message": {
+    "title": "If you are not a fund worker",
+    "link": "download the mobile application"
+  }
+}

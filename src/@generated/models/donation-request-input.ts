@@ -14,6 +14,7 @@
 
 
 import { UserSimpleUser } from './user-simple-user';
+import { UtilsMoneyJson } from './utils-money-json';
 
 /**
  * 
@@ -27,6 +28,18 @@ export interface DonationRequestInput {
      * @memberof DonationRequestInput
      */
     assignee_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestInput
+     */
+    category_id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DonationRequestInput
+     */
+    comment?: string;
     /**
      * 
      * @type {string}
@@ -50,25 +63,13 @@ export interface DonationRequestInput {
      * @type {string}
      * @memberof DonationRequestInput
      */
-    message?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DonationRequestInput
-     */
     relationship?: string;
     /**
      * 
-     * @type {number}
+     * @type {UtilsMoneyJson}
      * @memberof DonationRequestInput
      */
-    request_amount?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof DonationRequestInput
-     */
-    request_type?: string;
+    requested_amount?: UtilsMoneyJson;
     /**
      * 
      * @type {string}

@@ -1,0 +1,58 @@
+{
+  "title": "Transactions",
+  "pageTitle": "Transaction",
+  "id": "№",
+  "sum": "Donation sum",
+  "application_sum": "Goal sum",
+  "comission": "Comission",
+  "total": "Total",
+  "date": "Transaction date",
+  "createdAt": "Transaction date",
+  "donation_format": "Donation format",
+  "who": "Donor",
+  "whom": "Donee",
+  "until": "{{ days }} days",
+  "info": "Main info about application",
+  "anon": "Visibility",
+  "createPageTitle": "Donation input",
+  "time": "Transaction time",
+  "status": "Status",
+  "createTransaction": "Input donation",
+  "application_status": "Application status",
+  "create_donation_application_err": "Can not donate to the application",
+  "create_donation_application": "Successfully donated money to the application",
+  "create_donation_fund_success": "Successfully donated money to the fund",
+  "create_donation_fund_error": "Can't donate to the fund",
+  "aim": "Aim",
+  "to_fund": "Fund",
+  "to_application": "Application №{{ id }}",
+  "Status": {
+    "Success": "Successed",
+    "Registered": "Registered",
+    "InProgress": "In process",
+    "LowBalance": "Insufficient funds",
+    "Declined": "Declined"
+  },
+  "Description": {
+    "Registered": "Transaction created at {{ date }}",
+    "InProgress": "Transaction start processed at {{ date }}",
+    "Success": "Money transferred at {{ date }}"
+  },
+  "form": {
+    "amount": "Sum",
+    "anon": "Anonymous donation",
+    "application": "Application",
+    "applicationMessage": "Please, chose an application",
+    "applicationPlaceholder": "Choose an application",
+    "type": {
+      "title": "Donation type",
+      "application": "Application",
+      "fund": "To fund"
+    },
+    "first_name": "Donor name",
+    "middle_name": "Donor second name",
+    "last_name": "Donor surname",
+    "submit": "Create transaction",
+    "priceValidation": "Transaction sum > 0"
+  }
+}

@@ -9,7 +9,7 @@ import Unauthorized from "pages/_unauthorized";
 import ManagerView from "components/Manager/View";
 
 const ManagerPage: FC<PageProps> = ({ response }) => {
-  const { t } = useTranslation("Manager");
+  const { t: pt } = useTranslation("Users");
 
   const id = response.params.id as string;
 
@@ -33,7 +33,7 @@ const ManagerPage: FC<PageProps> = ({ response }) => {
     <AuthConsumer>
       {({ user: u }) => {
         return (
-          <Workspace noRefresh withBack title={t("page.title")}>
+          <Workspace noRefresh withBack title={pt(`Role.${user.role}`)}>
             <ManagerView user={user} role={u.role} />
           </Workspace>
         );

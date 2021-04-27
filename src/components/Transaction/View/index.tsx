@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Card,
@@ -8,21 +8,28 @@ import {
   Progress,
   Row,
   Statistic,
-  Steps,
   Tag,
 } from "antd";
 import { Link } from "@curi/react-dom";
+import { BlockchainDonation, DonationRequestBodyStatusEnum } from "@generated";
+import { formatDate, formatMoney } from "@lib/utils";
+import { moneyCollected } from "@lib/utils/currency";
+import { DateTimeFormat, daysLeft } from "@lib/utils/date";
 import { cred } from "@lib/utils/name";
-import { IdComponent } from "@typings/component";
 
-import StatusTag, {
-  ApplicationStatus,
-} from "components/Application/Status/tag";
+import StatusTag from "components/Application/Status/tag";
 
-const { Step } = Steps;
-
-const TransactionView: IdComponent = () => {
+const TransactionView: FC<{ transaction: BlockchainDonation }> = ({
+  transaction,
+}) => {
   const { t } = useTranslation("Transaction");
+
+  const application = transaction.donation_request;
+
+  const untilProgress = daysLeft(application?.started_at, application?.until);
+
+  console.log(application?.started_at);
+
   return (
     <>
       <Card>
@@ -30,86 +37,142 @@ const TransactionView: IdComponent = () => {
           <Col span={5}>
             <Row>
               <Col>
-                <Statistic title={t("sum")} value={112893} precision={2} />
+                <Statistic
+                  title={t("sum")}
+                  value={formatMoney(transaction.amount)}
+                  precision={2}
+                />
               </Col>
             </Row>
             <br />
-            <Row>
-              <Col>
-                <Statistic title={t("comission")} value={500} />
-              </Col>
-            </Row>
+            {application && (
+              <Row>
+                <Col>
+                  <Statistic
+                    title={t("application_sum")}
+                    value={formatMoney(application?.approved_amount)}
+                    precision={2}
+                  />
+                </Col>
+              </Row>
+            )}
             <br />
             <Row>
               <Col>
-                <Statistic title={t("total")} value={44444000} />
+                <Statistic
+                  title={t("date")}
+                  value={formatDate(
+                    transaction.created_at,
+                    DateTimeFormat.DATE_SHORT,
+                  )}
+                  precision={2}
+                />
               </Col>
             </Row>
           </Col>
-          <Col span={4}>
-            <Progress
-              type="circle"
-              strokeColor={{
-                "0%": "#108ee9",
-                "100%": "#87d068",
-              }}
-              percent={100}
-            />
+          <Col span={7}>
+            <Row>
+              <Col>
+                <Statistic
+                  title={t("donation_format")}
+                  valueRender={() => {
+                    if (application) {
+                      return (
+                        <Tag color="blue">
+                          {t("to_application", { id: application.id })}
+                        </Tag>
+                      );
+                    } else {
+                      return <Tag color="default">{t("to_fund")}</Tag>;
+                    }
+                  }}
+                ></Statistic>
+              </Col>
+            </Row>
+            <br />
+            <br />
+            <Row>
+              <Col>
+                <Statistic
+                  title={t("who")}
+                  valueRender={() => {
+                    if (!transaction.donation_author) {
+                      return "-";
+                    } else {
+                      const {
+                        first_name,
+                        middle_name,
+                        last_name,
+                      } = transaction.donation_author;
+                      return (
+                        <span>{cred(first_name, middle_name, last_name)}</span>
+                      );
+                    }
+                  }}
+                ></Statistic>
+              </Col>
+            </Row>
           </Col>
-          <Col span={1}>
-            <Divider type="vertical" style={{ height: "200px" }} />
-          </Col>
-          <Col span={13}>
-            <Steps direction="vertical" size="small" current={1}>
-              <Step
-                title={t("Status.Registered")}
-                description={t("Description.Registered")}
+          {application && (
+            <Col span={1}>
+              <Divider type="vertical" style={{ height: "200px" }} />
+            </Col>
+          )}
+          {application && (
+            <Col span={4}>
+              <Progress
+                type="circle"
+                percent={moneyCollected(
+                  application?.approved_amount,
+                  application?.received_amount,
+                )}
               />
-              <Step
-                title={t("Status.InProgress")}
-                description={t("Description.InProgress")}
+            </Col>
+          )}
+          {untilProgress && (
+            <Col span={4}>
+              <Progress
+                type="circle"
+                percent={untilProgress.percentage}
+                format={() => t("until", { days: untilProgress.days })}
               />
-              <Step
-                title={t("Status.Success")}
-                description={t("Description.Success")}
-              />
-            </Steps>
-          </Col>
+            </Col>
+          )}
         </Row>
       </Card>
 
-      <Card>
-        <Descriptions
-          title={t("info")}
-          bordered
-          column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
-        >
-          <Descriptions.Item label={t("who")}>
-            <Link params={{ id: 1 }} name="users:show">
-              {cred("Алексеев", "Алексеев", "Алексеев")}
-            </Link>
-          </Descriptions.Item>
-          <Descriptions.Item label={t("whom")}>
-            <Link params={{ id: 1 }} name="users:show">
-              {cred("Иванов", "Иванов", "Иванов")}
-            </Link>
-          </Descriptions.Item>
-          <Descriptions.Item label={t("application_status")}>
-            <StatusTag status={ApplicationStatus.Active} />
-          </Descriptions.Item>
-          <Descriptions.Item label={t("sum")}>$80.00</Descriptions.Item>
-          <Descriptions.Item label={t("comission")}>$20.00</Descriptions.Item>
-          <Descriptions.Item label={t("total")}>$60.00</Descriptions.Item>
-          <Descriptions.Item label={t("aim")}>
-            <Link name="applications:show" params={{ id: 1 }}>
-              Помогите Васе
-            </Link>
-          </Descriptions.Item>
-          <Descriptions.Item label={t("anon")}>
-            <Tag color="gray">Анонимная</Tag>
-          </Descriptions.Item>
-        </Descriptions>
-      </Card>
+      {application && (
+        <Card>
+          <Descriptions
+            title={t("info")}
+            bordered
+            column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
+          >
+            {application?.donee && (
+              <Descriptions.Item label={t("whom")}>
+                {cred(
+                  application?.donee?.first_name,
+                  application?.donee?.middle_name,
+                  application?.donee?.last_name,
+                )}
+              </Descriptions.Item>
+            )}
+            <Descriptions.Item label={t("application_status")}>
+              <StatusTag
+                status={
+                  (application?.status as unknown) as DonationRequestBodyStatusEnum
+                }
+              />
+            </Descriptions.Item>
+
+            <Descriptions.Item label={t("aim")}>
+              <Link name="applications:show" params={{ id: application?.id }}>
+                {application?.title}
+              </Link>
+            </Descriptions.Item>
+          </Descriptions>
+        </Card>
+      )}
     </>
   );
 };

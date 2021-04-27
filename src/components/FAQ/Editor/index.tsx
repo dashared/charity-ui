@@ -30,6 +30,11 @@ const FAQEditor: FC<EditorProps> = ({ editorRef, initialValue }) => {
   return (
     <Editor
       ref={editorRef}
+      view={{
+        menu: true,
+        md: true,
+        html: false,
+      }}
       value={value}
       style={{
         height: "500px",

@@ -13,8 +13,11 @@
  */
 
 
+import { CategoryCategory } from './category-category';
+import { FileInfo } from './file-info';
 import { UserSimpleUser } from './user-simple-user';
 import { UserUser } from './user-user';
+import { UtilsMoneyJson } from './utils-money-json';
 
 /**
  * 
@@ -30,10 +33,10 @@ export interface DonationRequestBody {
     anonymous?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {UtilsMoneyJson}
      * @memberof DonationRequestBody
      */
-    approved_amount?: number;
+    approved_amount?: UtilsMoneyJson;
     /**
      * 
      * @type {UserUser}
@@ -42,10 +45,28 @@ export interface DonationRequestBody {
     assignee?: UserUser;
     /**
      * 
+     * @type {Array<FileInfo>}
+     * @memberof DonationRequestBody
+     */
+    attached_files?: Array<FileInfo>;
+    /**
+     * 
      * @type {UserUser}
      * @memberof DonationRequestBody
      */
     author?: UserUser;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DonationRequestBody
+     */
+    available_statuses?: Array<DonationRequestBodyAvailableStatusesEnum>;
+    /**
+     * 
+     * @type {CategoryCategory}
+     * @memberof DonationRequestBody
+     */
+    category?: CategoryCategory;
     /**
      * 
      * @type {string}
@@ -66,22 +87,16 @@ export interface DonationRequestBody {
     donee?: UserSimpleUser;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof DonationRequestBody
-     */
-    file_id?: Array<string>;
-    /**
-     * 
      * @type {number}
      * @memberof DonationRequestBody
      */
     id?: number;
     /**
      * 
-     * @type {string}
+     * @type {UtilsMoneyJson}
      * @memberof DonationRequestBody
      */
-    message?: string;
+    received_amount?: UtilsMoneyJson;
     /**
      * 
      * @type {string}
@@ -90,16 +105,10 @@ export interface DonationRequestBody {
     relationship?: string;
     /**
      * 
-     * @type {string}
+     * @type {UtilsMoneyJson}
      * @memberof DonationRequestBody
      */
-    request_type?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof DonationRequestBody
-     */
-    requested_amount?: number;
+    requested_amount?: UtilsMoneyJson;
     /**
      * 
      * @type {string}
@@ -126,6 +135,22 @@ export interface DonationRequestBody {
     until?: string;
 }
 
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DonationRequestBodyAvailableStatusesEnum {
+    New = 'New',
+    InProcessing = 'InProcessing',
+    Refused = 'Refused',
+    NeedsImprovement = 'NeedsImprovement',
+    Archived = 'Archived',
+    SuperManagerConfirmation = 'SuperManagerConfirmation',
+    UserConfirmation = 'UserConfirmation',
+    Active = 'Active',
+    Spam = 'Spam',
+    Deleted = 'Deleted'
+}
 /**
     * @export
     * @enum {string}

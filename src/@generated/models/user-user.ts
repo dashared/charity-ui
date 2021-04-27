@@ -13,6 +13,7 @@
  */
 
 
+import { UserPrettyPublicKey } from './user-pretty-public-key';
 
 /**
  * 
@@ -26,6 +27,12 @@ export interface UserUser {
      * @memberof UserUser
      */
     birth_date?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserUser
+     */
+    blocked?: boolean;
     /**
      * 
      * @type {string}
@@ -67,7 +74,7 @@ export interface UserUser {
      * @type {string}
      * @memberof UserUser
      */
-    image?: string;
+    image_id?: string;
     /**
      * 
      * @type {string}
@@ -88,10 +95,22 @@ export interface UserUser {
     phone?: string;
     /**
      * 
+     * @type {UserPrettyPublicKey}
+     * @memberof UserUser
+     */
+    pretty_public_key?: UserPrettyPublicKey;
+    /**
+     * 
      * @type {string}
      * @memberof UserUser
      */
     role?: UserUserRoleEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserUser
+     */
+    tech_user?: boolean;
 }
 
 /**
@@ -103,7 +122,8 @@ export enum UserUserRoleEnum {
     Manager = 'Manager',
     SuperManager = 'SuperManager',
     ContentManager = 'ContentManager',
-    Operator = 'Operator'
+    Operator = 'Operator',
+    Admin = 'Admin'
 }
 
 

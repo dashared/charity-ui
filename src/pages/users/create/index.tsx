@@ -1,10 +1,27 @@
 import React, { FC, useCallback } from "react";
 import { Button, Card, Form, Input, Select, Space } from "antd";
 import { useForm } from "antd/lib/form/Form";
+import {
+  AuthManagerRegistrationInput,
+  AuthManagerRegistrationInputRoleEnum as Roles,
+} from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
+import { notify } from "@lib/utils/notification";
 import { router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
+import { RegistrationFactory } from "@providers/axios";
 import Unauthorized from "pages/_unauthorized";
+
+const RolesArr = [
+  Roles.User,
+  Roles.SuperManager,
+  Roles.Operator,
+  Roles.Manager,
+  Roles.ContentManager,
+  Roles.Admin,
+];
+
+const { Option } = Select;
 
 const formLayout = {
   labelCol: { span: 8 },
@@ -16,45 +33,84 @@ const tailLayout = {
 };
 
 const UserRegisterPage: FC = () => {
-  const { t } = useTranslation("User");
+  const { t } = useTranslation("Users");
 
-  const [form] = useForm();
+  const [form] = useForm<AuthManagerRegistrationInput>();
 
   const onReset = (): void => {
     form.resetFields();
   };
 
   const onAdd = useCallback(async () => {
-    router.navigate({ url: router.url({ name: "users:index" }) });
-  }, []);
+    const data = form.getFieldsValue();
+    RegistrationFactory.apiRegisterManagerPost(data)
+      .then(() => {
+        notify(t("$views.registrationSuccess"), "success");
+        router.navigate({ url: router.url({ name: "users:index" }) });
+      })
+      .catch((e) => {
+        console.error(e);
+        notify(t("$views.registrationError"), "error");
+      });
+  }, [form, t]);
 
   return (
     <Workspace noRefresh withBack title={t("$views.register.title")}>
       <Card>
-        <Form {...formLayout} form={form} name="control-hooks">
-          <Form.Item label={t("$views.register.name")}>
+        <Form {...formLayout} form={form} name="control-hooks" onFinish={onAdd}>
+          <Form.Item
+            name={["user", "last_name"]}
+            label={t("$views.register.last_name")}
+            rules={[{ required: true, message: t("$views.message.last_name") }]}
+          >
             <Input />
           </Form.Item>
 
-          <Form.Item label={t("$views.register.middle_name")}>
+          <Form.Item
+            name={["user", "first_name"]}
+            label={t("$views.register.name")}
+            rules={[
+              { required: true, message: t("$views.message.first_name") },
+            ]}
+          >
             <Input />
           </Form.Item>
 
-          <Form.Item label={t("$views.register.last_name")}>
+          <Form.Item
+            name={["user", "middle_name"]}
+            label={t("$views.register.middle_name")}
+          >
             <Input />
           </Form.Item>
 
-          <Form.Item label={t("$views.register.email")}>
+          <Form.Item
+            name={["user", "email"]}
+            label={t("$views.register.email")}
+            rules={[{ required: true, message: t("$views.message.email") }]}
+          >
             <Input />
           </Form.Item>
 
-          <Form.Item label={t("$views.register.roles")}>
-            <Select></Select>
+          <Form.Item
+            name={["role"]}
+            label={t("$views.register.roles")}
+            rules={[{ required: true, message: t("$views.message.roles") }]}
+          >
+            <Select //mode="multiple" TODO
+            >
+              {RolesArr.map((value) => {
+                return (
+                  <Option key={value} value={value}>
+                    {t(`Role.${value}`)}
+                  </Option>
+                );
+              })}
+            </Select>
           </Form.Item>
 
           <Form.Item {...tailLayout}>
             <Space>
-              <Button type="primary" htmlType="submit" onClick={onAdd}>
+              <Button type="primary" htmlType="submit">
                 {t("$views.buttons.add")}
               </Button>
 

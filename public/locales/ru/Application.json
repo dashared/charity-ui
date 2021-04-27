@@ -2,19 +2,74 @@
   "yes": "Да",
   "no": "Нет",
   "listTitle": "Заявки",
+  "listTitle_all": "Заявки - все",
+  "listTitle_processing": "Заявки - в обработке",
+  "listTitle_active": "Заявки - активные",
+  "listTitle_archived": "Заявки - архивированные",
   "id": "№",
   "title": "Название",
+  "assignee": "Менеджер",
+  "assignee_status": "Роль",
+  "collected": "Собрано денег",
+  "until": "Сбор до",
+  "comment": "Комментарий",
   "file": "Файл",
-  "downloadDate": "Дата, время загрузки",
+  "uploadDate": "Дата, время загрузки",
   "status": "Статус",
+  "type": "Тип",
   "author": "Автор",
   "createdAt": "Дата, время создания",
   "prevStatus": "Предыдущий статус",
   "newStatus": "Новый статус",
   "statusUpdData": "Дата изменения",
   "authorUpd": "Автор изменения",
+  "authorRole": "Роль автора изменения",
+  "createPageTitle": "Создание заявки",
+  "Filters": {
+    "assignee": "Назначены на меня",
+    "status": "Статусы заявки",
+    "statusTagPlaceholder": "Остальные статусы..."
+  },
   "$views": {
+    "updateStatus": "Успешно обновлен статус заявки",
+    "update_success": "Заявка успешно обновлена",
+    "update_error": "Ошибка обновления заявки, попробуйте позже",
+    "select_assignee": "Выберите менеджера",
     "title": "Заявка № {{ id }} {{ title }}",
+    "createApplication": "Создать",
+    "download": "Скачать",
+    "createSuccess": "Заявка успешно создана",
+    "createError": "Ошибка создания заявки, попробуйте снова",
+    "createPage": {
+      "title": "Название",
+      "approved_amount": "Сумма",
+      "until": "Дата сбора",
+      "category": "Категория",
+      "select_category": "Выберите категорию заявки",
+      "description": "Описание",
+      "message": "Сообщение для менеджера",
+      "donee": {
+        "first_name": "Имя нуждающегося",
+        "last_name": "Фамилия нуждающегося",
+        "middle_name": "Отчество нуждающегося"
+      },
+      "anon": {
+        "title": "Анонимная заявка",
+        "description": "Некоторые поля заявки будут скрыты от обычных пользователей"
+      },
+      "files": "Файлы",
+      "relationship": "Отношения",
+      "dragger": {
+        "title": "Загрузите файл(ы)",
+        "description": "Эти файлы будут доступны только сотрудникам фонда"
+      }
+    },
+    "message": {
+      "title": "Введите название заявки",
+      "category": "Введите название категории",
+      "donee_last": "Введите фамилию нуждающегося",
+      "donee_first": "Введите имя нуждающегося"
+    },
     "tabs": {
       "generalInfoTitle": "Основная информация",
       "doneeInfoTitle": "Нуждающийся",
@@ -38,17 +93,24 @@
       "endTime": "Окончание сбора",
       "status": "Статус",
       "createdBy": "Автор",
-      "birthPlace": "Место рождения",
+      "city": "Город",
+      "country": "Страна",
       "birthday": "Дата рождения",
-      "address": "Адрес",
       "phone": "Телефон",
+      "donee": "Нуждающийся",
       "relationship": "Отношения с заявителем",
+      "donee_fullname": "ФИО",
       "message": "Сообщение",
       "enterMessage": "Введите сообщение пользователю",
       "assignee": "Менеджер",
-      "successUpdateStatus": "Успешно обновлен статус заявки!"
+      "successUpdateStatus": "Успешно обновлен статус заявки!",
+      "received_amount": "Собрано средств"
     },
     "buttons": {
+      "actions": {
+        "title": "Действия с заявкой",
+        "formTitle": "Изменения статуса заявки"
+      },
       "inProcessing": "Взять в обработку",
       "spam": "Спам",
       "request_changes": "Отправить на доработку",
@@ -56,7 +118,9 @@
       "require_confirmation": "Одобрить",
       "returnFromSpam": "Вернуть из спама",
       "refuse": "Отклонить",
-      "activate": "Активировать"
+      "activate": "Активировать",
+      "add": "Добавить",
+      "reset": "Очистить"
     },
     "modal": {
       "requestChangesTitle": "Отправить на доработку",
@@ -70,9 +134,11 @@
     "InProcessing": "В обработке",
     "NeedsImprovement": "На доработке",
     "Spam": "Спам",
-    "SuperManagerConfirmation": "Ждет активации",
+    "SuperManagerConfirmation": "Ждет подтверждения",
     "Active": "Активна",
     "Archived": "В архиве",
-    "Refused": "Отказано"
+    "Refused": "Отказано",
+    "Deleted": "Удалено",
+    "UserConfirmation": "Ждет активации"
   }
 }

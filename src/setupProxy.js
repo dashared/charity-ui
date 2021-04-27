@@ -1,14 +1,13 @@
 /* eslint-disable */
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
-const GRAPHQL_API_URL = process.env.GRAPHQL_API_URL ?? "hello";
-const GRAPHQL_API_MOCK = process.env.GRAPHQL_API_MOCK;
+const API_URL = process.env.REACT_APP_API_URL ?? "hello";
 
 module.exports = (app) => {
   app.use(
-    "/graphql",
+    "/api",
     createProxyMiddleware({
-      target: GRAPHQL_API_URL,
+      target: API_URL,
       changeOrigin: true,
     }),
   );

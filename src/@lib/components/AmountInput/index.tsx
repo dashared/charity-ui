@@ -62,8 +62,7 @@ export const AmountInput: React.FC<PriceInputProps> = ({
         style={{ width: 80, margin: "0 8px" }}
         onChange={onCurrencyChange}
       >
-        <Option value="rmb">RMB</Option>
-        <Option value="dollar">Dollar</Option>
+        <Option value="rmb">RUB</Option>
       </Select>
     </span>
   );

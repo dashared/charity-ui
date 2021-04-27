@@ -1,114 +1,25 @@
 import React, { FC } from "react";
 import { Menu } from "antd";
 import {
+  AlignLeftOutlined,
   FolderOpenOutlined,
-  HistoryOutlined,
   HomeOutlined,
   MessageOutlined,
   MoneyCollectOutlined,
   ProfileOutlined,
+  QuestionOutlined,
   SettingOutlined,
+  UnorderedListOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Link } from "@curi/react-dom";
 import RoleSwitch from "@lib/components/RoleSwitch";
+import { i18n } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 
-import { buildUseMenuKeys, entryToKey, MenuEntry } from "./utils";
+import { buildUseMenuKeys, entryToKey, MenuEntry, MenuKeys } from "./utils";
 
 import styles from "./layout.module.less";
-
-const LeftBarConf: Array<MenuEntry> = [
-  {
-    display: (
-      <>
-        <FolderOpenOutlined />
-        <span>Заявки</span>
-      </>
-    ),
-    name: "applications:index",
-  },
-
-  {
-    display: (
-      <>
-        <ProfileOutlined />
-        <span>Менеджеры</span>
-      </>
-    ),
-    name: "managers:index",
-  },
-
-  {
-    display: (
-      <>
-        <MoneyCollectOutlined />
-        <span>Транзакции</span>
-      </>
-    ),
-    name: "transactions:index",
-  },
-
-  {
-    display: (
-      <>
-        <MessageOutlined />
-        <span>Чаты</span>
-      </>
-    ),
-    name: "chats:index",
-  },
-
-  {
-    display: (
-      <>
-        <HomeOutlined />
-        <span>Фонд</span>
-      </>
-    ),
-    name: "fund:index",
-    nested: [
-      {
-        display: <span>Описание</span>,
-        name: "fund:description-index",
-      },
-      {
-        display: <span>FAQ</span>,
-        name: "faq:index",
-      },
-    ],
-  },
-
-  {
-    display: (
-      <>
-        <UserOutlined />
-        <span>Пользователи</span>
-      </>
-    ),
-    name: "users:index",
-  },
-
-  {
-    display: (
-      <>
-        <HistoryOutlined />
-        <span>Логи</span>
-      </>
-    ),
-    name: "logs:index",
-  },
-
-  {
-    display: (
-      <>
-        <SettingOutlined />
-        <span>Настройки</span>
-      </>
-    ),
-    name: "settings:index",
-  },
-];
 
 const MenuLink: FC<MenuEntry> = ({ name, params, display, ...rest }) => (
   <Menu.Item {...rest}>
@@ -160,10 +71,142 @@ const MenuItem: FC<{ entry: MenuEntry }> = ({ entry, ...rest }) => {
   );
 };
 
-const useMenuKeys = buildUseMenuKeys(LeftBarConf);
+const useMenuKeys = (conf: Array<MenuEntry>): (() => MenuKeys) =>
+  buildUseMenuKeys(conf);
 
 const LeftBar: FC = () => {
-  const menuKeys = useMenuKeys();
+  const LeftBarConf: Array<MenuEntry> = [
+    {
+      display: (
+        <>
+          <HomeOutlined />
+          <span>{i18n.t("LeftBar.Fund")}</span>
+        </>
+      ),
+      name: "fund:index",
+      nested: [
+        {
+          display: <span>{i18n.t("LeftBar.Fund_nested.Dashboard")}</span>,
+          name: "fund:dashboard",
+        },
+        {
+          display: <span>{i18n.t("LeftBar.Fund_nested.Description")}</span>,
+          name: "fund:description",
+        },
+      ],
+    },
+    {
+      display: (
+        <>
+          <QuestionOutlined />
+          <span>{i18n.t("LeftBar.Fund_nested.FAQ")}</span>
+        </>
+      ),
+      name: "fund:faq-index",
+    },
+    {
+      display: (
+        <>
+          <MessageOutlined />
+          <span>{i18n.t("LeftBar.Chats")}</span>
+        </>
+      ),
+      name: "chats:index",
+    },
+    {
+      display: (
+        <>
+          <AlignLeftOutlined />
+          <span>{i18n.t("LeftBar.News")}</span>
+        </>
+      ),
+      name: "news:index",
+    },
+    {
+      display: (
+        <>
+          <UnorderedListOutlined />
+          <span>{i18n.t("LeftBar.Category")}</span>
+        </>
+      ),
+      name: "categories:index",
+    },
+    {
+      display: (
+        <>
+          <FolderOpenOutlined />
+          <span>{i18n.t("LeftBar.Applications.title")}</span>
+        </>
+      ),
+      name: "applications:index",
+      nested: [
+        {
+          display: <span>{i18n.t("LeftBar.Applications.All")}</span>,
+          name: "applications:index",
+        },
+        {
+          display: <span>{i18n.t("LeftBar.Applications.Processing")}</span>,
+          name: "applications:processing",
+        },
+        {
+          display: <span>{i18n.t("LeftBar.Applications.Active")}</span>,
+          name: "applications:active",
+        },
+      ],
+    },
+
+    {
+      display: (
+        <>
+          <ProfileOutlined />
+          <span>{i18n.t("LeftBar.Managers")}</span>
+        </>
+      ),
+      name: "managers:index",
+    },
+
+    {
+      display: (
+        <>
+          <MoneyCollectOutlined />
+          <span>{i18n.t("LeftBar.Transactions")}</span>
+        </>
+      ),
+      name: "transactions:index",
+    },
+
+    {
+      display: (
+        <>
+          <UserOutlined />
+          <span>{i18n.t("LeftBar.Users")}</span>
+        </>
+      ),
+      name: "users:index",
+    },
+
+    // {
+    //   display: (
+    //     <>
+    //       <HistoryOutlined />
+    //       <span>{i18n.t("LeftBar.Logs")}</span>
+    //     </>
+    //   ),
+    //   name: "logs:index",
+    // },
+
+    {
+      display: (
+        <>
+          <SettingOutlined />
+          <span>{i18n.t("LeftBar.Settings")}</span>
+        </>
+      ),
+      name: "settings:index",
+    },
+  ];
+
+  const menuKeys = useMenuKeys(LeftBarConf);
 
   const inner = LeftBarConf.map((entry) => (
     <MenuItem key={entryToKey(entry)} entry={entry} />

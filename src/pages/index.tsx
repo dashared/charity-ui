@@ -1,22 +1,52 @@
 import React, { FC } from "react";
-import { Card } from "antd";
-import Icon from "@ant-design/icons";
-import { useTranslation } from "@providers";
+import Elm from "react-elm-components";
+import RoleSwitch from "@lib/components/RoleSwitch";
+import { router } from "@providers";
+import { AuthConsumer } from "@providers/authContext";
+import { Role } from "@providers/rbac-rules";
+import Main from "Elm/Main.elm";
 
-import { GraphQL, Wand } from "../icons";
+//import Home from "Home";
+import Redirect from "./_redirect";
+
+// eslint-disable-next-line
+function setupPorts(ports: { clickedUrl: any }): void {
+  ports.clickedUrl.subscribe((urlName: string) => {
+    router.navigate({ url: router.url({ name: urlName }) });
+  });
+}
 
 const Index: FC = () => {
-  const { t } = useTranslation();
-
   return (
-    <Card bordered={false}>
-      <h1>{t("welcome")}</h1>
-      <Icon
-        style={{ fontSize: "64px", color: "hotpink" }}
-        component={GraphQL}
-      />
-      <Icon style={{ fontSize: "32px" }} component={Wand} />
-    </Card>
+    <AuthConsumer>
+      {({ user }) => {
+        return (
+          <RoleSwitch
+            role={user.role}
+            perform="auth:login"
+            yes={() => (
+              /*<div style={{ background: "white" }}>*/
+              <Elm
+                src={Main.Elm.Elm.Main}
+                flags={{ width: window.innerWidth, height: window.innerHeight }}
+                ports={setupPorts}
+              />
+              //</div>
+            )}
+            no={() => {
+              switch (user.role) {
+                case Role.admin:
+                  return <Redirect name="users:index" />;
+                case Role.operator:
+                  return <Redirect name="fund:description" />;
+                default:
+                  return <Redirect name="applications:index" />;
+              }
+            }}
+          />
+        );
+      }}
+    </AuthConsumer>
   );
 };
 

@@ -24,12 +24,16 @@ function getColor(level: DonationRequestBodyStatusEnum): TagProps["color"] {
       return "red";
     case DonationRequestBodyStatusEnum.Refused:
       return "error";
+    case DonationRequestBodyStatusEnum.UserConfirmation:
+      return "magenta";
+    case DonationRequestBodyStatusEnum.Archived:
+      return "volcano";
   }
 }
 
-const StatusTag: FC<{ status?: DonationRequestBodyStatusEnum | null }> = ({
-  status,
-}) => {
+const StatusTag: FC<{
+  status?: DonationRequestBodyStatusEnum | null | undefined;
+}> = ({ status }) => {
   const { t } = useTranslation("Application");
 
   if (!status) {

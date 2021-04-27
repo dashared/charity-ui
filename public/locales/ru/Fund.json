@@ -1,15 +1,42 @@
 {
   "title": "Фонд \"{{ name }}\"",
   "generalInfo": "Основная информация",
+  "balance": "Баланс",
+  "top_up": "Пополнить",
+  "staff": "Работники фонда",
+  "active_applications": "Открытые заявки",
+  "applications_0": "{{count}} заявка",
+  "applications_1": "{{count}} заявки",
+  "applications_2": "{{count}} заявок",
+  "active_users": "Активные пользователи",
+  "staff_title_0": "{{ count }} человек",
+  "staff_title_1": "{{ count }} человека",
+  "staff_title_2": "{{ count }} людей",
   "faq": "Часто задаваемые вопросы",
   "description": "Описание",
   "contacts": "Контакты",
   "docs": "Документы",
+  "reports": "Отчеты",
   "$views": {
     "buttons": {
       "edit": "Редактировать",
       "save": "Сохранить",
       "cancel": "Отменить"
+    },
+    "editPage": {
+      "title": "Название",
+      "address": "Адрес",
+      "phone": "Телефон",
+      "email": "E-mail",
+      "files": "Файлы",
+      "upload": "Загрузить",
+      "description": "Описание"
+    },
+    "viewPage": {
+      "contacts": "Контакты",
+      "address": "Адрес",
+      "email": "E-mail",
+      "phone": "Телефон"
     }
   },
   "modal": {

@@ -6,6 +6,232 @@
     "contact": {}
   },
   "paths": {
+    "/api/batch-statuses": {
+      "get": {
+        "tags": ["BatchStatus"],
+        "summary": "Retrieves a list of all operation statuses in blockchain",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "type": "integer",
+            "default": 10
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort param",
+            "required": false,
+            "type": "string",
+            "default": "'created_at DESC'"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Request type",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "enum": [
+              "DonateToCharity",
+              "DonateFromCharityToApplication",
+              "DonateToCharityFromExistingUser",
+              "DonateToCharityFromNewUser",
+              "DepositMoney",
+              "DonateToApplication",
+              "ProposeApplication",
+              "PublishApplication",
+              "CancelApplication",
+              "Registration",
+              "CloseApplication"
+            ]
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Request status",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "enum": ["Success", "Pending", "Failure"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Blockchain.StatusResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/categories": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["Category"],
+        "summary": "Get categories of fund",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Category.Category"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "produces": ["application/json"],
+        "tags": ["Category"],
+        "summary": "Create or update existing categories of fund",
+        "parameters": [
+          {
+            "description": "array with new categories",
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Category.UpdateInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "produces": ["application/json"],
+        "tags": ["Category"],
+        "summary": "Delete categories of fund",
+        "parameters": [
+          {
+            "description": "array of ids to be deleted",
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Category.DeleteInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/charity": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["Charity"],
+        "summary": "Get info about fund",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Charity.FundInfoResponse"
+            }
+          }
+        }
+      },
+      "patch": {
+        "produces": ["application/json"],
+        "tags": ["Charity"],
+        "summary": "Update info about fund",
+        "parameters": [
+          {
+            "description": "input",
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Charity.FundInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Charity.FundInfo"
+            }
+          }
+        }
+      }
+    },
+    "/api/charity/balance": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["Charity"],
+        "summary": "Get balance of charity",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/utils.MoneyJson"
+            }
+          }
+        }
+      }
+    },
+    "/api/charity/faq": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["Charity"],
+        "summary": "Get fund's faq",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Charity.Faq"
+            }
+          }
+        }
+      },
+      "patch": {
+        "produces": ["application/json"],
+        "tags": ["Charity"],
+        "summary": "Update fund's faq",
+        "parameters": [
+          {
+            "description": "faq",
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Charity.FaqInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Charity.Faq"
+            }
+          }
+        }
+      }
+    },
     "/api/donation-request": {
       "post": {
         "consumes": ["application/json"],
@@ -41,20 +267,69 @@
         "parameters": [
           {
             "type": "integer",
+            "default": 0,
             "description": "Page number",
             "name": "page",
             "in": "query"
           },
           {
             "type": "integer",
+            "default": 10,
             "description": "Page size",
             "name": "size",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "sort",
+            "default": "10",
+            "description": "Sort param",
             "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "description": "request author id",
+            "name": "author",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "description": "request assignee id",
+            "name": "assignee",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "description": "request status",
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "description": "request category",
+            "name": "category",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "id == searchString OR title LIKE searchString OR description LIKE searchString",
+            "name": "searchString",
             "in": "query"
           }
         ],
@@ -64,6 +339,30 @@
             "schema": {
               "$ref": "#/definitions/DonationRequest.Response"
             }
+          }
+        }
+      }
+    },
+    "/api/donation-request/from_manager": {
+      "post": {
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["DonationRequest"],
+        "summary": "Creates donation request from fund",
+        "parameters": [
+          {
+            "description": "Donation request Input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DonationRequest.SuperManagerInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
           }
         }
       }
@@ -90,6 +389,64 @@
             }
           }
         }
+      },
+      "patch": {
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["DonationRequest"],
+        "summary": "Updates donation request",
+        "parameters": [
+          {
+            "description": "Donation request Input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DonationRequest.UpdateInput"
+            }
+          },
+          {
+            "type": "integer",
+            "description": "Donation request ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/donation-request/{id}/comments": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["DonationRequest"],
+        "summary": "Get comments for a given application",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "donation request id",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DonationRequest.Comment"
+              }
+            }
+          }
+        }
       }
     },
     "/api/donation-request/{id}/history": {
@@ -98,12 +455,6 @@
         "tags": ["DonationRequest"],
         "summary": "Gets history of status changes",
         "parameters": [
-          {
-            "type": "integer",
-            "description": "donation request id",
-            "name": "id",
-            "in": "path"
-          },
           {
             "type": "integer",
             "description": "Page number",
@@ -121,6 +472,12 @@
             "description": "sort",
             "name": "sort",
             "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "donation request id",
+            "name": "id",
+            "in": "path"
           }
         ],
         "responses": {
@@ -171,15 +528,87 @@
             "name": "input",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/DonationRequest.UpdateInput"
+              "$ref": "#/definitions/DonationRequest.UpdateStatusInput"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/donations": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["Donations"],
+        "summary": "Retrieves a list of donations",
+        "parameters": [
+          {
+            "type": "integer",
+            "default": 0,
+            "description": "Page number",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "default": 10,
+            "description": "Page size",
+            "name": "size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "default": "'created_at DESC'",
+            "description": "Sort param",
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "default": "10",
+            "description": "Only for manager",
+            "name": "user",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "User can access only his donations",
+            "name": "application",
+            "in": "query"
           }
         ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/DonationRequest.Response"
+              "$ref": "#/definitions/Blockchain.DonationsResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/donations/{id}": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["Donations"],
+        "summary": "Returns donation with a given id",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Donation ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Blockchain.Donation"
             }
           }
         }
@@ -202,8 +631,54 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/File.Response"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/File.Info"
+              }
             }
+          }
+        }
+      }
+    },
+    "/api/file/{id}": {
+      "get": {
+        "consumes": ["application/octet-stream"],
+        "tags": ["File"],
+        "summary": "Gets the info about file",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "File Id",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/File.Info"
+            }
+          }
+        }
+      }
+    },
+    "/api/file/{id}/download": {
+      "get": {
+        "produces": ["application/octet-stream"],
+        "tags": ["File"],
+        "summary": "Gets the binary representation of a file",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "File Id",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
           }
         }
       }
@@ -235,6 +710,306 @@
       "post": {
         "tags": ["Login"],
         "summary": "Route for refreshing",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/money/balance": {
+      "get": {
+        "produces": ["application/json"],
+        "tags": ["Money"],
+        "summary": "Gets user's balance",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User.Balance"
+            }
+          }
+        }
+      }
+    },
+    "/api/money/deposit": {
+      "post": {
+        "produces": ["application/json"],
+        "tags": ["Money"],
+        "summary": "Deposit money to user with given ID",
+        "parameters": [
+          {
+            "description": "Deposit",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/controllers.Deposit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/money/donate/application": {
+      "post": {
+        "produces": ["application/json"],
+        "tags": ["Money"],
+        "summary": "Donation to an application with a given ID",
+        "parameters": [
+          {
+            "description": "DonateRequestInput",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/controllers.DonateRequestInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/money/donate/application/from_charity": {
+      "post": {
+        "produces": ["application/json"],
+        "tags": ["Money"],
+        "summary": "Donate to application from charity",
+        "parameters": [
+          {
+            "description": "Donation Input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Blockchain.DonationToApplicationFromFund"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Blockchain.Donation"
+            }
+          }
+        }
+      }
+    },
+    "/api/money/donate/charity/from_manager": {
+      "post": {
+        "produces": ["application/json"],
+        "tags": ["Money"],
+        "summary": "Donate to charity from manager",
+        "parameters": [
+          {
+            "description": "Donation Input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Blockchain.DonationToCharity"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Auth.UnregisteredUser"
+            }
+          }
+        }
+      }
+    },
+    "/api/money/donate/charity/from_user": {
+      "post": {
+        "produces": ["application/json"],
+        "tags": ["Money"],
+        "summary": "Donate to charity from user",
+        "parameters": [
+          {
+            "description": "Donation Input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Blockchain.DonationToCharityFromUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/news": {
+      "get": {
+        "tags": ["News"],
+        "summary": "Get all news with pagination",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "type": "integer",
+            "default": 10
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort param",
+            "required": false,
+            "type": "string",
+            "default": "10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/News.Response"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["News"],
+        "summary": "Creates news entity",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "News input",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/News.Input"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/News.View"
+            }
+          }
+        }
+      }
+    },
+    "/api/news/{id}": {
+      "get": {
+        "tags": ["News"],
+        "summary": "Get one news entity",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "News entity id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/News.View"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["News"],
+        "summary": "Deletes one news entity",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "News entity id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/News.View"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["News"],
+        "summary": "Edit one news entity",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "News id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "News input",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/News.Input"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/News.View"
+            }
+          }
+        }
+      }
+    },
+    "/api/notifications/set-token": {
+      "patch": {
+        "tags": ["Notifications"],
+        "summary": "Sets firebase token to current session for sending notifications",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "client registration id",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/controllers.fcmId"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": ""
@@ -288,6 +1063,29 @@
         }
       }
     },
+    "/api/register/manager": {
+      "post": {
+        "description": "Register another user",
+        "tags": ["Registration"],
+        "summary": "Register another user from manager",
+        "parameters": [
+          {
+            "description": "Registration input",
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Auth.ManagerRegistrationInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/user": {
       "get": {
         "produces": ["application/json"],
@@ -310,6 +1108,16 @@
             "type": "string",
             "description": "sort",
             "name": "sort",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "collectionFormat": "multi",
+            "items": {
+              "type": "string"
+            },
+            "description": "User role",
+            "name": "role",
             "in": "query"
           }
         ],
@@ -335,6 +1143,58 @@
             "name": "id",
             "in": "path",
             "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User.User"
+            }
+          }
+        }
+      },
+      "patch": {
+        "produces": ["application/json"],
+        "tags": ["User"],
+        "summary": "Update user info",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "User id",
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "description": "Input",
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/User.EditableInfo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User.User"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/{id}/block": {
+      "patch": {
+        "produces": ["application/json"],
+        "tags": ["User"],
+        "summary": "Block or unblock user",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "User id",
+            "name": "id",
+            "in": "path"
           }
         ],
         "responses": {
@@ -371,8 +1231,28 @@
         }
       }
     },
-    "Auth.RegistrationInput": {
+    "Auth.ManagerRegistrationInput": {
       "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": [
+            "User",
+            "Manager",
+            "SuperManager",
+            "ContentManager",
+            "Operator",
+            "Admin"
+          ]
+        },
+        "user": {
+          "$ref": "#/definitions/Auth.ManagerRegistrationUser"
+        }
+      }
+    },
+    "Auth.ManagerRegistrationUser": {
+      "type": "object",
+      "required": ["email", "first_name", "last_name"],
       "properties": {
         "birth_date": {
           "type": "string"
@@ -389,7 +1269,40 @@
         "first_name": {
           "type": "string"
         },
-        "image": {
+        "image_id": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "middle_name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      }
+    },
+    "Auth.RegistrationInput": {
+      "type": "object",
+      "required": ["email", "first_name", "last_name", "password"],
+      "properties": {
+        "birth_date": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "image_id": {
           "type": "string"
         },
         "last_name": {
@@ -406,6 +1319,329 @@
         }
       }
     },
+    "Auth.UnregisteredUser": {
+      "type": "object",
+      "properties": {
+        "birth_date": {
+          "type": "string"
+        },
+        "blocked": {
+          "type": "boolean"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "image_id": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "middle_name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "pretty_public_key": {
+          "$ref": "#/definitions/User.PrettyPublicKey"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "User",
+            "Manager",
+            "SuperManager",
+            "ContentManager",
+            "Operator",
+            "Admin"
+          ]
+        }
+      }
+    },
+    "Blockchain.Donation": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "anonymous": {
+          "type": "boolean"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "donation_author": {
+          "$ref": "#/definitions/User.User"
+        },
+        "donation_request": {
+          "$ref": "#/definitions/DonationRequest.DonationRequest"
+        },
+        "id": {
+          "type": "string"
+        },
+        "unverified_author": {
+          "$ref": "#/definitions/Auth.UnregisteredUser"
+        }
+      }
+    },
+    "Blockchain.DonationToApplicationFromFund": {
+      "type": "object",
+      "required": ["amount", "application_id"],
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "anonymous": {
+          "type": "boolean"
+        },
+        "application_id": {
+          "type": "integer"
+        },
+        "donor_id": {
+          "type": "string"
+        }
+      }
+    },
+    "Blockchain.DonationToCharity": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "donor": {
+          "$ref": "#/definitions/User.User"
+        }
+      }
+    },
+    "Blockchain.DonationToCharityFromUser": {
+      "type": "object",
+      "required": ["amount", "password"],
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "anonymous": {
+          "type": "boolean"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Blockchain.DonationsResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Blockchain.Donation"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/utils.PageData"
+        }
+      }
+    },
+    "Blockchain.Status": {
+      "type": "object",
+      "properties": {
+        "batch_id": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "error_string": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["Pending", "Success", "Failure"]
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "DonateToCharity",
+            "DonateFromCharityToApplication",
+            "DonateToCharityFromExistingUser",
+            "DonateToCharityFromNewUser",
+            "DepositMoney",
+            "DonateToApplication",
+            "ProposeApplication",
+            "PublishApplication",
+            "CancelApplication",
+            "Registration",
+            "CloseApplication"
+          ]
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      }
+    },
+    "Blockchain.StatusResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Blockchain.Status"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/utils.PageData"
+        }
+      }
+    },
+    "Category.Category": {
+      "type": "object",
+      "required": ["eng", "id", "rus"],
+      "properties": {
+        "eng": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "rus": {
+          "type": "string"
+        }
+      }
+    },
+    "Category.DeleteInput": {
+      "type": "object",
+      "required": ["categories"],
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Category.UpdateInput": {
+      "type": "object",
+      "required": ["categories"],
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Category.Category"
+          }
+        }
+      }
+    },
+    "Charity.Faq": {
+      "type": "object",
+      "properties": {
+        "faq": {
+          "type": "string"
+        },
+        "fund_id": {
+          "type": "string"
+        }
+      }
+    },
+    "Charity.FaqInput": {
+      "type": "object",
+      "properties": {
+        "faq": {
+          "type": "string"
+        }
+      }
+    },
+    "Charity.FundInfo": {
+      "type": "object",
+      "required": ["title", "description"],
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "Charity.FundInfoResponse": {
+      "type": "object",
+      "required": ["title", "description"],
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/File.Info"
+          }
+        },
+        "phone": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "Charity.FundInput": {
+      "type": "object",
+      "required": ["title", "description"],
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "file_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "phone": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
     "DonationRequest.Body": {
       "type": "object",
       "properties": {
@@ -413,13 +1649,40 @@
           "type": "boolean"
         },
         "approved_amount": {
-          "type": "integer"
+          "$ref": "#/definitions/utils.MoneyJson"
         },
         "assignee": {
           "$ref": "#/definitions/User.User"
         },
+        "attached_files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/File.Info"
+          }
+        },
         "author": {
           "$ref": "#/definitions/User.User"
+        },
+        "available_statuses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "New",
+              "InProcessing",
+              "Refused",
+              "NeedsImprovement",
+              "Archived",
+              "SuperManagerConfirmation",
+              "UserConfirmation",
+              "Active",
+              "Spam",
+              "Deleted"
+            ]
+          }
+        },
+        "category": {
+          "$ref": "#/definitions/Category.Category"
         },
         "created_at": {
           "type": "string"
@@ -430,26 +1693,17 @@
         "donee": {
           "$ref": "#/definitions/User.SimpleUser"
         },
-        "file_id": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
         "id": {
           "type": "integer"
         },
-        "message": {
-          "type": "string"
+        "received_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
         },
         "relationship": {
           "type": "string"
         },
-        "request_type": {
-          "type": "string"
-        },
         "requested_amount": {
-          "type": "integer"
+          "$ref": "#/definitions/utils.MoneyJson"
         },
         "started_at": {
           "type": "string"
@@ -477,6 +1731,26 @@
         }
       }
     },
+    "DonationRequest.Comment": {
+      "type": "object",
+      "properties": {
+        "author": {
+          "$ref": "#/definitions/User.User"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "donation_request_id": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
     "DonationRequest.DonationRequest": {
       "type": "object",
       "properties": {
@@ -484,13 +1758,16 @@
           "type": "boolean"
         },
         "approved_amount": {
-          "type": "integer"
+          "$ref": "#/definitions/utils.MoneyJson"
         },
         "assignee": {
           "$ref": "#/definitions/User.User"
         },
         "author": {
           "$ref": "#/definitions/User.User"
+        },
+        "category": {
+          "$ref": "#/definitions/Category.Category"
         },
         "created_at": {
           "type": "string"
@@ -504,17 +1781,14 @@
         "id": {
           "type": "integer"
         },
-        "message": {
-          "type": "string"
+        "received_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
         },
         "relationship": {
           "type": "string"
         },
-        "request_type": {
-          "type": "string"
-        },
         "requested_amount": {
-          "type": "integer"
+          "$ref": "#/definitions/utils.MoneyJson"
         },
         "started_at": {
           "type": "string"
@@ -562,6 +1836,12 @@
         "assignee_id": {
           "type": "string"
         },
+        "category_id": {
+          "type": "string"
+        },
+        "comment": {
+          "type": "string"
+        },
         "description": {
           "type": "string"
         },
@@ -574,17 +1854,11 @@
             "type": "string"
           }
         },
-        "message": {
-          "type": "string"
-        },
         "relationship": {
           "type": "string"
         },
-        "request_amount": {
-          "type": "integer"
-        },
-        "request_type": {
-          "type": "string"
+        "requested_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
         },
         "title": {
           "type": "string"
@@ -611,11 +1885,14 @@
     "DonationRequest.StatusHistory": {
       "type": "object",
       "properties": {
-        "assignee_id": {
-          "type": "string"
+        "assignee": {
+          "$ref": "#/definitions/User.User"
         },
-        "author_id": {
-          "type": "string"
+        "author": {
+          "$ref": "#/definitions/User.User"
+        },
+        "comment": {
+          "$ref": "#/definitions/DonationRequest.Comment"
         },
         "created_at": {
           "type": "string"
@@ -634,10 +1911,102 @@
         }
       }
     },
+    "DonationRequest.SuperManagerInput": {
+      "type": "object",
+      "required": ["category_id"],
+      "properties": {
+        "approved_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "assignee_id": {
+          "type": "string"
+        },
+        "category_id": {
+          "type": "string"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "donee": {
+          "$ref": "#/definitions/User.SimpleUser"
+        },
+        "file_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "relationship": {
+          "type": "string"
+        },
+        "requested_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "title": {
+          "type": "string"
+        },
+        "until": {
+          "type": "string"
+        }
+      }
+    },
     "DonationRequest.UpdateInput": {
       "type": "object",
       "properties": {
+        "anonymous": {
+          "type": "boolean"
+        },
+        "approved_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "assignee_id": {
+          "type": "string"
+        },
+        "category_id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "donee": {
+          "$ref": "#/definitions/User.SimpleUser"
+        },
+        "file_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "relationship": {
+          "type": "string"
+        },
+        "requested_amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "title": {
+          "type": "string"
+        },
+        "until": {
+          "type": "string"
+        }
+      }
+    },
+    "DonationRequest.UpdateStatusInput": {
+      "type": "object",
+      "properties": {
+        "assignee_id": {
+          "type": "string"
+        },
         "comment": {
+          "type": "string"
+        },
+        "password": {
           "type": "string"
         },
         "status": {
@@ -645,13 +2014,139 @@
         }
       }
     },
-    "File.Response": {
+    "File.Info": {
       "type": "object",
       "properties": {
-        "createdAt": {
+        "created_at": {
           "type": "string"
         },
         "id": {
+          "type": "string"
+        },
+        "mime_type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "News.Input": {
+      "type": "object",
+      "required": ["description", "text", "title"],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "image_id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "News.Response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/News.View"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/utils.PageData"
+        }
+      }
+    },
+    "News.View": {
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "image_id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      }
+    },
+    "User.Balance": {
+      "type": "object",
+      "properties": {
+        "balance": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        }
+      }
+    },
+    "User.EditableInfo": {
+      "type": "object",
+      "properties": {
+        "birth_date": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "image_id": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "middle_name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "User",
+            "Manager",
+            "SuperManager",
+            "ContentMaRolnager",
+            "Operator",
+            "Admin"
+          ]
+        }
+      }
+    },
+    "User.PrettyPublicKey": {
+      "type": "object",
+      "properties": {
+        "long": {
+          "type": "string"
+        },
+        "short": {
           "type": "string"
         }
       }
@@ -693,6 +2188,9 @@
         "birth_date": {
           "type": "string"
         },
+        "blocked": {
+          "type": "boolean"
+        },
         "city": {
           "type": "string"
         },
@@ -711,7 +2209,7 @@
         "id": {
           "type": "string"
         },
-        "image": {
+        "image_id": {
           "type": "string"
         },
         "last_name": {
@@ -723,6 +2221,9 @@
         "phone": {
           "type": "string"
         },
+        "pretty_public_key": {
+          "$ref": "#/definitions/User.PrettyPublicKey"
+        },
         "role": {
           "type": "string",
           "enum": [
@@ -730,8 +2231,62 @@
             "Manager",
             "SuperManager",
             "ContentManager",
-            "Operator"
+            "Operator",
+            "Admin"
           ]
+        },
+        "tech_user": {
+          "type": "boolean"
+        }
+      }
+    },
+    "controllers.Deposit": {
+      "type": "object",
+      "required": ["amount", "user_id"],
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "user_id": {
+          "type": "string"
+        }
+      }
+    },
+    "controllers.DonateRequestInput": {
+      "type": "object",
+      "required": ["amount", "application", "password"],
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/utils.MoneyJson"
+        },
+        "application": {
+          "type": "integer"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "controllers.fcmId": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "utils.MoneyJson": {
+      "type": "object",
+      "properties": {
+        "currency": {
+          "type": "string"
+        },
+        "denominator": {
+          "type": "integer"
+        },
+        "numerator": {
+          "type": "integer"
         }
       }
     },

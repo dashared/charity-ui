@@ -1,1 +1,1 @@
-export { PersonalSettings } from "./Personal";
+export { default as PersonalSettings } from "./Personal";

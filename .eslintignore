@@ -1,12 +1,14 @@
 *.*
 
 !*.graphql
-!*.js
-!*.jsx
+*.js
+*.jsx
 !*.ts
 !*.tsx
 
 Dockerfile
+Dockerfile-master
+Caddyfile
 LICENSE
 node_modules
 /build

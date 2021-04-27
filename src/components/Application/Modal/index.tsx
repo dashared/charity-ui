@@ -2,10 +2,7 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Form, Input, Modal } from "antd";
 import { useForm } from "antd/lib/form/Form";
-import {
-  DonationRequestResponse,
-  DonationRequestUpdateInput,
-} from "@generated";
+import { DonationRequestUpdateStatusInput } from "@generated";
 import { notify } from "@lib/utils/notification";
 import { AxiosPromise } from "axios";
 
@@ -18,10 +15,10 @@ type FormValues = {
 const ModalWithMessage: FC<{
   query: (
     id: number,
-    input: DonationRequestUpdateInput,
+    input?: DonationRequestUpdateStatusInput,
     // eslint-disable-next-line
     options?: any,
-  ) => AxiosPromise<DonationRequestResponse>;
+  ) => AxiosPromise<void>;
   title: string;
   applicationId: number;
   newStatus: ApplicationStatus;
@@ -54,12 +51,14 @@ const ModalWithMessage: FC<{
 
         console.log(values);
 
-        const input: DonationRequestUpdateInput = {
+        const input: DonationRequestUpdateStatusInput = {
           status: newStatus,
           comment: values.message,
         };
 
         await query(id, input);
+
+        form.resetFields();
 
         notify(t("$views.card.successUpdateStatus"));
       } catch (e) {
@@ -80,6 +79,7 @@ const ModalWithMessage: FC<{
       query,
       onClose,
       t,
+      form,
     ],
   );
 
