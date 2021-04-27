@@ -232,6 +232,138 @@
         }
       }
     },
+    "/api/chat/dialogs": {
+      "get": {
+        "tags": ["Chat"],
+        "summary": "Get list of all dialogs from operator",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "type": "integer",
+            "default": 10
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort param",
+            "required": false,
+            "type": "string",
+            "default": "10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Chat.DialogResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/dialogs/:id": {
+      "get": {
+        "tags": ["Chat"],
+        "summary": "Get dialog entity",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Dialog id",
+            "required": true,
+            "type": "string",
+            "default": "10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Chat.Dialog"
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/dialogs/:id/messages": {
+      "get": {
+        "tags": ["Chat"],
+        "summary": "Get messages by dialog id",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "type": "integer",
+            "default": 10
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Dialog id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "id of last displayed message",
+            "required": false,
+            "type": "string",
+            "default": "10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Chat.MessagesResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/operator": {
+      "post": {
+        "tags": ["Chat"],
+        "summary": "Send message from operator",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Message",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Chat.AdminInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Chat.Message"
+            }
+          }
+        }
+      }
+    },
     "/api/donation-request": {
       "post": {
         "consumes": ["application/json"],
@@ -1639,6 +1771,106 @@
         },
         "title": {
           "type": "string"
+        }
+      }
+    },
+    "Chat.AdminInput": {
+      "type": "object",
+      "required": ["body", "dialog_id"],
+      "properties": {
+        "attachments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "body": {
+          "type": "string"
+        },
+        "dialog_id": {
+          "type": "string"
+        }
+      }
+    },
+    "Chat.Dialog": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "unread_message_counter": {
+          "type": "integer"
+        },
+        "user": {
+          "$ref": "#/definitions/User.User"
+        }
+      }
+    },
+    "Chat.DialogResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Chat.Dialog"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/utils.PageData"
+        }
+      }
+    },
+    "Chat.Message": {
+      "type": "object",
+      "properties": {
+        "author": {
+          "$ref": "#/definitions/User.User"
+        },
+        "body": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "Chat.MessageBody": {
+      "type": "object",
+      "properties": {
+        "attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/File.Info"
+          }
+        },
+        "author": {
+          "$ref": "#/definitions/User.User"
+        },
+        "body": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "Chat.MessagesResponse": {
+      "type": "object",
+      "properties": {
+        "cursor": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Chat.MessageBody"
+          }
         }
       }
     },

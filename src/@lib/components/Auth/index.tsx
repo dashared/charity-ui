@@ -27,7 +27,7 @@ function mapRole(apiRole: UserApiRole): Role {
     case UserApiRole.Manager:
       return Role.manager;
     case UserApiRole.ContentManager:
-      return Role.operator;
+      return Role.contentManager;
     case UserApiRole.SuperManager:
       return Role.supermanager;
     case UserApiRole.Admin:
