@@ -85,7 +85,7 @@ const EditFundDescription: ForwardRefRenderFunction<
         <Form.Item
           name={["address"]}
           label={t("$views.editPage.address")}
-          rules={[{ required: true, message: t("$views.message.address") }]}
+          //rules={[{ required: true, message: t("$views.message.address") }]}
         >
           <Input.TextArea />
         </Form.Item>
@@ -93,7 +93,7 @@ const EditFundDescription: ForwardRefRenderFunction<
         <Form.Item
           name={["phone"]}
           label={t("$views.editPage.phone")}
-          rules={[{ required: true, message: t("$views.message.phone") }]}
+          //rules={[{ required: true, message: t("$views.message.phone") }]}
         >
           <Input />
         </Form.Item>
@@ -101,7 +101,7 @@ const EditFundDescription: ForwardRefRenderFunction<
         <Form.Item
           name={["email"]}
           label={t("$views.editPage.email")}
-          rules={[{ required: true, message: t("$views.message.email") }]}
+          //rules={[{ required: true, message: t("$views.message.email") }]}
         >
           <Input />
         </Form.Item>
@@ -121,7 +121,6 @@ const EditFundDescription: ForwardRefRenderFunction<
         <Form.Item
           name={["description"]}
           label={t("$views.editPage.description")}
-          rules={[{ required: true, message: t("$views.message.description") }]}
         >
           <FAQEditor
             editorRef={editorRef}

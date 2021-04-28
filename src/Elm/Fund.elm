@@ -22,7 +22,7 @@ type alias Fund =
     { title : String
     , description : Maybe String
     , address : Maybe String
-    , files : List FileInfo
+    , files : Maybe (List FileInfo)
     , phone : Maybe String
     , email : Maybe String
     }
@@ -73,7 +73,8 @@ view model =
                     ]
                     (List.map
                         oneLink
-                        model.fundInfo.files
+                     <|
+                        withDefault [] model.fundInfo.files
                     )
                 ]
 

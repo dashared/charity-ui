@@ -52,7 +52,18 @@ const FundDescription: FC = () => {
           <RoleSwitch
             role={user.role}
             perform="fund:description-pretty" // visitor or not
-            yes={() => <Elm src={FundElm.Elm.Elm.Fund} flags={data} />}
+            yes={() => (
+              <Elm
+                src={FundElm.Elm.Elm.Fund}
+                flags={{
+                  phone: null,
+                  email: null,
+                  address: null,
+                  files: null,
+                  ...data,
+                }}
+              />
+            )}
             no={() => (
               <Workspace
                 noRefresh
