@@ -1794,6 +1794,7 @@
     },
     "Chat.Dialog": {
       "type": "object",
+      "required": ["user"],
       "properties": {
         "id": {
           "type": "string"

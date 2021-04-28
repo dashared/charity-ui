@@ -38,7 +38,7 @@ export interface ChatDialog {
      * @type {UserUser}
      * @memberof ChatDialog
      */
-    user?: UserUser;
+    user: UserUser;
 }
 
 
