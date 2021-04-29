@@ -2,7 +2,10 @@ import React, { FC, useRef } from "react";
 import { Badge, Col, List, Row } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
 import { Link } from "@curi/react-dom";
-import { ChatDialog as Single, ChatDialogResponse as Result } from "@generated";
+import {
+  ChatDialogResponse as Result,
+  ChatDialogResponseBody as Single,
+} from "@generated";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useListSelection } from "@lib/hooks";
@@ -45,6 +48,10 @@ const ChatsPage: FC = () => {
             itemLayout="horizontal"
             dataSource={entries}
             renderItem={(item) => {
+              if (!item.user) {
+                return null;
+              }
+
               const { first_name, middle_name, last_name } = item.user;
 
               return (
@@ -60,7 +67,7 @@ const ChatsPage: FC = () => {
                         {fullName(first_name, middle_name, last_name)}
                       </Link>
                     }
-                    description={item.user?.email}
+                    description={item.last_message?.body}
                   />
                   <Row align="top" style={{ marginRight: "10px" }}>
                     <Col>
@@ -72,10 +79,10 @@ const ChatsPage: FC = () => {
                           marginBottom: "5px",
                         }}
                       >
-                        {formatDate(Date())}
+                        {formatDate(item.last_message?.created_at)}
                       </Row>
                       <Row justify="end">
-                        <Badge count={10}></Badge>
+                        <Badge count={item.unread_message_counter}></Badge>
                       </Row>
                     </Col>
                   </Row>

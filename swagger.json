@@ -273,7 +273,7 @@
         }
       }
     },
-    "/api/chat/dialogs/:id": {
+    "/api/chat/dialogs/{id}": {
       "get": {
         "tags": ["Chat"],
         "summary": "Get dialog entity",
@@ -298,7 +298,7 @@
         }
       }
     },
-    "/api/chat/dialogs/:id/messages": {
+    "/api/chat/dialogs/{id}/messages": {
       "get": {
         "tags": ["Chat"],
         "summary": "Get messages by dialog id",
@@ -1813,11 +1813,28 @@
         "data": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Chat.Dialog"
+            "$ref": "#/definitions/Chat.DialogResponseBody"
           }
         },
         "page": {
           "$ref": "#/definitions/utils.PageData"
+        }
+      }
+    },
+    "Chat.DialogResponseBody": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "last_message": {
+          "$ref": "#/definitions/Chat.Message"
+        },
+        "unread_message_counter": {
+          "type": "integer"
+        },
+        "user": {
+          "$ref": "#/definitions/User.User"
         }
       }
     },

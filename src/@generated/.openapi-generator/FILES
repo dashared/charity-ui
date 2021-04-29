@@ -40,6 +40,7 @@ models/charity-fund-info-response.ts
 models/charity-fund-info.ts
 models/charity-fund-input.ts
 models/chat-admin-input.ts
+models/chat-dialog-response-body.ts
 models/chat-dialog-response.ts
 models/chat-dialog.ts
 models/chat-message-body.ts

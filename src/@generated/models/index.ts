@@ -22,6 +22,7 @@ export * from './charity-fund-input';
 export * from './chat-admin-input';
 export * from './chat-dialog';
 export * from './chat-dialog-response';
+export * from './chat-dialog-response-body';
 export * from './chat-message';
 export * from './chat-message-body';
 export * from './chat-messages-response';

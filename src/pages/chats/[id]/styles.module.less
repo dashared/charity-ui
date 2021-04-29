@@ -1,0 +1,33 @@
+@import "../../../variables.less";
+
+.pagination {
+  background-color: white;
+  padding: 20px;
+}
+
+.container {
+  height: calc(
+    100vh - @layout-header-height - @layout-margin - 51px - 72px - 240px
+  );
+  overflow: auto;
+  transform: rotate(-180deg);
+  direction: rtl;
+}
+
+.message {
+  transform: rotate(-180deg);
+  direction: ltr;
+}
+
+.messageAuthor {
+  transform: rotate(-180deg);
+  align-items: right;
+  display: flex;
+  justify-content: flex-end;
+  direction: ltr;
+}
+
+.editor {
+  background-color: white;
+  padding: 0px 20px;
+}

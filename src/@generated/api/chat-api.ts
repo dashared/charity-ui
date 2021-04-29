@@ -98,7 +98,7 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
       if (id === null || id === undefined) {
         throw new RequiredError('id', 'Required parameter id was null or undefined when calling apiChatDialogsIdGet.');
       }
-      const localVarPath = `/api/chat/dialogs/:id`
+      const localVarPath = `/api/chat/dialogs/{id}`
         .replace(`{${"id"}}`, encodeURIComponent(String(id)));
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -144,7 +144,7 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
       if (id === null || id === undefined) {
         throw new RequiredError('id', 'Required parameter id was null or undefined when calling apiChatDialogsIdMessagesGet.');
       }
-      const localVarPath = `/api/chat/dialogs/:id/messages`
+      const localVarPath = `/api/chat/dialogs/{id}/messages`
         .replace(`{${"id"}}`, encodeURIComponent(String(id)));
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, 'https://example.com');

@@ -13,7 +13,7 @@
  */
 
 
-import { ChatDialog } from './chat-dialog';
+import { ChatDialogResponseBody } from './chat-dialog-response-body';
 import { UtilsPageData } from './utils-page-data';
 
 /**
@@ -24,10 +24,10 @@ import { UtilsPageData } from './utils-page-data';
 export interface ChatDialogResponse {
     /**
      * 
-     * @type {Array<ChatDialog>}
+     * @type {Array<ChatDialogResponseBody>}
      * @memberof ChatDialogResponse
      */
-    data?: Array<ChatDialog>;
+    data?: Array<ChatDialogResponseBody>;
     /**
      * 
      * @type {UtilsPageData}
