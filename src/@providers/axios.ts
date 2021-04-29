@@ -3,6 +3,7 @@ import {
   BatchStatusApiFactory,
   CategoryApiFactory,
   CharityApiFactory,
+  ChatApiFactory,
   DonationRequestApiFactory,
   DonationsApiFactory,
   FileApiFactory,
@@ -90,6 +91,7 @@ export const BatchStatusFactory = BatchStatusApiFactory(
 );
 export const MoneyFactory = MoneyApiFactory(configuration, basePath, axios);
 export const NewsFactory = NewsApiFactory(configuration, basePath, axios);
+export const ChatsFactory = ChatApiFactory(configuration, basePath, axios);
 export const NotificationsFactory = NotificationsApiFactory(
   configuration,
   basePath,

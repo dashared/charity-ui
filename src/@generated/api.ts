@@ -17,6 +17,7 @@
 export * from './api/batch-status-api';
 export * from './api/category-api';
 export * from './api/charity-api';
+export * from './api/chat-api';
 export * from './api/donation-request-api';
 export * from './api/donations-api';
 export * from './api/file-api';

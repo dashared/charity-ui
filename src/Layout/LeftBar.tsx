@@ -4,6 +4,7 @@ import {
   AlignLeftOutlined,
   FolderOpenOutlined,
   HomeOutlined,
+  MessageOutlined,
   MoneyCollectOutlined,
   ProfileOutlined,
   QuestionOutlined,
@@ -102,6 +103,15 @@ const LeftBar: FC = () => {
         </>
       ),
       name: "fund:faq-index",
+    },
+    {
+      display: (
+        <>
+          <MessageOutlined />
+          <span>{i18n.t("LeftBar.Chats")}</span>
+        </>
+      ),
+      name: "chats:index",
     },
     {
       display: (

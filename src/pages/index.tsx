@@ -37,8 +37,10 @@ const Index: FC = () => {
               switch (user.role) {
                 case Role.admin:
                   return <Redirect name="users:index" />;
-                case Role.operator:
+                case Role.contentManager:
                   return <Redirect name="fund:description" />;
+                case Role.operator:
+                  return <Redirect name="chats:index" />;
                 default:
                   return <Redirect name="applications:index" />;
               }

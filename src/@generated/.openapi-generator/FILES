@@ -4,6 +4,7 @@ api.ts
 api/batch-status-api.ts
 api/category-api.ts
 api/charity-api.ts
+api/chat-api.ts
 api/donation-request-api.ts
 api/donations-api.ts
 api/file-api.ts
@@ -38,6 +39,13 @@ models/charity-faq.ts
 models/charity-fund-info-response.ts
 models/charity-fund-info.ts
 models/charity-fund-input.ts
+models/chat-admin-input.ts
+models/chat-dialog-response-body.ts
+models/chat-dialog-response.ts
+models/chat-dialog.ts
+models/chat-message-body.ts
+models/chat-message.ts
+models/chat-messages-response.ts
 models/controllers-deposit.ts
 models/controllers-donate-request-input.ts
 models/controllers-fcm-id.ts
