@@ -85,16 +85,17 @@
     },
     "/api/categories": {
       "get": {
-        "produces": ["application/json"],
         "tags": ["Category"],
         "summary": "Get categories of fund",
+        "produces": ["application/json"],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Category.Category"
+                "$ref": "#/definitions/Category.AdminCategory"
               }
             }
           }
@@ -1641,6 +1642,27 @@
         }
       }
     },
+    "Category.AdminCategory": {
+      "type": "object",
+      "required": ["ara", "eng", "id", "rus"],
+      "properties": {
+        "ara": {
+          "type": "string"
+        },
+        "eng": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "is_hidden": {
+          "type": "boolean"
+        },
+        "rus": {
+          "type": "string"
+        }
+      }
+    },
     "Category.Category": {
       "type": "object",
       "required": ["eng", "id", "rus"],
@@ -1675,7 +1697,7 @@
         "categories": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Category.Category"
+            "$ref": "#/definitions/Category.AdminCategory"
           }
         }
       }

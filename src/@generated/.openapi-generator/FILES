@@ -31,6 +31,7 @@ models/blockchain-donation.ts
 models/blockchain-donations-response.ts
 models/blockchain-status-response.ts
 models/blockchain-status.ts
+models/category-admin-category.ts
 models/category-category.ts
 models/category-delete-input.ts
 models/category-update-input.ts

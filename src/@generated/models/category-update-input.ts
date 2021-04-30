@@ -13,7 +13,7 @@
  */
 
 
-import { CategoryCategory } from './category-category';
+import { CategoryAdminCategory } from './category-admin-category';
 
 /**
  * 
@@ -23,10 +23,10 @@ import { CategoryCategory } from './category-category';
 export interface CategoryUpdateInput {
     /**
      * 
-     * @type {Array<CategoryCategory>}
+     * @type {Array<CategoryAdminCategory>}
      * @memberof CategoryUpdateInput
      */
-    categories: Array<CategoryCategory>;
+    categories: Array<CategoryAdminCategory>;
 }
 
 
