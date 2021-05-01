@@ -16,11 +16,10 @@ const CategoriesPage: FC = () => {
     undefined,
   );
 
-  console.log(data);
-
   if (!data) {
     return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
   }
+
   if (loading) {
     return <Skeleton active={loading} />;
   }

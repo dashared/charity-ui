@@ -11,6 +11,7 @@ export * from './blockchain-donation-to-charity-from-user';
 export * from './blockchain-donations-response';
 export * from './blockchain-status';
 export * from './blockchain-status-response';
+export * from './category-admin-category';
 export * from './category-category';
 export * from './category-delete-input';
 export * from './category-update-input';
