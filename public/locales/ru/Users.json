@@ -34,7 +34,9 @@
       "middle_name": "Отчество",
       "last_name": "Фамилия",
       "email": "Почта",
-      "roles": "Роли"
+      "roles": "Роли",
+      "categories": "Категории",
+      "categories_placeholder": "Категории для члена комиссии"
     },
     "message": {
       "first_name": "Укажите имя пользователя",

@@ -34,7 +34,9 @@
       "middle_name": "Second name",
       "last_name": "Surname",
       "email": "Email",
-      "roles": "Roles"
+      "roles": "Roles",
+      "categories": "Categories",
+      "categories_placeholder": "Categories assosiated with committee"
     },
     "message": {
       "first_name": "Fill user's name",
