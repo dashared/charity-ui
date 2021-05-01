@@ -12,12 +12,11 @@ import { PlusOutlined } from "@ant-design/icons";
 import {
   AuthManagerRegistrationInputRoleEnum as Roles,
   UserEditableInfo,
-  UserUser,
-  UserUserRoleEnum,
 } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useTranslation } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
+import { UserApiModel, UserApiRole } from "@providers/axios";
 import { customRequest } from "@providers/cusomUpload";
 import moment from "moment";
 
@@ -40,7 +39,7 @@ export type PersonalSettingsFormState = UserEditableInfo;
 export type PersonalSettingsHandler = FormInstance<PersonalSettingsFormState>;
 
 type PersonalSettingsFormProps = {
-  initial?: UserUser;
+  initial?: UserApiModel;
   onSubmit?: (values: PersonalSettingsFormState) => void | Promise<void>;
 };
 
@@ -152,9 +151,7 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
                 no={() => {
                   return (
                     <Form.Item name="role" label={t("role")}>
-                      <RoleTag
-                        roles={[(initial?.role as unknown) as UserUserRoleEnum]}
-                      />
+                      <RoleTag roles={[initial?.role ?? UserApiRole.Admin]} />
                     </Form.Item>
                   );
                 }}

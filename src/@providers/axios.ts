@@ -116,5 +116,5 @@ export const RegistrationFactory = RegistrationApiFactory(
 
 export const LoginFactory = LoginApiFactory(configuration, basePath, axios);
 
-export { UserUserRoleEnum as UserApiRole } from "@generated";
-export type { UserUser as UserApiModel } from "@generated";
+export { UserExtendedUserRoleEnum as UserApiRole } from "@generated";
+export type { UserExtendedUser as UserApiModel } from "@generated";

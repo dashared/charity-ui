@@ -1,12 +1,11 @@
 import React, { FC } from "react";
 import { Avatar, Col, Form, Row } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { UserUser as User } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { formatDate, formatString } from "@lib/utils";
 import { fullName } from "@lib/utils/name";
 import { useTranslation } from "@providers";
-import { UserApiRole } from "@providers/axios";
+import { UserApiModel as User, UserApiRole } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
 
 import BlockedTag from "components/User/Block/tag";

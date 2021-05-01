@@ -2,6 +2,7 @@
   "title": "Managers",
   "name": "Full name",
   "id": "ID",
+  "createdAt": "Created at",
   "roles": "Roles",
   "metric": "Metrics",
   "email": "Email",
