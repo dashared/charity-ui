@@ -6,7 +6,6 @@ import {
   AuthManagerRegistrationInputRoleEnum as Roles,
 } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
-import { formatCategory } from "@lib/utils";
 import { notify } from "@lib/utils/notification";
 import { i18n, router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
@@ -15,6 +14,8 @@ import useAxios, {
   RegistrationFactory,
 } from "@providers/axios";
 import Unauthorized from "pages/_unauthorized";
+
+import SelectCategory from "components/Category/select";
 
 const RolesArr = [
   Roles.User,
@@ -125,27 +126,7 @@ const UserRegisterPage: FC = () => {
               name={["assigned_categories"]}
               label={t("$views.register.categories")}
             >
-              <Select
-                mode="multiple"
-                showSearch
-                optionFilterProp="children"
-                placeholder={t("$views.register.categories_placeholder")}
-                filterOption={(input, option) => {
-                  return (
-                    (option?.children?.toString() ?? "")
-                      .toLowerCase()
-                      .indexOf(input.toLowerCase()) >= 0
-                  );
-                }}
-              >
-                {categories?.map((category) => {
-                  return (
-                    <Select.Option value={category.id} key={category.id}>
-                      {formatCategory(lang, category)}
-                    </Select.Option>
-                  );
-                })}
-              </Select>
+              <SelectCategory categories={categories ?? []} lang={lang} />
             </Form.Item>
           )}
 

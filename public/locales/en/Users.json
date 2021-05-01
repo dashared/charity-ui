@@ -5,6 +5,7 @@
   "role": "Roles",
   "email": "Email",
   "blocked": "Blocked",
+  "not_blocked": "Not blocked",
   "filter": {
     "roles": "Filter user by role"
   },

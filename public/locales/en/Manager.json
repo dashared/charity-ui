@@ -13,6 +13,7 @@
   "page": {
     "title": "Manager",
     "statistics": "Statistic",
-    "infoTitle": "Main info"
+    "infoTitle": "Main info",
+    "applications": "Applications"
   }
 }

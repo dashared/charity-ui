@@ -6,7 +6,7 @@ const BlockedTag: FC<{ isBlocked: boolean }> = ({ isBlocked }) => {
   const { t } = useTranslation("Users");
 
   if (!isBlocked) {
-    return null;
+    return <Tag color="green">{t(`not_blocked`)}</Tag>;
   }
 
   return <Tag color="red">{t(`blocked`)}</Tag>;
