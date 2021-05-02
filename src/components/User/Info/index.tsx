@@ -2,9 +2,9 @@ import React, { FC } from "react";
 import { Avatar, Col, Form, Row } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import RoleSwitch from "@lib/components/RoleSwitch";
-import { formatDate, formatString } from "@lib/utils";
+import { formatCategories, formatDate, formatString } from "@lib/utils";
 import { fullName } from "@lib/utils/name";
-import { useTranslation } from "@providers";
+import { i18n, useTranslation } from "@providers";
 import { UserApiModel as User, UserApiRole } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
 
@@ -19,6 +19,8 @@ type UserInfoProps = {
 const UserInfo: FC<UserInfoProps> = ({ user, role }) => {
   const { t } = useTranslation("User");
 
+  const lang = i18n.language.substr(0, 2);
+
   const { first_name, middle_name, last_name, image_id } = user;
 
   const props = {
@@ -28,7 +30,7 @@ const UserInfo: FC<UserInfoProps> = ({ user, role }) => {
   };
 
   return (
-    <Row align="top" justify="center" gutter={16}>
+    <Row align="top" justify="space-around" gutter={16}>
       <Col span={3}>
         <Avatar {...props} />
       </Col>
@@ -81,6 +83,18 @@ const UserInfo: FC<UserInfoProps> = ({ user, role }) => {
           </Form.Item>
         </Form>
       </Col>
+
+      {user.role === UserApiRole.SuperManager && (
+        <>
+          <Col span={3}></Col>
+          <Col span={19}>
+            <Form.Item label={t("categories")}>
+              {formatCategories(lang, user.assigned_categories)}
+            </Form.Item>
+          </Col>
+          <Col span={1}></Col>
+        </>
+      )}
     </Row>
   );
 };

@@ -15,7 +15,7 @@ import {
   UserEditableInfo,
 } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
-import { formatCategory } from "@lib/utils";
+import { formatCategories } from "@lib/utils";
 import { i18n, useTranslation } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import { UserApiModel, UserApiRole } from "@providers/axios";
@@ -192,14 +192,7 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
                         label={t("assigned_categories")}
                       >
                         <span>
-                          {initial.assigned_categories?.length === 0 ||
-                          !initial.assigned_categories
-                            ? "-"
-                            : initial.assigned_categories
-                                ?.map((item) => {
-                                  return formatCategory(lang, item);
-                                })
-                                .join(", ")}
+                          {formatCategories(lang, initial.assigned_categories)}
                         </span>
                       </Form.Item>
                     );
