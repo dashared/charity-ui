@@ -46,6 +46,7 @@ export * from './news-response';
 export * from './news-view';
 export * from './user-balance';
 export * from './user-editable-info';
+export * from './user-extended-user';
 export * from './user-pretty-public-key';
 export * from './user-response';
 export * from './user-simple-user';

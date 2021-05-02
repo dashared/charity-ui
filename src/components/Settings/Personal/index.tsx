@@ -11,16 +11,18 @@ import { UploadFile } from "antd/lib/upload/interface";
 import { PlusOutlined } from "@ant-design/icons";
 import {
   AuthManagerRegistrationInputRoleEnum as Roles,
+  CategoryAdminCategory,
   UserEditableInfo,
-  UserUser,
-  UserUserRoleEnum,
 } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
-import { useTranslation } from "@providers";
+import { formatCategories } from "@lib/utils";
+import { i18n, useTranslation } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
+import { UserApiModel, UserApiRole } from "@providers/axios";
 import { customRequest } from "@providers/cusomUpload";
 import moment from "moment";
 
+import CategorySelect from "components/Category/select";
 import BlockedTag from "components/User/Block/tag";
 import RoleTag from "components/User/Role/tag";
 
@@ -40,7 +42,8 @@ export type PersonalSettingsFormState = UserEditableInfo;
 export type PersonalSettingsHandler = FormInstance<PersonalSettingsFormState>;
 
 type PersonalSettingsFormProps = {
-  initial?: UserUser;
+  initial?: UserApiModel;
+  categories: CategoryAdminCategory[];
   onSubmit?: (values: PersonalSettingsFormState) => void | Promise<void>;
 };
 
@@ -62,8 +65,10 @@ const UploadButton: FC = () => {
 const PersonalSettingsForm: ForwardRefRenderFunction<
   PersonalSettingsHandler,
   PersonalSettingsFormProps
-> = ({ initial, onSubmit }, ref) => {
+> = ({ initial, onSubmit, categories }, ref) => {
   const { t } = useTranslation("Settings");
+
+  const lang = i18n.language.substr(0, 2);
 
   const [id, setId] = useState<string | undefined>(initial?.image_id);
 
@@ -96,6 +101,9 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
               ref={ref}
               initialValues={{
                 ...initial,
+                assigned_categories: initial?.assigned_categories?.map(
+                  (item) => item.id,
+                ),
                 birth_date: initial?.birth_date
                   ? moment(initial?.birth_date)
                   : undefined,
@@ -152,9 +160,7 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
                 no={() => {
                   return (
                     <Form.Item name="role" label={t("role")}>
-                      <RoleTag
-                        roles={[(initial?.role as unknown) as UserUserRoleEnum]}
-                      />
+                      <RoleTag roles={[initial?.role ?? UserApiRole.Admin]} />
                     </Form.Item>
                   );
                 }}
@@ -175,6 +181,35 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
                 }}
               />
 
+              {initial?.role === UserApiRole.SuperManager && (
+                <RoleSwitch
+                  role={user.role}
+                  perform="user:edit"
+                  no={() => {
+                    return (
+                      <Form.Item
+                        name="assigned_categories"
+                        label={t("assigned_categories")}
+                      >
+                        <span>
+                          {formatCategories(lang, initial.assigned_categories)}
+                        </span>
+                      </Form.Item>
+                    );
+                  }}
+                  yes={() => {
+                    return (
+                      <Form.Item
+                        name="assigned_categories"
+                        label={t("assigned_categories")}
+                      >
+                        <CategorySelect categories={categories} lang={lang} />
+                      </Form.Item>
+                    );
+                  }}
+                />
+              )}
+
               <Form.Item name="email" label={t("email")} required={true}>
                 {initial?.email}
               </Form.Item>
@@ -188,7 +223,10 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
               </Form.Item>
 
               <Form.Item name="birth_date" label={t("birth_date")}>
-                <DatePicker style={{ width: 200 }} />
+                <DatePicker
+                  placeholder={t("birth_date_placeholder")}
+                  style={{ width: 200 }}
+                />
               </Form.Item>
 
               <Form.Item name="phone" label={t("phone")}>
@@ -207,7 +245,11 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
                 }}
                 yes={() => {
                   return (
-                    <Form.Item name="blocked" label={t("blocked")}>
+                    <Form.Item
+                      name="blocked"
+                      label={t("blocked")}
+                      valuePropName="checked"
+                    >
                       <Switch />
                     </Form.Item>
                   );

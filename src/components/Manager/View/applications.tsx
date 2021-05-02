@@ -3,7 +3,6 @@ import { Link } from "@curi/react-dom";
 import {
   DonationRequestBody as Single,
   DonationRequestResponse as Result,
-  UserUser as User,
 } from "@generated";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
@@ -12,7 +11,7 @@ import { format as formatCategory } from "@lib/utils/category";
 import { format } from "@lib/utils/date";
 import { cred } from "@lib/utils/name";
 import { i18n, useTranslation } from "@providers";
-import { DonationRequestFactory } from "@providers/axios";
+import { DonationRequestFactory, UserApiModel as User } from "@providers/axios";
 
 import StatusTag, {
   ApplicationStatus,

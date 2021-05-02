@@ -1266,23 +1266,23 @@
     },
     "/api/user/{id}": {
       "get": {
-        "produces": ["application/json"],
         "tags": ["User"],
         "summary": "Retrieves user based on given ID",
+        "produces": ["application/json"],
         "parameters": [
           {
-            "type": "string",
-            "description": "User ID",
             "name": "id",
             "in": "path",
-            "required": true
+            "description": "User ID",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User.User"
+              "$ref": "#/definitions/User.ExtendedUser"
             }
           }
         }
@@ -1367,6 +1367,12 @@
     "Auth.ManagerRegistrationInput": {
       "type": "object",
       "properties": {
+        "assigned_categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "role": {
           "type": "string",
           "enum": [
@@ -2372,6 +2378,12 @@
     "User.EditableInfo": {
       "type": "object",
       "properties": {
+        "assigned_categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "birth_date": {
           "type": "string"
         },
@@ -2451,6 +2463,70 @@
         },
         "middle_name": {
           "type": "string"
+        }
+      }
+    },
+    "User.ExtendedUser": {
+      "type": "object",
+      "properties": {
+        "assigned_categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Category.Category"
+          }
+        },
+        "birth_date": {
+          "type": "string"
+        },
+        "blocked": {
+          "type": "boolean"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "image_id": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "middle_name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "pretty_public_key": {
+          "$ref": "#/definitions/User.PrettyPublicKey"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "User",
+            "Manager",
+            "SuperManager",
+            "ContentManager",
+            "Operator",
+            "Admin"
+          ]
+        },
+        "tech_user": {
+          "type": "boolean"
         }
       }
     },

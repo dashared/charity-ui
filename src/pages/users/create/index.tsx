@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useState } from "react";
 import { Button, Card, Form, Input, Select, Space } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import {
@@ -7,10 +7,15 @@ import {
 } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { notify } from "@lib/utils/notification";
-import { router, useTranslation, Workspace } from "@providers";
+import { i18n, router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
-import { RegistrationFactory } from "@providers/axios";
+import useAxios, {
+  CategoryFactory,
+  RegistrationFactory,
+} from "@providers/axios";
 import Unauthorized from "pages/_unauthorized";
+
+import SelectCategory from "components/Category/select";
 
 const RolesArr = [
   Roles.User,
@@ -37,9 +42,16 @@ const UserRegisterPage: FC = () => {
 
   const [form] = useForm<AuthManagerRegistrationInput>();
 
+  const [role, setRole] = useState<Roles | undefined>();
+
   const onReset = (): void => {
     form.resetFields();
+    setRole(undefined);
   };
+
+  const lang = i18n.language.substr(0, 2);
+
+  const { data: categories } = useAxios(CategoryFactory.apiCategoriesGet);
 
   const onAdd = useCallback(async () => {
     const data = form.getFieldsValue();
@@ -97,6 +109,7 @@ const UserRegisterPage: FC = () => {
             rules={[{ required: true, message: t("$views.message.roles") }]}
           >
             <Select //mode="multiple" TODO
+              onChange={(value) => setRole(value as Roles)}
             >
               {RolesArr.map((value) => {
                 return (
@@ -107,6 +120,15 @@ const UserRegisterPage: FC = () => {
               })}
             </Select>
           </Form.Item>
+
+          {role === Roles.SuperManager && (
+            <Form.Item
+              name={["assigned_categories"]}
+              label={t("$views.register.categories")}
+            >
+              <SelectCategory categories={categories ?? []} lang={lang} />
+            </Form.Item>
+          )}
 
           <Form.Item {...tailLayout}>
             <Space>

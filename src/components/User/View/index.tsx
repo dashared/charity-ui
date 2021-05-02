@@ -6,14 +6,14 @@ import {
   HistoryOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons";
-import { UserUser } from "@generated";
 import { AuthConsumer } from "@providers/authContext";
+import { UserApiModel } from "@providers/axios";
 import { check, Role } from "@providers/rbac-rules";
 
 import { ApplicationsTab, InfoTab, SessionsTab } from "./Tabs";
 
 type UserViewProps = {
-  user: UserUser;
+  user: UserApiModel;
   role: Role;
 };
 

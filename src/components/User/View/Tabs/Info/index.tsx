@@ -1,14 +1,14 @@
 import React, { FC } from "react";
 import { Button, Card, Space } from "antd";
-import { UserUser } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useTranslation } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
+import { UserApiModel } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
 
 import UserInfo from "../../../Info";
 
-const Actions: FC<{ userData: UserUser }> = () => {
+const Actions: FC<{ userData: UserApiModel }> = () => {
   const { t } = useTranslation("User");
 
   return (
@@ -31,7 +31,10 @@ const Actions: FC<{ userData: UserUser }> = () => {
   );
 };
 
-export const InfoTab: FC<{ user: UserUser; role: Role }> = ({ user, role }) => {
+export const InfoTab: FC<{ user: UserApiModel; role: Role }> = ({
+  user,
+  role,
+}) => {
   const { t } = useTranslation("User");
 
   return (

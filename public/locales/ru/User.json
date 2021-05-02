@@ -11,6 +11,7 @@
   "roles": "Роли",
   "created_at": "Аккаунт создан",
   "birthday": "Дата рождения",
+  "categories": "Назначенные категории",
   "uuid": "ID",
   "$views": {
     "tab": {

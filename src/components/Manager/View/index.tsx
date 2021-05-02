@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Card } from "antd";
-import { UserUser as User, UserUserRoleEnum as ApiRole } from "@generated";
+import { UserApiModel as User, UserApiRole as ApiRole } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
 
 import UserInfo from "components/User/Info";

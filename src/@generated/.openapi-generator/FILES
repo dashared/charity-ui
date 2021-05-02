@@ -67,6 +67,7 @@ models/news-response.ts
 models/news-view.ts
 models/user-balance.ts
 models/user-editable-info.ts
+models/user-extended-user.ts
 models/user-pretty-public-key.ts
 models/user-response.ts
 models/user-simple-user.ts

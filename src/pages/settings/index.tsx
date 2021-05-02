@@ -59,7 +59,12 @@ const SettingsPage: FC = () => {
         </Button>
       }
     >
-      <PersonalSettings ref={handlers} onSubmit={onSubmit} initial={data} />
+      <PersonalSettings
+        ref={handlers}
+        onSubmit={onSubmit}
+        initial={data}
+        categories={[]}
+      />
 
       <Card title={t("language")} style={{ marginTop: "4px" }} id="language">
         <Select

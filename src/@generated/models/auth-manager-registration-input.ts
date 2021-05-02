@@ -23,6 +23,12 @@ import { AuthManagerRegistrationUser } from './auth-manager-registration-user';
 export interface AuthManagerRegistrationInput {
     /**
      * 
+     * @type {Array<string>}
+     * @memberof AuthManagerRegistrationInput
+     */
+    assigned_categories?: Array<string>;
+    /**
+     * 
      * @type {string}
      * @memberof AuthManagerRegistrationInput
      */

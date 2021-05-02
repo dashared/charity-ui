@@ -1,4 +1,4 @@
-import { CategoryCategory as Category } from "@generated";
+import { CategoryCategory as Category, CategoryCategory } from "@generated";
 
 export function format(
   lang: "ru" | "en" | string | undefined,
@@ -13,4 +13,23 @@ export function format(
   }
 
   return "-";
+}
+
+export function formatMany(
+  lang: "run" | "en" | string | undefined,
+  categories?: CategoryCategory[],
+): string {
+  if (!categories) {
+    return "-";
+  }
+
+  if (categories?.length === 0) {
+    return "-";
+  }
+
+  return categories
+    .map((item) => {
+      return format(lang, item);
+    })
+    .join(", ");
 }

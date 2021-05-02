@@ -10,6 +10,7 @@
   "credentials": "Full name",
   "roles": "Roles",
   "created_at": "Creation date",
+  "categories": "Assigned categories",
   "birthday": "Birth date",
   "uuid": "ID",
   "$views": {

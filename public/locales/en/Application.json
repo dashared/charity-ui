@@ -85,6 +85,7 @@
     },
     "card": {
       "doneeInfoTitle": "Donee info",
+      "received_amount": "Received amount",
       "generalInfoTitle": "Application info",
       "description": "Description",
       "requestedAmount": "Requested sum",
