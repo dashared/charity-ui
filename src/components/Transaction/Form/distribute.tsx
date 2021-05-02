@@ -61,6 +61,7 @@ const DistributeMoneyForm: FC<DistributeMoneyFormProps> = ({ onSubmit }) => {
           hasFeedback
           rules={[
             {
+              required: true,
               message: t("form.applicationMessage"),
             },
           ]}
