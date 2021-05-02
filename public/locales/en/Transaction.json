@@ -18,6 +18,7 @@
   "time": "Transaction time",
   "status": "Status",
   "createTransaction": "Input donation",
+  "dictributeMoney": "Distribute money",
   "application_status": "Application status",
   "create_donation_application_err": "Can not donate to the application",
   "create_donation_application": "Successfully donated money to the application",
@@ -53,6 +54,7 @@
     "middle_name": "Donor second name",
     "last_name": "Donor surname",
     "submit": "Create transaction",
+    "submit_money": "Forward money",
     "priceValidation": "Transaction sum > 0"
   }
 }
