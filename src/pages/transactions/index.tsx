@@ -1,6 +1,5 @@
 import React, { FC, useRef } from "react";
-import { Button, Tag } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { Button, Space, Tag } from "antd";
 import {
   BlockchainDonation as Single,
   BlockchainDonationsResponse as Result,
@@ -22,15 +21,26 @@ const Actions: FC = () => {
   const { t } = useTranslation("Transaction");
 
   return (
-    <Button
-      type="primary"
-      icon={<PlusOutlined />}
-      onClick={() => {
-        router.navigate({ url: router.url({ name: "transactions:create" }) });
-      }}
-    >
-      {t("createTransaction")}
-    </Button>
+    <Space>
+      <Button
+        onClick={() => {
+          router.navigate({ url: router.url({ name: "transactions:create" }) });
+        }}
+      >
+        {t("createTransaction")}
+      </Button>
+
+      <Button
+        type="primary"
+        onClick={() => {
+          router.navigate({
+            url: router.url({ name: "transactions:distribute" }),
+          });
+        }}
+      >
+        {t("dictributeMoney")}
+      </Button>
+    </Space>
   );
 };
 

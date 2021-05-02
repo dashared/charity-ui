@@ -40,7 +40,7 @@ const DEFAULTS: TransactionFormState = {
   },
 };
 
-const ApplicationSelect: FC = ({ ...rest }) => {
+export const ApplicationSelect: FC = ({ ...rest }) => {
   const { t } = useTranslation("Transaction");
 
   const [data, setData] = useState<DonationRequestBody[] | undefined>();

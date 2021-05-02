@@ -66,6 +66,7 @@ const rules = {
       "managers:show",
       "fund:faq-index",
       "notifications:index",
+      "transactions:distribute",
     ],
   },
   admin: {
