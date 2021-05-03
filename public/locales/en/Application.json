@@ -27,6 +27,7 @@
   "createPageTitle": "Create application",
   "Filters": {
     "assignee": "Assigned to me",
+    "vote": "Need my vote",
     "status": "Application statuses",
     "statusTagPlaceholder": "Other statuses..."
   },

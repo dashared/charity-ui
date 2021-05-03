@@ -27,6 +27,7 @@
   "createPageTitle": "Создание заявки",
   "Filters": {
     "assignee": "Назначены на меня",
+    "vote": "Требуют голоса",
     "status": "Статусы заявки",
     "statusTagPlaceholder": "Остальные статусы..."
   },

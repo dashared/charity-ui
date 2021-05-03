@@ -52,6 +52,7 @@ const rules = {
       "applications:index",
       "applications:show",
       "application:edit",
+      "application:can-vote",
       "applications:create",
       "settings:index",
       "categories:index",
