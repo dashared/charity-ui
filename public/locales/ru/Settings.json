@@ -29,6 +29,8 @@
   "email": "Почта",
   "update_success": "Информация успешно обновлена",
   "update_error": "Ошибка обновления информации",
+  "updateLang_success": "Язык успешно обновлен",
+  "updateLang_error": "Ошибка обновления языка",
   "updateButton": "Обновить данные",
   "languageSetting": {
     "russian": "Русский",

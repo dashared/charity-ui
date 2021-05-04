@@ -1318,6 +1318,46 @@
         }
       }
     },
+    "/api/user-settings": {
+      "get": {
+        "tags": ["Settings"],
+        "summary": "Retrieves user's settings",
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User.Settings"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Settings"],
+        "summary": "Updates user settings",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "user settings input",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/User.Settings"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User.Settings"
+            }
+          }
+        }
+      }
+    },
     "/api/user/{id}": {
       "get": {
         "tags": ["User"],
@@ -2557,6 +2597,16 @@
         },
         "page": {
           "$ref": "#/definitions/utils.PageData"
+        }
+      }
+    },
+    "User.Settings": {
+      "type": "object",
+      "required": ["language"],
+      "properties": {
+        "language": {
+          "type": "string",
+          "enum": ["ru", "en"]
         }
       }
     },

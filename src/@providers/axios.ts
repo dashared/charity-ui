@@ -12,6 +12,7 @@ import {
   NewsApiFactory,
   NotificationsApiFactory,
   RegistrationApiFactory,
+  SettingsApiFactory,
   UserApiFactory,
 } from "@generated";
 import { AxiosResponse as Response } from "axios";
@@ -115,6 +116,11 @@ export const RegistrationFactory = RegistrationApiFactory(
 );
 
 export const LoginFactory = LoginApiFactory(configuration, basePath, axios);
+export const SettingsFactory = SettingsApiFactory(
+  configuration,
+  basePath,
+  axios,
+);
 
 export { UserExtendedUserRoleEnum as UserApiRole } from "@generated";
 export type { UserExtendedUser as UserApiModel } from "@generated";

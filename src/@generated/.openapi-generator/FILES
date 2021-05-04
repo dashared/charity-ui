@@ -13,6 +13,7 @@ api/money-api.ts
 api/news-api.ts
 api/notifications-api.ts
 api/registration-api.ts
+api/settings-api.ts
 api/user-api.ts
 base.ts
 configuration.ts
@@ -73,6 +74,7 @@ models/user-editable-info.ts
 models/user-extended-user.ts
 models/user-pretty-public-key.ts
 models/user-response.ts
+models/user-settings.ts
 models/user-simple-user.ts
 models/user-user.ts
 models/utils-money-json.ts

@@ -71,7 +71,10 @@ const SingleReviewSpan: FC<{ status?: SingleReviewStatus }> = ({ status }) => {
   );
 };
 
-const RightPanel: FC<{ id: number }> = ({ id }) => {
+const RightPanel: FC<{
+  id: number;
+  onRefetchApplication: () => Promise<void>;
+}> = ({ id, onRefetchApplication }) => {
   const { t } = useTranslation("Application");
 
   const { data, loading, refetchQuery } = useAxios(
@@ -92,10 +95,11 @@ const RightPanel: FC<{ id: number }> = ({ id }) => {
       } catch (e) {
         notify(t("$views.rightPanel.error_vote"), "error");
       } finally {
-        refetchQuery();
+        await refetchQuery();
+        await onRefetchApplication();
       }
     },
-    [t, id, refetchQuery],
+    [t, id, onRefetchApplication, refetchQuery],
   );
 
   if (!data) {

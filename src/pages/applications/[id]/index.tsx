@@ -82,7 +82,7 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
       rightPanel={
         data.status ===
           DonationRequestBodyStatusEnum.SuperManagerConfirmation && (
-          <RightPanel id={id} />
+          <RightPanel id={id} onRefetchApplication={refetchQuery} />
         )
       }
       actions={
