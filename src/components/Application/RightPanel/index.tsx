@@ -18,7 +18,7 @@ import { CheckOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import {
   DonationRequestReviewResponseReviewStatusEnum as ReviewStatus,
   DonationRequestSingleReviewStatusSingleReviewStatusEnum as SingleReviewStatus,
-  DonationRequestSubmitReviewInputIsReadyEnum as IsReadyEum,
+  DonationRequestSubmitReviewInputReviewStatusEnum as IsReadyEum,
 } from "@generated";
 import { fullName } from "@lib/utils/name";
 import { notify } from "@lib/utils/notification";
@@ -83,7 +83,7 @@ const RightPanel: FC<{ id: number }> = ({ id }) => {
   const voteAPI = useCallback(
     async (vote: IsReadyEum) => {
       try {
-        await DonationRequestFactory.apiDonationRequestIdSubmitReviewPost(id, {
+        await DonationRequestFactory.apiDonationRequestIdSubmitReviewPatch(id, {
           id: toInteger(id.toString()),
           review_status: vote,
         });

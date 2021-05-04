@@ -153,7 +153,6 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
       }
 
 
-
       const queryParameters = new URLSearchParams(localVarUrlObj.search);
       for (const key in localVarQueryParameter) {
         queryParameters.set(key, localVarQueryParameter[key]);
@@ -525,14 +524,14 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    apiDonationRequestIdSubmitReviewPost: async (id: number, request: DonationRequestSubmitReviewInput, options: any = {}): Promise<RequestArgs> => {
+    apiDonationRequestIdSubmitReviewPatch: async (id: number, request: DonationRequestSubmitReviewInput, options: any = {}): Promise<RequestArgs> => {
       // verify required parameter 'id' is not null or undefined
       if (id === null || id === undefined) {
-        throw new RequiredError('id', 'Required parameter id was null or undefined when calling apiDonationRequestIdSubmitReviewPost.');
+        throw new RequiredError('id', 'Required parameter id was null or undefined when calling apiDonationRequestIdSubmitReviewPatch.');
       }
       // verify required parameter 'request' is not null or undefined
       if (request === null || request === undefined) {
-        throw new RequiredError('request', 'Required parameter request was null or undefined when calling apiDonationRequestIdSubmitReviewPost.');
+        throw new RequiredError('request', 'Required parameter request was null or undefined when calling apiDonationRequestIdSubmitReviewPatch.');
       }
       const localVarPath = `/api/donation-request/{id}/submit_review`
         .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -781,8 +780,8 @@ export const DonationRequestApiFp = function (configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async apiDonationRequestIdSubmitReviewPost(id: number, request: DonationRequestSubmitReviewInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-      const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestIdSubmitReviewPost(id, request, options);
+    async apiDonationRequestIdSubmitReviewPatch(id: number, request: DonationRequestSubmitReviewInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+      const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestIdSubmitReviewPatch(id, request, options);
       return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
         const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
         return axios.request(axiosRequestArgs);
@@ -922,8 +921,8 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    apiDonationRequestIdSubmitReviewPost(id: number, request: DonationRequestSubmitReviewInput, options?: any): AxiosPromise<void> {
-      return DonationRequestApiFp(configuration).apiDonationRequestIdSubmitReviewPost(id, request, options).then((request) => request(axios, basePath));
+    apiDonationRequestIdSubmitReviewPatch(id: number, request: DonationRequestSubmitReviewInput, options?: any): AxiosPromise<void> {
+      return DonationRequestApiFp(configuration).apiDonationRequestIdSubmitReviewPatch(id, request, options).then((request) => request(axios, basePath));
     },
     /**
      * 
@@ -1149,22 +1148,22 @@ export interface DonationRequestApiApiDonationRequestIdStatusPatchRequest {
 }
 
 /**
- * Request parameters for apiDonationRequestIdSubmitReviewPost operation in DonationRequestApi.
+ * Request parameters for apiDonationRequestIdSubmitReviewPatch operation in DonationRequestApi.
  * @export
- * @interface DonationRequestApiApiDonationRequestIdSubmitReviewPostRequest
+ * @interface DonationRequestApiApiDonationRequestIdSubmitReviewPatchRequest
  */
-export interface DonationRequestApiApiDonationRequestIdSubmitReviewPostRequest {
+export interface DonationRequestApiApiDonationRequestIdSubmitReviewPatchRequest {
   /**
    * donation request id
    * @type {number}
-   * @memberof DonationRequestApiApiDonationRequestIdSubmitReviewPost
+   * @memberof DonationRequestApiApiDonationRequestIdSubmitReviewPatch
    */
   readonly id: number
 
   /**
    * Donation request Input
    * @type {DonationRequestSubmitReviewInput}
-   * @memberof DonationRequestApiApiDonationRequestIdSubmitReviewPost
+   * @memberof DonationRequestApiApiDonationRequestIdSubmitReviewPatch
    */
   readonly request: DonationRequestSubmitReviewInput
 }
@@ -1301,13 +1300,13 @@ export class DonationRequestApi extends BaseAPI {
   /**
    * 
    * @summary Submit result of application review
-   * @param {DonationRequestApiApiDonationRequestIdSubmitReviewPostRequest} requestParameters Request parameters.
+   * @param {DonationRequestApiApiDonationRequestIdSubmitReviewPatchRequest} requestParameters Request parameters.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof DonationRequestApi
    */
-  public apiDonationRequestIdSubmitReviewPost(requestParameters: DonationRequestApiApiDonationRequestIdSubmitReviewPostRequest, options?: any) {
-    return DonationRequestApiFp(this.configuration).apiDonationRequestIdSubmitReviewPost(requestParameters.id, requestParameters.request, options).then((request) => request(this.axios, this.basePath));
+  public apiDonationRequestIdSubmitReviewPatch(requestParameters: DonationRequestApiApiDonationRequestIdSubmitReviewPatchRequest, options?: any) {
+    return DonationRequestApiFp(this.configuration).apiDonationRequestIdSubmitReviewPatch(requestParameters.id, requestParameters.request, options).then((request) => request(this.axios, this.basePath));
   }
 
   /**
