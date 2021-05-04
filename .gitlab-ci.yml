@@ -65,32 +65,6 @@ deploy-docker:
   only:
     - develop
 
-prettier-master:
-  stage: prettier
-  tags:
-    - master
-  before_script:
-    - yarn install
-    - node -v
-    - yarn -v
-  script: yarn lint:prettier
-  only:
-    - master
-
-eslint-master:
-  stage: eslint
-  tags:
-    - master
-  before_script:
-    - yarn install
-    - node -v
-    - yarn -v
-  needs:
-    - job: prettier-master
-  script: yarn lint:eslint
-  only:
-    - master
-
 docker-build-master:
   stage: build
   tags:

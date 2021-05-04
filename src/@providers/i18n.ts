@@ -7,6 +7,8 @@ const DETECTION_OPTIONS = {
   order: ["navigator"],
 };
 
+const I18N_LANGUAGE = "language";
+
 export const init = (): Promise<TFunction> =>
   i18n
     .use(detector)
@@ -16,6 +18,7 @@ export const init = (): Promise<TFunction> =>
       detection: DETECTION_OPTIONS,
       ns: ["translation", "form", "_error"],
       defaultNS: "translation",
+      lng: localStorage.getItem(I18N_LANGUAGE) || "en",
       fallbackLng: "en",
       interpolation: {
         escapeValue: false,

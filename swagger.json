@@ -6,18 +6,96 @@
     "contact": {}
   },
   "paths": {
+    "/api/batch-statuses": {
+      "get": {
+        "tags": ["BatchStatus"],
+        "summary": "Retrieves a list of all operation statuses in blockchain",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "type": "integer",
+            "default": 10
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort param",
+            "required": false,
+            "type": "string",
+            "default": "'created_at DESC'"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Request type",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "enum": [
+              "DonateToCharity",
+              "DonateFromCharityToApplication",
+              "DonateToCharityFromExistingUser",
+              "DonateToCharityFromNewUser",
+              "DepositMoney",
+              "DonateToApplication",
+              "ProposeApplication",
+              "PublishApplication",
+              "CancelApplication",
+              "Registration",
+              "CloseApplication"
+            ]
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Request status",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "enum": ["Success", "Pending", "Failure"]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Blockchain.StatusResponse"
+            }
+          }
+        }
+      }
+    },
     "/api/categories": {
       "get": {
-        "produces": ["application/json"],
         "tags": ["Category"],
         "summary": "Get categories of fund",
+        "produces": ["application/json"],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Category.Category"
+                "$ref": "#/definitions/Category.AdminCategory"
               }
             }
           }
@@ -150,6 +228,138 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/Charity.Faq"
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/dialogs": {
+      "get": {
+        "tags": ["Chat"],
+        "summary": "Get list of all dialogs from operator",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "type": "integer",
+            "default": 10
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort param",
+            "required": false,
+            "type": "string",
+            "default": "10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Chat.DialogResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/dialogs/{id}": {
+      "get": {
+        "tags": ["Chat"],
+        "summary": "Get dialog entity",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Dialog id",
+            "required": true,
+            "type": "string",
+            "default": "10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Chat.Dialog"
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/dialogs/{id}/messages": {
+      "get": {
+        "tags": ["Chat"],
+        "summary": "Get messages by dialog id",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "type": "integer",
+            "default": 10
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Dialog id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "id of last displayed message",
+            "required": false,
+            "type": "string",
+            "default": "10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Chat.MessagesResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/chat/operator": {
+      "post": {
+        "tags": ["Chat"],
+        "summary": "Send message from operator",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Message",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Chat.AdminInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Chat.Message"
             }
           }
         }
@@ -368,6 +578,60 @@
                 "$ref": "#/definitions/DonationRequest.Comment"
               }
             }
+          }
+        }
+      }
+    },
+    "/api/donation-request/{id}/get_all_reviewers": {
+      "get": {
+        "tags": ["DonationRequest"],
+        "summary": "Get all SuperManagers responsible for category of application",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "donation request id",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DonationRequest.ReviewResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/donation-request/{id}/submit_review": {
+      "patch": {
+        "tags": ["DonationRequest"],
+        "summary": "Submit result of application review",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "request",
+            "description": "Donation request Input",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DonationRequest.SubmitReviewInput"
+            }
+          },
+          {
+            "type": "integer",
+            "description": "donation request id",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
           }
         }
       }
@@ -776,6 +1040,148 @@
         }
       }
     },
+    "/api/news": {
+      "get": {
+        "tags": ["News"],
+        "summary": "Get all news with pagination",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "type": "integer",
+            "default": 10
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort param",
+            "required": false,
+            "type": "string",
+            "default": "10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/News.Response"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["News"],
+        "summary": "Creates news entity",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "News input",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/News.Input"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/News.View"
+            }
+          }
+        }
+      }
+    },
+    "/api/news/{id}": {
+      "get": {
+        "tags": ["News"],
+        "summary": "Get one news entity",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "News entity id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/News.View"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["News"],
+        "summary": "Deletes one news entity",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "News entity id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/News.View"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["News"],
+        "summary": "Edit one news entity",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "News id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "News input",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/News.Input"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/News.View"
+            }
+          }
+        }
+      }
+    },
     "/api/notifications/set-token": {
       "patch": {
         "tags": ["Notifications"],
@@ -912,25 +1318,65 @@
         }
       }
     },
-    "/api/user/{id}": {
+    "/api/user-settings": {
       "get": {
+        "tags": ["Settings"],
+        "summary": "Retrieves user's settings",
         "produces": ["application/json"],
-        "tags": ["User"],
-        "summary": "Retrieves user based on given ID",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User.Settings"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Settings"],
+        "summary": "Updates user settings",
+        "produces": ["application/json"],
         "parameters": [
           {
-            "type": "string",
-            "description": "User ID",
-            "name": "id",
-            "in": "path",
-            "required": true
+            "in": "body",
+            "name": "body",
+            "description": "user settings input",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/User.Settings"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User.User"
+              "$ref": "#/definitions/User.Settings"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Retrieves user based on given ID",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User.ExtendedUser"
             }
           }
         }
@@ -1015,6 +1461,12 @@
     "Auth.ManagerRegistrationInput": {
       "type": "object",
       "properties": {
+        "assigned_categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "role": {
           "type": "string",
           "enum": [
@@ -1239,6 +1691,78 @@
         }
       }
     },
+    "Blockchain.Status": {
+      "type": "object",
+      "properties": {
+        "batch_id": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "error_string": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["Pending", "Success", "Failure"]
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "DonateToCharity",
+            "DonateFromCharityToApplication",
+            "DonateToCharityFromExistingUser",
+            "DonateToCharityFromNewUser",
+            "DepositMoney",
+            "DonateToApplication",
+            "ProposeApplication",
+            "PublishApplication",
+            "CancelApplication",
+            "Registration",
+            "CloseApplication"
+          ]
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      }
+    },
+    "Blockchain.StatusResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Blockchain.Status"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/utils.PageData"
+        }
+      }
+    },
+    "Category.AdminCategory": {
+      "type": "object",
+      "required": ["ara", "eng", "id", "rus"],
+      "properties": {
+        "ara": {
+          "type": "string"
+        },
+        "eng": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "is_hidden": {
+          "type": "boolean"
+        },
+        "rus": {
+          "type": "string"
+        }
+      }
+    },
     "Category.Category": {
       "type": "object",
       "required": ["eng", "id", "rus"],
@@ -1273,7 +1797,7 @@
         "categories": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Category.Category"
+            "$ref": "#/definitions/Category.AdminCategory"
           }
         }
       }
@@ -1299,6 +1823,7 @@
     },
     "Charity.FundInfo": {
       "type": "object",
+      "required": ["title", "description"],
       "properties": {
         "address": {
           "type": "string"
@@ -1319,6 +1844,7 @@
     },
     "Charity.FundInfoResponse": {
       "type": "object",
+      "required": ["title", "description"],
       "properties": {
         "address": {
           "type": "string"
@@ -1345,6 +1871,7 @@
     },
     "Charity.FundInput": {
       "type": "object",
+      "required": ["title", "description"],
       "properties": {
         "address": {
           "type": "string"
@@ -1366,6 +1893,124 @@
         },
         "title": {
           "type": "string"
+        }
+      }
+    },
+    "Chat.AdminInput": {
+      "type": "object",
+      "required": ["body", "dialog_id"],
+      "properties": {
+        "attachments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "body": {
+          "type": "string"
+        },
+        "dialog_id": {
+          "type": "string"
+        }
+      }
+    },
+    "Chat.Dialog": {
+      "type": "object",
+      "required": ["user"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "unread_message_counter": {
+          "type": "integer"
+        },
+        "user": {
+          "$ref": "#/definitions/User.User"
+        }
+      }
+    },
+    "Chat.DialogResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Chat.DialogResponseBody"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/utils.PageData"
+        }
+      }
+    },
+    "Chat.DialogResponseBody": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "last_message": {
+          "$ref": "#/definitions/Chat.Message"
+        },
+        "unread_message_counter": {
+          "type": "integer"
+        },
+        "user": {
+          "$ref": "#/definitions/User.User"
+        }
+      }
+    },
+    "Chat.Message": {
+      "type": "object",
+      "properties": {
+        "author": {
+          "$ref": "#/definitions/User.User"
+        },
+        "body": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "Chat.MessageBody": {
+      "type": "object",
+      "properties": {
+        "attachments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/File.Info"
+          }
+        },
+        "author": {
+          "$ref": "#/definitions/User.User"
+        },
+        "body": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "Chat.MessagesResponse": {
+      "type": "object",
+      "properties": {
+        "cursor": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Chat.MessageBody"
+          }
         }
       }
     },
@@ -1407,6 +2052,9 @@
               "Deleted"
             ]
           }
+        },
+        "undo_transition": {
+          "type": "boolean"
         },
         "category": {
           "$ref": "#/definitions/Category.Category"
@@ -1475,6 +2123,48 @@
         },
         "text": {
           "type": "string"
+        }
+      }
+    },
+    "DonationRequest.ReviewResponse": {
+      "type": "object",
+      "properties": {
+        "accepted_count": {
+          "type": "integer"
+        },
+        "not_viewed_count": {
+          "type": "integer"
+        },
+        "rejected_count": {
+          "type": "integer"
+        },
+        "review_status": {
+          "type": "string",
+          "enum": ["Accepted", "Rejected", "NotViewed"]
+        },
+        "reviewers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DonationRequest.SingleReviewStatus"
+          }
+        },
+        "total_count": {
+          "type": "integer"
+        }
+      }
+    },
+    "DonationRequest.SingleReviewStatus": {
+      "type": "object",
+      "properties": {
+        "application_id": {
+          "type": "integer"
+        },
+        "manager": {
+          "$ref": "#/definitions/User.User"
+        },
+        "single_review_status": {
+          "type": "string",
+          "enum": ["Accepted", "Rejected", "NotViewed"]
         }
       }
     },
@@ -1638,6 +2328,18 @@
         }
       }
     },
+    "DonationRequest.SubmitReviewInput": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "review_status": {
+          "type": "string",
+          "enum": ["Accepted", "Rejected", "NotViewed"]
+        }
+      }
+    },
     "DonationRequest.SuperManagerInput": {
       "type": "object",
       "required": ["category_id"],
@@ -1758,6 +2460,64 @@
         }
       }
     },
+    "News.Input": {
+      "type": "object",
+      "required": ["description", "text", "title"],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "image_id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "News.Response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/News.View"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/utils.PageData"
+        }
+      }
+    },
+    "News.View": {
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "image_id": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        }
+      }
+    },
     "User.Balance": {
       "type": "object",
       "properties": {
@@ -1769,6 +2529,12 @@
     "User.EditableInfo": {
       "type": "object",
       "properties": {
+        "assigned_categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "birth_date": {
           "type": "string"
         },
@@ -1834,6 +2600,16 @@
         }
       }
     },
+    "User.Settings": {
+      "type": "object",
+      "required": ["language"],
+      "properties": {
+        "language": {
+          "type": "string",
+          "enum": ["ru", "en"]
+        }
+      }
+    },
     "User.SimpleUser": {
       "type": "object",
       "properties": {
@@ -1848,6 +2624,70 @@
         },
         "middle_name": {
           "type": "string"
+        }
+      }
+    },
+    "User.ExtendedUser": {
+      "type": "object",
+      "properties": {
+        "assigned_categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Category.Category"
+          }
+        },
+        "birth_date": {
+          "type": "string"
+        },
+        "blocked": {
+          "type": "boolean"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "image_id": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "middle_name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "pretty_public_key": {
+          "$ref": "#/definitions/User.PrettyPublicKey"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "User",
+            "Manager",
+            "SuperManager",
+            "ContentManager",
+            "Operator",
+            "Admin"
+          ]
+        },
+        "tech_user": {
+          "type": "boolean"
         }
       }
     },

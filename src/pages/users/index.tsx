@@ -1,7 +1,11 @@
 import React, { FC, useRef, useState } from "react";
 import { Avatar, Button, Card, Select, Space } from "antd";
 import { DownOutlined, UpOutlined, UserOutlined } from "@ant-design/icons";
-import { UserResponse as Result, UserUser as Single } from "@generated";
+import {
+  UserResponse as Result,
+  UserUser as Single,
+  UserUserRoleEnum,
+} from "@generated";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable, {
   RegistryColumnConf,
@@ -15,7 +19,7 @@ import { AuthConsumer } from "@providers/authContext";
 import { UserApiRole, UserRequestFactory } from "@providers/axios";
 import Redirect from "pages/_redirect";
 
-import ClearButton from "components/Application/Filters/clear";
+import { ClearButton } from "components/Application/Filters";
 import RoleTag from "components/User/Role/tag";
 
 import styles from "./styles.module.less";
@@ -180,7 +184,7 @@ const UsersPage: FC = () => {
     {
       key: "role",
       render(record: Single) {
-        return <RoleTag roles={[record.role ?? UserApiRole.User]} />;
+        return <RoleTag roles={[record.role ?? UserUserRoleEnum.User]} />;
       },
     },
   ];

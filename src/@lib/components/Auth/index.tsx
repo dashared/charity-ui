@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import { notification } from "antd";
+import { UserSettings, UserSettingsLanguageEnum } from "@generated";
 import { decode } from "@lib/utils/base64";
 import { notify } from "@lib/utils/notification";
 import { i18n } from "@providers";
 import { AuthProvider, Credentials } from "@providers/authContext";
 import {
   LoginFactory,
+  SettingsFactory,
   UserApiModel,
   UserApiRole,
   UserRequestFactory,
@@ -26,7 +29,7 @@ function mapRole(apiRole: UserApiRole): Role {
     case UserApiRole.Manager:
       return Role.manager;
     case UserApiRole.ContentManager:
-      return Role.operator;
+      return Role.contentManager;
     case UserApiRole.SuperManager:
       return Role.supermanager;
     case UserApiRole.Admin:
@@ -46,6 +49,7 @@ class Auth extends Component {
       uuid: localStorage.getItem("uuid") ?? "",
       name: localStorage.getItem("name") ?? "",
       surname: localStorage.getItem("surname") ?? "",
+      language: localStorage.getItem("language") ?? "",
     },
     accessToken: localStorage.getItem("accessToken") ?? "",
     expires: parseInt(localStorage.getItem("exp") ?? "0"),
@@ -82,9 +86,11 @@ class Auth extends Component {
 
   handleAuthentication = async (headerData: HeaderData): Promise<void> => {
     const data = await UserRequestFactory.apiUserIdGet(headerData.user_id);
+    localStorage.setItem("accessToken", headerData.token);
+    const settings = await SettingsFactory.apiUserSettingsGet();
 
-    if (data) {
-      this.setSession(headerData, data.data);
+    if (data && settings) {
+      this.setSession(headerData, data.data, settings.data);
     }
   };
 
@@ -105,6 +111,7 @@ class Auth extends Component {
     user: UserApiModel,
     exp: number,
     token: string,
+    language: UserSettingsLanguageEnum,
   ): void {
     localStorage.setItem("authenticated", "true");
     localStorage.setItem("role", role);
@@ -113,6 +120,7 @@ class Auth extends Component {
     localStorage.setItem("surname", user.last_name ?? "");
     localStorage.setItem("accessToken", token);
     localStorage.setItem("exp", exp.toString());
+    localStorage.setItem("language", language);
   }
 
   // Function that will be called to refresh authorization
@@ -126,7 +134,11 @@ class Auth extends Component {
         return undefined;
       });
 
-  setSession(headerData: HeaderData, user: UserApiModel): void {
+  setSession(
+    headerData: HeaderData,
+    user: UserApiModel,
+    settings: UserSettings,
+  ): void {
     const role = mapRole(headerData.role); // TODO: remove
 
     if (role === Role.visitor) {
@@ -134,7 +146,13 @@ class Auth extends Component {
       return;
     }
 
-    this.saveToLocalStorage(role, user, headerData.exp, headerData.token);
+    this.saveToLocalStorage(
+      role,
+      user,
+      headerData.exp,
+      headerData.token,
+      settings.language,
+    );
 
     this.setState({
       authenticated: true,
@@ -143,6 +161,7 @@ class Auth extends Component {
         uuid: headerData.user_id,
         name: user.first_name,
         surname: user.last_name,
+        language: settings.language,
       },
       accessToken: headerData.token,
       expires: headerData.exp,
@@ -164,7 +183,12 @@ class Auth extends Component {
 
       onMessageListener()
         .then((payload) => {
-          console.log(payload);
+          const n = payload.notification;
+          notification.info({
+            message: n.title,
+            description: n.body,
+            placement: "topRight",
+          });
         })
         .catch((err) => console.log("failed: ", err));
     }

@@ -43,19 +43,29 @@
       "Processing": "Processing",
       "Archived": "Archived"
     },
+    "Chats": "Chats",
     "Managers": "Managers",
     "Transactions": "Transactions",
     "Category": "Categories",
     "Fund": "Fund",
     "Fund_nested": {
       "Description": "Description",
+      "Dashboard": "Dashboard",
       "FAQ": "FAQ"
     },
     "Users": "Users",
     "Logs": "Logs",
-    "Settings": "Settings"
+    "Settings": "Settings",
+    "News": "News"
   },
   "cancel": "Cancel",
   "edit": "Edit",
-  "save": "Save"
+  "save": "Save",
+  "PageHeader": {
+    "refresh": "Refresh",
+    "rightPanel": {
+      "close": "Close",
+      "open": "Open"
+    }
+  }
 }

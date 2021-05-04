@@ -12,6 +12,8 @@ import ApplicationForm, {
 type ChangeApplicationFormProps = {
   id: number;
   availiableStatuses: ApplicationStatus[];
+  currentStatus: ApplicationStatus;
+  undoTransition?: boolean;
   onSuccess?: () => void;
   onError?: (error: Error) => void;
 };
@@ -19,7 +21,10 @@ type ChangeApplicationFormProps = {
 const ChangeApplicationForm: ForwardRefRenderFunction<
   ApplicationFormHandler,
   ChangeApplicationFormProps
-> = ({ onSuccess, onError, id, availiableStatuses }, ref) => {
+> = (
+  { onSuccess, onError, id, availiableStatuses, currentStatus, undoTransition },
+  ref,
+) => {
   const { t } = useTranslation("Application");
 
   const onSubmit = async (values: ApplicationFormState): Promise<void> => {
@@ -36,11 +41,26 @@ const ChangeApplicationForm: ForwardRefRenderFunction<
     }
   };
 
+  const onUndoTransition = async (): Promise<void> => {
+    try {
+      await DonationRequestFactory.apiDonationRequestIdStatusDelete(id);
+
+      notify(t("$views.undoTransitionSuccess", "success"));
+
+      onSuccess?.();
+    } catch (e) {
+      onError?.(e);
+    }
+  };
+
   return (
     <ApplicationForm
       ref={ref}
       onSubmit={onSubmit}
       availiableStatuses={availiableStatuses}
+      currentStatus={currentStatus}
+      undoTransition={undoTransition}
+      onUndoTransition={onUndoTransition}
     />
   );
 };

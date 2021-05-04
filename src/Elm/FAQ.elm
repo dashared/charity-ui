@@ -1,6 +1,7 @@
 module Elm.FAQ exposing (..)
 
 import Browser
+import Element as E
 import Elm.Center
 import Elm.Skeleton exposing (Tab(..))
 import Html exposing (..)
@@ -30,9 +31,9 @@ view : Model -> Html msg
 view model =
     let
         mdFaq =
-            Elm.Center.markdown model.faq
+            E.html (Elm.Center.markdown model.faq)
     in
-    Elm.Skeleton.skeleton "" FAQ [ mdFaq ]
+    Elm.Skeleton.skeleton FAQ [ mdFaq ]
 
 
 type alias Flags =

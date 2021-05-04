@@ -8,6 +8,7 @@
   "listTitle_archived": "Application - archieved",
   "id": "№",
   "title": "Title",
+  "reviewers": "Reviewers",
   "assignee": "Manager",
   "assignee_status": "Role",
   "collected": "Money collected",
@@ -25,13 +26,19 @@
   "authorUpd": "Update author",
   "authorRole": "Author's role",
   "createPageTitle": "Create application",
+  "undo_transition": "Undo transition to \"{{ currentStatus }}\" status",
+  "undo_transition_tooltip": "This action will cancel the last transition",
+  "vote_text": "You have already voted in favor of the aplication №{{ id }}",
+  "vote_text_reject": "You have already voted in against the aplication №{{ id }}",
   "Filters": {
     "assignee": "Assigned to me",
+    "vote": "Need my vote",
     "status": "Application statuses",
     "statusTagPlaceholder": "Other statuses..."
   },
   "$views": {
     "updateStatus": "Status updated successfully",
+    "undoTransitionSuccess": "Canceled the last status transition",
     "update_success": "Application info updated successfully",
     "update_error": "Error updating aplication, try again",
     "select_assignee": "Select the manager",
@@ -64,6 +71,17 @@
         "description": "These files will be available only to the fund"
       }
     },
+    "rightPanel": {
+      "title": "Voting",
+      "for": "Accepted",
+      "against": "Rejected",
+      "not_voted": "Still waiting",
+      "vote_status": "Review status",
+      "vote_for": "Vote for",
+      "vote_against": "Against",
+      "success_vote": "Your vote was counted!",
+      "error_vote": "Error sending the request, try later"
+    },
     "message": {
       "title": "Enter an application title",
       "category": "Enter an application category",
@@ -85,6 +103,7 @@
     },
     "card": {
       "doneeInfoTitle": "Donee info",
+      "received_amount": "Received amount",
       "generalInfoTitle": "Application info",
       "description": "Description",
       "requestedAmount": "Requested sum",
@@ -139,5 +158,10 @@
     "Refused": "Refused",
     "Deleted": "Deleted",
     "UserConfirmation": "Waiting activation"
+  },
+  "ReviewStatus": {
+    "Accepted": "Accepted",
+    "Rejected": "Rejected",
+    "NotViewed": "Not viewed"
   }
 }

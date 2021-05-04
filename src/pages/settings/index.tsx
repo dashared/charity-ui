@@ -1,12 +1,15 @@
 import React, { FC, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Card, Empty, Select, Skeleton } from "antd";
-import { UserEditableInfo } from "@generated";
+import { UserEditableInfo, UserSettingsLanguageEnum } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { notify } from "@lib/utils/notification";
 import { Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
-import useAxios, { UserRequestFactory } from "@providers/axios";
+import useAxios, {
+  SettingsFactory,
+  UserRequestFactory,
+} from "@providers/axios";
 import i18n from "i18next";
 import Redirect from "pages/_redirect";
 
@@ -29,10 +32,29 @@ const SettingsPage: FC = () => {
 
         notify(t("update_success"), "success");
       } catch {
-        notify(t("update_success"), "error");
+        notify(t("update_error"), "error");
       }
     },
     [id, t],
+  );
+
+  const onChangeLanguage = useCallback(
+    async (lang: UserSettingsLanguageEnum) => {
+      try {
+        await SettingsFactory.apiUserSettingsPatch({
+          language: lang,
+        });
+
+        i18n.changeLanguage(lang);
+
+        localStorage.setItem("language", lang);
+
+        notify(t("updateLang_success"), "success");
+      } catch {
+        notify(t("updateLang_error"), "error");
+      }
+    },
+    [t],
   );
 
   const { data, loading } = useAxios(
@@ -59,12 +81,17 @@ const SettingsPage: FC = () => {
         </Button>
       }
     >
-      <PersonalSettings ref={handlers} onSubmit={onSubmit} initial={data} />
+      <PersonalSettings
+        ref={handlers}
+        onSubmit={onSubmit}
+        initial={data}
+        categories={[]}
+      />
 
       <Card title={t("language")} style={{ marginTop: "4px" }} id="language">
         <Select
           onChange={(value) => {
-            i18n.changeLanguage(value);
+            onChangeLanguage(value as UserSettingsLanguageEnum);
           }}
           value={i18n.language.startsWith("en") ? "en" : "ru"}
           style={{ width: 180, margin: "0 8px" }}

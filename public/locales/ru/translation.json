@@ -44,18 +44,28 @@
       "Archived": "Архивированные"
     },
     "Managers": "Менеджеры",
+    "Chats": "Чаты",
     "Category": "Категории",
     "Transactions": "Транзакции",
     "Fund": "Фонд",
     "Fund_nested": {
       "Description": "Описание",
+      "Dashboard": "Статистика",
       "FAQ": "FAQ"
     },
     "Users": "Пользователи",
     "Logs": "Логи",
-    "Settings": "Настройки"
+    "Settings": "Настройки",
+    "News": "Новости"
   },
   "cancel": "Отменить",
   "edit": "Изменить",
-  "save": "Сохранить"
+  "save": "Сохранить",
+  "PageHeader": {
+    "refresh": "Обновить",
+    "rightPanel": {
+      "close": "Закрыть",
+      "open": "Открыть"
+    }
+  }
 }

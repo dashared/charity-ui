@@ -63,6 +63,12 @@ export interface DonationRequestBody {
     available_statuses?: Array<DonationRequestBodyAvailableStatusesEnum>;
     /**
      * 
+     * @type {boolean}
+     * @memberof DonationRequestBody
+     */
+    undo_transition?: boolean;
+    /**
+     * 
      * @type {CategoryCategory}
      * @memberof DonationRequestBody
      */

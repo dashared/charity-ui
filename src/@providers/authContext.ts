@@ -3,11 +3,12 @@ import { HeaderData } from "@lib/components/Auth";
 
 import { Role } from "./rbac-rules";
 
-type User = {
+export type User = {
   name?: string;
   role: Role;
   surname?: string;
   uuid?: string;
+  language?: string;
 };
 
 export type Credentials = {

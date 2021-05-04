@@ -7,20 +7,22 @@ import React, {
 } from "react";
 import { Card, DatePicker, Form, Input, Select, Switch, Upload } from "antd";
 import { FormInstance } from "antd/lib/form";
-import { RcCustomRequestOptions, UploadFile } from "antd/lib/upload/interface";
+import { UploadFile } from "antd/lib/upload/interface";
 import { PlusOutlined } from "@ant-design/icons";
 import {
   AuthManagerRegistrationInputRoleEnum as Roles,
-  FileInfo,
+  CategoryAdminCategory,
   UserEditableInfo,
-  UserUser,
-  UserUserRoleEnum,
 } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
-import { useTranslation } from "@providers";
+import { formatCategories } from "@lib/utils";
+import { i18n, useTranslation } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
+import { UserApiModel, UserApiRole } from "@providers/axios";
+import { customRequest } from "@providers/cusomUpload";
 import moment from "moment";
 
+import CategorySelect from "components/Category/select";
 import BlockedTag from "components/User/Block/tag";
 import RoleTag from "components/User/Role/tag";
 
@@ -40,7 +42,8 @@ export type PersonalSettingsFormState = UserEditableInfo;
 export type PersonalSettingsHandler = FormInstance<PersonalSettingsFormState>;
 
 type PersonalSettingsFormProps = {
-  initial?: UserUser;
+  initial?: UserApiModel;
+  categories: CategoryAdminCategory[];
   onSubmit?: (values: PersonalSettingsFormState) => void | Promise<void>;
 };
 
@@ -62,16 +65,18 @@ const UploadButton: FC = () => {
 const PersonalSettingsForm: ForwardRefRenderFunction<
   PersonalSettingsHandler,
   PersonalSettingsFormProps
-> = ({ initial, onSubmit }, ref) => {
+> = ({ initial, onSubmit, categories }, ref) => {
   const { t } = useTranslation("Settings");
+
+  const lang = i18n.language.substr(0, 2);
 
   const [id, setId] = useState<string | undefined>(initial?.image_id);
 
   const [profileList, setFileList] = useState<Array<UploadFile<any>>>(
-    initial?.image_id
+    id
       ? [
           {
-            uid: "-1",
+            uid: id,
             status: "done",
             name: "avatar",
             size: 0,
@@ -81,30 +86,6 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
         ]
       : [],
   );
-
-  const customRequest = (options: RcCustomRequestOptions): void => {
-    const { file, onError, onSuccess } = options;
-
-    const url = `/api/file/upload`;
-
-    const formData = new FormData();
-    formData.append("file", file as Blob);
-    const request = new XMLHttpRequest();
-
-    request.open("POST", url);
-    request.send(formData);
-
-    request.onload = function () {
-      if (request.status === 200) {
-        const parsed: FileInfo[] = JSON.parse(request.responseText);
-        setId(parsed.map((value) => value.id ?? "")[0]);
-
-        return onSuccess(parsed, file);
-      } else {
-        return onError(Error(request.statusText));
-      }
-    };
-  };
 
   const handleOnChange = ({ fileList }: any): void => {
     setFileList(fileList);
@@ -120,21 +101,31 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
               ref={ref}
               initialValues={{
                 ...initial,
+                assigned_categories: initial?.assigned_categories?.map(
+                  (item) => item.id,
+                ),
                 birth_date: initial?.birth_date
                   ? moment(initial?.birth_date)
                   : undefined,
               }}
               onFinish={(values) => {
+                const image_id = profileList[0]?.response
+                  ? profileList[0]?.response[0]?.id
+                  : undefined;
                 onSubmit?.({
                   ...values,
-                  image_id: id ?? "",
+                  image_id,
                 });
               }}
             >
               <Form.Item label={t("profile_picture")} name="image">
                 <Upload
                   accept="image/*"
-                  customRequest={customRequest}
+                  customRequest={(options) => {
+                    customRequest(options, (ids) => {
+                      setId(ids[0]);
+                    });
+                  }}
                   listType="picture-card"
                   fileList={profileList}
                   onChange={handleOnChange}
@@ -169,9 +160,7 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
                 no={() => {
                   return (
                     <Form.Item name="role" label={t("role")}>
-                      <RoleTag
-                        roles={[(initial?.role as unknown) as UserUserRoleEnum]}
-                      />
+                      <RoleTag roles={[initial?.role ?? UserApiRole.Admin]} />
                     </Form.Item>
                   );
                 }}
@@ -192,6 +181,35 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
                 }}
               />
 
+              {initial?.role === UserApiRole.SuperManager && (
+                <RoleSwitch
+                  role={user.role}
+                  perform="user:edit"
+                  no={() => {
+                    return (
+                      <Form.Item
+                        name="assigned_categories"
+                        label={t("assigned_categories")}
+                      >
+                        <span>
+                          {formatCategories(lang, initial.assigned_categories)}
+                        </span>
+                      </Form.Item>
+                    );
+                  }}
+                  yes={() => {
+                    return (
+                      <Form.Item
+                        name="assigned_categories"
+                        label={t("assigned_categories")}
+                      >
+                        <CategorySelect categories={categories} lang={lang} />
+                      </Form.Item>
+                    );
+                  }}
+                />
+              )}
+
               <Form.Item name="email" label={t("email")} required={true}>
                 {initial?.email}
               </Form.Item>
@@ -205,7 +223,10 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
               </Form.Item>
 
               <Form.Item name="birth_date" label={t("birth_date")}>
-                <DatePicker style={{ width: 200 }} />
+                <DatePicker
+                  placeholder={t("birth_date_placeholder")}
+                  style={{ width: 200 }}
+                />
               </Form.Item>
 
               <Form.Item name="phone" label={t("phone")}>
@@ -224,7 +245,11 @@ const PersonalSettingsForm: ForwardRefRenderFunction<
                 }}
                 yes={() => {
                   return (
-                    <Form.Item name="blocked" label={t("blocked")}>
+                    <Form.Item
+                      name="blocked"
+                      label={t("blocked")}
+                      valuePropName="checked"
+                    >
                       <Switch />
                     </Form.Item>
                   );

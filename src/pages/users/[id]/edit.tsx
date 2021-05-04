@@ -5,7 +5,10 @@ import RoleSwitch from "@lib/components/RoleSwitch";
 import { notify } from "@lib/utils/notification";
 import { PageProps, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
-import useAxios, { UserRequestFactory } from "@providers/axios";
+import useAxios, {
+  CategoryFactory,
+  UserRequestFactory,
+} from "@providers/axios";
 import Unauthorized from "pages/_unauthorized";
 
 import { PersonalSettings } from "components/Settings";
@@ -39,11 +42,19 @@ const EditUserPage: FC<PageProps> = ({ response }) => {
     id,
   );
 
-  if (loading) {
+  const { data: categories, loading: loadingCategories } = useAxios(
+    CategoryFactory.apiCategoriesGet,
+  );
+
+  if (loading || loadingCategories) {
     return <Skeleton active={loading} />;
   }
 
   if (!data) {
+    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
+  }
+
+  if (!categories) {
     return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
   }
 
@@ -58,7 +69,12 @@ const EditUserPage: FC<PageProps> = ({ response }) => {
         </Button>
       }
     >
-      <PersonalSettings ref={handlers} onSubmit={onSubmit} initial={data} />
+      <PersonalSettings
+        ref={handlers}
+        onSubmit={onSubmit}
+        initial={data}
+        categories={categories}
+      />
     </Workspace>
   );
 };

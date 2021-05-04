@@ -1,0 +1,33 @@
+{
+  "create": "Add",
+  "createTitle": "New story",
+  "editTitle": "Edit story",
+  "load_more": "Load more",
+  "title": "News",
+  "edit": "Edit",
+  "delete": "Delete",
+  "$views": {
+    "createSuccess": "Successfully added content!",
+    "createError": "Error publishing the news",
+    "deleteSuccess": "Post successfully deleted!",
+    "deleteError": "Error deleting post",
+    "editSuccess": "Information changed successfully!",
+    "editError": "Error updating information",
+    "message": {
+      "title": "Please, enter the title",
+      "text": "Please, enter the text",
+      "description": "Please, enter the description"
+    },
+    "create": {
+      "title": "Title",
+      "text": "Text",
+      "description": "Description",
+      "image": "Image",
+      "imageUpload": "Upload"
+    },
+    "buttons": {
+      "add": "Publish",
+      "edit": "Save changes"
+    }
+  }
+}

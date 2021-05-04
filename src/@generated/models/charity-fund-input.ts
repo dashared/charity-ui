@@ -31,7 +31,7 @@ export interface CharityFundInput {
      * @type {string}
      * @memberof CharityFundInput
      */
-    description?: string;
+    description: string;
     /**
      * 
      * @type {string}
@@ -55,7 +55,7 @@ export interface CharityFundInput {
      * @type {string}
      * @memberof CharityFundInput
      */
-    title?: string;
+    title: string;
 }
 
 

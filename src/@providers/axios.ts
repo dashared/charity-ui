@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import {
+  BatchStatusApiFactory,
   CategoryApiFactory,
   CharityApiFactory,
+  ChatApiFactory,
   DonationRequestApiFactory,
   DonationsApiFactory,
   FileApiFactory,
   LoginApiFactory,
   MoneyApiFactory,
+  NewsApiFactory,
   NotificationsApiFactory,
   RegistrationApiFactory,
+  SettingsApiFactory,
   UserApiFactory,
 } from "@generated";
 import { AxiosResponse as Response } from "axios";
@@ -81,7 +85,14 @@ export const DonationsFactory = DonationsApiFactory(
   axios,
 );
 export const FileFactory = FileApiFactory(configuration, basePath, axios);
+export const BatchStatusFactory = BatchStatusApiFactory(
+  configuration,
+  basePath,
+  axios,
+);
 export const MoneyFactory = MoneyApiFactory(configuration, basePath, axios);
+export const NewsFactory = NewsApiFactory(configuration, basePath, axios);
+export const ChatsFactory = ChatApiFactory(configuration, basePath, axios);
 export const NotificationsFactory = NotificationsApiFactory(
   configuration,
   basePath,
@@ -105,6 +116,11 @@ export const RegistrationFactory = RegistrationApiFactory(
 );
 
 export const LoginFactory = LoginApiFactory(configuration, basePath, axios);
+export const SettingsFactory = SettingsApiFactory(
+  configuration,
+  basePath,
+  axios,
+);
 
-export { UserUserRoleEnum as UserApiRole } from "@generated";
-export type { UserUser as UserApiModel } from "@generated";
+export { UserExtendedUserRoleEnum as UserApiRole } from "@generated";
+export type { UserExtendedUser as UserApiModel } from "@generated";

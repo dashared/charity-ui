@@ -6,6 +6,7 @@ import { Link } from "@curi/react-dom";
 import {
   DonationRequestBody as Single,
   DonationRequestBodyAvailableStatusesEnum as Status,
+  UserUserRoleEnum,
 } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { formatMoney } from "@lib/utils";
@@ -13,7 +14,7 @@ import { format } from "@lib/utils/date";
 import { cred, fullName } from "@lib/utils/name";
 import { notify } from "@lib/utils/notification";
 import { useTranslation } from "@providers";
-import { DonationRequestFactory, UserApiRole } from "@providers/axios";
+import { DonationRequestFactory } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
 import moment from "moment";
 
@@ -223,7 +224,9 @@ export const GeneralInfo: FC<{
                     info.assignee?.last_name,
                   )}
                 </Link>{" "}
-                <RoleTag roles={[info.assignee?.role ?? UserApiRole.Admin]} />
+                <RoleTag
+                  roles={[info.assignee?.role ?? UserUserRoleEnum.Admin]}
+                />
               </>
             )}
             {editable && (

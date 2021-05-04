@@ -1,17 +1,25 @@
 {
   "title": "Categories for applications",
+  "ok": "Yes",
+  "is_private": "Private",
+  "cancel": "Cancel",
+  "delete_popconfirm": "Are you sure you want to delete this category?",
   "placeholder": {
     "id": "ID",
     "rus": "In russian",
-    "eng": "In english"
+    "eng": "In english",
+    "ara": "In arabic"
   },
   "add": "Add category",
   "submit": "Submit changes",
   "missing": {
     "id": "ID not present",
     "rus": "Russian localization not present",
-    "eng": "English localization not present"
+    "eng": "English localization not present",
+    "ara": "Arabic localization not present"
   },
   "updated": "Successfully updated category list",
-  "updated_err": "Error, try again!"
+  "updated_err": "Error, try again!",
+  "deleted_err": "Application with category ID {{id}} already exists!",
+  "deleted": "Successfully deleted category with ID {{id}}"
 }

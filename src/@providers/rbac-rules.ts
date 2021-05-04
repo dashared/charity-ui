@@ -2,25 +2,38 @@ export enum Role {
   visitor = "visitor",
   manager = "manager",
   supermanager = "supermanager",
+  contentManager = "contentManager",
   operator = "operator",
   admin = "admin",
 }
 
 const rules = {
   visitor: {
-    static: ["auth:login", "faq:pretty"],
+    static: [
+      "auth:login",
+      "faq:pretty",
+      "fund:description-pretty",
+      "news:public",
+    ],
   },
-  operator: {
+  contentManager: {
     static: [
       "applications:show",
       "settings:index",
       "users:show",
       "fund:index",
       "fund:faq-index",
-      "fund:description-index",
+      "fund:description",
       "fund:description-edit",
       "faq:edit",
+      "news:edit",
+      "news:create",
+      "news:index",
+      "notifications:index",
     ],
+  },
+  operator: {
+    static: ["chats:show", "chats:index", "settings:index"],
   },
   manager: {
     static: [
@@ -31,6 +44,7 @@ const rules = {
       "applications:create",
       "users:show",
       "user:view-applications",
+      "notifications:index",
     ],
   },
   supermanager: {
@@ -38,20 +52,22 @@ const rules = {
       "applications:index",
       "applications:show",
       "application:edit",
+      "application:can-vote",
       "applications:create",
       "settings:index",
       "categories:index",
       "users:show",
       "user:view-applications",
-      "fund:description-index",
+      "fund:index",
+      "fund:description",
       "transactions:show",
       "transactions:index",
       "transactions:create",
       "managers:index",
       "managers:show",
-      "fund:index",
       "fund:faq-index",
-      "fund:description-index",
+      "notifications:index",
+      "transactions:distribute",
     ],
   },
   admin: {
@@ -64,6 +80,7 @@ const rules = {
       "user:show-admin",
       "settings:index",
       "logs:index",
+      "notifications:index",
     ],
   },
 };

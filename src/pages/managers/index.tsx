@@ -6,6 +6,7 @@ import {
   AuthManagerRegistrationInputRoleEnum as Roles,
   UserResponse as Result,
   UserUser as Single,
+  UserUserRoleEnum,
 } from "@generated";
 // import Metrics from "@lib/components/Metrics";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
@@ -16,10 +17,10 @@ import { formatDate } from "@lib/utils";
 import { fullName } from "@lib/utils/name";
 import { router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
-import { UserApiRole, UserRequestFactory } from "@providers/axios";
+import { UserRequestFactory } from "@providers/axios";
 import Unauthorized from "pages/_unauthorized";
 
-import ClearButton from "components/Application/Filters/clear";
+import { ClearButton } from "components/Application/Filters";
 import RoleTag from "components/User/Role/tag";
 
 import styles from "./styles.module.less";
@@ -115,7 +116,7 @@ const ManagersPage: FC = () => {
       key: "roles",
       width: "12%",
       render(record: Single) {
-        return <RoleTag roles={[record.role ?? UserApiRole.User]} />;
+        return <RoleTag roles={[record.role ?? UserUserRoleEnum.User]} />;
       },
     },
     {

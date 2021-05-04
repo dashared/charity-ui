@@ -10,10 +10,11 @@ import {
 } from "@providers";
 import { RootState } from "@providers/redux";
 import classnames from "classnames";
-import { Provider } from "jotai";
+import produce from "immer";
+import { atom, Provider } from "jotai";
 
 import { name, version } from "../../appInfo";
-import { toggleRightPanel, WorkspaceState } from "../../reducer/workspace";
+import { toggleRightPanel } from "../../reducer/workspace";
 
 import Footer from "./Footer";
 
@@ -21,12 +22,42 @@ import styles from "./styles.module.less";
 
 const { Sider, Content } = Layout;
 
+export type WorkspaceState = {
+  rightPanelCollapsed: boolean;
+};
+
+const workspaceAtom = atom<WorkspaceState>({
+  rightPanelCollapsed: true,
+});
+
+export const toggleRightPanelAtom = atom(
+  null,
+  (get, set, newState: "open" | "closed" | undefined) => {
+    let newValue = !get(workspaceAtom).rightPanelCollapsed;
+
+    if (newState === "open") {
+      newValue = false;
+    }
+    if (newState === "closed") {
+      newValue = true;
+    }
+
+    set(
+      workspaceAtom,
+      produce((draft: WorkspaceState) => {
+        draft.rightPanelCollapsed = newValue;
+      }),
+    );
+  },
+);
+
 interface WorkspaceProps {
   withBack?: boolean;
   title: string;
   subTitle?: string;
   rightPanel?: ReactNode;
   actions?: ReactNode;
+  rightPanelWidth?: number;
   noRefresh?: boolean;
 }
 
@@ -35,6 +66,7 @@ const Workspace: FC<WorkspaceProps> = ({
   title,
   subTitle,
   rightPanel,
+  rightPanelWidth = 360,
   children,
   actions,
   noRefresh = false,
@@ -105,7 +137,7 @@ const Workspace: FC<WorkspaceProps> = ({
             collapsed={!rightPanel || workspace.rightPanelCollapsed}
             collapsible
             collapsedWidth="0"
-            width={workspace.width}
+            width={rightPanelWidth}
             reverseArrow
           >
             {rightPanel}

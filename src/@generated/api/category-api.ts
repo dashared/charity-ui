@@ -19,7 +19,7 @@ import { Configuration } from '../configuration';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { CategoryCategory } from '../models';
+import { CategoryAdminCategory } from '../models';
 // @ts-ignore
 import { CategoryDeleteInput } from '../models';
 // @ts-ignore
@@ -190,7 +190,7 @@ export const CategoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiCategoriesGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CategoryCategory>>> {
+        async apiCategoriesGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CategoryAdminCategory>>> {
             const localVarAxiosArgs = await CategoryApiAxiosParamCreator(configuration).apiCategoriesGet(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -236,7 +236,7 @@ export const CategoryApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiCategoriesGet(options?: any): AxiosPromise<Array<CategoryCategory>> {
+        apiCategoriesGet(options?: any): AxiosPromise<Array<CategoryAdminCategory>> {
             return CategoryApiFp(configuration).apiCategoriesGet(options).then((request) => request(axios, basePath));
         },
         /**

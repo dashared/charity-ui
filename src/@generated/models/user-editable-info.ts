@@ -22,6 +22,12 @@
 export interface UserEditableInfo {
     /**
      * 
+     * @type {Array<string>}
+     * @memberof UserEditableInfo
+     */
+    assigned_categories?: Array<string>;
+    /**
+     * 
      * @type {string}
      * @memberof UserEditableInfo
      */

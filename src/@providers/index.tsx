@@ -16,6 +16,9 @@ import { init as routerInit, Router, router } from "./router";
 export { default as i18n } from "i18next";
 export { useTranslation } from "react-i18next";
 
+// Helpers
+export { toggleRightPanelAtom } from "../Layout/Workspace/index";
+
 // router reexports
 export { useResponse, useActive } from "@curi/react-dom";
 export { router } from "./router";

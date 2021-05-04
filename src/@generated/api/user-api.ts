@@ -21,6 +21,8 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { UserEditableInfo } from '../models';
 // @ts-ignore
+import { UserExtendedUser } from '../models';
+// @ts-ignore
 import { UserResponse } from '../models';
 // @ts-ignore
 import { UserUser } from '../models';
@@ -273,7 +275,7 @@ export const UserApiFp = function (configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async apiUserIdGet(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserUser>> {
+    async apiUserIdGet(id: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserExtendedUser>> {
       const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).apiUserIdGet(id, options);
       return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
         const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
@@ -334,7 +336,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    apiUserIdGet(id: string, options?: any): AxiosPromise<UserUser> {
+    apiUserIdGet(id: string, options?: any): AxiosPromise<UserExtendedUser> {
       return UserApiFp(configuration).apiUserIdGet(id, options).then((request) => request(axios, basePath));
     },
     /**

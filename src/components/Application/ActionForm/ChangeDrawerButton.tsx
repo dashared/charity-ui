@@ -11,8 +11,10 @@ import styles from "./styles.module.less";
 const CreateDrawerButton: FC<{
   refetch: () => void;
   availiableStatuses: ApplicationStatus[];
+  currentStatus: ApplicationStatus;
+  undoTransition?: boolean;
   id: number;
-}> = ({ availiableStatuses, id, refetch }) => {
+}> = ({ availiableStatuses, id, currentStatus, undoTransition, refetch }) => {
   const { t } = useTranslation("Application");
 
   const handlers = useRef<ApplicationFormHandler>(null);
@@ -55,6 +57,8 @@ const CreateDrawerButton: FC<{
           onSuccess={onClose}
           id={id}
           availiableStatuses={availiableStatuses}
+          currentStatus={currentStatus}
+          undoTransition={undoTransition}
         />
       </Drawer>
     </>

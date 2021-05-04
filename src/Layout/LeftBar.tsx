@@ -1,8 +1,10 @@
 import React, { FC } from "react";
 import { Menu } from "antd";
 import {
+  AlignLeftOutlined,
   FolderOpenOutlined,
   HomeOutlined,
+  MessageOutlined,
   MoneyCollectOutlined,
   ProfileOutlined,
   QuestionOutlined,
@@ -82,6 +84,16 @@ const LeftBar: FC = () => {
         </>
       ),
       name: "fund:index",
+      nested: [
+        {
+          display: <span>{i18n.t("LeftBar.Fund_nested.Dashboard")}</span>,
+          name: "fund:dashboard",
+        },
+        {
+          display: <span>{i18n.t("LeftBar.Fund_nested.Description")}</span>,
+          name: "fund:description",
+        },
+      ],
     },
     {
       display: (
@@ -91,6 +103,24 @@ const LeftBar: FC = () => {
         </>
       ),
       name: "fund:faq-index",
+    },
+    {
+      display: (
+        <>
+          <MessageOutlined />
+          <span>{i18n.t("LeftBar.Chats")}</span>
+        </>
+      ),
+      name: "chats:index",
+    },
+    {
+      display: (
+        <>
+          <AlignLeftOutlined />
+          <span>{i18n.t("LeftBar.News")}</span>
+        </>
+      ),
+      name: "news:index",
     },
     {
       display: (

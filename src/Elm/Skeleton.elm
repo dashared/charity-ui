@@ -35,17 +35,17 @@ import Html.Attributes exposing (..)
 -- SKELETON
 
 
-skeleton : String -> Tab -> List (Html msg) -> Html msg
-skeleton title tab content =
+skeleton : Tab -> List (E.Element msg) -> Html msg
+skeleton tab content =
     container <|
         E.column
-            [ E.width (E.maximum 600 E.fill)
+            [ E.width (E.maximum 700 E.fill)
             , E.centerX
             , E.paddingXY 20 0
             , E.spacing 60
             ]
             [ header tab
-            , E.paragraph [ F.size 14, E.spacing 14 ] (List.map E.html content)
+            , E.paragraph [ F.size 14, E.spacing 14 ] content -- E.spacing 14
             , footer
             ]
 
@@ -56,8 +56,9 @@ skeleton title tab content =
 
 type Tab
     = Applications
-    | News
+    | NewsTab
     | FAQ
+    | FundTab
     | Other
 
 
@@ -104,8 +105,9 @@ header tab =
 headerTabs : Tab -> List (E.Element msg)
 headerTabs tab =
     [ viewTab tab FAQ "FAQ" "/faq"
-    , viewTab tab Applications "Applications" "/applications"
-    , viewTab tab News "News" "/news"
+    , viewTab tab FundTab "Fund" "/fund/description"
+
+    ---, viewTab tab NewsTab "News" "/news/public"
     ]
 
 
@@ -114,10 +116,10 @@ viewTab currentTab targetTab name link =
     let
         attrs =
             if currentTab == targetTab then
-                [ F.bold ]
+                [ E.alignRight, F.bold ]
 
             else
-                []
+                [ E.alignRight, F.regular ]
     in
     E.link (F.color C.darkBlue :: attrs) { url = link, label = E.text name }
 

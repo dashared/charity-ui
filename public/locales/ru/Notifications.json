@@ -1,0 +1,27 @@
+{
+  "title": "Уведомления",
+  "all_title": "Все",
+  "blockchain_title": "Блокчейн",
+  "created_at": "Дата создания",
+  "updated_at": "Дата обновления",
+  "type": "Тип операции",
+  "status": "Статус",
+  "BlockchainStatusStatusEnum": {
+    "Success": "Успешно",
+    "Failure": "Ошибка",
+    "Pending": "В обработке"
+  },
+  "BlockchainStatusTypeEnum": {
+    "DepositMoney": "Пополнение кошелька",
+    "DonateToApplication": "Внесение пожертвования",
+    "ProposeApplication": "Изменение статуса заявки",
+    "PublishApplication": "Публикация заявки",
+    "CancelApplication": "Отмена заявки",
+    "Registration": "Registration",
+    "CloseApplication": "Закрытие заявки",
+    "DonateToCharity": "Внесение пожертвования",
+    "DonateFromCharityToApplication": "Внесение пожертвования",
+    "DonateToCharityFromExistingUser": "Внесение пожертвования",
+    "DonateToCharityFromNewUser": "Внесение пожертвования"
+  }
+}
