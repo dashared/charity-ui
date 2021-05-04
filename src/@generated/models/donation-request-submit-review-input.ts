@@ -20,18 +20,18 @@
  * @interface DonationRequestSubmitReviewInput
  */
 export interface DonationRequestSubmitReviewInput {
-    /**
-     * 
-     * @type {string}
-     * @memberof DonationRequestSubmitReviewInput
-     */
-    application_id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DonationRequestSubmitReviewInput
-     */
-    is_ready?: DonationRequestSubmitReviewInputIsReadyEnum;
+  /**
+   * 
+   * @type {string}
+   * @memberof DonationRequestSubmitReviewInput
+   */
+  id?: number;
+  /**
+   * 
+   * @type {string}
+   * @memberof DonationRequestSubmitReviewInput
+   */
+  review_status?: DonationRequestSubmitReviewInputIsReadyEnum;
 }
 
 /**
@@ -39,9 +39,9 @@ export interface DonationRequestSubmitReviewInput {
     * @enum {string}
     */
 export enum DonationRequestSubmitReviewInputIsReadyEnum {
-    Accepted = 'Accepted',
-    Rejected = 'Rejected',
-    NotViewed = 'NotViewed'
+  Accepted = 'Accepted',
+  Rejected = 'Rejected',
+  NotViewed = 'NotViewed'
 }
 
 

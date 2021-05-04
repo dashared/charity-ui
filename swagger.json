@@ -607,7 +607,7 @@
       }
     },
     "/api/donation-request/{id}/submit_review": {
-      "post": {
+      "patch": {
         "tags": ["DonationRequest"],
         "summary": "Submit result of application review",
         "consumes": ["application/json"],
@@ -2291,10 +2291,10 @@
     "DonationRequest.SubmitReviewInput": {
       "type": "object",
       "properties": {
-        "application_id": {
-          "type": "string"
+        "id": {
+          "type": "integer"
         },
-        "is_ready": {
+        "review_status": {
           "type": "string",
           "enum": ["Accepted", "Rejected", "NotViewed"]
         }

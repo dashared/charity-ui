@@ -31,6 +31,10 @@ import { DonationRequestInput } from '../models';
 // @ts-ignore
 import { DonationRequestResponse } from '../models';
 // @ts-ignore
+import { DonationRequestReviewResponse } from '../models';
+// @ts-ignore
+import { DonationRequestSubmitReviewInput } from '../models';
+// @ts-ignore
 import { DonationRequestSuperManagerInput } from '../models';
 // @ts-ignore
 import { DonationRequestUpdateInput } from '../models';
@@ -228,6 +232,49 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
         throw new RequiredError('id', 'Required parameter id was null or undefined when calling apiDonationRequestIdGet.');
       }
       const localVarPath = `/api/donation-request/{id}`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+
+
+      const queryParameters = new URLSearchParams(localVarUrlObj.search);
+      for (const key in localVarQueryParameter) {
+        queryParameters.set(key, localVarQueryParameter[key]);
+      }
+      for (const key in options.query) {
+        queryParameters.set(key, options.query[key]);
+      }
+      localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+
+      return {
+        url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * 
+     * @summary Get all SuperManagers responsible for category of application
+     * @param {number} id donation request id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    apiDonationRequestIdGetAllReviewersGet: async (id: number, options: any = {}): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      if (id === null || id === undefined) {
+        throw new RequiredError('id', 'Required parameter id was null or undefined when calling apiDonationRequestIdGetAllReviewersGet.');
+      }
+      const localVarPath = `/api/donation-request/{id}/get_all_reviewers`
         .replace(`{${"id"}}`, encodeURIComponent(String(id)));
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -472,6 +519,63 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
     },
     /**
      * 
+     * @summary Submit result of application review
+     * @param {number} id donation request id
+     * @param {DonationRequestSubmitReviewInput} request Donation request Input
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    apiDonationRequestIdSubmitReviewPost: async (id: number, request: DonationRequestSubmitReviewInput, options: any = {}): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      if (id === null || id === undefined) {
+        throw new RequiredError('id', 'Required parameter id was null or undefined when calling apiDonationRequestIdSubmitReviewPost.');
+      }
+      // verify required parameter 'request' is not null or undefined
+      if (request === null || request === undefined) {
+        throw new RequiredError('request', 'Required parameter request was null or undefined when calling apiDonationRequestIdSubmitReviewPost.');
+      }
+      const localVarPath = `/api/donation-request/{id}/submit_review`
+        .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      const queryParameters = new URLSearchParams(localVarUrlObj.search);
+      for (const key in localVarQueryParameter) {
+        queryParameters.set(key, localVarQueryParameter[key]);
+      }
+      for (const key in options.query) {
+        queryParameters.set(key, options.query[key]);
+      }
+      localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+      const nonString = typeof request !== 'string';
+      const needsSerialization = nonString && configuration && configuration.isJsonMime
+        ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
+        : nonString;
+      localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(request !== undefined ? request : {})
+        : (request || "");
+
+      return {
+        url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * 
      * @summary Creates donation request
      * @param {DonationRequestInput} request Donation request Input
      * @param {*} [options] Override http request option.
@@ -595,6 +699,20 @@ export const DonationRequestApiFp = function (configuration?: Configuration) {
     },
     /**
      * 
+     * @summary Get all SuperManagers responsible for category of application
+     * @param {number} id donation request id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async apiDonationRequestIdGetAllReviewersGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DonationRequestReviewResponse>> {
+      const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestIdGetAllReviewersGet(id, options);
+      return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+        const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+        return axios.request(axiosRequestArgs);
+      };
+    },
+    /**
+     * 
      * @summary Gets history of status changes
      * @param {number} [page] Page number
      * @param {number} [size] Page size
@@ -650,6 +768,21 @@ export const DonationRequestApiFp = function (configuration?: Configuration) {
      */
     async apiDonationRequestIdStatusPatch(id: number, input?: DonationRequestUpdateStatusInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
       const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestIdStatusPatch(id, input, options);
+      return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+        const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
+        return axios.request(axiosRequestArgs);
+      };
+    },
+    /**
+     * 
+     * @summary Submit result of application review
+     * @param {number} id donation request id
+     * @param {DonationRequestSubmitReviewInput} request Donation request Input
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async apiDonationRequestIdSubmitReviewPost(id: number, request: DonationRequestSubmitReviewInput, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+      const localVarAxiosArgs = await DonationRequestApiAxiosParamCreator(configuration).apiDonationRequestIdSubmitReviewPost(id, request, options);
       return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
         const axiosRequestArgs = { ...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url };
         return axios.request(axiosRequestArgs);
@@ -727,6 +860,16 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
     },
     /**
      * 
+     * @summary Get all SuperManagers responsible for category of application
+     * @param {number} id donation request id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    apiDonationRequestIdGetAllReviewersGet(id: number, options?: any): AxiosPromise<DonationRequestReviewResponse> {
+      return DonationRequestApiFp(configuration).apiDonationRequestIdGetAllReviewersGet(id, options).then((request) => request(axios, basePath));
+    },
+    /**
+     * 
      * @summary Gets history of status changes
      * @param {number} [page] Page number
      * @param {number} [size] Page size
@@ -770,6 +913,17 @@ export const DonationRequestApiFactory = function (configuration?: Configuration
      */
     apiDonationRequestIdStatusPatch(id: number, input?: DonationRequestUpdateStatusInput, options?: any): AxiosPromise<void> {
       return DonationRequestApiFp(configuration).apiDonationRequestIdStatusPatch(id, input, options).then((request) => request(axios, basePath));
+    },
+    /**
+     * 
+     * @summary Submit result of application review
+     * @param {number} id donation request id
+     * @param {DonationRequestSubmitReviewInput} request Donation request Input
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    apiDonationRequestIdSubmitReviewPost(id: number, request: DonationRequestSubmitReviewInput, options?: any): AxiosPromise<void> {
+      return DonationRequestApiFp(configuration).apiDonationRequestIdSubmitReviewPost(id, request, options).then((request) => request(axios, basePath));
     },
     /**
      * 
@@ -890,6 +1044,20 @@ export interface DonationRequestApiApiDonationRequestIdGetRequest {
 }
 
 /**
+ * Request parameters for apiDonationRequestIdGetAllReviewersGet operation in DonationRequestApi.
+ * @export
+ * @interface DonationRequestApiApiDonationRequestIdGetAllReviewersGetRequest
+ */
+export interface DonationRequestApiApiDonationRequestIdGetAllReviewersGetRequest {
+  /**
+   * donation request id
+   * @type {number}
+   * @memberof DonationRequestApiApiDonationRequestIdGetAllReviewersGet
+   */
+  readonly id: number
+}
+
+/**
  * Request parameters for apiDonationRequestIdHistoryGet operation in DonationRequestApi.
  * @export
  * @interface DonationRequestApiApiDonationRequestIdHistoryGetRequest
@@ -981,6 +1149,27 @@ export interface DonationRequestApiApiDonationRequestIdStatusPatchRequest {
 }
 
 /**
+ * Request parameters for apiDonationRequestIdSubmitReviewPost operation in DonationRequestApi.
+ * @export
+ * @interface DonationRequestApiApiDonationRequestIdSubmitReviewPostRequest
+ */
+export interface DonationRequestApiApiDonationRequestIdSubmitReviewPostRequest {
+  /**
+   * donation request id
+   * @type {number}
+   * @memberof DonationRequestApiApiDonationRequestIdSubmitReviewPost
+   */
+  readonly id: number
+
+  /**
+   * Donation request Input
+   * @type {DonationRequestSubmitReviewInput}
+   * @memberof DonationRequestApiApiDonationRequestIdSubmitReviewPost
+   */
+  readonly request: DonationRequestSubmitReviewInput
+}
+
+/**
  * Request parameters for apiDonationRequestPost operation in DonationRequestApi.
  * @export
  * @interface DonationRequestApiApiDonationRequestPostRequest
@@ -1051,6 +1240,18 @@ export class DonationRequestApi extends BaseAPI {
 
   /**
    * 
+   * @summary Get all SuperManagers responsible for category of application
+   * @param {DonationRequestApiApiDonationRequestIdGetAllReviewersGetRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DonationRequestApi
+   */
+  public apiDonationRequestIdGetAllReviewersGet(requestParameters: DonationRequestApiApiDonationRequestIdGetAllReviewersGetRequest, options?: any) {
+    return DonationRequestApiFp(this.configuration).apiDonationRequestIdGetAllReviewersGet(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * 
    * @summary Gets history of status changes
    * @param {DonationRequestApiApiDonationRequestIdHistoryGetRequest} requestParameters Request parameters.
    * @param {*} [options] Override http request option.
@@ -1095,6 +1296,18 @@ export class DonationRequestApi extends BaseAPI {
    */
   public apiDonationRequestIdStatusPatch(requestParameters: DonationRequestApiApiDonationRequestIdStatusPatchRequest, options?: any) {
     return DonationRequestApiFp(this.configuration).apiDonationRequestIdStatusPatch(requestParameters.id, requestParameters.input, options).then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * 
+   * @summary Submit result of application review
+   * @param {DonationRequestApiApiDonationRequestIdSubmitReviewPostRequest} requestParameters Request parameters.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DonationRequestApi
+   */
+  public apiDonationRequestIdSubmitReviewPost(requestParameters: DonationRequestApiApiDonationRequestIdSubmitReviewPostRequest, options?: any) {
+    return DonationRequestApiFp(this.configuration).apiDonationRequestIdSubmitReviewPost(requestParameters.id, requestParameters.request, options).then((request) => request(this.axios, this.basePath));
   }
 
   /**
