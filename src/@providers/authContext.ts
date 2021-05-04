@@ -8,6 +8,7 @@ export type User = {
   role: Role;
   surname?: string;
   uuid?: string;
+  language?: string;
 };
 
 export type Credentials = {

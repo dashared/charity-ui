@@ -52,6 +52,7 @@ export * from './user-editable-info';
 export * from './user-extended-user';
 export * from './user-pretty-public-key';
 export * from './user-response';
+export * from './user-settings';
 export * from './user-simple-user';
 export * from './user-user';
 export * from './utils-money-json';

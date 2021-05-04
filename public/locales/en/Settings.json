@@ -30,6 +30,8 @@
   "updateButton": "Update",
   "update_success": "Information is successfully updated",
   "update_error": "Information was not updated",
+  "updateLang_success": "Language updated successfully",
+  "updateLang_error": "Error updating the language",
   "languageSetting": {
     "russian": "Russian",
     "english": "English"
