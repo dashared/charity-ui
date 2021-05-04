@@ -12,13 +12,22 @@ import ApplicationView from "components/Application/View";
 
 const Actions: FC<{
   currentStatus: ApplicationStatus;
+  undoTransition?: boolean;
   applicationId: number;
   availiableStatuses: ApplicationStatus[];
   onRefetch: () => Promise<void>;
-}> = ({ availiableStatuses, applicationId, onRefetch }) => {
+}> = ({
+  availiableStatuses,
+  applicationId,
+  currentStatus,
+  undoTransition,
+  onRefetch,
+}) => {
   return (
     <ChangeButton
       id={applicationId}
+      currentStatus={currentStatus}
+      undoTransition={undoTransition}
       refetch={onRefetch}
       availiableStatuses={availiableStatuses}
     />
@@ -61,6 +70,7 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
       actions={
         <Actions
           currentStatus={(data.status as unknown) as ApplicationStatus}
+          undoTransition={data.undo_transition}
           applicationId={data.id ?? 0}
           availiableStatuses={data.available_statuses ?? []}
           onRefetch={onRefetchButton}

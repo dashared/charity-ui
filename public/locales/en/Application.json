@@ -25,6 +25,8 @@
   "authorUpd": "Update author",
   "authorRole": "Author's role",
   "createPageTitle": "Create application",
+  "undo_transition": "Undo transition to \"{{ currentStatus }}\" status",
+  "undo_transition_tooltip": "This action will cancel the last transition",
   "Filters": {
     "assignee": "Assigned to me",
     "vote": "Need my vote",
@@ -33,6 +35,7 @@
   },
   "$views": {
     "updateStatus": "Status updated successfully",
+    "undoTransitionSuccess": "Canceled the last status transition",
     "update_success": "Application info updated successfully",
     "update_error": "Error updating aplication, try again",
     "select_assignee": "Select the manager",

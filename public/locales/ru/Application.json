@@ -25,6 +25,8 @@
   "authorUpd": "Автор изменения",
   "authorRole": "Роль автора изменения",
   "createPageTitle": "Создание заявки",
+  "undo_transition": "Отменить переход к статусу \"{{ currentStatus }}\"",
+  "undo_transition_tooltip": "Это действие отменит последний переход статуса заявки",
   "Filters": {
     "assignee": "Назначены на меня",
     "vote": "Требуют голоса",
@@ -33,6 +35,7 @@
   },
   "$views": {
     "updateStatus": "Успешно обновлен статус заявки",
+    "undoTransitionSuccess": "Отменен последний переход заявки",
     "update_success": "Заявка успешно обновлена",
     "update_error": "Ошибка обновления заявки, попробуйте позже",
     "select_assignee": "Выберите менеджера",

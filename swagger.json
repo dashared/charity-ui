@@ -582,6 +582,60 @@
         }
       }
     },
+    "/api/donation-request/{id}/get_all_reviewers": {
+      "get": {
+        "tags": ["DonationRequest"],
+        "summary": "Get all SuperManagers responsible for category of application",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "donation request id",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DonationRequest.ReviewResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/donation-request/{id}/submit_review": {
+      "post": {
+        "tags": ["DonationRequest"],
+        "summary": "Submit result of application review",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "request",
+            "description": "Donation request Input",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DonationRequest.SubmitReviewInput"
+            }
+          },
+          {
+            "type": "integer",
+            "description": "donation request id",
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/donation-request/{id}/history": {
       "get": {
         "produces": ["application/json"],
@@ -1959,6 +2013,9 @@
             ]
           }
         },
+        "undo_transition": {
+          "type": "boolean"
+        },
         "category": {
           "$ref": "#/definitions/Category.Category"
         },
@@ -2026,6 +2083,48 @@
         },
         "text": {
           "type": "string"
+        }
+      }
+    },
+    "DonationRequest.ReviewResponse": {
+      "type": "object",
+      "properties": {
+        "accepted_count": {
+          "type": "integer"
+        },
+        "not_viewed_count": {
+          "type": "integer"
+        },
+        "rejected_count": {
+          "type": "integer"
+        },
+        "review_status": {
+          "type": "string",
+          "enum": ["Accepted", "Rejected", "NotViewed"]
+        },
+        "reviewers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DonationRequest.SingleReviewStatus"
+          }
+        },
+        "total_count": {
+          "type": "integer"
+        }
+      }
+    },
+    "DonationRequest.SingleReviewStatus": {
+      "type": "object",
+      "properties": {
+        "application_id": {
+          "type": "integer"
+        },
+        "manager": {
+          "$ref": "#/definitions/User.User"
+        },
+        "single_review_status": {
+          "type": "string",
+          "enum": ["Accepted", "Rejected", "NotViewed"]
         }
       }
     },
@@ -2186,6 +2285,18 @@
         },
         "previous_status": {
           "type": "string"
+        }
+      }
+    },
+    "DonationRequest.SubmitReviewInput": {
+      "type": "object",
+      "properties": {
+        "application_id": {
+          "type": "string"
+        },
+        "is_ready": {
+          "type": "string",
+          "enum": ["Accepted", "Rejected", "NotViewed"]
         }
       }
     },
