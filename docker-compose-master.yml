@@ -9,7 +9,7 @@ services:
     container_name: charity_ui
     ports:
       - "7999:7999"
-      - "7778:7778"
+      - "80:80"
     environment:
       - REACT_APP_API_URL=http://api:9000
       - NODE_OPTIONS=--max_old_space_size=4096

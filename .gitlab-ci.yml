@@ -16,6 +16,8 @@ prettier:
     - node -v
     - yarn -v
   script: yarn lint:prettier
+  only:
+    - develop
 
 eslint:
   stage: eslint
@@ -28,6 +30,8 @@ eslint:
   needs:
     - job: prettier
   script: yarn lint:eslint
+  only:
+    - develop
 
 docker-build:
   stage: build
