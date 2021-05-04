@@ -20,7 +20,7 @@ import { AuthConsumer } from "@providers/authContext";
 import { UserRequestFactory } from "@providers/axios";
 import Unauthorized from "pages/_unauthorized";
 
-import ClearButton from "components/Application/Filters/clear";
+import { ClearButton } from "components/Application/Filters";
 import RoleTag from "components/User/Role/tag";
 
 import styles from "./styles.module.less";

@@ -13,13 +13,19 @@ import { format } from "@lib/utils/date";
 import { cred } from "@lib/utils/name";
 import { i18n, router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
-import { DonationRequestFactory } from "@providers/axios";
+import useAxios, {
+  DonationRequestFactory,
+  UserRequestFactory,
+} from "@providers/axios";
 import Redirect from "pages/_redirect";
 
 import { Actions } from "components/Application/Buttons/create";
-import AssignedToMe from "components/Application/Filters/assignee";
-import ClearButton from "components/Application/Filters/clear";
-import StatusFilter from "components/Application/Filters/status";
+import {
+  AssignedToMe,
+  ClearButton,
+  NeedMyVote,
+  StatusFilter,
+} from "components/Application/Filters";
 import StatusTag, {
   ApplicationStatus,
 } from "components/Application/Status/tag";
@@ -35,6 +41,8 @@ export const onElementClick = (record: Single): void => {
 type FilterInfo = {
   assignedToMe?: boolean;
   status?: string[];
+  needMyVote?: boolean;
+  category?: string[];
 };
 
 type FilterSetting = {
@@ -42,39 +50,77 @@ type FilterSetting = {
 };
 
 const Filter: FC<{
+  categoryIDs?: string[];
   initial: FilterSetting;
   onChange: (values: FilterSetting) => void;
-}> = ({ initial, onChange }) => {
+}> = ({ initial, onChange, categoryIDs }) => {
   return (
-    <Card style={{ marginBottom: "5px" }}>
-      <Space>
-        <AssignedToMe
-          initial={initial.filterInfo?.assignedToMe ?? false}
-          onChange={() => {
-            onChange({
-              ...initial,
-              filterInfo: {
-                ...initial.filterInfo,
-                assignedToMe: !(initial.filterInfo?.assignedToMe ?? false),
-              },
-            });
-          }}
-        />
-        <StatusFilter
-          initial={initial.filterInfo?.status}
-          onChange={(value) => {
-            onChange({
-              ...initial,
-              filterInfo: {
-                ...initial.filterInfo,
-                status: value,
-              },
-            });
-          }}
-        />
-        <ClearButton onClearAll={() => onChange({})} />
-      </Space>
-    </Card>
+    <AuthConsumer>
+      {({ user }) => {
+        return (
+          <Card style={{ marginBottom: "5px" }}>
+            <Space>
+              <AssignedToMe
+                initial={initial.filterInfo?.assignedToMe ?? false}
+                onChange={() => {
+                  onChange({
+                    ...initial,
+                    filterInfo: {
+                      ...initial.filterInfo,
+                      assignedToMe: !(
+                        initial.filterInfo?.assignedToMe ?? false
+                      ),
+                    },
+                  });
+                }}
+              />
+              <RoleSwitch
+                role={user.role}
+                perform="application:can-vote"
+                yes={() => {
+                  return (
+                    <NeedMyVote
+                      disabled={categoryIDs?.length === 0}
+                      initial={initial.filterInfo?.needMyVote ?? false}
+                      onChange={() => {
+                        const needMyVote = !(
+                          initial.filterInfo?.needMyVote ?? false
+                        );
+
+                        onChange({
+                          ...initial,
+                          filterInfo: {
+                            ...initial.filterInfo,
+                            status: needMyVote
+                              ? [ApplicationStatus.SuperManagerConfirmation]
+                              : [],
+                            needMyVote,
+                            category: needMyVote ? categoryIDs : undefined,
+                          },
+                        });
+                      }}
+                    />
+                  );
+                }}
+              />
+              <StatusFilter
+                initial={initial.filterInfo?.status}
+                onChange={(value) => {
+                  onChange({
+                    ...initial,
+                    filterInfo: {
+                      ...initial.filterInfo,
+                      status: value,
+                    },
+                  });
+                }}
+              />
+              <ClearButton onClearAll={() => onChange({})} />
+            </Space>
+          </Card>
+        );
+      }}
+    </AuthConsumer>
   );
 };
 
@@ -82,6 +128,8 @@ const ApplicationsPage: FC<{ userId?: string }> = ({ userId }) => {
   const { isTarget, isSelected, setList } = useListSelection<Single>();
 
   const [filter, setFilter] = useState<FilterSetting>({});
+
+  const { data } = useAxios(UserRequestFactory.apiUserIdGet, false, userId);
 
   const paginationState = useRef<StateRef>(null);
 
@@ -134,9 +182,19 @@ const ApplicationsPage: FC<{ userId?: string }> = ({ userId }) => {
     },
   ];
 
+  const categoryIDs = data?.assigned_categories?.map((c) => {
+    return c.id;
+  });
+
   return (
     <Workspace noRefresh title={t("listTitle_all")} actions={<Actions />}>
-      <Filter initial={filter} onChange={setFilter} />
+      {data && (
+        <Filter
+          initial={filter}
+          onChange={setFilter}
+          categoryIDs={categoryIDs}
+        />
+      )}
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
         requestQuery={DonationRequestFactory.apiDonationRequestGet}
@@ -145,6 +203,7 @@ const ApplicationsPage: FC<{ userId?: string }> = ({ userId }) => {
           author: undefined,
           assignee: filter.filterInfo?.assignedToMe ? [userId] : undefined,
           status: filter.filterInfo?.status,
+          category: filter.filterInfo?.category,
         }}
         stateRef={paginationState}
         onResult={(result) => {

@@ -60,5 +60,12 @@
   },
   "cancel": "Cancel",
   "edit": "Edit",
-  "save": "Save"
+  "save": "Save",
+  "PageHeader": {
+    "refresh": "Refresh",
+    "rightPanel": {
+      "close": "Close",
+      "open": "Open"
+    }
+  }
 }

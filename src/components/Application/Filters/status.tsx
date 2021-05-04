@@ -4,7 +4,7 @@ import { useTranslation } from "@providers";
 
 import { ApplicationStatus } from "../Status/tag";
 
-const StatusFilter: FC<{
+export const StatusFilter: FC<{
   initial?: string[];
   onChange: (value?: string[]) => void;
 }> = ({ initial, onChange }) => {
@@ -51,5 +51,3 @@ const StatusFilter: FC<{
     </Select>
   );
 };
-
-export default StatusFilter;

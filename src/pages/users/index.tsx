@@ -19,7 +19,7 @@ import { AuthConsumer } from "@providers/authContext";
 import { UserApiRole, UserRequestFactory } from "@providers/axios";
 import Redirect from "pages/_redirect";
 
-import ClearButton from "components/Application/Filters/clear";
+import { ClearButton } from "components/Application/Filters";
 import RoleTag from "components/User/Role/tag";
 
 import styles from "./styles.module.less";

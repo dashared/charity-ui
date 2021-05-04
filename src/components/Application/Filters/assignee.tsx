@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Checkbox } from "antd";
 import { useTranslation } from "@providers";
 
-const AssignedToMe: FC<{ initial: boolean; onChange: () => void }> = ({
+export const AssignedToMe: FC<{ initial: boolean; onChange: () => void }> = ({
   initial,
   onChange,
 }) => {
@@ -14,5 +14,3 @@ const AssignedToMe: FC<{ initial: boolean; onChange: () => void }> = ({
     </Checkbox>
   );
 };
-
-export default AssignedToMe;
