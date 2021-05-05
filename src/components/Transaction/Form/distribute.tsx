@@ -5,6 +5,8 @@ import { useForm } from "antd/lib/form/Form";
 import { MoneyCollectOutlined } from "@ant-design/icons";
 import { AmountInput, Currency } from "@lib/components/AmountInput";
 
+import { ApplicationStatus } from "components/Application/Status/tag";
+
 import { ApplicationSelect } from "./index";
 
 const formItemLayout = {
@@ -66,7 +68,7 @@ const DistributeMoneyForm: FC<DistributeMoneyFormProps> = ({ onSubmit }) => {
             },
           ]}
         >
-          <ApplicationSelect />
+          <ApplicationSelect status={[ApplicationStatus.Active]} />
         </Form.Item>
 
         <Form.Item
