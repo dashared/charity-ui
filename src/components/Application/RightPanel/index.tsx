@@ -7,6 +7,7 @@ import {
   Divider,
   Empty,
   List,
+  Progress,
   Row,
   Skeleton,
   Statistic,
@@ -14,7 +15,11 @@ import {
   Typography,
 } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
-import { CheckOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import {
+  CheckOutlined,
+  CloseCircleOutlined,
+  WarningOutlined,
+} from "@ant-design/icons";
 import {
   DonationRequestReviewResponseReviewStatusEnum as ReviewStatus,
   DonationRequestSingleReviewStatusSingleReviewStatusEnum as SingleReviewStatus,
@@ -26,7 +31,7 @@ import { useTranslation } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import useAxios, { DonationRequestFactory } from "@providers/axios";
 
-const { Paragraph } = Typography;
+const { Paragraph, Title } = Typography;
 
 const StatusTag: FC<{ status?: ReviewStatus }> = ({ status }) => {
   const { t } = useTranslation("Application");
@@ -73,8 +78,9 @@ const SingleReviewSpan: FC<{ status?: SingleReviewStatus }> = ({ status }) => {
 
 const RightPanel: FC<{
   id: number;
+  category?: string;
   onRefetchApplication: () => Promise<void>;
-}> = ({ id, onRefetchApplication }) => {
+}> = ({ id, category, onRefetchApplication }) => {
   const { t } = useTranslation("Application");
 
   const { data, loading, refetchQuery } = useAxios(
@@ -126,6 +132,29 @@ const RightPanel: FC<{
             bordered={false}
             extra={<StatusTag status={data.review_status} />}
           >
+            <Row>
+              <Col span={24}>
+                <Progress
+                  percent={
+                    ((data.accepted_count ?? 0) / (data.total_count ?? 1)) * 100
+                  }
+                />
+              </Col>
+              {data.rejected_count !== 0 && (
+                <Col span={24}>
+                  <Progress
+                    percent={
+                      ((data.rejected_count ?? 0) / (data.total_count ?? 1)) *
+                      100
+                    }
+                    status="exception"
+                  />
+                </Col>
+              )}
+            </Row>
+
+            <Divider />
+
             <Row gutter={16}>
               <Col span={8}>
                 <Statistic
@@ -182,6 +211,15 @@ const RightPanel: FC<{
                   </Col>
                 )}
 
+              {!canVote && (
+                <Col style={{ marginTop: "16px" }} span={24}>
+                  <Paragraph style={{ marginBottom: "0px" }}>
+                    <WarningOutlined style={{ color: "orange" }} />{" "}
+                    {t("vote_text_visitor", { id, category })}
+                  </Paragraph>
+                </Col>
+              )}
+
               {alreadyVoted &&
                 canVote?.single_review_status ===
                   SingleReviewStatus.Rejected && (
@@ -195,7 +233,7 @@ const RightPanel: FC<{
             </Row>
 
             <Divider />
-            <span>{t("reviewers")}</span>
+            <Title level={5}>{t("reviewers")}</Title>
             <List
               itemLayout="horizontal"
               dataSource={data.reviewers}

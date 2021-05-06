@@ -43,6 +43,7 @@ const UserRegisterPage: FC = () => {
   const [form] = useForm<AuthManagerRegistrationInput>();
 
   const [role, setRole] = useState<Roles | undefined>();
+  const [loading, setLoading] = useState(false);
 
   const onReset = (): void => {
     form.resetFields();
@@ -55,6 +56,7 @@ const UserRegisterPage: FC = () => {
 
   const onAdd = useCallback(async () => {
     const data = form.getFieldsValue();
+    setLoading(true);
     RegistrationFactory.apiRegisterManagerPost(data)
       .then(() => {
         notify(t("$views.registrationSuccess"), "success");
@@ -63,6 +65,9 @@ const UserRegisterPage: FC = () => {
       .catch((e) => {
         console.error(e);
         notify(t("$views.registrationError"), "error");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [form, t]);
 
@@ -132,7 +137,7 @@ const UserRegisterPage: FC = () => {
 
           <Form.Item {...tailLayout}>
             <Space>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit" loading={loading}>
                 {t("$views.buttons.add")}
               </Button>
 

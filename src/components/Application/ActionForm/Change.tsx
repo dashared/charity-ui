@@ -1,4 +1,8 @@
-import React, { forwardRef, ForwardRefRenderFunction } from "react";
+import React, {
+  forwardRef,
+  ForwardRefRenderFunction,
+  useCallback,
+} from "react";
 import { DonationRequestBodyAvailableStatusesEnum as ApplicationStatus } from "@generated";
 import { notify } from "@lib/utils/notification";
 import { useTranslation } from "@providers";
@@ -11,6 +15,7 @@ import ApplicationForm, {
 
 type ChangeApplicationFormProps = {
   id: number;
+  setLoading: (value: boolean) => void;
   availiableStatuses: ApplicationStatus[];
   currentStatus: ApplicationStatus;
   undoTransition?: boolean;
@@ -22,24 +27,39 @@ const ChangeApplicationForm: ForwardRefRenderFunction<
   ApplicationFormHandler,
   ChangeApplicationFormProps
 > = (
-  { onSuccess, onError, id, availiableStatuses, currentStatus, undoTransition },
+  {
+    onSuccess,
+    onError,
+    id,
+    availiableStatuses,
+    currentStatus,
+    undoTransition,
+    setLoading,
+  },
   ref,
 ) => {
   const { t } = useTranslation("Application");
 
-  const onSubmit = async (values: ApplicationFormState): Promise<void> => {
-    try {
-      DonationRequestFactory.apiDonationRequestIdStatusPatch(id, values).then(
-        () => {
-          notify(t("$views.updateStatus"), "success");
+  const onSubmit = useCallback(
+    async (values: ApplicationFormState): Promise<void> => {
+      try {
+        setLoading(true);
+        DonationRequestFactory.apiDonationRequestIdStatusPatch(id, values).then(
+          () => {
+            notify(t("$views.updateStatus"), "success");
 
-          onSuccess?.();
-        },
-      );
-    } catch (e) {
-      onError?.(e);
-    }
-  };
+            onSuccess?.();
+          },
+        );
+      } catch (e) {
+        onError?.(e);
+      } finally {
+        setLoading(false);
+      }
+    },
+    // eslint-disable-next-line
+    [],
+  );
 
   const onUndoTransition = async (): Promise<void> => {
     try {

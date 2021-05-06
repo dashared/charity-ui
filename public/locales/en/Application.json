@@ -29,6 +29,7 @@
   "undo_transition": "Undo transition to \"{{ currentStatus }}\" status",
   "undo_transition_tooltip": "This action will cancel the last transition",
   "vote_text": "You have already voted in favor of the aplication №{{ id }}",
+  "vote_text_visitor": "You can't vote for the application №{{ id }}, because you are not assigned the category \"{{ category }}\"",
   "vote_text_reject": "You have already voted in against the aplication №{{ id }}",
   "Filters": {
     "assignee": "Assigned to me",
@@ -103,6 +104,7 @@
     },
     "card": {
       "doneeInfoTitle": "Donee info",
+      "category": "Category",
       "received_amount": "Received amount",
       "generalInfoTitle": "Application info",
       "description": "Description",
