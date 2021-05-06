@@ -12,6 +12,7 @@ services:
       - "7778:7778"
     environment:
       - REACT_APP_API_URL=http://api:9000
+      - REACT_APP_WEBSOCKET=api:9000
       - NODE_OPTIONS=--max_old_space_size=4096
       - NODE_ENV=production
 networks:

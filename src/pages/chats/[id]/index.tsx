@@ -17,6 +17,7 @@ import { cred } from "@lib/utils/name";
 import { PageProps, useTranslation, Workspace } from "@providers";
 import { AuthConsumer, User } from "@providers/authContext";
 import useAxios, { ChatsFactory } from "@providers/axios";
+// import { io } from "socket.io-client";
 import Unauthorized from "pages/_unauthorized";
 
 import styles from "./styles.module.less";
@@ -46,6 +47,57 @@ const ChatPage: FC<PageProps & { user: User }> = ({ response }) => {
 
   useEffect(
     () => {
+      // const socket = io(
+      //   `${process.env.REACT_APP_API_URL}`, {
+      //   path: '/api/chat/ws/',
+      //   transports: ['websocket']
+      // });
+
+      // socket.on('message', (event, ...args) => {
+      //   console.log(`got ${event}`);
+      // });
+
+      // socket.onAny((event, ...args) => {
+      //   console.log(`got ${event}`);
+      // });
+
+      // socket.on('connect', (...args) => {
+      //   console.log(args);
+      // })
+      const socket = new WebSocket(
+        `ws://${process.env.REACT_APP_WEBSOCKET}/api/chat/ws/`,
+      );
+
+      socket.onmessage = socketListener;
+
+      return () => {
+        socket.close();
+      };
+    },
+    // eslint-disable-next-line
+    [],
+  );
+
+  const socketListener = useCallback(
+    // eslint-disable-next-line
+    (...websocketTarget: MessageEvent<any>[]) => {
+      const data = websocketTarget
+        .map((item) => {
+          return JSON.parse(item.data) as ChatMessageBody;
+        })
+        .filter((item) => item.dialog_id === id);
+
+      setListState({
+        ...listState,
+        chats: data.concat(listState.chats),
+      });
+    },
+    // eslint-disable-next-line
+    [listState.chats, setListState],
+  );
+
+  useEffect(
+    () => {
       if (!state.submitting) {
         fetchAPI();
       }
@@ -69,7 +121,9 @@ const ChatPage: FC<PageProps & { user: User }> = ({ response }) => {
           ? [...listState.chats, ...(responseAPI.data.data ?? [])]
           : responseAPI.data.data ?? [],
         loading: false,
-        hasMore: "1" !== responseAPI.data.cursor,
+        hasMore: !(
+          "1" === responseAPI.data.cursor || "0" === responseAPI.data.cursor
+        ),
         cursor: responseAPI.data.cursor,
       });
     } else {

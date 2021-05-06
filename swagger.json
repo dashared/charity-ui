@@ -1992,6 +1992,9 @@
         "body": {
           "type": "string"
         },
+        "dialog_id": {
+          "type": "string"
+        },
         "created_at": {
           "type": "string"
         },
