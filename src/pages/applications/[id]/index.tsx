@@ -5,7 +5,9 @@ import {
   DonationRequestBodyStatusEnum,
 } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
+import { formatCategory } from "@lib/utils";
 import {
+  i18n,
   PageProps,
   //toggleRightPanelAtom,
   useTranslation,
@@ -53,6 +55,7 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
 
   const { t } = useTranslation("Application");
 
+  const lang = i18n.language.substr(0, 2);
   // const toggleRightPanel = useUpdateAtom(toggleRightPanelAtom);
 
   const refetchRef = useRef<RefType | null>(null);
@@ -82,7 +85,11 @@ const ApplicationPage: FC<PageProps> = ({ response }) => {
       rightPanel={
         data.status ===
           DonationRequestBodyStatusEnum.SuperManagerConfirmation && (
-          <RightPanel id={id} onRefetchApplication={refetchQuery} />
+          <RightPanel
+            id={id}
+            category={formatCategory(lang, data.category)}
+            onRefetchApplication={refetchQuery}
+          />
         )
       }
       actions={

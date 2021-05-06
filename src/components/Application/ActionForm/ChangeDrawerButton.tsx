@@ -20,6 +20,7 @@ const CreateDrawerButton: FC<{
   const handlers = useRef<ApplicationFormHandler>(null);
 
   const [drawer, setDrawer] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onClose = (): void => {
     setDrawer(false);
@@ -46,7 +47,11 @@ const CreateDrawerButton: FC<{
           <Space align="center" className={styles.submitButtons}>
             <Button onClick={onClose}>{t("translation:cancel")}</Button>
 
-            <Button type="primary" onClick={() => handlers.current?.submit()}>
+            <Button
+              loading={loading}
+              type="primary"
+              onClick={() => handlers.current?.submit()}
+            >
               {t("translation:save")}
             </Button>
           </Space>
@@ -55,6 +60,7 @@ const CreateDrawerButton: FC<{
         <ApplicationForm
           ref={handlers}
           onSuccess={onClose}
+          setLoading={setLoading}
           id={id}
           availiableStatuses={availiableStatuses}
           currentStatus={currentStatus}

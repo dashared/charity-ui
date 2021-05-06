@@ -9,11 +9,11 @@ import {
   UserUserRoleEnum,
 } from "@generated";
 import RoleSwitch from "@lib/components/RoleSwitch";
-import { formatMoney } from "@lib/utils";
-import { format } from "@lib/utils/date";
+import { formatCategory, formatMoney } from "@lib/utils";
+import { DateTimeFormat, format } from "@lib/utils/date";
 import { cred, fullName } from "@lib/utils/name";
 import { notify } from "@lib/utils/notification";
-import { useTranslation } from "@providers";
+import { i18n, useTranslation } from "@providers";
 import { DonationRequestFactory } from "@providers/axios";
 import { Role } from "@providers/rbac-rules";
 import moment from "moment";
@@ -88,6 +88,8 @@ export const GeneralInfo: FC<{
   const { t } = useTranslation("Application");
 
   const [editable, setEditable] = useState<boolean>(false);
+
+  const lang = i18n.language.substr(0, 2);
 
   const [initialInfo, updateInfo] = useState<EditableInfo>({
     approvedAmount: info.approved_amount?.numerator,
@@ -183,8 +185,10 @@ export const GeneralInfo: FC<{
           {format(info.created_at)}
         </Descriptions.Item>
 
-        <Descriptions.Item label={t("$views.card.endTime")} span={2}>
-          {!editable && <span>{format(info.until)}</span>}
+        <Descriptions.Item label={t("$views.card.endTime")}>
+          {!editable && (
+            <span>{format(info.until, DateTimeFormat.DATE_SHORT)}</span>
+          )}
           {editable && (
             <DatePicker
               defaultValue={
@@ -201,6 +205,10 @@ export const GeneralInfo: FC<{
               }}
             />
           )}
+        </Descriptions.Item>
+
+        <Descriptions.Item label={t("$views.card.category")}>
+          {formatCategory(lang, info.category)}
         </Descriptions.Item>
 
         <Descriptions.Item label={t("$views.card.status")}>
