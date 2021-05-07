@@ -4,6 +4,7 @@ variables:
 stages:
   - prettier
   - eslint
+  - test
   - build
   - deploy
 
@@ -16,6 +17,16 @@ prettier:
     - node -v
     - yarn -v
   script: yarn lint:prettier
+
+test:
+  stage: test
+  tags:
+    - develop
+  before_script:
+    - yarn install
+    - node -v
+    - yarn -v
+  script: yarn test
 
 eslint:
   stage: eslint
