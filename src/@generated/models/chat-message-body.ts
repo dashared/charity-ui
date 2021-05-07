@@ -13,6 +13,7 @@
  */
 
 
+import { ChatDialog } from './chat-dialog';
 import { FileInfo } from './file-info';
 import { UserUser } from './user-user';
 
@@ -40,6 +41,12 @@ export interface ChatMessageBody {
    * @memberof ChatMessageBody
    */
   body?: string;
+  /**
+  * 
+  * @type {ChatDialog}
+  * @memberof ChatMessageBody
+  */
+  dialog?: ChatDialog;
   /**
   * 
   * @type {string}

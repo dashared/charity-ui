@@ -1992,6 +1992,9 @@
         "body": {
           "type": "string"
         },
+        "dialog": {
+          "$ref": "#/definitions/Chat.Dialog"
+        },
         "dialog_id": {
           "type": "string"
         },
