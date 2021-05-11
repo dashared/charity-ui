@@ -3,6 +3,7 @@ import { Menu } from "antd";
 import {
   AlignLeftOutlined,
   FolderOpenOutlined,
+  HistoryOutlined,
   HomeOutlined,
   MessageOutlined,
   MoneyCollectOutlined,
@@ -184,17 +185,15 @@ const LeftBar: FC = () => {
       ),
       name: "users:index",
     },
-
-    // {
-    //   display: (
-    //     <>
-    //       <HistoryOutlined />
-    //       <span>{i18n.t("LeftBar.Logs")}</span>
-    //     </>
-    //   ),
-    //   name: "logs:index",
-    // },
-
+    {
+      display: (
+        <>
+          <HistoryOutlined />
+          <span>{i18n.t("LeftBar.Logs")}</span>
+        </>
+      ),
+      name: "logs:index",
+    },
     {
       display: (
         <>

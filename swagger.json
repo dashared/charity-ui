@@ -6,6 +6,97 @@
     "contact": {}
   },
   "paths": {
+    "/api/analytics/get_donations_sum_by_month": {
+      "get": {
+        "description": "Get sum of all donations by month",
+        "tags": ["Analytics"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Analytics.OneMonthProfit"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/analytics/get_registrations_count_by_month": {
+      "get": {
+        "description": "Get number of registrations by month",
+        "tags": ["Analytics"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Analytics.OneMonthRegistrations"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/analytics/get_top_categories_count": {
+      "get": {
+        "description": "Get number of times category was used",
+        "tags": ["Analytics"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Analytics.TopCategory"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/audit/": {
+      "get": {
+        "description": "Get logs of system",
+        "tags": ["Audit"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "type": "integer",
+            "default": 10
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort param",
+            "required": false,
+            "type": "string",
+            "default": "10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Audit.Response"
+            }
+          }
+        }
+      }
+    },
     "/api/batch-statuses": {
       "get": {
         "tags": ["BatchStatus"],
@@ -893,6 +984,18 @@
         }
       }
     },
+    "/api/logout": {
+      "post": {
+        "produces": ["application/json"],
+        "tags": ["Login"],
+        "summary": "Destroys user session",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/login/refresh": {
       "post": {
         "tags": ["Login"],
@@ -1436,6 +1539,86 @@
     }
   },
   "definitions": {
+    "Analytics.OneMonthProfit": {
+      "type": "object",
+      "properties": {
+        "month": {
+          "type": "string"
+        },
+        "to_application": {
+          "type": "integer"
+        },
+        "to_fund": {
+          "type": "integer"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "year": {
+          "type": "string"
+        }
+      }
+    },
+    "Analytics.OneMonthRegistrations": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer"
+        },
+        "month": {
+          "type": "string"
+        },
+        "year": {
+          "type": "string"
+        }
+      }
+    },
+    "Analytics.TopCategory": {
+      "type": "object",
+      "properties": {
+        "category_id": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer"
+        }
+      }
+    },
+    "Audit.Audit": {
+      "type": "object",
+      "properties": {
+        "author": {
+          "$ref": "#/definitions/User.User"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["Login", "ApplicationStatusChanged", "ApplicationDataChange"]
+        }
+      }
+    },
+    "Audit.Response": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Audit.Audit"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/utils.PageData"
+        }
+      }
+    },
     "Auth.Credentials": {
       "type": "object",
       "properties": {

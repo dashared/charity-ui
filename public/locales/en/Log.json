@@ -2,5 +2,6 @@
   "title": "Logs",
   "date": "Date, Time",
   "who": "Author",
-  "action": "Action"
+  "action": "Action",
+  "role": "Role"
 }

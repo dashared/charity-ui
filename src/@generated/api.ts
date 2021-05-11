@@ -14,6 +14,8 @@
 
 
 
+export * from './api/analytics-api';
+export * from './api/audit-api';
 export * from './api/batch-status-api';
 export * from './api/category-api';
 export * from './api/charity-api';

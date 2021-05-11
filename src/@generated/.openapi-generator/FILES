@@ -1,6 +1,8 @@
 .gitignore
 .npmignore
 api.ts
+api/analytics-api.ts
+api/audit-api.ts
 api/batch-status-api.ts
 api/category-api.ts
 api/charity-api.ts
@@ -19,6 +21,11 @@ base.ts
 configuration.ts
 git_push.sh
 index.ts
+models/analytics-one-month-profit.ts
+models/analytics-one-month-registrations.ts
+models/analytics-top-category.ts
+models/audit-audit.ts
+models/audit-response.ts
 models/auth-credentials.ts
 models/auth-email-confirmation-input.ts
 models/auth-manager-registration-input.ts
