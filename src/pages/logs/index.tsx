@@ -1,18 +1,18 @@
 import React, { FC, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  DonationRequestBody as Single,
-  DonationRequestResponse as Result,
-} from "@generated";
+import { AuditAudit as Single, AuditResponse as Result } from "@generated";
 import PaginatedQuery, { StateRef } from "@lib/components/Pagination";
 import RegistryTable from "@lib/components/RegistryTable";
 import RoleSwitch from "@lib/components/RoleSwitch";
 import { useListSelection } from "@lib/hooks";
 import { format } from "@lib/utils/date";
+import { fullName } from "@lib/utils/name";
 import { Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
-import { DonationRequestFactory } from "@providers/axios";
+import { AuditFactory } from "@providers/axios";
 import Unauthorized from "pages/_unauthorized";
+
+import RoleTag from "components/User/Role/tag";
 
 import styles from "./styles.module.less";
 
@@ -32,19 +32,32 @@ const LogsPage: FC = () => {
     {
       key: "date",
       render(record: Single) {
-        return format(record.started_at);
+        return format(record.created_at);
       },
     },
     {
       key: "who",
       render(record: Single) {
-        return record.id;
+        if (!record.author) {
+          return null;
+        }
+        const { first_name, middle_name, last_name } = record.author;
+        return fullName(first_name, middle_name, last_name);
+      },
+    },
+    {
+      key: "role",
+      render(record: Single) {
+        if (!record?.author?.role) {
+          return null;
+        }
+        return <RoleTag roles={[record.author.role]} />;
       },
     },
     {
       key: "action",
-      render() {
-        return "Описание действия, выполненного пользователем";
+      render(record: Single) {
+        return record.type;
       },
     },
   ];
@@ -53,7 +66,7 @@ const LogsPage: FC = () => {
     <Workspace noRefresh title={t("title")}>
       <PaginatedQuery<{ page: number; size: number }, Result, Single>
         className={styles.pagination}
-        requestQuery={DonationRequestFactory.apiDonationRequestGet}
+        requestQuery={AuditFactory.apiAuditGet}
         stateRef={paginationState}
         onResult={(result) => {
           setList(result.data ?? []);
@@ -62,8 +75,19 @@ const LogsPage: FC = () => {
           <RegistryTable
             entity="Log"
             expandable={{
-              expandedRowRender(record) {
-                return <p style={{ margin: 0 }}>{record.description}</p>;
+              expandedRowRender(record: Single) {
+                const data = JSON.parse(record?.data ?? "");
+                const r = {
+                  ...record,
+                  data,
+                };
+                return (
+                  <div>
+                    <pre style={{ fontSize: "10px" }}>
+                      {JSON.stringify(r, null, 3)}
+                    </pre>
+                  </div>
+                );
               },
               rowExpandable: (record) => record.name !== "Not Expandable",
             }}

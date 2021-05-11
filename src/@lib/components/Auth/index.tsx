@@ -72,16 +72,22 @@ class Auth extends Component {
   };
 
   logout = (): void => {
-    localStorage.clear();
+    LoginFactory.apiLogoutPost()
+      .catch((e) => {
+        console.error(e);
+      })
+      .finally(() => {
+        localStorage.clear();
 
-    this.setState({
-      authenticated: false,
-      user: {
-        role: Role.visitor,
-      },
-      accessToken: "",
-      expires: undefined,
-    });
+        this.setState({
+          authenticated: false,
+          user: {
+            role: Role.visitor,
+          },
+          accessToken: "",
+          expires: undefined,
+        });
+      });
   };
 
   handleAuthentication = async (headerData: HeaderData): Promise<void> => {
