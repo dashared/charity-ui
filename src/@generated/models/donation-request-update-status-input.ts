@@ -44,6 +44,12 @@ export interface DonationRequestUpdateStatusInput {
      * @memberof DonationRequestUpdateStatusInput
      */
     status?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DonationRequestUpdateStatusInput
+     */
+    file_ids?: Array<string>;
 }
 
 

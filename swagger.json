@@ -2238,7 +2238,8 @@
               "UserConfirmation",
               "Active",
               "Spam",
-              "Deleted"
+              "Deleted",
+              "OnRealization"
             ]
           }
         },
@@ -2284,7 +2285,8 @@
             "UserConfirmation",
             "Active",
             "Spam",
-            "Deleted"
+            "Deleted",
+            "OnRealization"
           ]
         },
         "title": {
@@ -2411,7 +2413,8 @@
             "UserConfirmation",
             "Active",
             "Spam",
-            "Deleted"
+            "Deleted",
+            "OnRealization"
           ]
         },
         "title": {
@@ -2629,6 +2632,12 @@
         },
         "status": {
           "type": "string"
+        },
+        "file_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
