@@ -136,7 +136,8 @@ export enum DonationRequestDonationRequestStatusEnum {
     UserConfirmation = 'UserConfirmation',
     Active = 'Active',
     Spam = 'Spam',
-    Deleted = 'Deleted'
+    Deleted = 'Deleted',
+    OnRealization = 'OnRealization'
 }
 
 
