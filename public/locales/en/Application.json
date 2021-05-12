@@ -17,6 +17,8 @@
   "file": "File",
   "uploadDate": "Uploaded at",
   "status": "Status",
+  "file_ids": "Supporting files",
+  "upload": "Upload",
   "type": "Type",
   "author": "Author",
   "createdAt": "Created at",

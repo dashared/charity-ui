@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   FC,
   forwardRef,
@@ -7,13 +8,16 @@ import React, {
   useState,
 } from "react";
 import { defaults, noop } from "lodash";
-import { Button, Form, Input, Tooltip } from "antd";
+import { Button, Form, Input, Tooltip, Upload } from "antd";
 import { FormInstance, Rule } from "antd/lib/form";
+import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
+import { UploadOutlined } from "@ant-design/icons";
 import {
   DonationRequestBodyAvailableStatusesEnum as ApplicationStatus,
   DonationRequestUpdateStatusInput,
 } from "@generated";
 import { useTranslation } from "@providers";
+import { customRequest } from "@providers/cusomUpload";
 
 import AssigneeSelect from "components/Assignee/Select";
 import StatusSelect from "components/Status/Select";
@@ -61,6 +65,31 @@ const UndoTransition: FC<{
   );
 };
 
+type UploadFilesProps = {
+  initial: Array<UploadFile<any>>;
+  onFilesChange: (files: string[]) => void;
+  onUploadChange: (info: UploadChangeParam) => void;
+};
+
+const UploadFilesItem: FC<UploadFilesProps> = (
+  { initial, onFilesChange, onUploadChange },
+  ...rest
+) => {
+  const { t } = useTranslation("Application");
+
+  return (
+    <Form.Item name="file_ids" label={t("file_ids")} {...rest}>
+      <Upload
+        onChange={onUploadChange}
+        fileList={initial}
+        customRequest={(options) => customRequest(options, onFilesChange)}
+      >
+        <Button icon={<UploadOutlined />}>{t("upload")}</Button>
+      </Upload>
+    </Form.Item>
+  );
+};
+
 const ApplicationForm: ForwardRefRenderFunction<
   ApplicationFormHandler,
   ApplicationFormProps
@@ -81,6 +110,15 @@ const ApplicationForm: ForwardRefRenderFunction<
 
   const [status, setStatus] = useState<ApplicationStatus | undefined>();
 
+  // file ids after uploading during OnRealization
+  const [initialFileList, setUploadChange] = useState<Array<UploadFile<any>>>(
+    [],
+  );
+
+  const handleOnChange = (info: UploadChangeParam): void => {
+    setUploadChange(info.fileList);
+  };
+
   const initialValues = useMemo(() => defaults({}, initial, DEFAULTS), [
     initial,
   ]);
@@ -97,10 +135,25 @@ const ApplicationForm: ForwardRefRenderFunction<
       initialValues={initialValues}
       // eslint-disable-next-line
       onFinish={(values: any) => {
+        const file_ids = initialFileList
+          .map((item) => {
+            if (item.response) {
+              return item.response[0]?.id;
+            } else {
+              return undefined;
+            }
+          })
+          .flatMap((item) => {
+            return item ? [item] : [];
+          });
+
+        console.log(file_ids);
+
         onSubmit?.({
           assignee_id: values?.assignee?.value,
           comment: values.comment,
           status: values.status,
+          file_ids,
         });
       }}
     >
@@ -119,6 +172,17 @@ const ApplicationForm: ForwardRefRenderFunction<
       >
         <StatusSelect avaliable={availiableStatuses} onChange={setStatus} />
       </Form.Item>
+
+      {currentStatus === ApplicationStatus.OnRealization &&
+        status === ApplicationStatus.Archived && (
+          <UploadFilesItem
+            initial={initialFileList}
+            onFilesChange={(ids) => {
+              console.log(ids);
+            }}
+            onUploadChange={handleOnChange}
+          />
+        )}
 
       <Form.Item name={["assignee"]} label={t("assignee")}>
         <AssigneeSelect value={null} status={status} onChange={noop} />

@@ -34,6 +34,7 @@ const Variables: Record<Status, Array<Role>> = {
   SuperManagerConfirmation: [Role.SuperManager],
   UserConfirmation: [Role.SuperManager, Role.Manager],
   Archived: [Role.Manager, Role.SuperManager],
+  OnRealization: [Role.SuperManager],
 };
 
 const { Option } = Select;
