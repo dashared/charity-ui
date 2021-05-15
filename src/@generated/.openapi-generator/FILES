@@ -76,6 +76,8 @@ models/index.ts
 models/news-input.ts
 models/news-response.ts
 models/news-view.ts
+models/notifications-notification-response.ts
+models/notifications-notification.ts
 models/user-balance.ts
 models/user-editable-info.ts
 models/user-extended-user.ts
