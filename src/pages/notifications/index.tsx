@@ -5,6 +5,7 @@ import { useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
 import Redirect from "pages/_redirect";
 
+import { AllnNotificationsPage } from "components/Notifications/all";
 import { BlockchainNotificationsPage } from "components/Notifications/blockchain";
 
 const { TabPane } = Tabs;
@@ -17,7 +18,7 @@ const NotificationsPage: FC = () => {
       <Card>
         <Tabs defaultActiveKey="1">
           <TabPane tab={t("all_title")} key="1">
-            Content of Tab Pane 1
+            <AllnNotificationsPage />
           </TabPane>
           <TabPane tab={t("blockchain_title")} key="2">
             <BlockchainNotificationsPage />

@@ -4,6 +4,9 @@
   "blockchain_title": "Блокчейн",
   "created_at": "Дата создания",
   "updated_at": "Дата обновления",
+  "notification_type": "Заголовок",
+  "body": "Ответ",
+  "author": "Автор",
   "type": "Тип операции",
   "status": "Статус",
   "BlockchainStatusStatusEnum": {
