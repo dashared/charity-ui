@@ -52,6 +52,8 @@ export * from './file-info';
 export * from './news-input';
 export * from './news-response';
 export * from './news-view';
+export * from './notifications-notification';
+export * from './notifications-notification-response';
 export * from './user-balance';
 export * from './user-editable-info';
 export * from './user-extended-user';

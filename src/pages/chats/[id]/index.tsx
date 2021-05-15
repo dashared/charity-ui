@@ -22,6 +22,32 @@ import Unauthorized from "pages/_unauthorized";
 
 import styles from "./styles.module.less";
 
+const ChatComment: FC<{
+  first_name?: string;
+  middle_name?: string;
+  last_name?: string;
+  item: ChatMessageBody;
+}> = ({ first_name, middle_name, last_name, item }) => {
+  return (
+    <Comment
+      className={styles.message}
+      author={cred(first_name, middle_name, last_name)}
+      avatar={
+        <Avatar
+          src={`/api/file/${item.author?.image_id}/download`}
+          alt={cred(first_name, middle_name, last_name)}
+        />
+      }
+      content={<p>{item.body}</p>}
+      datetime={
+        <Tooltip title={formatDate(item.created_at)}>
+          <span>{formatDate(item.created_at)}</span>
+        </Tooltip>
+      }
+    />
+  );
+};
+
 const ChatPage: FC<PageProps & { user: User }> = ({ response }) => {
   const id = response.params.id;
 
@@ -47,23 +73,6 @@ const ChatPage: FC<PageProps & { user: User }> = ({ response }) => {
 
   useEffect(
     () => {
-      // const socket = io(
-      //   `${process.env.REACT_APP_API_URL}`, {
-      //   path: '/api/chat/ws/',
-      //   transports: ['websocket']
-      // });
-
-      // socket.on('message', (event, ...args) => {
-      //   console.log(`got ${event}`);
-      // });
-
-      // socket.onAny((event, ...args) => {
-      //   console.log(`got ${event}`);
-      // });
-
-      // socket.on('connect', (...args) => {
-      //   console.log(args);
-      // })
       const socket = new WebSocket(soketUrl);
 
       socket.onmessage = socketListener;
@@ -235,38 +244,31 @@ const ChatPage: FC<PageProps & { user: User }> = ({ response }) => {
               loading={listState.loading}
               dataSource={listState.chats}
               renderItem={(item, index) => {
-                if (listState.chats.length - 1 === index) {
-                  return (
-                    <div ref={lastMessageReceived}>
-                      <List.Item>
-                        <List.Item.Meta description={item.body} />
-                      </List.Item>
-                    </div>
-                  );
-                }
-
                 if (!item.author) {
                   return null;
                 }
 
                 const { first_name, middle_name, last_name } = item.author;
 
-                return (
-                  <Comment
-                    className={styles.message}
-                    author={cred(first_name, middle_name, last_name)}
-                    avatar={
-                      <Avatar
-                        src={`/api/file/${item.author?.image_id}/download`}
-                        alt={cred(first_name, middle_name, last_name)}
+                if (listState.chats.length - 1 === index) {
+                  return (
+                    <div ref={lastMessageReceived}>
+                      <ChatComment
+                        first_name={first_name}
+                        middle_name={middle_name}
+                        last_name={last_name}
+                        item={item}
                       />
-                    }
-                    content={<p>{item.body}</p>}
-                    datetime={
-                      <Tooltip title={formatDate(item.created_at)}>
-                        <span>{formatDate(item.created_at)}</span>
-                      </Tooltip>
-                    }
+                    </div>
+                  );
+                }
+
+                return (
+                  <ChatComment
+                    first_name={first_name}
+                    middle_name={middle_name}
+                    last_name={last_name}
+                    item={item}
                   />
                 );
               }}

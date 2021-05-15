@@ -1285,6 +1285,46 @@
         }
       }
     },
+    "/api/notifications": {
+      "get": {
+        "tags": ["Notifications"],
+        "description": "Get all user notifications with pagination",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "type": "integer",
+            "default": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "type": "integer",
+            "default": 10
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort param",
+            "required": false,
+            "type": "string",
+            "default": "'created_at DESC'"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Notifications.NotificationResponse"
+            }
+          }
+        }
+      }
+    },
     "/api/notifications/set-token": {
       "patch": {
         "tags": ["Notifications"],
@@ -2713,6 +2753,40 @@
         },
         "updated_at": {
           "type": "string"
+        }
+      }
+    },
+    "Notifications.Notification": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "notification_author": {
+          "$ref": "#/definitions/User.User"
+        },
+        "notification_type": {
+          "type": "string"
+        }
+      }
+    },
+    "Notifications.NotificationResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Notifications.Notification"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/utils.PageData"
         }
       }
     },
