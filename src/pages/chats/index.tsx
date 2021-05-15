@@ -13,7 +13,7 @@ import { formatDate } from "@lib/utils";
 import { fullName } from "@lib/utils/name";
 import { router, useTranslation, Workspace } from "@providers";
 import { AuthConsumer } from "@providers/authContext";
-import { ChatsFactory } from "@providers/axios";
+import { ChatsFactory, soketUrl } from "@providers/axios";
 import Unauthorized from "pages/_unauthorized";
 
 const ChatsPage: FC = () => {
@@ -36,9 +36,7 @@ const ChatsPage: FC = () => {
 
   useEffect(
     () => {
-      const socket = new WebSocket(
-        `ws://${process.env.REACT_APP_WEBSOCKET}/api/chat/ws/`,
-      );
+      const socket = new WebSocket(soketUrl);
 
       socket.onmessage = socketListener;
 

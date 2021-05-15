@@ -16,7 +16,7 @@ import { formatDate } from "@lib/utils";
 import { cred } from "@lib/utils/name";
 import { PageProps, useTranslation, Workspace } from "@providers";
 import { AuthConsumer, User } from "@providers/authContext";
-import useAxios, { ChatsFactory } from "@providers/axios";
+import useAxios, { ChatsFactory, soketUrl } from "@providers/axios";
 // import { io } from "socket.io-client";
 import Unauthorized from "pages/_unauthorized";
 
@@ -64,9 +64,7 @@ const ChatPage: FC<PageProps & { user: User }> = ({ response }) => {
       // socket.on('connect', (...args) => {
       //   console.log(args);
       // })
-      const socket = new WebSocket(
-        `ws://${process.env.REACT_APP_WEBSOCKET}/api/chat/ws/`,
-      );
+      const socket = new WebSocket(soketUrl);
 
       socket.onmessage = socketListener;
 

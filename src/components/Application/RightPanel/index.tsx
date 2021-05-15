@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from "react";
-import { toInteger } from "lodash";
+import { toInteger, toNumber } from "lodash";
 import {
   Button,
   Card,
@@ -135,22 +135,24 @@ const RightPanel: FC<{
             <Row>
               <Col span={24}>
                 <Progress
-                  percent={
-                    ((data.accepted_count ?? 0) / (data.total_count ?? 1)) * 100
-                  }
+                  percent={toNumber(
+                    (
+                      (((data.accepted_count ?? 0) +
+                        (data.rejected_count ?? 0)) /
+                        (data.total_count ?? 1)) *
+                      100
+                    ).toFixed(1),
+                  )}
+                  success={{
+                    percent: toNumber(
+                      (
+                        ((data.accepted_count ?? 0) / (data.total_count ?? 1)) *
+                        100
+                      ).toFixed(1),
+                    ),
+                  }}
                 />
               </Col>
-              {data.rejected_count !== 0 && (
-                <Col span={24}>
-                  <Progress
-                    percent={
-                      ((data.rejected_count ?? 0) / (data.total_count ?? 1)) *
-                      100
-                    }
-                    status="exception"
-                  />
-                </Col>
-              )}
             </Row>
 
             <Divider />
