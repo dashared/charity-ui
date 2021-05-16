@@ -49,7 +49,7 @@ export const AllnNotificationsPage: FC = () => {
       key: "body",
       width: "15%",
       render(record: Single) {
-        return formatDate(record.body);
+        return record.body;
       },
     },
     {
