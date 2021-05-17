@@ -6,6 +6,7 @@
   "email": "Email",
   "blocked": "Blocked",
   "not_blocked": "Not blocked",
+  "blocked_tooltip": "User is blocked",
   "filter": {
     "roles": "Filter user by role"
   },

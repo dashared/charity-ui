@@ -4,7 +4,9 @@
   "error": {
     "denied": "You do not have sufficient rights to authorize",
     "401": "Incorrect password, try again",
-    "404": "User with provided credentials wasn't registered"
+    "404": "User with provided credentials wasn't registered",
+    "403": "User with provided credentials is blocked, please contact the CRM administrator",
+    "undefined": "Something went wrong, contact the CRM administrator"
   },
   "password": "Password",
   "rememberMe": "Remember me",

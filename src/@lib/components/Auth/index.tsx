@@ -63,7 +63,11 @@ class Auth extends Component {
         this.handleAuthentication(headerData); // TODO: replace
       })
       .catch((e) => {
-        if (e.response.status === 404 || e.response.status === 401) {
+        if (
+          e.response.status === 404 ||
+          e.response.status === 401 ||
+          e.response.status === 403
+        ) {
           notify(i18n.t(`Login:error.${e.response.status}`), "error");
         } else {
           notify(i18n.t("Login:error.undefined"), "error");
