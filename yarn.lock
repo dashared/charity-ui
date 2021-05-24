@@ -6805,18 +6805,6 @@ globby@^6.1.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-gojs-react@^1.0.8:
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/gojs-react/-/gojs-react-1.0.10.tgz#e9936999d6a5003cce56377d2204126deb0b1458"
-  integrity sha512-kHUNMo9U0WoaAGugIysxJRevvWL+D1Y+alhdaW2zkJrs3NG6PMzDHLTlIrUdaUe7816r4Fse8CvaURpShoJGgA==
-  dependencies:
-    tslib "^2.0.3"
-
-gojs@^2.1.26:
-  version "2.1.30"
-  resolved "https://registry.yarnpkg.com/gojs/-/gojs-2.1.30.tgz#7c731448fd3f0116e0dcb48aad642927062c8c26"
-  integrity sha512-NQ2FGqakl+ccwByEUjZ5fXINuelylwDhpSi/Mr+KmD1qJB0qwPiGPQOcQJXnh3Z73Y5WAE0fUyeedzy5zXG55Q==
-
 google-auth-library@^6.1.1:
   version "6.1.6"
   resolved "https://registry.yarnpkg.com/google-auth-library/-/google-auth-library-6.1.6.tgz#deacdcdb883d9ed6bac78bb5d79a078877fdf572"
