@@ -13,6 +13,7 @@
  */
 
 
+import { CategoryCategory } from './category-category';
 
 /**
  * 
@@ -20,6 +21,12 @@
  * @interface AnalyticsTopCategory
  */
 export interface AnalyticsTopCategory {
+    /**
+     * 
+     * @type {CategoryCategory}
+     * @memberof AnalyticsTopCategory
+     */
+    category?: CategoryCategory;
     /**
      * 
      * @type {string}

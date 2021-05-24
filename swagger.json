@@ -1616,6 +1616,9 @@
     "Analytics.TopCategory": {
       "type": "object",
       "properties": {
+        "category": {
+          "$ref": "#/definitions/Category.Category"
+        },
         "category_id": {
           "type": "string"
         },

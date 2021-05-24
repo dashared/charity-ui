@@ -57,8 +57,6 @@
     "enquire-js": "^0.1.0",
     "file-saver": "^2.0.2",
     "firebase": "^8.0.0-dev.14",
-    "gojs": "^2.1.26",
-    "gojs-react": "^1.0.8",
     "i18next": "^19.7.0",
     "i18next-browser-languagedetector": "^6.0.1",
     "i18next-http-backend": "^1.0.21",

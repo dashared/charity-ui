@@ -70,7 +70,7 @@ const TransactionCreatePage: FC = () => {
 
         notify(t("create_donation_application"), "success");
 
-        router.navigate({ url: router.url({ name: "transactions:create" }) });
+        router.navigate({ url: router.url({ name: "transactions:index" }) });
       } catch (e) {
         notify(t("create_donation_application_err"), "error");
       }

@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Card, Form, Input, Radio, Select, Switch } from "antd";
+import { Button, Card, Form, Input, Radio, Select } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { MoneyCollectOutlined } from "@ant-design/icons";
 import { DonationRequestBody } from "@generated";
@@ -159,7 +159,7 @@ const TransactionForm: FC<TransactionFormProps> = ({ onSubmit }) => {
               },
             ]}
           >
-            <ApplicationSelect />
+            <ApplicationSelect status={[ApplicationStatus.Active]} />
           </Form.Item>
         )}
 
@@ -170,14 +170,7 @@ const TransactionForm: FC<TransactionFormProps> = ({ onSubmit }) => {
         >
           <AmountInput />
         </Form.Item>
-        <Form.Item
-          hidden={type === "fund"}
-          name="anonymous"
-          label={t("form.anon")}
-          valuePropName="checked"
-        >
-          <Switch />
-        </Form.Item>
+
         <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
           <Button
             type="primary"

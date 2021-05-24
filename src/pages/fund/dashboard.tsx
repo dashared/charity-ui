@@ -1,8 +1,11 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { Card } from "antd";
-import { Bar } from "@ant-design/charts";
-import { useTranslation, Workspace } from "@providers";
+import { drop } from "lodash";
+import { Card, Typography } from "antd";
+import { Bar, Line, Pie } from "@ant-design/charts";
+import { formatCategory } from "@lib/utils";
+import { i18n, useTranslation, Workspace } from "@providers";
 import useAxios, {
+  AnalyticsFactory,
   CharityFactory,
   DonationRequestFactory,
   UserApiRole,
@@ -15,6 +18,91 @@ import StatisticsCard from "components/Fund/Statistics";
 type BarData = {
   title: string;
   count: number;
+};
+
+const LineStat: FC = () => {
+  const { data } = useAxios(
+    AnalyticsFactory.apiAnalyticsGetDonationsSumByMonthGet,
+  );
+
+  const config = {
+    data: drop(data, 1).map((item) => {
+      return {
+        month: item.month,
+        key: `${item.month} ${item.year}`,
+        value: item.total,
+      };
+    }),
+    xField: "month",
+    yField: "value",
+    //seriesField: 'key',
+    //stepType: 'hvh',
+    label: {},
+    point: {
+      size: 5,
+      shape: "diamond",
+      style: {
+        fill: "white",
+        stroke: "#5B8FF9",
+        lineWidth: 2,
+      },
+    },
+    tooltip: { showMarkers: false },
+    state: {
+      active: {
+        style: {
+          shadowColor: "yellow",
+          shadowBlur: 4,
+          stroke: "transparent",
+          fill: "red",
+        },
+      },
+    },
+    theme: {
+      geometries: {
+        point: {
+          diamond: {
+            active: {
+              style: {
+                shadowColor: "#FCEBB9",
+                shadowBlur: 2,
+                stroke: "#F6BD16",
+              },
+            },
+          },
+        },
+      },
+    },
+    interactions: [{ type: "marker-active" }],
+  };
+  return <Line {...config} />;
+};
+
+const CategoryStat: FC = () => {
+  const { data } = useAxios(
+    AnalyticsFactory.apiAnalyticsGetTopCategoriesCountGet,
+  );
+
+  const lang = i18n.language.substr(0, 2);
+
+  const config = {
+    data: (data ?? []).map((item) => {
+      return {
+        type: formatCategory(lang, item.category),
+        value: item.count,
+      };
+    }),
+    angleField: "value",
+    colorField: "type",
+    radius: 0.8,
+    label: {
+      type: "outer",
+      content: "{name} {percentage}",
+    },
+    interactions: [{ type: "pie-legend-active" }, { type: "element-active" }],
+  };
+
+  return <Pie loading={data === undefined} {...config} />;
 };
 
 const ApplicationStat: FC = () => {
@@ -104,6 +192,15 @@ const ApplicationStat: FC = () => {
       [ApplicationStatus.Archived],
     );
 
+    const onRealizarion = await DonationRequestFactory.apiDonationRequestGet(
+      0,
+      1,
+      "",
+      undefined,
+      undefined,
+      [ApplicationStatus.OnRealization],
+    );
+
     setData([
       {
         title: t(`Status.${ApplicationStatus.New}`),
@@ -128,6 +225,10 @@ const ApplicationStat: FC = () => {
       {
         title: t(`Status.${ApplicationStatus.Active}`),
         count: active?.data.page?.totalElements ?? 0,
+      },
+      {
+        title: t(`Status.${ApplicationStatus.OnRealization}`),
+        count: onRealizarion?.data.page?.totalElements ?? 0,
       },
       {
         title: t(`Status.${ApplicationStatus.Deleted}`),
@@ -218,7 +319,18 @@ const FundPage: FC = () => {
         staffCount={staff?.page?.totalElements}
       />
       <Card style={{ marginTop: 5 }}>
+        <CategoryStat />
+      </Card>
+
+      <Card style={{ marginTop: 5 }}>
         <ApplicationStat />
+      </Card>
+
+      <Card style={{ marginTop: 5 }}>
+        <Typography.Title level={3}>
+          {t("dontations_by_month")}
+        </Typography.Title>
+        <LineStat />
       </Card>
     </Workspace>
   );

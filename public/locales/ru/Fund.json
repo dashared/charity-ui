@@ -17,6 +17,7 @@
   "description": "Описание",
   "contacts": "Контакты",
   "docs": "Документы",
+  "dontations_by_month": "Динамика пожертвований",
   "reports": "Отчеты",
   "$views": {
     "buttons": {

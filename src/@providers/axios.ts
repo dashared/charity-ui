@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  AnalyticsApiFactory,
   AuditApiFactory,
   BatchStatusApiFactory,
   CategoryApiFactory,
@@ -23,7 +24,7 @@ export type { UtilsPageData as PageData } from "@generated";
 
 export const soketUrl = `${
   process.env.NODE_ENV === "production" ? "wss" : "ws"
-}//:${process.env.REACT_APP_WEBSOCKET}/api/chat/ws/`;
+}://charity.infostrategic.com/api/chat/ws/`;
 
 type AxiosResponse<R> = {
   data: R | undefined;
@@ -98,6 +99,11 @@ export const BatchStatusFactory = BatchStatusApiFactory(
 );
 export const MoneyFactory = MoneyApiFactory(configuration, basePath, axios);
 export const NewsFactory = NewsApiFactory(configuration, basePath, axios);
+export const AnalyticsFactory = AnalyticsApiFactory(
+  configuration,
+  basePath,
+  axios,
+);
 export const ChatsFactory = ChatApiFactory(configuration, basePath, axios);
 export const NotificationsFactory = NotificationsApiFactory(
   configuration,

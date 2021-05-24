@@ -1,6 +1,11 @@
 import React, { FC, useRef, useState } from "react";
-import { Avatar, Button, Card, Select, Space } from "antd";
-import { DownOutlined, UpOutlined, UserOutlined } from "@ant-design/icons";
+import { Avatar, Button, Card, Select, Space, Tooltip } from "antd";
+import {
+  DownOutlined,
+  FrownOutlined,
+  UpOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import {
   UserResponse as Result,
   UserUser as Single,
@@ -53,7 +58,7 @@ const Filter: FC<{
           }}
         />
         <Button
-          icon={sortIcon()}
+          icon={sortIcon(initial.sortedInfo)}
           onClick={() => {
             onChange({
               ...initial,
@@ -105,6 +110,15 @@ const RoleFilter: FC<{
       </Select.Option>
     </Select>
   );
+};
+
+const BlockedIcon: FC<{ blocked?: boolean }> = ({ blocked }) => {
+  const { t } = useTranslation("Users");
+  return blocked ? (
+    <Tooltip title={t("blocked_tooltip")}>
+      <FrownOutlined style={{ color: "red" }} />
+    </Tooltip>
+  ) : null;
 };
 
 const Actions: FC = () => {
@@ -159,10 +173,11 @@ const UsersPage: FC = () => {
     {
       key: "name",
       render(record: Single) {
-        return fullName(
-          record.first_name,
-          record.middle_name,
-          record.last_name,
+        return (
+          <span>
+            {<BlockedIcon blocked={record.blocked} />}{" "}
+            {fullName(record.first_name, record.middle_name, record.last_name)}
+          </span>
         );
       },
     },
