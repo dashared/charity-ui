@@ -13,43 +13,44 @@
  */
 
 
+import { UserUser } from './user-user';
 
 /**
  * 
  * @export
- * @interface DonationRequestUpdateStatusInput
+ * @interface NotificationsNotification
  */
-export interface DonationRequestUpdateStatusInput {
+export interface NotificationsNotification {
     /**
      * 
      * @type {string}
-     * @memberof DonationRequestUpdateStatusInput
+     * @memberof NotificationsNotification
      */
-    assignee_id?: string;
+    body?: string;
     /**
      * 
      * @type {string}
-     * @memberof DonationRequestUpdateStatusInput
+     * @memberof NotificationsNotification
      */
-    comment?: string;
+    created_at?: string;
     /**
      * 
      * @type {string}
-     * @memberof DonationRequestUpdateStatusInput
+     * @memberof NotificationsNotification
      */
-    password?: string;
+    id?: string;
+    /**
+     * 
+     * @type {UserUser}
+     * @memberof NotificationsNotification
+     */
+    notification_author?: UserUser;
     /**
      * 
      * @type {string}
-     * @memberof DonationRequestUpdateStatusInput
+     * @memberof NotificationsNotification
      */
-    status?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof DonationRequestUpdateStatusInput
-     */
-    file_ids?: Array<string>;
+    notification_type?: string;
 }
 
 

@@ -7,6 +7,8 @@ import { DonationRequestBody } from "@generated";
 import { AmountInput, Currency } from "@lib/components/AmountInput";
 import { DonationRequestFactory } from "@providers/axios";
 
+import { ApplicationStatus } from "components/Application/Status/tag";
+
 const formItemLayout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 10 },
@@ -40,29 +42,35 @@ const DEFAULTS: TransactionFormState = {
   },
 };
 
-export const ApplicationSelect: FC = ({ ...rest }) => {
+export const ApplicationSelect: FC<{ status?: ApplicationStatus[] }> = ({
+  status,
+  ...rest
+}) => {
   const { t } = useTranslation("Transaction");
 
   const [data, setData] = useState<DonationRequestBody[] | undefined>();
 
-  const onSearch = useCallback(async (value?: string) => {
-    try {
-      const { data: d } = await DonationRequestFactory.apiDonationRequestGet(
-        0,
-        10,
-        "",
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        value,
-      );
+  const onSearch = useCallback(
+    async (value?: string) => {
+      try {
+        const { data: d } = await DonationRequestFactory.apiDonationRequestGet(
+          0,
+          10,
+          "",
+          undefined,
+          undefined,
+          status,
+          undefined,
+          value,
+        );
 
-      setData(d.data);
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
+        setData(d.data);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    [status],
+  );
 
   useEffect(() => {
     if (!data) {

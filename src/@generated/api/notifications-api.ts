@@ -20,12 +20,65 @@ import { Configuration } from '../configuration';
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
 import { ControllersFcmId } from '../models';
+// @ts-ignore
+import { NotificationsNotificationResponse } from '../models';
 /**
  * NotificationsApi - axios parameter creator
  * @export
  */
 export const NotificationsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Get all user notifications with pagination
+         * @param {number} [page] Page number
+         * @param {number} [size] Page size
+         * @param {string} [sort] Sort param
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiNotificationsGet: async (page?: number, size?: number, sort?: string, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/notifications`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+
+    
+            const queryParameters = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                queryParameters.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                queryParameters.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Sets firebase token to current session for sending notifications
@@ -83,6 +136,21 @@ export const NotificationsApiAxiosParamCreator = function (configuration?: Confi
 export const NotificationsApiFp = function(configuration?: Configuration) {
     return {
         /**
+         * Get all user notifications with pagination
+         * @param {number} [page] Page number
+         * @param {number} [size] Page size
+         * @param {string} [sort] Sort param
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiNotificationsGet(page?: number, size?: number, sort?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NotificationsNotificationResponse>> {
+            const localVarAxiosArgs = await NotificationsApiAxiosParamCreator(configuration).apiNotificationsGet(page, size, sort, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
          * 
          * @summary Sets firebase token to current session for sending notifications
          * @param {ControllersFcmId} [body] client registration id
@@ -106,6 +174,17 @@ export const NotificationsApiFp = function(configuration?: Configuration) {
 export const NotificationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
+         * Get all user notifications with pagination
+         * @param {number} [page] Page number
+         * @param {number} [size] Page size
+         * @param {string} [sort] Sort param
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiNotificationsGet(page?: number, size?: number, sort?: string, options?: any): AxiosPromise<NotificationsNotificationResponse> {
+            return NotificationsApiFp(configuration).apiNotificationsGet(page, size, sort, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Sets firebase token to current session for sending notifications
          * @param {ControllersFcmId} [body] client registration id
@@ -117,6 +196,34 @@ export const NotificationsApiFactory = function (configuration?: Configuration, 
         },
     };
 };
+
+/**
+ * Request parameters for apiNotificationsGet operation in NotificationsApi.
+ * @export
+ * @interface NotificationsApiApiNotificationsGetRequest
+ */
+export interface NotificationsApiApiNotificationsGetRequest {
+    /**
+     * Page number
+     * @type {number}
+     * @memberof NotificationsApiApiNotificationsGet
+     */
+    readonly page?: number
+
+    /**
+     * Page size
+     * @type {number}
+     * @memberof NotificationsApiApiNotificationsGet
+     */
+    readonly size?: number
+
+    /**
+     * Sort param
+     * @type {string}
+     * @memberof NotificationsApiApiNotificationsGet
+     */
+    readonly sort?: string
+}
 
 /**
  * Request parameters for apiNotificationsSetTokenPatch operation in NotificationsApi.
@@ -139,6 +246,17 @@ export interface NotificationsApiApiNotificationsSetTokenPatchRequest {
  * @extends {BaseAPI}
  */
 export class NotificationsApi extends BaseAPI {
+    /**
+     * Get all user notifications with pagination
+     * @param {NotificationsApiApiNotificationsGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NotificationsApi
+     */
+    public apiNotificationsGet(requestParameters: NotificationsApiApiNotificationsGetRequest = {}, options?: any) {
+        return NotificationsApiFp(this.configuration).apiNotificationsGet(requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Sets firebase token to current session for sending notifications

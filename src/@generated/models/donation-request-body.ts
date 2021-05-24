@@ -155,7 +155,8 @@ export enum DonationRequestBodyAvailableStatusesEnum {
     UserConfirmation = 'UserConfirmation',
     Active = 'Active',
     Spam = 'Spam',
-    Deleted = 'Deleted'
+    Deleted = 'Deleted',
+    OnRealization = 'OnRealization'
 }
 /**
     * @export
@@ -171,7 +172,8 @@ export enum DonationRequestBodyStatusEnum {
     UserConfirmation = 'UserConfirmation',
     Active = 'Active',
     Spam = 'Spam',
-    Deleted = 'Deleted'
+    Deleted = 'Deleted',
+    OnRealization = 'OnRealization'
 }
 
 

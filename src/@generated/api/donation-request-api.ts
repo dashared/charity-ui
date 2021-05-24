@@ -144,10 +144,6 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
         localVarQueryParameter['assignee'] = assignee;
       }
 
-      if (category) {
-        localVarQueryParameter['category'] = category;
-      }
-
       if (searchString !== undefined) {
         localVarQueryParameter['searchString'] = searchString;
       }
@@ -161,6 +157,12 @@ export const DonationRequestApiAxiosParamCreator = function (configuration?: Con
       if (status) {
         for (const index in status) {
           queryParameters.append('status', status[index]);
+        }
+      }
+      // category=a&category=b
+      if (category) {
+        for (const index in category) {
+          queryParameters.append('category', category[index]);
         }
       }
       for (const key in options.query) {

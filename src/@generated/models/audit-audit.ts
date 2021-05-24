@@ -13,58 +13,55 @@
  */
 
 
-import { ChatDialog } from './chat-dialog';
-import { FileInfo } from './file-info';
 import { UserUser } from './user-user';
 
 /**
  * 
  * @export
- * @interface ChatMessageBody
+ * @interface AuditAudit
  */
-export interface ChatMessageBody {
-    /**
-     * 
-     * @type {Array<FileInfo>}
-     * @memberof ChatMessageBody
-     */
-    attachments?: Array<FileInfo>;
+export interface AuditAudit {
     /**
      * 
      * @type {UserUser}
-     * @memberof ChatMessageBody
+     * @memberof AuditAudit
      */
     author?: UserUser;
     /**
      * 
      * @type {string}
-     * @memberof ChatMessageBody
-     */
-    body?: string;
-    /**
-     * 
-     * @type {ChatDialog}
-     * @memberof ChatMessageBody
-     */
-    dialog?: ChatDialog;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatMessageBody
-     */
-    dialog_id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatMessageBody
+     * @memberof AuditAudit
      */
     created_at?: string;
     /**
      * 
-     * @type {number}
-     * @memberof ChatMessageBody
+     * @type {string}
+     * @memberof AuditAudit
      */
-    id?: number;
+    data?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AuditAudit
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AuditAudit
+     */
+    type?: AuditAuditTypeEnum;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum AuditAuditTypeEnum {
+    Login = 'Login',
+    ApplicationStatusChanged = 'ApplicationStatusChanged',
+    ApplicationDataChange = 'ApplicationDataChange'
+}
+
 
 

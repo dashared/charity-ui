@@ -19,26 +19,24 @@ import { Configuration } from '../configuration';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { AuthCredentials } from '../models';
+import { AnalyticsOneMonthProfit } from '../models';
+// @ts-ignore
+import { AnalyticsOneMonthRegistrations } from '../models';
+// @ts-ignore
+import { AnalyticsTopCategory } from '../models';
 /**
- * LoginApi - axios parameter creator
+ * AnalyticsApi - axios parameter creator
  * @export
  */
-export const LoginApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AnalyticsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Sets token on success
-         * @summary Route for signing in
-         * @param {AuthCredentials} request User credentials
+         * Get sum of all donations by month
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiLoginPost: async (request: AuthCredentials, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling apiLoginPost.');
-            }
-            const localVarPath = `/api/login`;
+        apiAnalyticsGetDonationsSumByMonthGet: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/analytics/get_donations_sum_by_month`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -46,53 +44,7 @@ export const LoginApiAxiosParamCreator = function (configuration?: Configuration
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            const queryParameters = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                queryParameters.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                queryParameters.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const nonString = typeof request !== 'string';
-            const needsSerialization = nonString && configuration && configuration.isJsonMime
-                ? configuration.isJsonMime(localVarRequestOptions.headers['Content-Type'])
-                : nonString;
-            localVarRequestOptions.data =  needsSerialization
-                ? JSON.stringify(request !== undefined ? request : {})
-                : (request || "");
-
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Route for refreshing
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiLoginRefreshPost: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/login/refresh`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -115,13 +67,12 @@ export const LoginApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary Destroys user session
+         * Get number of registrations by month
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiLogoutPost: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/logout`;
+        apiAnalyticsGetRegistrationsCountByMonthGet: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/analytics/get_registrations_count_by_month`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
             let baseOptions;
@@ -129,7 +80,43 @@ export const LoginApiAxiosParamCreator = function (configuration?: Configuration
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            const queryParameters = new URLSearchParams(localVarUrlObj.search);
+            for (const key in localVarQueryParameter) {
+                queryParameters.set(key, localVarQueryParameter[key]);
+            }
+            for (const key in options.query) {
+                queryParameters.set(key, options.query[key]);
+            }
+            localVarUrlObj.search = (new URLSearchParams(queryParameters)).toString();
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get number of times category was used
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiAnalyticsGetTopCategoriesCountGet: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/analytics/get_top_categories_count`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -155,46 +142,42 @@ export const LoginApiAxiosParamCreator = function (configuration?: Configuration
 };
 
 /**
- * LoginApi - functional programming interface
+ * AnalyticsApi - functional programming interface
  * @export
  */
-export const LoginApiFp = function(configuration?: Configuration) {
+export const AnalyticsApiFp = function(configuration?: Configuration) {
     return {
         /**
-         * Sets token on success
-         * @summary Route for signing in
-         * @param {AuthCredentials} request User credentials
+         * Get sum of all donations by month
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiLoginPost(request: AuthCredentials, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await LoginApiAxiosParamCreator(configuration).apiLoginPost(request, options);
+        async apiAnalyticsGetDonationsSumByMonthGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AnalyticsOneMonthProfit>>> {
+            const localVarAxiosArgs = await AnalyticsApiAxiosParamCreator(configuration).apiAnalyticsGetDonationsSumByMonthGet(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         * 
-         * @summary Route for refreshing
+         * Get number of registrations by month
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiLoginRefreshPost(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await LoginApiAxiosParamCreator(configuration).apiLoginRefreshPost(options);
+        async apiAnalyticsGetRegistrationsCountByMonthGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AnalyticsOneMonthRegistrations>>> {
+            const localVarAxiosArgs = await AnalyticsApiAxiosParamCreator(configuration).apiAnalyticsGetRegistrationsCountByMonthGet(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         * 
-         * @summary Destroys user session
+         * Get number of times category was used
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiLogoutPost(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await LoginApiAxiosParamCreator(configuration).apiLogoutPost(options);
+        async apiAnalyticsGetTopCategoriesCountGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AnalyticsTopCategory>>> {
+            const localVarAxiosArgs = await AnalyticsApiAxiosParamCreator(configuration).apiAnalyticsGetTopCategoriesCountGet(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -204,94 +187,72 @@ export const LoginApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * LoginApi - factory interface
+ * AnalyticsApi - factory interface
  * @export
  */
-export const LoginApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+export const AnalyticsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
         /**
-         * Sets token on success
-         * @summary Route for signing in
-         * @param {AuthCredentials} request User credentials
+         * Get sum of all donations by month
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiLoginPost(request: AuthCredentials, options?: any): AxiosPromise<void> {
-            return LoginApiFp(configuration).apiLoginPost(request, options).then((request) => request(axios, basePath));
+        apiAnalyticsGetDonationsSumByMonthGet(options?: any): AxiosPromise<Array<AnalyticsOneMonthProfit>> {
+            return AnalyticsApiFp(configuration).apiAnalyticsGetDonationsSumByMonthGet(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Route for refreshing
+         * Get number of registrations by month
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiLoginRefreshPost(options?: any): AxiosPromise<void> {
-            return LoginApiFp(configuration).apiLoginRefreshPost(options).then((request) => request(axios, basePath));
+        apiAnalyticsGetRegistrationsCountByMonthGet(options?: any): AxiosPromise<Array<AnalyticsOneMonthRegistrations>> {
+            return AnalyticsApiFp(configuration).apiAnalyticsGetRegistrationsCountByMonthGet(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Destroys user session
+         * Get number of times category was used
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiLogoutPost(options?: any): AxiosPromise<void> {
-            return LoginApiFp(configuration).apiLogoutPost(options).then((request) => request(axios, basePath));
+        apiAnalyticsGetTopCategoriesCountGet(options?: any): AxiosPromise<Array<AnalyticsTopCategory>> {
+            return AnalyticsApiFp(configuration).apiAnalyticsGetTopCategoriesCountGet(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for apiLoginPost operation in LoginApi.
+ * AnalyticsApi - object-oriented interface
  * @export
- * @interface LoginApiApiLoginPostRequest
- */
-export interface LoginApiApiLoginPostRequest {
-    /**
-     * User credentials
-     * @type {AuthCredentials}
-     * @memberof LoginApiApiLoginPost
-     */
-    readonly request: AuthCredentials
-}
-
-/**
- * LoginApi - object-oriented interface
- * @export
- * @class LoginApi
+ * @class AnalyticsApi
  * @extends {BaseAPI}
  */
-export class LoginApi extends BaseAPI {
+export class AnalyticsApi extends BaseAPI {
     /**
-     * Sets token on success
-     * @summary Route for signing in
-     * @param {LoginApiApiLoginPostRequest} requestParameters Request parameters.
+     * Get sum of all donations by month
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LoginApi
+     * @memberof AnalyticsApi
      */
-    public apiLoginPost(requestParameters: LoginApiApiLoginPostRequest, options?: any) {
-        return LoginApiFp(this.configuration).apiLoginPost(requestParameters.request, options).then((request) => request(this.axios, this.basePath));
+    public apiAnalyticsGetDonationsSumByMonthGet(options?: any) {
+        return AnalyticsApiFp(this.configuration).apiAnalyticsGetDonationsSumByMonthGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @summary Route for refreshing
+     * Get number of registrations by month
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LoginApi
+     * @memberof AnalyticsApi
      */
-    public apiLoginRefreshPost(options?: any) {
-        return LoginApiFp(this.configuration).apiLoginRefreshPost(options).then((request) => request(this.axios, this.basePath));
+    public apiAnalyticsGetRegistrationsCountByMonthGet(options?: any) {
+        return AnalyticsApiFp(this.configuration).apiAnalyticsGetRegistrationsCountByMonthGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @summary Destroys user session
+     * Get number of times category was used
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof LoginApi
+     * @memberof AnalyticsApi
      */
-    public apiLogoutPost(options?: any) {
-        return LoginApiFp(this.configuration).apiLogoutPost(options).then((request) => request(this.axios, this.basePath));
+    public apiAnalyticsGetTopCategoriesCountGet(options?: any) {
+        return AnalyticsApiFp(this.configuration).apiAnalyticsGetTopCategoriesCountGet(options).then((request) => request(this.axios, this.basePath));
     }
 }

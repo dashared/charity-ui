@@ -16,10 +16,37 @@ import { formatDate } from "@lib/utils";
 import { cred } from "@lib/utils/name";
 import { PageProps, useTranslation, Workspace } from "@providers";
 import { AuthConsumer, User } from "@providers/authContext";
-import useAxios, { ChatsFactory } from "@providers/axios";
+import useAxios, { ChatsFactory, soketUrl } from "@providers/axios";
+// import { io } from "socket.io-client";
 import Unauthorized from "pages/_unauthorized";
 
 import styles from "./styles.module.less";
+
+const ChatComment: FC<{
+  first_name?: string;
+  middle_name?: string;
+  last_name?: string;
+  item: ChatMessageBody;
+}> = ({ first_name, middle_name, last_name, item }) => {
+  return (
+    <Comment
+      className={styles.message}
+      author={cred(first_name, middle_name, last_name)}
+      avatar={
+        <Avatar
+          src={`/api/file/${item.author?.image_id}/download`}
+          alt={cred(first_name, middle_name, last_name)}
+        />
+      }
+      content={<p>{item.body}</p>}
+      datetime={
+        <Tooltip title={formatDate(item.created_at)}>
+          <span>{formatDate(item.created_at)}</span>
+        </Tooltip>
+      }
+    />
+  );
+};
 
 const ChatPage: FC<PageProps & { user: User }> = ({ response }) => {
   const id = response.params.id;
@@ -46,6 +73,38 @@ const ChatPage: FC<PageProps & { user: User }> = ({ response }) => {
 
   useEffect(
     () => {
+      const socket = new WebSocket(soketUrl);
+
+      socket.onmessage = socketListener;
+
+      return () => {
+        socket.close();
+      };
+    },
+    // eslint-disable-next-line
+    [],
+  );
+
+  const socketListener = useCallback(
+    // eslint-disable-next-line
+    (...websocketTarget: MessageEvent<any>[]) => {
+      const data = websocketTarget
+        .map((item) => {
+          return JSON.parse(item.data) as ChatMessageBody;
+        })
+        .filter((item) => item.dialog_id === id);
+
+      setListState({
+        ...listState,
+        chats: data.concat(listState.chats),
+      });
+    },
+    // eslint-disable-next-line
+    [listState.chats, setListState],
+  );
+
+  useEffect(
+    () => {
       if (!state.submitting) {
         fetchAPI();
       }
@@ -69,7 +128,9 @@ const ChatPage: FC<PageProps & { user: User }> = ({ response }) => {
           ? [...listState.chats, ...(responseAPI.data.data ?? [])]
           : responseAPI.data.data ?? [],
         loading: false,
-        hasMore: "1" !== responseAPI.data.cursor,
+        hasMore: !(
+          "1" === responseAPI.data.cursor || "0" === responseAPI.data.cursor
+        ),
         cursor: responseAPI.data.cursor,
       });
     } else {
@@ -183,38 +244,31 @@ const ChatPage: FC<PageProps & { user: User }> = ({ response }) => {
               loading={listState.loading}
               dataSource={listState.chats}
               renderItem={(item, index) => {
-                if (listState.chats.length - 1 === index) {
-                  return (
-                    <div ref={lastMessageReceived}>
-                      <List.Item>
-                        <List.Item.Meta description={item.body} />
-                      </List.Item>
-                    </div>
-                  );
-                }
-
                 if (!item.author) {
                   return null;
                 }
 
                 const { first_name, middle_name, last_name } = item.author;
 
-                return (
-                  <Comment
-                    className={styles.message}
-                    author={cred(first_name, middle_name, last_name)}
-                    avatar={
-                      <Avatar
-                        src={`/api/file/${item.author?.image_id}/download`}
-                        alt={cred(first_name, middle_name, last_name)}
+                if (listState.chats.length - 1 === index) {
+                  return (
+                    <div ref={lastMessageReceived}>
+                      <ChatComment
+                        first_name={first_name}
+                        middle_name={middle_name}
+                        last_name={last_name}
+                        item={item}
                       />
-                    }
-                    content={<p>{item.body}</p>}
-                    datetime={
-                      <Tooltip title={formatDate(item.created_at)}>
-                        <span>{formatDate(item.created_at)}</span>
-                      </Tooltip>
-                    }
+                    </div>
+                  );
+                }
+
+                return (
+                  <ChatComment
+                    first_name={first_name}
+                    middle_name={middle_name}
+                    last_name={last_name}
+                    item={item}
                   />
                 );
               }}

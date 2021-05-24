@@ -72,16 +72,22 @@ class Auth extends Component {
   };
 
   logout = (): void => {
-    localStorage.clear();
+    LoginFactory.apiLogoutPost()
+      .catch((e) => {
+        console.error(e);
+      })
+      .finally(() => {
+        localStorage.clear();
 
-    this.setState({
-      authenticated: false,
-      user: {
-        role: Role.visitor,
-      },
-      accessToken: "",
-      expires: undefined,
-    });
+        this.setState({
+          authenticated: false,
+          user: {
+            role: Role.visitor,
+          },
+          accessToken: "",
+          expires: undefined,
+        });
+      });
   };
 
   handleAuthentication = async (headerData: HeaderData): Promise<void> => {
@@ -198,7 +204,11 @@ class Auth extends Component {
       async (response) => {
         const originalResponce = response.config;
 
-        if (originalResponce.url === `/api/login/refresh`) {
+        if (
+          originalResponce.url === `/api/login/refresh` ||
+          originalResponce.url ===
+            `${process.env.REACT_APP_API_URL}/api/login/refresh`
+        ) {
           return response;
         }
 
@@ -230,7 +240,11 @@ class Auth extends Component {
       async (error) => {
         const originalRequest = error.config;
 
-        if (originalRequest.url === `/api/login/refresh`) {
+        if (
+          originalRequest.url === `/api/login/refresh` ||
+          originalRequest.url ===
+            `${process.env.REACT_APP_API_URL}/api/login/refresh`
+        ) {
           return Promise.reject(error);
         }
 
