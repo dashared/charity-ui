@@ -16,6 +16,7 @@
   "contacts": "Contacts",
   "docs": "Documents",
   "reports": "Reports",
+  "dontations_by_month": "Donations by month",
   "update_success": "Successfully updated fund info!",
   "update_error": "Error updating fund info",
   "$views": {

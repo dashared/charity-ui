@@ -44,13 +44,14 @@ const ChangeApplicationForm: ForwardRefRenderFunction<
     async (values: ApplicationFormState): Promise<void> => {
       try {
         setLoading(true);
-        DonationRequestFactory.apiDonationRequestIdStatusPatch(id, values).then(
-          () => {
-            notify(t("$views.updateStatus"), "success");
-
-            onSuccess?.();
-          },
+        await DonationRequestFactory.apiDonationRequestIdStatusPatch(
+          id,
+          values,
         );
+
+        notify(t("$views.updateStatus"), "success");
+
+        onSuccess?.();
       } catch (e) {
         onError?.(e);
       } finally {

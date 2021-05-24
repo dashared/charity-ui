@@ -124,6 +124,7 @@ const ChatsPage: FC = () => {
                 page,
               });
             },
+            hideOnSinglePage: true,
             pageSize: pageData.size,
             total: pageData.totalElements,
             current: pageData.page ?? 0 + 1,

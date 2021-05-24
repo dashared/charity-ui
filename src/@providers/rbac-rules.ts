@@ -33,7 +33,12 @@ const rules = {
     ],
   },
   operator: {
-    static: ["chats:show", "chats:index", "settings:index"],
+    static: [
+      "chats:show",
+      "chats:index",
+      "settings:index",
+      "notifications:index",
+    ],
   },
   manager: {
     static: [

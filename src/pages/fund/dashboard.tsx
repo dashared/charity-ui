@@ -2,7 +2,8 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import { drop } from "lodash";
 import { Card, Typography } from "antd";
 import { Bar, Line, Pie } from "@ant-design/charts";
-import { useTranslation, Workspace } from "@providers";
+import { formatCategory } from "@lib/utils";
+import { i18n, useTranslation, Workspace } from "@providers";
 import useAxios, {
   AnalyticsFactory,
   CharityFactory,
@@ -82,10 +83,12 @@ const CategoryStat: FC = () => {
     AnalyticsFactory.apiAnalyticsGetTopCategoriesCountGet,
   );
 
+  const lang = i18n.language.substr(0, 2);
+
   const config = {
     data: (data ?? []).map((item) => {
       return {
-        type: item.category_id,
+        type: formatCategory(lang, item.category),
         value: item.count,
       };
     }),
@@ -325,7 +328,7 @@ const FundPage: FC = () => {
 
       <Card style={{ marginTop: 5 }}>
         <Typography.Title level={3}>
-          {t("dontations_ny_month")}
+          {t("dontations_by_month")}
         </Typography.Title>
         <LineStat />
       </Card>

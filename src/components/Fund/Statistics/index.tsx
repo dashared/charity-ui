@@ -26,8 +26,8 @@ const StatisticsCard: FC<StatisticsCardProps> = ({
   const applicationsLabel = t("applications", formatNumber(activeApplications));
 
   return (
-    <Card loading={loading}>
-      <Card>
+    <Card loading={loading} bordered={false}>
+      <Card bordered={false}>
         <Row>
           <Col span={12}>
             <Statistic title={t("active_users")} value={usersLabel} />

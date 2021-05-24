@@ -24,7 +24,7 @@ export type { UtilsPageData as PageData } from "@generated";
 
 export const soketUrl = `${
   process.env.NODE_ENV === "production" ? "wss" : "ws"
-}//:${process.env.REACT_APP_WEBSOCKET}/api/chat/ws/`;
+}://charity.infostrategic.com/api/chat/ws/`;
 
 type AxiosResponse<R> = {
   data: R | undefined;
