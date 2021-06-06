@@ -298,7 +298,7 @@ smallDescriptionText =
     E.paragraph
         [ F.size 14, F.center ]
         [ E.text "or "
-        , Elm.Ui.link [] (Link "open the mobile application" "https://play.google.com/store/apps/details?id=com.hse.charity")
+        , Elm.Ui.link [] (Link "open the mobile application" "https://play.google.com/store/apps/details?id=infostrategic.hse.charity")
         ]
 
 
@@ -361,7 +361,7 @@ features =
       , image = E.image [ E.width (E.maximum 400 E.fill), E.centerX ] { src = "blockchain.jpg", description = "Blockchain" }
       }
     , { title = "Android application"
-      , description = paragraphLinked "https://play.google.com/store/apps/details?id=com.hse.charity" "Install now." [ text "The mobile application offers a solution that makes it quick and easy to seek help. The user can create a request for help and track status: from creation to publication. Donors also top up their personal wallet and send money to specific requests or directly send money to the foundation. Besides, there is communication with the fund’s employees for questions or issues from users." ]
+      , description = paragraphLinked "https://play.google.com/store/apps/details?id=infostrategic.hse.charity" "Install now." [ text "The mobile application offers a solution that makes it quick and easy to seek help. The user can create a request for help and track status: from creation to publication. Donors also top up their personal wallet and send money to specific requests or directly send money to the foundation. Besides, there is communication with the fund’s employees for questions or issues from users." ]
       , image = E.image [ E.width (E.maximum 600 E.fill), E.centerX ] { src = "android.jpg", description = "Android" }
       }
     ]

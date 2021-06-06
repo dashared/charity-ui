@@ -22,8 +22,6 @@ const StatisticsCard: FC<StatisticsCardProps> = ({
   const { t } = useTranslation("Fund");
 
   const usersLabel = t("users_title", formatNumber(usersCount));
-  const staffLabel = t("staff_title", formatNumber(staffCount));
-  const applicationsLabel = t("applications", formatNumber(activeApplications));
 
   return (
     <Card loading={loading} bordered={false}>
@@ -35,14 +33,14 @@ const StatisticsCard: FC<StatisticsCardProps> = ({
           <Col span={12}>
             <Statistic
               title={t("active_applications")}
-              value={applicationsLabel}
+              value={activeApplications}
             />
           </Col>
         </Row>
 
         <Row style={{ marginTop: 32 }}>
           <Col span={12}>
-            <Statistic title={t("staff")} value={staffLabel} />
+            <Statistic title={t("staff")} value={staffCount} />
           </Col>
           <Col span={12}>
             <Statistic

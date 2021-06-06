@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { drop } from "lodash";
+import { takeRight } from "lodash";
 import { Card, Typography } from "antd";
 import { Bar, Line, Pie } from "@ant-design/charts";
 import { formatCategory } from "@lib/utils";
@@ -26,7 +26,7 @@ const LineStat: FC = () => {
   );
 
   const config = {
-    data: drop(data, 1).map((item) => {
+    data: takeRight(data, 11).map((item) => {
       return {
         month: item.month,
         key: `${item.month} ${item.year}`,

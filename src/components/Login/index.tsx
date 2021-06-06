@@ -81,7 +81,7 @@ const LoginForm: FC<LoginProps> = ({ onLogin }) => {
                 <WarningOutlined className={styles.icon} /> {t("message.title")}
                 <a
                   target="_blank"
-                  href="https://play.google.com/store/apps/details?id=com.hse.charity"
+                  href="https://play.google.com/store/apps/details?id=infostrategic.hse.charity"
                   rel="noopener noreferrer"
                 >
                   {" "}

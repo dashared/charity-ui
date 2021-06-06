@@ -42,6 +42,9 @@ export const StatusFilter: FC<{
       <Select.Option value={ApplicationStatus.Active}>
         {t(`Status.${ApplicationStatus.Active}`)}
       </Select.Option>
+      <Select.Option value={ApplicationStatus.OnRealization}>
+        {t(`Status.${ApplicationStatus.OnRealization}`)}
+      </Select.Option>
       <Select.Option value={ApplicationStatus.Refused}>
         {t(`Status.${ApplicationStatus.Refused}`)}
       </Select.Option>
