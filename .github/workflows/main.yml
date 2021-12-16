@@ -15,11 +15,10 @@ jobs:
 
     steps:
       - name: yarn install, eslint & prettier
-        with:
-          run: |
-            yarn install
-            node -v
-            yarn -v
-            yarn lint:prettier
-            yarn lint:eslint
+        run: |
+          yarn install
+          node -v
+          yarn -v
+          yarn lint:prettier
+          yarn lint:eslint
         
