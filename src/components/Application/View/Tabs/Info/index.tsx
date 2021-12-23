@@ -149,7 +149,7 @@ export const GeneralInfo: FC<{
         </Descriptions.Item>
 
         <Descriptions.Item label={t("$views.card.createdBy")}>
-          <a onClick={() => setVisible(true)}>
+          <a onClick={() => setVisible(true)} href="/">
             {cred(
               info.author?.first_name,
               info.author?.middle_name,
