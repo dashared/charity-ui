@@ -24,4 +24,22 @@ jobs:
           yarn -v
           yarn lint:prettier
           yarn lint:eslint
+          
+          
+  build:
+    name: Build project and create artifact
+    runs-on: ubuntu-18.04
+    
+    steps:
+     - run: |
+        yarn install
+        node -v
+        yarn -v
+        yarn build
+        ls -al
+     - uses: actions/upload-artifact@v2
+       with:
+          name: my-app
+          path: index.js
+    
         
